@@ -1929,7 +1929,7 @@ class LanguageEn extends BaseLanguage {
   String get lblEdit => 'Edit';
 
   @override
-  String get bankName => "Bank Name";
+  String get bankName => "Enter Bank Name";
 
   @override
   String get accountNumber => "Account number";
@@ -1975,7 +1975,31 @@ class LanguageEn extends BaseLanguage {
   String get btnSave => 'Save';
 
   @override
-  String get fullNameOnBankAccount => 'Full name on bank account';
+  String get fullNameOnBankAccount => 'Full Name As Bank Account';
+
+  @override
+  String get lblBankName => 'Bank Name';
+
+  @override
+  String get lblFullNameOnBankAccount => 'Full Name On Bank Account';
+
+  @override
+  String get lblAccountNumber => 'Account Number';
+
+  @override
+  String get lblIFSCCode => 'IFSC Code';
+
+  @override
+  String get lblActive => 'Active';
+
+  @override
+  String get hintEnterFullName => 'Enter Full Name';
+
+  @override
+  String get hintEnterAccountNumber => 'Enter Account Number';
+
+  @override
+  String get hintEnterIFSCCode => 'Enter IFSC Code';
 
   @override
   String get packageIsExpired => 'Package is expired';

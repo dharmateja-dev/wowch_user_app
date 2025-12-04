@@ -1,4 +1,6 @@
+import 'package:booking_system_flutter/component/back_widget.dart';
 import 'package:booking_system_flutter/component/base_scaffold_widget.dart';
+import 'package:booking_system_flutter/component/custom_language_list_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -27,9 +29,9 @@ class LanguagesScreenState extends State<LanguagesScreen> {
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
+      leading: BackWidget(),
       appBarTitle: language.language,
-      child: LanguageListWidget(
-        widgetType: WidgetType.LIST,
+      child: CustomLanguageListWidget(
         onLanguageChange: (v) {
           appStore.setLanguage(v.languageCode!);
           setState(() {});

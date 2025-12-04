@@ -1969,6 +1969,30 @@ class LanguageHi extends BaseLanguage {
   String get fullNameOnBankAccount => 'बैंक खाते पर पूरा नाम';
 
   @override
+  String get lblBankName => 'बैंक का नाम';
+
+  @override
+  String get lblFullNameOnBankAccount => 'बैंक खाते पर पूरा नाम';
+
+  @override
+  String get lblAccountNumber => 'खाता संख्या';
+
+  @override
+  String get lblIFSCCode => 'IFSC कोड';
+
+  @override
+  String get lblActive => 'सक्रिय';
+
+  @override
+  String get hintEnterFullName => 'पूरा नाम दर्ज करें';
+
+  @override
+  String get hintEnterAccountNumber => 'खाता संख्या दर्ज करें';
+
+  @override
+  String get hintEnterIFSCCode => 'IFSC कोड दर्ज करें';
+
+  @override
   String get packageIsExpired => 'पैकेज समाप्त हो गया है';
 
   @override

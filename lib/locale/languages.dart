@@ -1268,6 +1268,22 @@ abstract class BaseLanguage {
 
   String get fullNameOnBankAccount;
 
+  String get lblBankName;
+
+  String get lblFullNameOnBankAccount;
+
+  String get lblAccountNumber;
+
+  String get lblIFSCCode;
+
+  String get lblActive;
+
+  String get hintEnterFullName;
+
+  String get hintEnterAccountNumber;
+
+  String get hintEnterIFSCCode;
+
   String get packageIsExpired;
 
   String get bookPackage;

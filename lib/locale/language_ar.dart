@@ -1899,6 +1899,30 @@ class LanguageAr extends BaseLanguage {
   String get fullNameOnBankAccount => 'الاسم الكامل على الحساب البنكي';
 
   @override
+  String get lblBankName => 'اسم البنك';
+
+  @override
+  String get lblFullNameOnBankAccount => 'الاسم الكامل على الحساب البنكي';
+
+  @override
+  String get lblAccountNumber => 'رقم الحساب';
+
+  @override
+  String get lblIFSCCode => 'رمز IFSC';
+
+  @override
+  String get lblActive => 'نشط';
+
+  @override
+  String get hintEnterFullName => 'أدخل الاسم الكامل';
+
+  @override
+  String get hintEnterAccountNumber => 'أدخل رقم الحساب';
+
+  @override
+  String get hintEnterIFSCCode => 'أدخل رمز IFSC';
+
+  @override
   String get packageIsExpired => 'انتهت صلاحية الحزمة';
 
   @override

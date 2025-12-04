@@ -1,7 +1,7 @@
 import 'package:booking_system_flutter/main.dart';
 import 'package:booking_system_flutter/utils/colors.dart';
-import 'package:booking_system_flutter/utils/extensions/num_extenstions.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 class PriceWidget extends StatelessWidget {
@@ -31,7 +31,8 @@ class PriceWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TextDecoration? textDecoration() => isLineThroughEnabled ? TextDecoration.lineThrough : null;
+    TextDecoration? textDecoration() =>
+        isLineThroughEnabled ? TextDecoration.lineThrough : null;
 
     TextStyle _textStyle({int? aSize}) {
       return isBoldText
@@ -39,8 +40,7 @@ class PriceWidget extends StatelessWidget {
               size: aSize ?? size!.toInt(),
               color: color ?? primaryColor,
               decoration: textDecoration(),
-              textDecorationStyle: TextDecorationStyle.solid
-            )
+              textDecorationStyle: TextDecorationStyle.solid)
           : secondaryTextStyle(
               size: aSize ?? size!.toInt(),
               color: color ?? primaryColor,
@@ -57,21 +57,44 @@ class PriceWidget extends StatelessWidget {
           "${isDiscountedPrice ? ' -' : ''}",
           style: _textStyle(),
         ),
-        Row(
-          children: [
-            if (isFreeService)
-              Text(language.lblFree, style: _textStyle())
-            else
-              Text(
-                price.toPriceFormat(),
-                style: _textStyle(),
-              ),
-            if (isHourlyService)
-              Text(
-                '/${language.lblHr}',
-                style: secondaryTextStyle(color: hourlyTextColor, size: 12),
-              ),
-          ],
+        Observer(
+          builder: (_) {
+            String currencySymbol;
+            if (appConfigurationStore.currencySymbol.isNotEmpty) {
+              currencySymbol = appConfigurationStore.currencySymbol.trim();
+            } else {
+              // Set currency symbol based on language
+              if (appStore.selectedLanguageCode == 'en') {
+                currencySymbol = '₹'; // Indian Rupee for English
+              } else {
+                currencySymbol = '\$'; // Default to dollar
+              }
+            }
+            return Row(
+              children: [
+                if (isFreeService)
+                  Text(language.lblFree, style: _textStyle())
+                else ...[
+                  Text(
+                    '$currencySymbol ',
+                    style: _textStyle(),
+                  ),
+                  Text(
+                    price
+                        .toStringAsFixed(
+                            appConfigurationStore.priceDecimalPoint)
+                        .formatNumberWithComma(),
+                    style: _textStyle(),
+                  ),
+                ],
+                if (isHourlyService)
+                  Text(
+                    '/${language.lblHr}',
+                    style: secondaryTextStyle(color: hourlyTextColor, size: 12),
+                  ),
+              ],
+            );
+          },
         ),
       ],
     );

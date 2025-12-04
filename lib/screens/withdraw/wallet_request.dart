@@ -1,9 +1,9 @@
 // ignore_for_file: must_be_immutable
 
+import 'package:booking_system_flutter/component/back_widget.dart';
 import 'package:booking_system_flutter/main.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
 import 'package:booking_system_flutter/utils/extensions/num_extenstions.dart';
-import 'package:booking_system_flutter/utils/extensions/string_extentions.dart';
 import 'package:booking_system_flutter/utils/images.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
 import 'package:flutter/material.dart';
@@ -51,7 +51,8 @@ class _WithdrawRequestState extends State<WithdrawRequest> {
   int page = 1;
   bool isLastPage = false;
 
-  bool get isWithdrawMethodIsBank => selectedWithdrawalMethod == PAYMENT_METHOD_BANK;
+  bool get isWithdrawMethodIsBank =>
+      selectedWithdrawalMethod == PAYMENT_METHOD_BANK;
 
   @override
   void initState() {
@@ -104,7 +105,8 @@ class _WithdrawRequestState extends State<WithdrawRequest> {
         context: context,
         builder: (BuildContext context) => SuccessDialog(
           title: language.successful,
-          description: language.yourWithdrawalRequestHasBeenSuccessfullySubmitted,
+          description:
+              language.yourWithdrawalRequestHasBeenSuccessfullySubmitted,
           buttonText: language.done,
         ),
       );
@@ -125,6 +127,7 @@ class _WithdrawRequestState extends State<WithdrawRequest> {
     return GestureDetector(
       onTap: () => hideKeyboard(context),
       child: AppScaffold(
+        leading: BackWidget(),
         appBarTitle: language.withdrawRequest,
         child: Stack(
           children: [
@@ -133,22 +136,36 @@ class _WithdrawRequestState extends State<WithdrawRequest> {
               child: AnimatedScrollView(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(language.availableBalance, style: secondaryTextStyle(size: 12)),
-                      PriceWidget(price: widget.availableBalance.validate(), color: context.primaryColor, isBoldText: true),
-                    ],
+                  Container(
+                    padding: const EdgeInsets.all(14),
+                    decoration: BoxDecoration(
+                      color: context.primaryColor.withValues(alpha: 0.1),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(language.availableBalance,
+                            style: boldTextStyle(size: 14)),
+                        PriceWidget(
+                            price: widget.availableBalance.validate(),
+                            color: context.primaryColor,
+                            isBoldText: true),
+                      ],
+                    ),
                   ),
-                  24.height,
-                  Text(language.lblEnterAmount, style: primaryTextStyle(size: 12, weight: FontWeight.w600)),
+                  (context.height() * 0.05).toInt().height,
+                  Text(language.lblEnterAmount, style: boldTextStyle(size: 14)),
                   8.height,
                   AppTextField(
                     textFieldType: TextFieldType.NUMBER,
                     controller: amount,
                     focus: amountFocus,
                     nextFocus: chooseBankFocus,
-                    decoration: inputDecoration(context, hintText: language.eg3000, prefix: const Text("\$ ")),
+                    decoration: inputDecoration(context,
+                        hintText: language.eg3000,
+                        borderRadius: 8,
+                        fillColor: Colors.transparent),
                     inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                     isValidationRequired: true,
                     validator: (value) {
@@ -157,7 +174,8 @@ class _WithdrawRequestState extends State<WithdrawRequest> {
                       }
 
                       final enteredAmount = num.tryParse(value.toString()) ?? 0;
-                      final availableBalance = widget.availableBalance.validate();
+                      final availableBalance =
+                          widget.availableBalance.validate();
 
                       if (enteredAmount <= 0) {
                         return "Please enter an amount greater than 0.";
@@ -172,26 +190,58 @@ class _WithdrawRequestState extends State<WithdrawRequest> {
                       return null;
                     },
                   ),
+                  32.height,
+                  Row(
+                    children: [
+                      Text(
+                        language.chooseBank,
+                        style: boldTextStyle(size: 14),
+                      ),
+                      const Spacer(),
+                      GestureDetector(
+                        onTap: () {
+                          AddBankScreen(
+                            availableBalance:
+                                widget.availableBalance.validate(),
+                          ).launch(context).then((value) {
+                            if (value.isNotEmpty) {
+                              if (value[0]) {
+                                init(value[1]);
+                                setState(() {});
+                              }
+                            }
+                          });
+                        },
+                        child: Text(
+                          language.addBank,
+                          style: boldTextStyle(size: 14, color: primaryColor),
+                        ),
+                      ),
+                    ],
+                  ),
                   16.height,
-                  DropdownButtonFormField<String>(
+                  DropdownButtonFormField<BankHistory>(
                     decoration: inputDecoration(context),
                     isExpanded: true,
                     menuMaxHeight: 300,
-                    initialValue: selectedWithdrawalMethod,
+                    initialValue: selectedBank,
                     hint: Text(
-                      language.chooseWithdrawalMethod,
+                      language.egCentralNationalBank,
                       style: secondaryTextStyle(size: 12),
                     ),
                     icon: ic_down_arrow.iconImage(size: 16),
                     dropdownColor: context.cardColor,
-                    items: withdrawalMethodList.map((String e) {
-                      return DropdownMenuItem<String>(
+                    items: bankHistoryList.map((BankHistory e) {
+                      return DropdownMenuItem<BankHistory>(
                         value: e,
-                        child: Text(e.toPaymentMethodText, style: primaryTextStyle(), maxLines: 1, overflow: TextOverflow.ellipsis),
+                        child: Text(e.bankName.validate(),
+                            style: primaryTextStyle(),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis),
                       );
                     }).toList(),
-                    onChanged: (String? value) async {
-                      selectedWithdrawalMethod = value;
+                    onChanged: (BankHistory? value) async {
+                      selectedBank = value;
                       setState(() {});
                     },
                     validator: (value) {
@@ -199,55 +249,6 @@ class _WithdrawRequestState extends State<WithdrawRequest> {
                       return null;
                     },
                   ),
-                  if (isWithdrawMethodIsBank) ...[
-                    8.height,
-                    Row(
-                      children: [
-                        Text(language.chooseBank, style: primaryTextStyle(size: 12, weight: FontWeight.w600)),
-                        const Spacer(),
-                        TextButton(
-                          onPressed: () {
-                            const AddBankScreen().launch(context).then((value) {
-                              if (value.isNotEmpty) {
-                                if (value[0]) {
-                                  init(value[1]);
-                                  setState(() {});
-                                }
-                              }
-                            });
-                          },
-                          child: Text(language.addBank, style: boldTextStyle(size: 12, color: primaryColor)),
-                        ),
-                      ],
-                    ),
-                    8.height,
-                    DropdownButtonFormField<BankHistory>(
-                      decoration: inputDecoration(context),
-                      isExpanded: true,
-                      menuMaxHeight: 300,
-                      initialValue: selectedBank,
-                      hint: Text(
-                        language.egCentralNationalBank,
-                        style: secondaryTextStyle(size: 12),
-                      ),
-                      icon: ic_down_arrow.iconImage(size: 16),
-                      dropdownColor: context.cardColor,
-                      items: bankHistoryList.map((BankHistory e) {
-                        return DropdownMenuItem<BankHistory>(
-                          value: e,
-                          child: Text(e.bankName.validate(), style: primaryTextStyle(), maxLines: 1, overflow: TextOverflow.ellipsis),
-                        );
-                      }).toList(),
-                      onChanged: (BankHistory? value) async {
-                        selectedBank = value;
-                        setState(() {});
-                      },
-                      validator: (value) {
-                        if (value == null) return errorThisFieldRequired;
-                        return null;
-                      },
-                    ),
-                  ],
                   40.height,
                   AppButton(
                     text: language.withdraw,
@@ -264,7 +265,9 @@ class _WithdrawRequestState extends State<WithdrawRequest> {
                 ],
               ).paddingSymmetric(horizontal: 16, vertical: 16),
             ),
-            Observer(builder: (_) => LoaderWidget().center().visible(appStore.isLoading)),
+            Observer(
+                builder: (_) =>
+                    LoaderWidget().center().visible(appStore.isLoading)),
           ],
         ),
       ),

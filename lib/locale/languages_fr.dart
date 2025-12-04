@@ -2009,6 +2009,30 @@ class LanguageFr extends BaseLanguage {
   String get fullNameOnBankAccount => 'Nom complet sur le compte bancaire';
 
   @override
+  String get lblBankName => 'Nom de la banque';
+
+  @override
+  String get lblFullNameOnBankAccount => 'Nom complet sur le compte bancaire';
+
+  @override
+  String get lblAccountNumber => 'Numéro de compte';
+
+  @override
+  String get lblIFSCCode => 'Code IFSC';
+
+  @override
+  String get lblActive => 'Actif';
+
+  @override
+  String get hintEnterFullName => 'Entrez le nom complet';
+
+  @override
+  String get hintEnterAccountNumber => 'Entrez le numéro de compte';
+
+  @override
+  String get hintEnterIFSCCode => 'Entrez le code IFSC';
+
+  @override
   String get packageIsExpired => 'Le colis est expiré';
 
   @override

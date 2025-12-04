@@ -2010,6 +2010,30 @@ class LanguageDe extends BaseLanguage {
   String get fullNameOnBankAccount => 'Vollständiger Name auf dem Bankkonto';
 
   @override
+  String get lblBankName => 'Bankname';
+
+  @override
+  String get lblFullNameOnBankAccount => 'Vollständiger Name auf dem Bankkonto';
+
+  @override
+  String get lblAccountNumber => 'Kontonummer';
+
+  @override
+  String get lblIFSCCode => 'IFSC-Code';
+
+  @override
+  String get lblActive => 'Aktiv';
+
+  @override
+  String get hintEnterFullName => 'Vollständigen Namen eingeben';
+
+  @override
+  String get hintEnterAccountNumber => 'Kontonummer eingeben';
+
+  @override
+  String get hintEnterIFSCCode => 'IFSC-Code eingeben';
+
+  @override
   String get packageIsExpired => 'Paket ist abgelaufen';
 
   @override
