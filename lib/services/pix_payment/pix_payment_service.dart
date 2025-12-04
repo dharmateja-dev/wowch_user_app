@@ -164,26 +164,27 @@ class _PixPayDialogState extends State<PixPayDialog> {
     );
   }
 
-  void _handleClick() async {
-    var request = {
-      "calendario": {"expiracao": "36000"},
-      "devedor": {"cpf": "12345678909", "nome": "Francisco da Silva"},
-      "valor": {"original": "130.44"},
-      "chave": "7f6844d0-de89-47e5-9ef7-e0a35a681615",
-      "solicitacaoPagador": "Cobrança dos serviços prestados."
-    };
+  // void _handleClick() async {
+  //   var request = {
+  //     "calendario": {"expiracao": "36000"},
+  //     "devedor": {"cpf": "12345678909", "nome": "Francisco da Silva"},
+  //     "valor": {"original": "130.44"},
+  //     "chave": "7f6844d0-de89-47e5-9ef7-e0a35a681615",
+  //     "solicitacaoPagador": "Cobrança dos serviços prestados."
+  //   };
 
-    query = await pixFlutter.createCobTxid(txid: "dgkjsdhgkjshddgsdggjjuliano", request: request);
+  //   query = await pixFlutter.createCobTxid(txid: "dgkjsdhgkjshddgsdggjjuliano", request: request);
 
-    var payloadDinamico = PixFlutter(
-        payload: Payload(
-      merchantName: "A",
-      merchantCity: "BRASILIA",
-      txid: "***",
-      url: "qrcodepix-h.bb.com.br/pix/v2/a1bfb8af-3485-4509-8b75-bfc6b7749de9",
-      isUniquePayment: true,
-    ));
+  //   var payloadDinamico = PixFlutter(
+  //       payload: Payload(
+  //     merchantName: "A",
+  //     merchantCity: "BRASILIA",
+  //     txid: "***",
+  //     url: "qrcodepix-h.bb.com.br/pix/v2/a1bfb8af-3485-4509-8b75-bfc6b7749de9",
+  //     isUniquePayment: true,
+  //   ));
 
-    query = payloadDinamico.getQRCode();
-  }
+  //   query = payloadDinamico.getQRCode();
+  // }
+
 }

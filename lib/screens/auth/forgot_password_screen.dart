@@ -71,21 +71,20 @@ class ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 borderRadius:
                     radiusOnly(topRight: defaultRadius, topLeft: defaultRadius),
               ),
-              child: Text(language.forgotPassword,
-                      style: boldTextStyle(size: 20, weight: FontWeight.bold))
-                  .center(),
+              child:
+                  Text(language.forgotPassword, style: boldTextStyle(size: 24))
+                      .center(),
             ),
             Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("${language.hintEmailAddressTxt}", style: boldTextStyle()),
+                Text("${language.hintEmailAddressTxt}",
+                    style: boldTextStyle(size: 14)),
                 6.height,
                 Text(language.lblForgotPwdSubtitle,
                     style: secondaryTextStyle(
-                        size: 12,
-                        weight: FontWeight.w500,
-                        color: Colors.grey.shade500)),
+                        size: 12, weight: FontWeight.w500, color: grey)),
                 24.height,
                 Observer(
                   builder: (_) => AppTextField(
@@ -103,7 +102,7 @@ class ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 AppButton(
                   text: language.confirm,
                   color: primaryColor,
-                  textColor: Colors.white,
+                  textColor: context.scaffoldBackgroundColor,
                   width: context.width() - context.navigationBarHeight,
                   onTap: () {
                     forgotPwd();
@@ -122,7 +121,7 @@ class ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     color: context.primaryColor),
               ),
             ).center(),
-            16.height,
+            32.height,
           ],
         ),
       ),

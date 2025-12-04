@@ -227,8 +227,7 @@ class _OTPLoginScreenState extends State<OTPLoginScreen> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            Text(language.confirmOTP,
-                style: boldTextStyle(size: APP_BAR_TEXT_SIZE)),
+            Text(language.confirmOTP, style: boldTextStyle(size: 24)).center(),
             (context.height() * 0.10).toInt().height,
             OTPTextField(
               pinLength: OTP_TEXT_FIELD_LENGTH,
@@ -243,7 +242,7 @@ class _OTPLoginScreenState extends State<OTPLoginScreen> {
                 ),
                 enabledBorder: UnderlineInputBorder(
                   borderSide: BorderSide(
-                    color: Colors.grey.shade400,
+                    color: greyColor,
                     width: 2,
                   ),
                 ),
@@ -264,7 +263,7 @@ class _OTPLoginScreenState extends State<OTPLoginScreen> {
                 submitOtp();
               },
             ).fit(),
-            (context.height() * 0.10).toInt().height,
+            (context.height() * 0.08).toInt().height,
             AppButton(
               onTap: () {
                 submitOtp();

@@ -246,7 +246,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget _buildTopWidget() {
     return Column(
       children: [
-        (context.height() * 0.10).toInt().height,
+        (context.height() * 0.08).toInt().height,
         Text(language.lblHelloAgain, style: boldTextStyle(size: 24)).center(),
         16.height,
         Text(language.lblSignUpSubTitle,
@@ -561,7 +561,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ? AutovalidateMode.disabled
                     : AutovalidateMode.onUserInteraction,
                 child: SingleChildScrollView(
-                  padding: const EdgeInsets.all(18),
+                  padding: const EdgeInsets.all(16),
                   child: Column(
                     children: [
                       _buildTopWidget(),

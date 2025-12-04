@@ -1,4 +1,3 @@
-import 'package:booking_system_flutter/app_theme.dart';
 import 'package:booking_system_flutter/component/back_widget.dart';
 import 'package:booking_system_flutter/component/base_scaffold_body.dart';
 //import 'package:booking_system_flutter/component/loader_widget.dart';
@@ -226,11 +225,11 @@ class _SignInScreenState extends State<SignInScreen> {
           16.height,
           Text(language.lblLoginSubTitle,
                   style: primaryTextStyle(
-                    size: 14,
+                    size: 16,
                   ),
                   textAlign: TextAlign.center)
               .center()
-              .paddingSymmetric(horizontal: 32),
+              .paddingSymmetric(horizontal: 8),
           32.height,
         ],
       ),
@@ -353,12 +352,12 @@ class _SignInScreenState extends State<SignInScreen> {
         onTap: otpSignIn,
         child: Container(
           padding: const EdgeInsets.all(10),
-          width: 60,
-          height: 60,
+          width: 50,
+          height: 50,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             color: context.scaffoldBackgroundColor,
-            border: Border.all(color: Colors.grey.shade300, width: 1.0),
+            border: Border.all(color: grey300Color, width: 2.0),
           ),
           child: Icon(Icons.phone, size: 20, color: primaryColor),
         ),
@@ -372,12 +371,12 @@ class _SignInScreenState extends State<SignInScreen> {
         onTap: appleSign,
         child: Container(
           padding: const EdgeInsets.all(10),
-          width: 60,
-          height: 60,
+          width: 50,
+          height: 50,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             color: context.scaffoldBackgroundColor,
-            border: Border.all(color: Colors.grey.shade300, width: 1.0),
+            border: Border.all(color: grey300Color, width: 2.0),
           ),
           child: Icon(Icons.apple, size: 30, color: context.iconColor),
         ),
@@ -391,12 +390,12 @@ class _SignInScreenState extends State<SignInScreen> {
         onTap: googleSignIn,
         child: Container(
           padding: const EdgeInsets.all(10),
-          width: 60,
-          height: 60,
+          width: 50,
+          height: 50,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: context.cardColor,
-            border: Border.all(color: Colors.grey.shade300, width: 1.0),
+            color: context.scaffoldBackgroundColor,
+            border: Border.all(color: grey300Color, width: 2.0),
           ),
           child: const GoogleLogoWidget(size: 20),
         ),
@@ -488,7 +487,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    (context.height() * 0.10).toInt().height,
+                    (context.height() * 0.085).toInt().height,
                     //
                     _buildTopWidget(),
                     AutofillGroup(

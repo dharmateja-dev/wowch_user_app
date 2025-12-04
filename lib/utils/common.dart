@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:booking_system_flutter/app_theme.dart';
 import 'package:booking_system_flutter/component/app_common_dialog.dart';
 import 'package:booking_system_flutter/component/html_widget.dart';
 import 'package:booking_system_flutter/component/location_service_dialog.dart';
@@ -195,7 +194,7 @@ InputDecoration inputDecoration(
     prefix: prefix,
     enabledBorder: OutlineInputBorder(
       borderRadius: radius(borderRadius ?? defaultRadius),
-      borderSide: BorderSide(color: Colors.grey.shade300, width: 1.0),
+      borderSide: BorderSide(color: grey300Color, width: 1.0),
     ),
     focusedErrorBorder: OutlineInputBorder(
       borderRadius: radius(borderRadius ?? defaultRadius),
@@ -208,7 +207,7 @@ InputDecoration inputDecoration(
     errorMaxLines: 2,
     border: OutlineInputBorder(
       borderRadius: radius(borderRadius ?? defaultRadius),
-      borderSide: BorderSide(color: Colors.grey.shade300, width: 1.0),
+      borderSide: BorderSide(color: grey300Color, width: 1.0),
     ),
     disabledBorder: OutlineInputBorder(
       borderRadius: radius(borderRadius ?? defaultRadius),

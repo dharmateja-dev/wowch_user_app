@@ -1922,7 +1922,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
       );
 
   Widget buildBodyWidget(AsyncSnapshot<BookingDetailResponse> snap) {
-    ShopModel shops = snap.data?.shop != null ? snap.data!.shop! : ShopModel();
+    //ShopModel shops = snap.data?.shop != null ? snap.data!.shop! : ShopModel();
     return Stack(
       fit: StackFit.expand,
       children: [

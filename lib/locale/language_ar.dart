@@ -2182,8 +2182,8 @@ class LanguageAr extends BaseLanguage {
   @override
   String get lblSelectShop => 'اختر المتجر';
 
-  @override
-  String get lblShopDocument => 'مستند المتجر';
+  // @override
+  // String get lblShopDocument => 'مستند المتجر';
 
 
   @override

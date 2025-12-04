@@ -147,7 +147,7 @@ class AppColors {
   static const Color shop = Color(0xFF1C1E33);
 
   // Common Colors
-  static const Color grey = Colors.grey;
+  static const Color grey = Color(0xFFBDBDBD);
   static const Color grey300 = Color(0xFFE0E0E0);
   static const Color amber = Color(0xFFFFC107);
 
