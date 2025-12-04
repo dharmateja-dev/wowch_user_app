@@ -17,7 +17,8 @@ class CustomLanguageListWidget extends StatefulWidget {
   });
 
   @override
-  CustomLanguageListWidgetState createState() => CustomLanguageListWidgetState();
+  CustomLanguageListWidgetState createState() =>
+      CustomLanguageListWidgetState();
 }
 
 class CustomLanguageListWidgetState extends State<CustomLanguageListWidget> {
@@ -66,6 +67,7 @@ class CustomLanguageListWidgetState extends State<CustomLanguageListWidget> {
             data.languageCode.validate();
 
         return SettingItemWidget(
+          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
           title: getNativeName(data),
           subTitle: data.subTitle,
           leading: (data.flag != null) ? buildImageWidget(data.flag!) : null,
@@ -96,4 +98,3 @@ class CustomLanguageListWidgetState extends State<CustomLanguageListWidget> {
     );
   }
 }
-
