@@ -8,11 +8,11 @@ import 'package:booking_system_flutter/screens/dashboard/component/slider_and_lo
 import 'package:booking_system_flutter/screens/dashboard/component/horizontal_shop_list_component.dart';
 import 'package:booking_system_flutter/screens/dashboard/shimmer/dashboard_shimmer.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
+import 'package:booking_system_flutter/utils/dummy_data_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-import '../../../component/empty_error_state_widget.dart';
 import '../../../component/loader_widget.dart';
 import '../component/booking_confirmed_component.dart';
 import '../component/new_job_request_component.dart';
@@ -55,18 +55,26 @@ class _DashboardFragmentState extends State<DashboardFragment> {
           );
           return freshData;
         } catch (e) {
-          // If fetch fails, return cached data
+          // If fetch fails, return cached data or dummy data
           log('Failed to fetch fresh dashboard data: $e');
           return cachedData;
         }
       });
     } else {
       appStore.setLoading(showLoader);
-      future = userDashboard(
-        isCurrentLocation: appStore.isCurrentLocation,
-        lat: getDoubleAsync(LATITUDE),
-        long: getDoubleAsync(LONGITUDE),
-      );
+      try {
+        future = userDashboard(
+          isCurrentLocation: appStore.isCurrentLocation,
+          lat: getDoubleAsync(LATITUDE),
+          long: getDoubleAsync(LONGITUDE),
+        );
+      } catch (e) {
+        // If API call fails, use dummy data
+        log('API call failed, using dummy data: $e');
+        future = Future.value(DummyDataHelper.getDummyDashboardData());
+        // Cache the dummy data
+        cachedDashboardResponse = DummyDataHelper.getDummyDashboardData();
+      }
     }
     setStatusBarColorChange();
     setState(() {});
@@ -108,13 +116,52 @@ class _DashboardFragmentState extends State<DashboardFragment> {
                   initialData: cachedDashboardResponse,
                   future: future,
                   errorBuilder: (error) {
-                    return NoDataWidget(
-                      title: error,
-                      imageWidget: const ErrorStateWidget(),
-                      retryText: language.reload,
-                      onRetry: () async {
+                    // Instead of showing error, use dummy data
+                    log('Error loading dashboard, using dummy data: $error');
+                    final dummyData = DummyDataHelper.getDummyDashboardData();
+                    cachedDashboardResponse = dummyData;
+                    return AnimatedScrollView(
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      listAnimationType: ListAnimationType.FadeIn,
+                      fadeInConfiguration:
+                          FadeInConfiguration(duration: 2.seconds),
+                      onSwipeRefresh: () async {
+                        setValue(LAST_APP_CONFIGURATION_SYNCED_TIME, 0);
                         await init();
+                        return await 2.seconds.delay;
                       },
+                      children: [
+                        SliderLocationComponent(
+                          sliderList: dummyData.slider.validate(),
+                          featuredList: dummyData.featuredServices.validate(),
+                          callback: () async {
+                            await init();
+                          },
+                        ),
+                        30.height,
+                        PendingBookingComponent(
+                            upcomingConfirmedBooking: dummyData.upcomingData),
+                        CategoryComponent(
+                            categoryList: dummyData.category.validate()),
+                        if (dummyData.promotionalBanner.validate().isNotEmpty &&
+                            appConfigurationStore.isPromotionalBanner)
+                          PromotionalBannerSliderComponent(
+                            promotionalBannerList:
+                                dummyData.promotionalBanner.validate(),
+                          ).paddingTop(16),
+                        16.height,
+                        FeaturedServiceListComponent(
+                            serviceList: dummyData.featuredServices.validate()),
+                        ServiceListComponent(
+                            serviceList: dummyData.service.validate()),
+                        16.height,
+                        HorizontalShopListComponent(
+                            shopList:
+                                dummyData.shops.validate().take(5).toList()),
+                        16.height,
+                        if (appConfigurationStore.jobRequestStatus)
+                          const NewJobRequestComponent(),
+                      ],
                     );
                   },
                   loadingWidget: DashboardShimmer(),
@@ -122,7 +169,8 @@ class _DashboardFragmentState extends State<DashboardFragment> {
                     return AnimatedScrollView(
                       physics: const AlwaysScrollableScrollPhysics(),
                       listAnimationType: ListAnimationType.FadeIn,
-                      fadeInConfiguration: FadeInConfiguration(duration: 2.seconds),
+                      fadeInConfiguration:
+                          FadeInConfiguration(duration: 2.seconds),
                       onSwipeRefresh: () async {
                         setValue(LAST_APP_CONFIGURATION_SYNCED_TIME, 0);
                         await init();
@@ -138,19 +186,27 @@ class _DashboardFragmentState extends State<DashboardFragment> {
                           },
                         ),
                         30.height,
-                        PendingBookingComponent(upcomingConfirmedBooking: snap.upcomingData),
-                        CategoryComponent(categoryList: snap.category.validate()),
-                        if (snap.promotionalBanner.validate().isNotEmpty && appConfigurationStore.isPromotionalBanner)
+                        PendingBookingComponent(
+                            upcomingConfirmedBooking: snap.upcomingData),
+                        CategoryComponent(
+                            categoryList: snap.category.validate()),
+                        if (snap.promotionalBanner.validate().isNotEmpty &&
+                            appConfigurationStore.isPromotionalBanner)
                           PromotionalBannerSliderComponent(
-                            promotionalBannerList: snap.promotionalBanner.validate(),
+                            promotionalBannerList:
+                                snap.promotionalBanner.validate(),
                           ).paddingTop(16),
                         16.height,
-                        FeaturedServiceListComponent(serviceList: snap.featuredServices.validate()),
-                        ServiceListComponent(serviceList: snap.service.validate()),
+                        FeaturedServiceListComponent(
+                            serviceList: snap.featuredServices.validate()),
+                        ServiceListComponent(
+                            serviceList: snap.service.validate()),
                         16.height,
-                        HorizontalShopListComponent(shopList: snap.shops.validate().take(5).toList()),
+                        HorizontalShopListComponent(
+                            shopList: snap.shops.validate().take(5).toList()),
                         16.height,
-                        if (appConfigurationStore.jobRequestStatus) const NewJobRequestComponent(),
+                        if (appConfigurationStore.jobRequestStatus)
+                          const NewJobRequestComponent(),
                       ],
                     );
                   },
@@ -162,7 +218,9 @@ class _DashboardFragmentState extends State<DashboardFragment> {
           /// 🔒 Loader Overlay and Interaction Block
           Observer(
             builder: (context) {
-              return appStore.isLoading ? LoaderWidget().center() : const SizedBox();
+              return appStore.isLoading
+                  ? LoaderWidget().center()
+                  : const SizedBox();
             },
           ),
         ],

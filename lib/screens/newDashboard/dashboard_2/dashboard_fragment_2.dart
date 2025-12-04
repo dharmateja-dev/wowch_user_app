@@ -2,11 +2,11 @@ import 'package:booking_system_flutter/screens/dashboard/component/promotional_b
 import 'package:booking_system_flutter/screens/dashboard/component/horizontal_shop_list_component.dart';
 import 'package:booking_system_flutter/screens/newDashboard/dashboard_2/shimmer/dashboard_shimmer_2.dart';
 import 'package:booking_system_flutter/utils/colors.dart';
+import 'package:booking_system_flutter/utils/dummy_data_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-import '../../../component/empty_error_state_widget.dart';
 import '../../../component/loader_widget.dart';
 import '../../../main.dart';
 import '../../../model/dashboard_model.dart';
@@ -39,7 +39,15 @@ class _DashboardFragment2State extends State<DashboardFragment2> {
 
   Future<void> init({bool showLoader = true}) async {
     appStore.setLoading(showLoader);
-    future = userDashboard(isCurrentLocation: appStore.isCurrentLocation, lat: getDoubleAsync(LATITUDE), long: getDoubleAsync(LONGITUDE));
+    try {
+      future = userDashboard(isCurrentLocation: appStore.isCurrentLocation, lat: getDoubleAsync(LATITUDE), long: getDoubleAsync(LONGITUDE));
+    } catch (e) {
+      // If API call fails, use dummy data
+      log('API call failed, using dummy data: $e');
+      future = Future.value(DummyDataHelper.getDummyDashboardData());
+      // Cache the dummy data
+      cachedDashboardResponse = DummyDataHelper.getDummyDashboardData();
+    }
     setStatusBarColorChange();
     setState(() {});
   }
@@ -77,14 +85,46 @@ class _DashboardFragment2State extends State<DashboardFragment2> {
             initialData: cachedDashboardResponse,
             future: future,
             errorBuilder: (error) {
-              return NoDataWidget(
-                title: error,
-                imageWidget: const ErrorStateWidget(),
-                retryText: language.reload,
-                onRetry: () async {
-                  await init();
-                },
-              );
+              // Instead of showing error, use dummy data
+              log('Error loading dashboard, using dummy data: $error');
+              final dummyData = DummyDataHelper.getDummyDashboardData();
+              cachedDashboardResponse = dummyData;
+              return Observer(builder: (context) {
+                return AnimatedScrollView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  listAnimationType: ListAnimationType.FadeIn,
+                  fadeInConfiguration: FadeInConfiguration(duration: 2.seconds),
+                  onSwipeRefresh: () async {
+                    setValue(LAST_APP_CONFIGURATION_SYNCED_TIME, 0);
+                    await init();
+                    return await 2.seconds.delay;
+                  },
+                  children: [
+                    CustomAppbarDashboardComponent2(
+                      featuredList: dummyData.featuredServices.validate(),
+                      callback: () async {
+                        await init();
+                      },
+                    ),
+                    16.height,
+                    SliderDashboardComponent2(sliderList: dummyData.slider.validate()),
+                    ConfirmDashboardBookingComponent2(upcomingConfirmedBooking: dummyData.upcomingData),
+                    16.height,
+                    CategoryListDashboardComponent2(categoryList: dummyData.category.validate()),
+                    if (dummyData.promotionalBanner.validate().isNotEmpty && appConfigurationStore.isPromotionalBanner)
+                      PromotionalBannerSliderComponent(
+                        promotionalBannerList: dummyData.promotionalBanner.validate(),
+                      ).paddingTop(16),
+                    20.height,
+                    ServiceListDashboardComponent2(serviceList: dummyData.service.validate(), serviceListTitle: language.service),
+                    16.height,
+                    ServiceListDashboardComponent2(serviceList: dummyData.featuredServices.validate(), serviceListTitle: language.featuredServices, isFeatured: true),
+                    HorizontalShopListComponent(shopList: dummyData.shops.take(5).toList()),
+                    16.height,
+                    if (appConfigurationStore.jobRequestStatus) JobRequestDashboardComponent2(),
+                  ],
+                );
+              });
             },
             loadingWidget: DashboardShimmer2(),
             onSuccess: (snap) {

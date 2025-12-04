@@ -33,6 +33,9 @@ class LanguageEn extends BaseLanguage {
   String get hintContactNumberTxt => 'Enter Contact Number';
 
   @override
+  String get hintPhoneNumberTxt => 'Enter Phone Number';
+
+  @override
   String get hintEmailAddressTxt => 'Enter your email address';
 
   @override
@@ -63,6 +66,12 @@ class LanguageEn extends BaseLanguage {
 
   @override
   String get lblContactNumber => 'Contact Number';
+
+  @override
+  String get lblMobileNumber => 'Phone Number';
+
+  @override
+  String get lblApartment => 'Apartment';
 
   @override
   String get hintEmailTxt => 'Enter Email ID';
@@ -128,6 +137,15 @@ class LanguageEn extends BaseLanguage {
   String get selectCity => 'Select City';
 
   @override
+  String get lblCountry => 'Country';
+
+  @override
+  String get lblState => 'State / Province';
+
+  @override
+  String get lblCity => 'City';
+
+  @override
   String get changePassword => 'Change Password';
 
   @override
@@ -144,6 +162,9 @@ class LanguageEn extends BaseLanguage {
 
   @override
   String get hintAddress => 'Address';
+
+  @override
+  String get hintApartment => 'Apartment';
 
   @override
   String get lblGallery => "Gallery";

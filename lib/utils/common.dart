@@ -211,7 +211,7 @@ InputDecoration inputDecoration(
     ),
     disabledBorder: OutlineInputBorder(
       borderRadius: radius(borderRadius ?? defaultRadius),
-      borderSide: BorderSide(color: Colors.transparent, width: 0.0),
+      borderSide: BorderSide(color: grey300Color, width: 1.0),
     ),
     errorStyle: primaryTextStyle(color: Colors.red, size: 11),
     focusedBorder: OutlineInputBorder(

@@ -34,6 +34,9 @@ class LanguageAr extends BaseLanguage {
   String get hintContactNumberTxt => 'أدخل رقم الاتصال الخاص بك';
 
   @override
+  String get hintPhoneNumberTxt => 'أدخل رقم الهاتف';
+
+  @override
   String get hintEmailAddressTxt => 'أدخل عنوان بريدك الالكتروني';
 
   @override
@@ -68,6 +71,12 @@ class LanguageAr extends BaseLanguage {
 
   @override
   String get lblContactNumber => 'رقم الاتصال';
+
+  @override
+  String get lblMobileNumber => 'رقم الهاتف';
+
+  @override
+  String get lblApartment => 'الشقة';
 
   @override
   String get forgotPassword => 'هل نسيت كلمة السر؟';
@@ -130,6 +139,15 @@ class LanguageAr extends BaseLanguage {
   String get selectCity => 'اختر مدينة';
 
   @override
+  String get lblCountry => 'البلد';
+
+  @override
+  String get lblState => 'الولاية / المقاطعة';
+
+  @override
+  String get lblCity => 'المدينة';
+
+  @override
   String get changePassword => 'تغيير كلمة المرور';
 
   @override
@@ -146,6 +164,9 @@ class LanguageAr extends BaseLanguage {
 
   @override
   String get hintAddress => 'أدخل عنوانك';
+
+  @override
+  String get hintApartment => 'أدخل الشقة';
 
   @override
   String get lblGallery => "صالة عرض";

@@ -34,6 +34,9 @@ class LanguageHi extends BaseLanguage {
   String get hintContactNumberTxt => 'अपना संपर्क नंबर दर्ज करें';
 
   @override
+  String get hintPhoneNumberTxt => 'फोन नंबर दर्ज करें';
+
+  @override
   String get hintEmailAddressTxt => 'अपना ईमेल पता दर्ज करें';
 
   @override
@@ -118,6 +121,15 @@ class LanguageHi extends BaseLanguage {
   String get selectCity => 'शहर चुनें';
 
   @override
+  String get lblCountry => 'देश';
+
+  @override
+  String get lblState => 'राज्य / प्रांत';
+
+  @override
+  String get lblCity => 'शहर';
+
+  @override
   String get changePassword => 'पासवर्ड बदलें';
 
   @override
@@ -134,6 +146,9 @@ class LanguageHi extends BaseLanguage {
 
   @override
   String get hintAddress => 'अपना पता दर्ज करें';
+
+  @override
+  String get hintApartment => 'अपार्टमेंट दर्ज करें';
 
   @override
   String get lblGallery => "गेलरी";
@@ -2284,6 +2299,12 @@ class LanguageHi extends BaseLanguage {
   
   @override
   String get lblContactNumber => 'संपर्क नंबर';
+  
+  @override
+  String get lblMobileNumber => 'फोन नंबर';
+  
+  @override
+  String get lblApartment => 'अपार्टमेंट';
   
   @override
   String get lblFirstName => 'पहला नाम';

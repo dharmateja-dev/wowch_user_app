@@ -36,6 +36,12 @@ class LanguageDe extends BaseLanguage {
   String get lblContactNumber => "Kontaktnummer";
 
   @override
+  String get lblMobileNumber => "Telefonnummer";
+
+  @override
+  String get lblApartment => "Wohnung";
+
+  @override
   String get hintFirstNameTxt => "Geben Sie Ihren Vornamen ein";
 
   @override
@@ -43,6 +49,9 @@ class LanguageDe extends BaseLanguage {
 
   @override
   String get hintContactNumberTxt => "Geben Sie Ihre Kontaktnummer ein";
+
+  @override
+  String get hintPhoneNumberTxt => "Geben Sie Ihre Telefonnummer ein";
 
   @override
   String get hintEmailAddressTxt => "Geben sie ihre E-Mailadresse ein";
@@ -130,6 +139,15 @@ class LanguageDe extends BaseLanguage {
   String get selectCity => "Stadt wählen";
 
   @override
+  String get lblCountry => "Land";
+
+  @override
+  String get lblState => "Bundesland / Provinz";
+
+  @override
+  String get lblCity => "Stadt";
+
+  @override
   String get changePassword => "Passwort ändern";
 
   @override
@@ -146,6 +164,9 @@ class LanguageDe extends BaseLanguage {
 
   @override
   String get hintAddress => "Geben Sie Ihre Adresse ein";
+
+  @override
+  String get hintApartment => "Wohnung eingeben";
 
   @override
   String get lblGallery => "Galerie";

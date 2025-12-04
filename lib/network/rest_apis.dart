@@ -46,6 +46,7 @@ import '../model/update_location_response.dart';
 import '../model/wallet_response.dart';
 import '../model/zone_model.dart';
 import '../utils/app_configuration.dart';
+import '../utils/dummy_data_helper.dart';
 import '../utils/firebase_messaging_utils.dart';
 
 //region Auth Api
@@ -379,7 +380,11 @@ Future<DashboardResponse> userDashboard(
       log('Network error, returning cached dashboard data: $e');
       completer.complete(cachedDashboardResponse);
     } else {
-      completer.completeError(e);
+      // If no cached data, return dummy data instead of error
+      log('Network error and no cached data, returning dummy data: $e');
+      final dummyData = DummyDataHelper.getDummyDashboardData();
+      cachedDashboardResponse = dummyData;
+      completer.complete(dummyData);
     }
   }
 

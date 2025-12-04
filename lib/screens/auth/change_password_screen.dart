@@ -1,3 +1,4 @@
+import 'package:booking_system_flutter/component/back_widget.dart';
 import 'package:booking_system_flutter/component/base_scaffold_widget.dart';
 import 'package:booking_system_flutter/main.dart';
 import 'package:booking_system_flutter/network/rest_apis.dart';
@@ -5,9 +6,7 @@ import 'package:booking_system_flutter/screens/dashboard/dashboard_screen.dart';
 import 'package:booking_system_flutter/utils/colors.dart';
 import 'package:booking_system_flutter/utils/common.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
-import 'package:booking_system_flutter/utils/images.dart';
 import 'package:booking_system_flutter/utils/model_keys.dart';
-import 'package:booking_system_flutter/utils/string_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -72,16 +71,18 @@ class ChangePasswordScreenState extends State<ChangePasswordScreen> {
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
+      leading: BackWidget(),
       appBarTitle: language.changePassword,
       child: SingleChildScrollView(
-        padding: const EdgeInsets.all(18),
+        padding: const EdgeInsets.all(16),
         child: Form(
           key: formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               16.height,
-              Text(language.lblChangePwdTitle, style: secondaryTextStyle()),
+              Text(language.lblChangePwdTitle,
+                  style: primaryTextStyle(size: 14)),
               24.height,
               Text(language.hintOldPasswordTxt, style: boldTextStyle(size: 14)),
               8.height,
@@ -91,12 +92,8 @@ class ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 focus: oldPasswordFocus,
                 nextFocus: newPasswordFocus,
                 obscureText: true,
-                suffixPasswordVisibleWidget: ic_show
-                    .iconImage(size: 10, color: Colors.black)
-                    .paddingAll(14),
-                suffixPasswordInvisibleWidget: ic_hide
-                    .iconImage(size: 10, color: Colors.black)
-                    .paddingAll(14),
+                suffixPasswordVisibleWidget: const SizedBox.shrink(),
+                suffixPasswordInvisibleWidget: const SizedBox.shrink(),
                 decoration: inputDecoration(
                   context,
                   fillColor: Colors.transparent,
@@ -122,12 +119,8 @@ class ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 focus: newPasswordFocus,
                 obscureText: true,
                 nextFocus: reenterPasswordFocus,
-                suffixPasswordVisibleWidget: ic_show
-                    .iconImage(size: 10, color: Colors.black)
-                    .paddingAll(14),
-                suffixPasswordInvisibleWidget: ic_hide
-                    .iconImage(size: 10, color: Colors.black)
-                    .paddingAll(14),
+                suffixPasswordVisibleWidget: const SizedBox.shrink(),
+                suffixPasswordInvisibleWidget: const SizedBox.shrink(),
                 decoration: inputDecoration(
                   context,
                   fillColor: Colors.transparent,
@@ -153,12 +146,8 @@ class ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 controller: reenterPasswordCont,
                 obscureText: true,
                 focus: reenterPasswordFocus,
-                suffixPasswordVisibleWidget: ic_show
-                    .iconImage(size: 10, color: Colors.black)
-                    .paddingAll(14),
-                suffixPasswordInvisibleWidget: ic_hide
-                    .iconImage(size: 10, color: Colors.black)
-                    .paddingAll(14),
+                suffixPasswordVisibleWidget: const SizedBox.shrink(),
+                suffixPasswordInvisibleWidget: const SizedBox.shrink(),
                 validator: (v) {
                   if (v == null || v.isEmpty) {
                     return errorThisFieldRequired;

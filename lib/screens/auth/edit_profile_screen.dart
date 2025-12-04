@@ -2,9 +2,9 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:booking_system_flutter/component/back_widget.dart';
 import 'package:booking_system_flutter/component/base_scaffold_widget.dart';
 import 'package:booking_system_flutter/component/cached_image_widget.dart';
-import 'package:booking_system_flutter/component/custom_image_picker.dart';
 import 'package:booking_system_flutter/main.dart';
 import 'package:booking_system_flutter/model/city_list_model.dart';
 import 'package:booking_system_flutter/model/country_list_model.dart';
@@ -55,6 +55,9 @@ class EditProfileScreenState extends State<EditProfileScreen> {
   TextEditingController emailCont = TextEditingController();
   TextEditingController userNameCont = TextEditingController();
   TextEditingController mobileCont = TextEditingController();
+  TextEditingController countryCont = TextEditingController();
+  TextEditingController stateCont = TextEditingController();
+  TextEditingController cityCont = TextEditingController();
   TextEditingController addressCont = TextEditingController();
 
   FocusNode fNameFocus = FocusNode();
@@ -62,8 +65,13 @@ class EditProfileScreenState extends State<EditProfileScreen> {
   FocusNode emailFocus = FocusNode();
   FocusNode userNameFocus = FocusNode();
   FocusNode mobileFocus = FocusNode();
+  FocusNode countryFocus = FocusNode();
+  FocusNode stateFocus = FocusNode();
+  FocusNode cityFocus = FocusNode();
 
   ValueNotifier valueNotifier = ValueNotifier(true);
+  ValueNotifier<Country> countryNotifier =
+      ValueNotifier<Country>(defaultCountry());
 
   int countryId = 0;
   int stateId = 0;
@@ -100,6 +108,8 @@ class EditProfileScreenState extends State<EditProfileScreen> {
     cityId = appStore.cityId;
     addressCont.text = appStore.address;
 
+    countryNotifier.value = selectedCountryCode;
+
     userDetailAPI();
 
     if (getIntAsync(COUNTRY_ID) != 0) {
@@ -124,7 +134,9 @@ class EditProfileScreenState extends State<EditProfileScreen> {
     await getUserDetail(appStore.userId).then((value) {
       isEmailVerified = value.emailVerified.validate().getBoolInt();
       setValue(IS_EMAIL_VERIFIED, isEmailVerified);
-      mobileCont.text = value.contactNumber.validate().formatPhoneNumber(selectedCountryCode.phoneCode);
+      mobileCont.text = value.contactNumber
+          .validate()
+          .formatPhoneNumber(selectedCountryCode.phoneCode);
       String raw = value.contactNumber.validate().trim();
       if (raw.startsWith('+')) {
         RegExp re = RegExp(r'^\+(\d{1,3})\s*(.*)$');
@@ -146,7 +158,9 @@ class EditProfileScreenState extends State<EditProfileScreen> {
             e164Key: '',
             fullExampleWithPlusSign: '',
           );
-          mobileCont.text = local.isNotEmpty ? local : raw.replaceAll(RegExp(r'[^\d]'), '');
+          countryNotifier.value = selectedCountryCode;
+          mobileCont.text =
+              local.isNotEmpty ? local : raw.replaceAll(RegExp(r'[^\d]'), '');
           valueNotifier.value = !valueNotifier.value;
         } else {
           // Fallback to digits only as local
@@ -169,7 +183,9 @@ class EditProfileScreenState extends State<EditProfileScreen> {
       countryList.addAll(value);
 
       if (value.any((element) => element.id == getIntAsync(COUNTRY_ID))) {
-        selectedCountry = value.firstWhere((element) => element.id == getIntAsync(COUNTRY_ID));
+        selectedCountry = value
+            .firstWhere((element) => element.id == getIntAsync(COUNTRY_ID));
+        countryCont.text = selectedCountry?.name ?? '';
       }
 
       setState(() {});
@@ -187,7 +203,9 @@ class EditProfileScreenState extends State<EditProfileScreen> {
       stateList.addAll(value);
 
       if (value.any((element) => element.id == getIntAsync(STATE_ID))) {
-        selectedState = value.firstWhere((element) => element.id == getIntAsync(STATE_ID));
+        selectedState =
+            value.firstWhere((element) => element.id == getIntAsync(STATE_ID));
+        stateCont.text = selectedState?.name ?? '';
       }
 
       setState(() {});
@@ -208,7 +226,9 @@ class EditProfileScreenState extends State<EditProfileScreen> {
       cityList.addAll(value);
 
       if (value.any((element) => element.id == getIntAsync(CITY_ID))) {
-        selectedCity = value.firstWhere((element) => element.id == getIntAsync(CITY_ID));
+        selectedCity =
+            value.firstWhere((element) => element.id == getIntAsync(CITY_ID));
+        cityCont.text = selectedCity?.name ?? '';
       }
 
       setState(() {});
@@ -218,10 +238,67 @@ class EditProfileScreenState extends State<EditProfileScreen> {
     appStore.setLoading(false);
   }
 
+  int? _findCountryId(String countryName) {
+    if (countryName.isEmpty) return null;
+    try {
+      return countryList
+          .firstWhere((e) =>
+              e.name!.toLowerCase().trim() == countryName.toLowerCase().trim())
+          .id;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  int? _findStateId(String stateName) {
+    if (stateName.isEmpty) return null;
+    try {
+      return stateList
+          .firstWhere((e) =>
+              e.name!.toLowerCase().trim() == stateName.toLowerCase().trim())
+          .id;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  int? _findCityId(String cityName) {
+    if (cityName.isEmpty) return null;
+    try {
+      return cityList
+          .firstWhere((e) =>
+              e.name!.toLowerCase().trim() == cityName.toLowerCase().trim())
+          .id;
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future<void> update() async {
     hideKeyboard(context);
 
-    MultipartRequest multiPartRequest = await getMultiPartRequest('update-profile');
+    // Try to find IDs from text inputs
+    if (countryCont.text.isNotEmpty) {
+      int? foundCountryId = _findCountryId(countryCont.text);
+      if (foundCountryId != null) {
+        countryId = foundCountryId;
+      }
+    }
+    if (stateCont.text.isNotEmpty) {
+      int? foundStateId = _findStateId(stateCont.text);
+      if (foundStateId != null) {
+        stateId = foundStateId;
+      }
+    }
+    if (cityCont.text.isNotEmpty) {
+      int? foundCityId = _findCityId(cityCont.text);
+      if (foundCityId != null) {
+        cityId = foundCityId;
+      }
+    }
+
+    MultipartRequest multiPartRequest =
+        await getMultiPartRequest('update-profile');
     multiPartRequest.fields[UserKeys.id] = appStore.userId.toString();
     multiPartRequest.fields[UserKeys.firstName] = fNameCont.text;
     multiPartRequest.fields[UserKeys.lastName] = lNameCont.text;
@@ -233,9 +310,11 @@ class EditProfileScreenState extends State<EditProfileScreen> {
     multiPartRequest.fields[UserKeys.stateId] = stateId.toString();
     multiPartRequest.fields[UserKeys.cityId] = cityId.toString();
     multiPartRequest.fields[CommonKeys.address] = addressCont.text;
-    multiPartRequest.fields[UserKeys.displayName] = '${fNameCont.text.validate() + " " + lNameCont.text.validate()}';
+    multiPartRequest.fields[UserKeys.displayName] =
+        '${fNameCont.text.validate() + " " + lNameCont.text.validate()}';
     if (imageFile != null) {
-      multiPartRequest.files.add(await MultipartFile.fromPath(UserKeys.profileImage, imageFile!.path));
+      multiPartRequest.files.add(
+          await MultipartFile.fromPath(UserKeys.profileImage, imageFile!.path));
     }
 
     multiPartRequest.headers.addAll(buildHeaderTokens());
@@ -314,12 +393,59 @@ class EditProfileScreenState extends State<EditProfileScreen> {
   }
 
   void _showImgPickDialog(BuildContext context) {
-    showInDialog(
-      context,
-      contentPadding: const EdgeInsets.symmetric(vertical: 16),
-      title: Text(language.chooseAction, style: boldTextStyle()),
-      builder: (p0) {
-        return const FilePickerDialog(isSelected: (false));
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      builder: (BuildContext context) {
+        return Container(
+          decoration: BoxDecoration(
+            color: context.scaffoldBackgroundColor,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(20),
+              topRight: Radius.circular(20),
+            ),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                margin: EdgeInsets.only(top: 12, bottom: 8),
+                width: 40,
+                height: 4,
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade300,
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+              SizedBox(
+                width: context.width(),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    SettingItemWidget(
+                      title: language.lblGallery,
+                      titleTextStyle: primaryTextStyle(),
+                      leading:
+                          Icon(LineIcons.image_1, color: context.iconColor),
+                      onTap: () {
+                        finish(context, GalleryFileTypes.GALLERY);
+                      },
+                    ),
+                    SettingItemWidget(
+                      title: language.camera,
+                      titleTextStyle: primaryTextStyle(),
+                      leading: Icon(LineIcons.camera, color: context.iconColor),
+                      onTap: () {
+                        finish(context, GalleryFileTypes.CAMERA);
+                      },
+                    ).visible(!isWeb),
+                  ],
+                ),
+              ),
+              SizedBox(height: MediaQuery.of(context).viewInsets.bottom),
+            ],
+          ),
+        );
       },
     ).then((file) async {
       if (file != null) {
@@ -349,9 +475,11 @@ class EditProfileScreenState extends State<EditProfileScreen> {
         ),
       ),
 
-      showPhoneCode: true, // optional. Shows phone code before the country name.
+      showPhoneCode:
+          true, // optional. Shows phone code before the country name.
       onSelect: (Country country) {
         selectedCountryCode = country;
+        countryNotifier.value = country;
         setState(() {});
       },
     );
@@ -363,9 +491,16 @@ class EditProfileScreenState extends State<EditProfileScreen> {
   }
 
   @override
+  void dispose() {
+    countryNotifier.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return AppScaffold(
-      showLoader: true,
+      leading: BackWidget(),
+      showLoader: false,
       isLoading: Observable(appStore.isLoading),
       appBarTitle: language.editProfile,
       child: RefreshIndicator(
@@ -380,13 +515,14 @@ class EditProfileScreenState extends State<EditProfileScreen> {
               key: formKey,
               autovalidateMode: AutovalidateMode.onUserInteraction,
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Stack(
                     children: [
                       Container(
                         decoration: boxDecorationDefault(
-                          border: Border.all(color: context.scaffoldBackgroundColor, width: 4),
+                          border: Border.all(
+                              color: context.scaffoldBackgroundColor, width: 4),
                           shape: BoxShape.circle,
                         ),
                         child: imageFile != null
@@ -416,14 +552,17 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                             backgroundColor: primaryColor,
                             border: Border.all(color: Colors.white),
                           ),
-                          child: const Icon(AntDesign.camera, color: Colors.white, size: 12),
+                          child: const Icon(AntDesign.camera,
+                              color: Colors.white, size: 12),
                         ).onTap(() async {
                           _showImgPickDialog(context);
                         }),
                       ).visible(!isLoginTypeGoogle && !isLoginTypeApple)
                     ],
-                  ),
+                  ).center(),
                   16.height,
+                  Text(language.lblFirstName, style: boldTextStyle(size: 14)),
+                  8.height,
                   AppTextField(
                     textFieldType: TextFieldType.NAME,
                     controller: fNameCont,
@@ -431,10 +570,17 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                     errorThisFieldRequired: language.requiredText,
                     nextFocus: lNameFocus,
                     enabled: !isLoginTypeApple,
-                    decoration: inputDecoration(context, labelText: language.hintFirstNameTxt),
-                    suffix: ic_profile2.iconImage(size: 10).paddingAll(14),
+                    decoration: inputDecoration(
+                      context,
+                      fillColor: Colors.transparent,
+                      borderRadius: 8,
+                      hintText: language.hintFirstNameTxt,
+                    ),
+                    //suffix: ic_profile2.iconImage(size: 10).paddingAll(14),
                   ),
                   16.height,
+                  Text(language.lblLastName, style: boldTextStyle(size: 14)),
+                  8.height,
                   AppTextField(
                     textFieldType: TextFieldType.NAME,
                     controller: lNameCont,
@@ -442,10 +588,17 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                     errorThisFieldRequired: language.requiredText,
                     nextFocus: userNameFocus,
                     enabled: !isLoginTypeApple,
-                    decoration: inputDecoration(context, labelText: language.hintLastNameTxt),
-                    suffix: ic_profile2.iconImage(size: 10).paddingAll(14),
+                    decoration: inputDecoration(
+                      context,
+                      fillColor: Colors.transparent,
+                      borderRadius: 8,
+                      hintText: language.hintLastNameTxt,
+                    ),
+                    //suffix: ic_profile2.iconImage(size: 10).paddingAll(14),
                   ),
                   16.height,
+                  Text(language.lblUserName, style: boldTextStyle(size: 14)),
+                  8.height,
                   AppTextField(
                     textFieldType: TextFieldType.NAME,
                     controller: userNameCont,
@@ -453,49 +606,67 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                     enabled: false,
                     errorThisFieldRequired: language.requiredText,
                     nextFocus: emailFocus,
-                    decoration: inputDecoration(context, labelText: language.hintUserNameTxt),
-                    suffix: ic_profile2.iconImage(size: 10).paddingAll(14),
+                    decoration: inputDecoration(
+                      context,
+                      fillColor: Colors.transparent,
+                      borderRadius: 8,
+                      //hintText: language.hintUserNameTxt,
+                    ),
+                    //suffix: ic_profile2.iconImage(size: 10).paddingAll(14),
                   ),
                   16.height,
+                  Text(language.lblEmail, style: boldTextStyle(size: 14)),
+                  8.height,
                   AppTextField(
                     textFieldType: TextFieldType.EMAIL_ENHANCED,
                     controller: emailCont,
                     focus: emailFocus,
                     nextFocus: mobileFocus,
                     errorThisFieldRequired: language.requiredText,
-                    decoration: inputDecoration(context, labelText: language.hintEmailTxt),
-                    suffix: ic_message.iconImage(size: 10).paddingAll(14),
+                    decoration: inputDecoration(
+                      context,
+                      fillColor: Colors.transparent,
+                      borderRadius: 8,
+                      hintText: language.hintEmailTxt,
+                    ),
+                    //suffix: ic_message.iconImage(size: 10).paddingAll(14),
                     autoFillHints: [AutofillHints.email],
                     onFieldSubmitted: (email) async {
                       if (emailCont.text.isNotEmpty) await verifyEmail();
                     },
                   ),
-                  Align(
-                    alignment: AlignmentDirectional.centerEnd,
-                    child: Wrap(
-                      spacing: 4,
-                      crossAxisAlignment: WrapCrossAlignment.center,
-                      children: [
-                        Text(
-                          isEmailVerified ? language.verified : language.verifyEmail,
-                          style: isEmailVerified ? secondaryTextStyle(color: Colors.green) : secondaryTextStyle(),
-                        ),
-                        if (!isEmailVerified && !showRefresh)
-                          ic_pending.iconImage(color: Colors.amber, size: 14)
-                        else
-                          Icon(
-                            isEmailVerified ? Icons.check_circle : Icons.refresh,
-                            color: isEmailVerified ? Colors.green : Colors.grey,
-                            size: 16,
-                          )
-                      ],
-                    ).paddingSymmetric(horizontal: 6, vertical: 2).onTap(
-                      () {
-                        verifyEmail();
-                      },
-                      borderRadius: radius(),
-                    ),
-                  ).paddingSymmetric(vertical: 4),
+                  // Align(
+                  //   alignment: AlignmentDirectional.centerEnd,
+                  //   child: Wrap(
+                  //     spacing: 4,
+                  //     crossAxisAlignment: WrapCrossAlignment.center,
+                  //     children: [
+                  //       Text(
+                  //         isEmailVerified
+                  //             ? language.verified
+                  //             : language.verifyEmail,
+                  //         style: isEmailVerified
+                  //             ? secondaryTextStyle(color: Colors.green)
+                  //             : secondaryTextStyle(),
+                  //       ),
+                  //       if (!isEmailVerified && !showRefresh)
+                  //         ic_pending.iconImage(color: Colors.amber, size: 14)
+                  //       else
+                  //         Icon(
+                  //           isEmailVerified
+                  //               ? Icons.check_circle
+                  //               : Icons.refresh,
+                  //           color: isEmailVerified ? Colors.green : Colors.grey,
+                  //           size: 16,
+                  //         )
+                  //     ],
+                  //   ).paddingSymmetric(horizontal: 6, vertical: 2).onTap(
+                  //     () {
+                  //       verifyEmail();
+                  //     },
+                  //     borderRadius: radius(),
+                  //   ),
+                  // ).paddingSymmetric(vertical: 4),
                   10.height,
                   // AppTextField(
                   //   textFieldType: isAndroid ? TextFieldType.PHONE : TextFieldType.NAME,
@@ -519,138 +690,110 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                   //   },
                   // ),
 
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      // Country code ...
-                      Container(
-                        height: 48.0,
-                        margin: EdgeInsets.only(bottom: context.height() * 0.032),
-                        decoration: BoxDecoration(
-                          color: context.cardColor,
-                          borderRadius: BorderRadius.circular(12.0),
-                        ),
-                        child: Center(
-                          child: ValueListenableBuilder(
-                            valueListenable: valueNotifier,
-                            builder: (context, value, child) => Row(
-                              children: [
-                                Text(
-                                  "+${selectedCountryCode.phoneCode}",
-                                  style: primaryTextStyle(size: 12),
+                  Text(language.lblMobileNumber,
+                      style: boldTextStyle(size: 14)),
+                  8.height,
+                  // Mobile number text field...
+                  AppTextField(
+                    textFieldType:
+                        isAndroid ? TextFieldType.PHONE : TextFieldType.NAME,
+                    controller: mobileCont,
+                    focus: mobileFocus,
+                    enabled: !isLoginTypeOTP,
+                    errorThisFieldRequired: language.requiredText,
+                    decoration: inputDecoration(context,
+                        fillColor: Colors.transparent,
+                        hintText: "${language.hintPhoneNumberTxt}",
+                        counter: false,
+                        borderRadius: 8,
+                        prefixIcon: ValueListenableBuilder<Country>(
+                          valueListenable: countryNotifier,
+                          builder: (context, country, child) {
+                            return GestureDetector(
+                              onTap: () => changeCountry(),
+                              child: Container(
+                                padding: EdgeInsets.symmetric(horizontal: 8),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text(
+                                      country.flagEmoji,
+                                      style: TextStyle(fontSize: 18),
+                                    ),
+                                    6.width,
+                                    Text(
+                                      "+${country.phoneCode}",
+                                      style: primaryTextStyle(size: 14),
+                                    ),
+                                    4.width,
+                                    Icon(
+                                      Icons.arrow_drop_down,
+                                      size: 18,
+                                      color: context.iconColor,
+                                    ),
+                                  ],
                                 ),
-                                const Icon(Icons.arrow_drop_down)
-                              ],
-                            ).paddingOnly(left: 8),
-                          ),
-                        ),
-                      ).onTap(() => changeCountry()),
-                      10.width,
-                      // Mobile number text field...
-                      Expanded(
-                        child: AppTextField(
-                          textFieldType: isAndroid ? TextFieldType.PHONE : TextFieldType.NAME,
-                          controller: mobileCont,
-                          focus: mobileFocus,
-                          enabled: !isLoginTypeOTP,
-                          isValidationRequired: false,
-                          errorThisFieldRequired: language.requiredText,
-                          decoration: inputDecoration(context, hintText: '${language.hintContactNumberTxt}').copyWith(
-                            // hintText: '${selectedCountry.example}',
-                            hintStyle: secondaryTextStyle(),
-                          ),
-                          maxLength: 15,
-                          suffix: ic_calling.iconImage(size: 10).paddingAll(14),
-                        ),
-                      ),
-                    ],
-                  ),
-                  16.height,
-                  Row(
-                    children: [
-                      DropdownButtonFormField<CountryListResponse>(
-                        decoration: inputDecoration(context, labelText: language.selectCountry),
-                        isExpanded: true,
-                        initialValue: selectedCountry,
-                        dropdownColor: context.cardColor,
-                        items: countryList.map((CountryListResponse e) {
-                          return DropdownMenuItem<CountryListResponse>(
-                            value: e,
-                            child: Text(
-                              e.name!,
-                              style: primaryTextStyle(),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          );
-                        }).toList(),
-                        onChanged: (CountryListResponse? value) async {
-                          hideKeyboard(context);
-                          countryId = value!.id!;
-                          selectedCountry = value;
-                          selectedState = null;
-                          selectedCity = null;
-                          getStates(value.id!);
-
-                          setState(() {});
-                        },
-                      ).expand(),
-                      8.width.visible(stateList.isNotEmpty),
-                      if (stateList.isNotEmpty)
-                        DropdownButtonFormField<StateListResponse>(
-                          decoration: inputDecoration(context, labelText: language.selectState),
-                          isExpanded: true,
-                          dropdownColor: context.cardColor,
-                          initialValue: selectedState,
-                          items: stateList.map((StateListResponse e) {
-                            return DropdownMenuItem<StateListResponse>(
-                              value: e,
-                              child: Text(
-                                e.name!,
-                                style: primaryTextStyle(),
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
                               ),
                             );
-                          }).toList(),
-                          onChanged: (StateListResponse? value) async {
-                            hideKeyboard(context);
-                            selectedCity = null;
-                            selectedState = value;
-                            stateId = value!.id!;
-                            await getCity(value.id!);
-                            setState(() {});
                           },
-                        ).expand(),
-                    ],
+                        )),
+                    maxLength: 15,
+                    // suffix: ic_calling
+                    //     .iconImage(size: 10, color: context.iconColor)
+                    //     .paddingAll(14),
                   ),
                   16.height,
-                  if (cityList.isNotEmpty)
-                    DropdownButtonFormField<CityListResponse>(
-                      decoration: inputDecoration(context, labelText: language.selectCity),
-                      isExpanded: true,
-                      initialValue: selectedCity,
-                      dropdownColor: context.cardColor,
-                      items: cityList.map((CityListResponse e) {
-                        return DropdownMenuItem<CityListResponse>(
-                          value: e,
-                          child: Text(e.name!, style: primaryTextStyle(), maxLines: 1, overflow: TextOverflow.ellipsis),
-                        );
-                      }).toList(),
-                      onChanged: (CityListResponse? value) async {
-                        hideKeyboard(context);
-                        selectedCity = value;
-                        cityId = value!.id!;
-                        setState(() {});
-                      },
-                    ),
+                  Text(language.lblCountry, style: boldTextStyle(size: 14)),
+                  8.height,
+                  AppTextField(
+                    textFieldType: TextFieldType.NAME,
+                    controller: countryCont,
+                    focus: countryFocus,
+                    errorThisFieldRequired: language.requiredText,
+                    nextFocus: stateFocus,
+                    decoration: inputDecoration(context,
+                        fillColor: Colors.transparent,
+                        hintText: language.lblCountry,
+                        borderRadius: 8),
+                  ),
                   16.height,
+                  Text(language.lblState, style: boldTextStyle(size: 14)),
+                  8.height,
+                  AppTextField(
+                    textFieldType: TextFieldType.NAME,
+                    controller: stateCont,
+                    focus: stateFocus,
+                    errorThisFieldRequired: language.requiredText,
+                    nextFocus: cityFocus,
+                    decoration: inputDecoration(context,
+                        fillColor: Colors.transparent,
+                        hintText: language.lblState,
+                        borderRadius: 8),
+                  ),
+                  16.height,
+                  Text(language.lblCity, style: boldTextStyle(size: 14)),
+                  8.height,
+                  AppTextField(
+                    textFieldType: TextFieldType.NAME,
+                    controller: cityCont,
+                    focus: cityFocus,
+                    errorThisFieldRequired: language.requiredText,
+                    decoration: inputDecoration(context,
+                        fillColor: Colors.transparent,
+                        hintText: language.lblCity,
+                        borderRadius: 8),
+                  ),
+                  16.height,
+                  Text(language.lblApartment, style: boldTextStyle(size: 14)),
+                  8.height,
                   AppTextField(
                     controller: addressCont,
                     textFieldType: TextFieldType.MULTILINE,
-                    maxLines: 5,
-                    decoration: inputDecoration(context, labelText: language.hintAddress),
-                    suffix: ic_location.iconImage(size: 10).paddingAll(14),
+                    maxLines: 3,
+                    decoration: inputDecoration(context,
+                        fillColor: Colors.transparent,
+                        hintText: language.hintApartment,
+                        borderRadius: 8),
                     isValidationRequired: false,
                   ),
                   40.height,

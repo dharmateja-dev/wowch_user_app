@@ -378,7 +378,7 @@ class _SignInScreenState extends State<SignInScreen> {
             color: context.scaffoldBackgroundColor,
             border: Border.all(color: grey300Color, width: 2.0),
           ),
-          child: Icon(Icons.apple, size: 30, color: context.iconColor),
+          child: Icon(Icons.apple, size: 20, color: context.iconColor),
         ),
       ),
     );

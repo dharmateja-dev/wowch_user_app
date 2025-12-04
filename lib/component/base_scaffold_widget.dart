@@ -13,6 +13,7 @@ class AppScaffold extends StatelessWidget {
   final Widget? bottomNavigationBar;
   final Observable<bool>? isLoading;
   final bool showLoader;
+  final Widget? leading;
 
   AppScaffold({
     this.appBarTitle,
@@ -22,6 +23,7 @@ class AppScaffold extends StatelessWidget {
     this.bottomNavigationBar,
     this.showLoader = true,
     this.isLoading,
+    this.leading,
   });
 
   @override
@@ -30,13 +32,16 @@ class AppScaffold extends StatelessWidget {
     return Scaffold(
       appBar: appBarTitle != null
           ? AppBar(
+              centerTitle: true,
               title: Text(
                 appBarTitle.validate(),
-                style: boldTextStyle(color: Colors.white, size: APP_BAR_TEXT_SIZE),
+                style: boldTextStyle(
+                    size: APP_BAR_TEXT_SIZE,
+                    color: context.scaffoldBackgroundColor),
               ),
               elevation: 0.0,
               backgroundColor: context.primaryColor,
-              leading: context.canPop ? BackWidget() : null,
+              leading: leading ?? (context.canPop ? BackWidget() : null),
               actions: actions,
             )
           : null,

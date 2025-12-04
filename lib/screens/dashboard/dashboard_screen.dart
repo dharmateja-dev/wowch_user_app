@@ -105,13 +105,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }*/
 
   void init() async {
-    // Load dashboard data immediately if cached data is available
-    // This ensures dashboard shows data right away
-    if (cachedDashboardResponse != null) {
-      // Trigger dashboard update to show cached data
-      LiveStream().emit(LIVESTREAM_UPDATE_DASHBOARD, true);
-    }
-
     await 3.seconds.delay;
     if (getIntAsync(FORCE_UPDATE_USER_APP).getBoolInt()) {
       showForceUpdateDialog(context);

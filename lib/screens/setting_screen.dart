@@ -120,23 +120,26 @@ class _SettingScreenState extends State<SettingScreen> {
               titleTextStyle: primaryTextStyle(),
               trailing: Transform.scale(
                 scale: 0.7,
-                child: Observer(builder: (context) {
-                  return Switch.adaptive(
-                    value: FirebaseAuth.instance.currentUser != null && appStore.isSubscribedForPushNotification,
-                    onChanged: (v) async {
-                      if (appStore.isLoading) return;
-                      appStore.setLoading(true);
+                child: Observer(
+                  builder: (context) {
+                    return Switch.adaptive(
+                      value: FirebaseAuth.instance.currentUser != null &&
+                          appStore.isSubscribedForPushNotification,
+                      onChanged: (v) async {
+                        if (appStore.isLoading) return;
+                        appStore.setLoading(true);
 
-                      if (v) {
-                        await subscribeToFirebaseTopic();
-                      } else {
-                        await unsubscribeFirebaseTopic(appStore.userId);
-                      }
-                      appStore.setLoading(false);
-                      setState(() {});
-                    },
-                  ).withHeight(18);
-                },),
+                        if (v) {
+                          await subscribeToFirebaseTopic();
+                        } else {
+                          await unsubscribeFirebaseTopic(appStore.userId);
+                        }
+                        appStore.setLoading(false);
+                        setState(() {});
+                      },
+                    ).withHeight(18);
+                  },
+                ),
               ),
             ),
           SnapHelperWidget<bool>(

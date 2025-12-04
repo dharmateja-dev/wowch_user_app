@@ -22,6 +22,8 @@ abstract class BaseLanguage {
 
   String get hintContactNumberTxt;
 
+  String get hintPhoneNumberTxt;
+
   String get hintEmailAddressTxt;
 
   String get hintUserNameTxt;
@@ -45,6 +47,10 @@ abstract class BaseLanguage {
   String get lblUserName;
 
   String get lblContactNumber;
+
+  String get lblMobileNumber;
+
+  String get lblApartment;
 
   String get forgotPassword;
 
@@ -88,6 +94,12 @@ abstract class BaseLanguage {
 
   String get selectCity;
 
+  String get lblCountry;
+
+  String get lblState;
+
+  String get lblCity;
+
   String get passwordNotMatch;
 
   String get doNotHaveAccount;
@@ -97,6 +109,8 @@ abstract class BaseLanguage {
   String get hintNewPasswordTxt;
 
   String get hintAddress;
+
+  String get hintApartment;
 
   String get hintDescription;
 
