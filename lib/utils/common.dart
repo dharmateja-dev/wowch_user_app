@@ -600,8 +600,8 @@ void doIfLoggedIn(BuildContext context, VoidCallback callback) {
   }
 }
 
-Widget get trailing {
-  return ic_arrow_right.iconImage(size: 16);
+Widget trailing(BuildContext context) {
+  return ic_arrow_right.iconImage(color: context.iconColor, size: 16);
 }
 
 void showNewUpdateDialog(BuildContext context,

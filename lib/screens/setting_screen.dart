@@ -31,10 +31,11 @@ class _SettingScreenState extends State<SettingScreen> {
         children: [
           if (isLoginTypeUser)
             SettingItemWidget(
-              leading: ic_lock.iconImage(size: SETTING_ICON_SIZE),
+              leading: ic_lock.iconImage(
+                  size: SETTING_ICON_SIZE, color: context.iconColor),
               title: language.changePassword,
-              trailing: trailing,
-              titleTextStyle: primaryTextStyle(),
+              trailing: trailing(context),
+              titleTextStyle: boldTextStyle(),
               onTap: () {
                 doIfLoggedIn(context, () {
                   ChangePasswordScreen().launch(context);
@@ -42,10 +43,12 @@ class _SettingScreenState extends State<SettingScreen> {
               },
             ),
           SettingItemWidget(
-            leading: ic_language.iconImage(size: 17).paddingOnly(left: 2),
+            leading: ic_language
+                .iconImage(size: 17, color: context.iconColor)
+                .paddingOnly(left: 2),
             title: language.language,
-            trailing: trailing,
-            titleTextStyle: primaryTextStyle(),
+            trailing: trailing(context),
+            titleTextStyle: boldTextStyle(),
             onTap: () {
               LanguagesScreen().launch(context).then((value) {
                 setState(() {});
@@ -53,11 +56,11 @@ class _SettingScreenState extends State<SettingScreen> {
             },
           ),
           SettingItemWidget(
-            leading: ic_dark_mode.iconImage(size: 22),
+            leading: ic_dark_mode.iconImage(size: 22, color: context.iconColor),
             title: language.appTheme,
             paddingAfterLeading: 12,
-            trailing: trailing,
-            titleTextStyle: primaryTextStyle(),
+            trailing: trailing(context),
+            titleTextStyle: boldTextStyle(),
             onTap: () async {
               await showInDialog(
                 context,
@@ -67,11 +70,12 @@ class _SettingScreenState extends State<SettingScreen> {
             },
           ),
           SettingItemWidget(
-            leading: ic_slider_status.iconImage(size: SETTING_ICON_SIZE),
+            leading: ic_slider_status.iconImage(
+                size: SETTING_ICON_SIZE, color: context.iconColor),
             title: language.lblAutoSliderStatus,
-            titleTextStyle: primaryTextStyle(),
+            titleTextStyle: boldTextStyle(),
             trailing: Transform.scale(
-              scale: 0.7,
+              scale: 0.8,
               child: Switch.adaptive(
                 value: getBoolAsync(AUTO_SLIDER_STATUS, defaultValue: true),
                 onChanged: (v) {
@@ -82,11 +86,12 @@ class _SettingScreenState extends State<SettingScreen> {
             ),
           ),
           SettingItemWidget(
-            leading: ic_check_update.iconImage(size: SETTING_ICON_SIZE),
+            leading: ic_check_update.iconImage(
+                size: SETTING_ICON_SIZE, color: context.iconColor),
             title: language.lblOptionalUpdateNotify,
-            titleTextStyle: primaryTextStyle(),
+            titleTextStyle: boldTextStyle(),
             trailing: Transform.scale(
-              scale: 0.7,
+              scale: 0.8,
               child: Switch.adaptive(
                 value: getBoolAsync(UPDATE_NOTIFY, defaultValue: true),
                 onChanged: (v) {
@@ -101,7 +106,7 @@ class _SettingScreenState extends State<SettingScreen> {
           //   title: 'Auto Update',
           //   titleTextStyle: boldTextStyle(size: 12),
           //   trailing: Transform.scale(
-          //     scale: 0.7,
+          //     scale: 0.8,
           //     child: Switch.adaptive(
           //       value: getBoolAsync(AUTO_UPDATE, defaultValue: false),
           //       onChanged: getIntAsync(FORCE_UPDATE_USER_APP).getBoolInt()
@@ -115,11 +120,12 @@ class _SettingScreenState extends State<SettingScreen> {
           // ),
           if (appStore.isLoggedIn)
             SettingItemWidget(
-              leading: ic_notification.iconImage(size: SETTING_ICON_SIZE),
+              leading: ic_notification.iconImage(
+                  size: SETTING_ICON_SIZE, color: context.iconColor),
               title: language.pushNotification,
-              titleTextStyle: primaryTextStyle(),
+              titleTextStyle: boldTextStyle(),
               trailing: Transform.scale(
-                scale: 0.7,
+                scale: 0.8,
                 child: Observer(
                   builder: (context) {
                     return Switch.adaptive(
@@ -142,39 +148,40 @@ class _SettingScreenState extends State<SettingScreen> {
                 ),
               ),
             ),
-          SnapHelperWidget<bool>(
-            future: isAndroid12Above(),
-            onSuccess: (data) {
-              if (data) {
-                return SettingItemWidget(
-                  leading: ic_android_12.iconImage(size: SETTING_ICON_SIZE),
-                  title: language.lblMaterialTheme,
-                  titleTextStyle: primaryTextStyle(),
-                  trailing: Transform.scale(
-                    scale: 0.7,
-                    child: Switch.adaptive(
-                      value: appStore.useMaterialYouTheme,
-                      onChanged: (v) {
-                        showConfirmDialogCustom(
-                          context,
-                          onAccept: (_) {
-                            appStore.setUseMaterialYouTheme(v.validate());
+          // SnapHelperWidget<bool>(
+          //   future: isAndroid12Above(),
+          //   onSuccess: (data) {
+          //     if (data) {
+          //       return SettingItemWidget(
+          //         leading: ic_android_12.iconImage(
+          //             size: SETTING_ICON_SIZE, color: context.iconColor),
+          //         title: language.lblMaterialTheme,
+          //         titleTextStyle: boldTextStyle(),
+          //         trailing: Transform.scale(
+          //           scale: 0.8,
+          //           child: Switch.adaptive(
+          //             value: appStore.useMaterialYouTheme,
+          //             onChanged: (v) {
+          //               showConfirmDialogCustom(
+          //                 context,
+          //                 onAccept: (_) {
+          //                   appStore.setUseMaterialYouTheme(v.validate());
 
-                            RestartAppWidget.init(context);
-                          },
-                          title: language.lblAndroid12Support,
-                          primaryColor: context.primaryColor,
-                          positiveText: language.lblYes,
-                          negativeText: language.lblCancel,
-                        );
-                      },
-                    ).withHeight(18),
-                  ),
-                );
-              }
-              return const Offstage();
-            },
-          ),
+          //                   RestartAppWidget.init(context);
+          //                 },
+          //                 title: language.lblAndroid12Support,
+          //                 primaryColor: context.primaryColor,
+          //                 positiveText: language.lblYes,
+          //                 negativeText: language.lblCancel,
+          //               );
+          //             },
+          //           ).withHeight(18),
+          //         ),
+          //       );
+          //     }
+          //     return const Offstage();
+          //   },
+          // ),
         ],
       ),
     );
