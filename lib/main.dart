@@ -13,6 +13,7 @@ import 'package:booking_system_flutter/model/service_detail_response.dart';
 import 'package:booking_system_flutter/model/user_data_model.dart';
 import 'package:booking_system_flutter/model/user_wallet_history.dart';
 import 'package:booking_system_flutter/network/rest_apis.dart';
+import 'package:booking_system_flutter/screens/about_screen.dart';
 import 'package:booking_system_flutter/screens/auth/change_password_screen.dart';
 import 'package:booking_system_flutter/screens/auth/edit_profile_screen.dart';
 import 'package:booking_system_flutter/screens/auth/sign_in_screen.dart';
@@ -178,7 +179,7 @@ class _MyAppState extends State<MyApp> {
               builder: (_) => MaterialApp(
                 debugShowCheckedModeBanner: false,
                 navigatorKey: navigatorKey,
-                home: SettingScreen(),
+                home: AboutScreen(),
                 theme: AppTheme.lightTheme(color: snap.data),
                 darkTheme: AppTheme.darkTheme(color: snap.data),
                 themeMode:
