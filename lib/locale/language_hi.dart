@@ -461,6 +461,9 @@ class LanguageHi extends BaseLanguage {
   String get lblDeleteReview => "समीक्षा हटाएं";
 
   @override
+  String get lblClearReviewConfirmation => "क्या आप वाकई इस समीक्षा को साफ करना चाहते हैं?";
+
+  @override
   String get lblConfirmReviewSubTitle => 'क्या आप यह समीक्षा हटाना चाहते हैं?';
 
   @override
@@ -619,6 +622,9 @@ class LanguageHi extends BaseLanguage {
   String get lblLogoutSubTitle => "क्या आप लॉगआउट करना चाहते हैं?";
 
   @override
+  String get lblLogoutConfirmation => "क्या आप वाकई लॉगआउट करना चाहते हैं?";
+
+  @override
   String get lblFeaturedProduct => "यह चित्रित उत्पाद है";
 
   @override
@@ -704,6 +710,9 @@ class LanguageHi extends BaseLanguage {
 
   @override
   String get lblDeleteAccount => "खाता हटा दो";
+
+  @override
+  String get lblDeleteAccountQuestion => "खाता हटाएं?";
 
   @override
   String get lblUnderMaintenance => "रखरखाव जारी...";

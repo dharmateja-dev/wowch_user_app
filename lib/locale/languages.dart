@@ -314,6 +314,8 @@ abstract class BaseLanguage {
 
   String get lblDeleteReview;
 
+  String get lblClearReviewConfirmation;
+
   String get lblConfirmReviewSubTitle;
 
   String get lblConfirmService;
@@ -418,6 +420,8 @@ abstract class BaseLanguage {
 
   String get lblLogoutSubTitle;
 
+  String get lblLogoutConfirmation;
+
   String get lblFeaturedProduct;
 
   String get lblAlert;
@@ -473,6 +477,8 @@ abstract class BaseLanguage {
   String get lblDangerZone;
 
   String get lblDeleteAccount;
+
+  String get lblDeleteAccountQuestion;
 
   String get lblUnderMaintenance;
 

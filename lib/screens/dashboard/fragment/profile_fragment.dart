@@ -25,7 +25,6 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../utils/app_configuration.dart';
-import '../../bankDetails/view/bank_details.dart';
 import '../../favourite_provider_screen.dart';
 import '../../helpDesk/help_desk_list_screen.dart';
 import '../component/wallet_history.dart';
@@ -602,8 +601,17 @@ class ProfileFragmentState extends State<ProfileFragment> {
                         onTap: () {
                           showConfirmDialogCustom(
                             context,
+                            height: 80,
+                            width: 290,
+                            shape: dialogShape(16),
+                            title: language.lblDeleteAccountQuestion,
+                            subTitle: language.lblDeleteAccountConformation,
                             negativeText: language.lblCancel,
                             positiveText: language.lblDelete,
+                            primaryColor: context.primaryColor,
+                            negativeTextColor: context.primaryColor,
+                            customCenterWidget: Image.asset(ic_warning,
+                                height: 70, width: 70, fit: BoxFit.cover),
                             onAccept: (_) {
                               ifNotTester(() {
                                 appStore.setLoading(true);
@@ -632,22 +640,21 @@ class ProfileFragmentState extends State<ProfileFragment> {
                                 });
                               });
                             },
-                            dialogType: DialogType.DELETE,
-                            title: language.lblDeleteAccountConformation,
+                            dialogType: DialogType.CONFIRMATION,
                           );
                         },
                         //un commment visible after delete account feature is enabled
                       ), //.visible(appStore.isLoggedIn),
-                      32.height,
+                      80.height,
                       //toggle after logout feature is enabled
                       if (!appStore.isLoggedIn)
-                        TextButton(
+                        GestureDetector(
+                          onTap: () {
+                            logout(context);
+                          },
                           child: Text(language.logout,
                               style:
                                   boldTextStyle(color: primaryColor, size: 16)),
-                          onPressed: () {
-                            logout(context);
-                          },
                         ).center(),
                       //32.height,
                       // SnapHelperWidget<PackageInfoData>(

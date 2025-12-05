@@ -469,6 +469,9 @@ class LanguageAr extends BaseLanguage {
   String get lblDeleteReview => "حذف التقييم";
 
   @override
+  String get lblClearReviewConfirmation => "هل أنت متأكد أنك تريد مسح هذا التقييم؟";
+
+  @override
   String get lblConfirmReviewSubTitle => 'هل تريد حذف هذه المراجعة؟';
 
   @override
@@ -624,6 +627,9 @@ class LanguageAr extends BaseLanguage {
   String get lblLogoutSubTitle => "هل ترغب بالخروج؟";
 
   @override
+  String get lblLogoutConfirmation => "هل أنت متأكد أنك تريد تسجيل الخروج؟";
+
+  @override
   String get lblFeaturedProduct => "هذا المنتج مميز";
 
   @override
@@ -706,6 +712,9 @@ class LanguageAr extends BaseLanguage {
 
   @override
   String get lblDeleteAccount => "حذف الحساب";
+
+  @override
+  String get lblDeleteAccountQuestion => "حذف الحساب؟";
 
   @override
   String get lblUnderMaintenance => "تحت الصيانة...";

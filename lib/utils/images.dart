@@ -36,6 +36,7 @@ const ic_verified = 'assets/icons/ic_verified.png';
 const ic_location = 'assets/icons/ic_location.png';
 const ic_calling = 'assets/icons/ic_calling.png';
 const ic_message = 'assets/icons/ic_message.png';
+const ic_warning = 'assets/icons/ic_warning.png';
 const ic_confirm_check = 'assets/icons/ic_confirm_check.png';
 const ic_profile2 = 'assets/icons/ic_profile2.png';
 const ic_calendar = 'assets/icons/ic_calendar.png';

@@ -69,6 +69,7 @@ class Assets {
   static const String iconsIcLocation = 'assets/icons/ic_location.png';
   static const String iconsIcLock = 'assets/icons/ic_lock.png';
   static const String iconsIcMessage = 'assets/icons/ic_message.png';
+  static const String iconsIcWarning = 'assets/icons/ic_warning.png';
   static const String iconsIcMyReview = 'assets/icons/ic_my_review.png';
   static const String iconsIcNoPhoto = 'assets/icons/ic_no_photo.png';
   static const String iconsIcNotification = 'assets/icons/ic_notification.png';

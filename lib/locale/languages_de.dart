@@ -480,6 +480,9 @@ class LanguageDe extends BaseLanguage {
   String get lblDeleteReview => "Überprüfung löschen";
 
   @override
+  String get lblClearReviewConfirmation => "Sind Sie sicher, dass Sie diese Bewertung löschen möchten?";
+
+  @override
   String get lblConfirmReviewSubTitle => 'Möchten Sie diese Bewertung löschen?';
 
   @override
@@ -636,6 +639,9 @@ class LanguageDe extends BaseLanguage {
   String get lblLogoutSubTitle => "Möchten Sie sich abmelden?";
 
   @override
+  String get lblLogoutConfirmation => "Sind Sie sicher, dass Sie sich abmelden möchten?";
+
+  @override
   String get lblFeaturedProduct => "Dies ist ein Produkt";
 
   @override
@@ -722,6 +728,9 @@ class LanguageDe extends BaseLanguage {
 
   @override
   String get lblDeleteAccount => "Konto löschen";
+
+  @override
+  String get lblDeleteAccountQuestion => "Konto löschen?";
 
   @override
   String get lblUnderMaintenance => "Wird gewartet...";

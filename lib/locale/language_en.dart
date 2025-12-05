@@ -475,6 +475,10 @@ class LanguageEn extends BaseLanguage {
   String get lblDeleteReview => "Delete Review";
 
   @override
+  String get lblClearReviewConfirmation =>
+      "Are you sure you want to clear this review?";
+
+  @override
   String get lblConfirmReviewSubTitle => "Do you want to delete this review?";
 
   @override
@@ -633,6 +637,9 @@ class LanguageEn extends BaseLanguage {
   String get lblLogoutSubTitle => "Do you want to logout?";
 
   @override
+  String get lblLogoutConfirmation => "Are you sure you want to logout?";
+
+  @override
   String get lblFeaturedProduct => "This is Featured Product";
 
   @override
@@ -720,6 +727,9 @@ class LanguageEn extends BaseLanguage {
   String get lblDeleteAccount => "Delete Account";
 
   @override
+  String get lblDeleteAccountQuestion => "Delete Account?";
+
+  @override
   String get lblUnderMaintenance => "Under Maintenance...";
 
   @override
@@ -742,7 +752,7 @@ class LanguageEn extends BaseLanguage {
 
   @override
   String get lblDeleteAccountConformation =>
-      "Your account will be deleted permanently. Your Data will not be Restored Again.";
+      "Are you sure you want to delete your account?";
 
   @override
   String get lblAutoSliderStatus => "Auto Slider Status";

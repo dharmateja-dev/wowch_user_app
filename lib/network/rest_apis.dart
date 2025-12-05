@@ -190,71 +190,44 @@ Future<void> clearPreferences() async {
 }
 
 Future<void> logout(BuildContext context) async {
-  return showInDialog(
+  showConfirmDialogCustom(
     context,
-    contentPadding: EdgeInsets.zero,
-    builder: (p0) {
-      return Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Image.asset(logout_image, width: context.width(), fit: BoxFit.cover),
-          32.height,
-          Text(language.lblLogoutTitle, style: boldTextStyle(size: 18)),
-          16.height,
-          Text(language.lblLogoutSubTitle, style: secondaryTextStyle()),
-          28.height,
-          Row(
-            children: [
-              AppButton(
-                elevation: 0,
-                shapeBorder: RoundedRectangleBorder(
-                  borderRadius: radius(defaultAppButtonRadius),
-                  side: BorderSide(color: viewLineColor),
-                ),
-                child: Text(language.lblNo, style: boldTextStyle()),
-                onTap: () {
-                  finish(context);
-                },
-              ).expand(),
-              16.width,
-              AppButton(
-                child:
-                    Text(language.lblYes, style: boldTextStyle(color: white)),
-                color: primaryColor,
-                elevation: 0,
-                onTap: () async {
-                  finish(context);
+    height: 80,
+    width: 290,
+    shape: dialogShape(16),
+    title: language.logout,
+    subTitle: language.lblLogoutConfirmation,
+    negativeText: language.lblNo,
+    positiveText: language.lblYes,
+    primaryColor: context.primaryColor,
+    negativeTextColor: context.primaryColor,
+    customCenterWidget:
+        Image.asset(ic_warning, height: 70, width: 70, fit: BoxFit.cover),
+    onAccept: (_) async {
+      if (await isNetworkAvailable()) {
+        appStore.setLoading(true);
 
-                  if (await isNetworkAvailable()) {
-                    appStore.setLoading(true);
+        logoutApi().then((value) async {
+          //
+        }).catchError((e) {
+          log(e.toString());
+        });
 
-                    logoutApi().then((value) async {
-                      //
-                    }).catchError((e) {
-                      log(e.toString());
-                    });
+        await clearPreferences();
+        if (cachedWalletHistoryList != null &&
+            cachedWalletHistoryList!.isNotEmpty)
+          cachedWalletHistoryList!.clear();
 
-                    await clearPreferences();
-                    if (cachedWalletHistoryList != null &&
-                        cachedWalletHistoryList!.isNotEmpty)
-                      cachedWalletHistoryList!.clear();
-
-                    appStore.setLoading(false);
-                    //todo:
-                    toast("Your Account has logged out successfully");
-                    DashboardScreen().launch(context,
-                        isNewTask: true,
-                        pageRouteAnimation: PageRouteAnimation.Fade);
-                  } else {
-                    toast(errorInternetNotAvailable);
-                  }
-                },
-              ).expand(),
-            ],
-          ),
-        ],
-      ).paddingSymmetric(horizontal: 16, vertical: 24);
+        appStore.setLoading(false);
+        //todo:
+        toast("Your Account has logged out successfully");
+        DashboardScreen().launch(context,
+            isNewTask: true, pageRouteAnimation: PageRouteAnimation.Fade);
+      } else {
+        toast(errorInternetNotAvailable);
+      }
     },
+    dialogType: DialogType.CONFIRMATION,
   );
 }
 
