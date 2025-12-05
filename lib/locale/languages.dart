@@ -950,6 +950,8 @@ abstract class BaseLanguage {
 
   String get walletHistory;
 
+  String get lastTransaction;
+
   String get debit;
 
   String get credit;

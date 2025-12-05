@@ -1460,6 +1460,9 @@ class LanguageHi extends BaseLanguage {
   String get walletHistory => 'बटुए का इतिहास';
 
   @override
+  String get lastTransaction => 'अंतिम लेनदेन';
+
+  @override
   String get debit => 'खर्चे में लिखना';
 
   @override

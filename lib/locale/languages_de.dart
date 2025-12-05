@@ -1491,6 +1491,9 @@ class LanguageDe extends BaseLanguage {
   String get walletHistory => 'Brieftaschengeschichte';
 
   @override
+  String get lastTransaction => 'Letzte Transaktion';
+
+  @override
   String get debit => 'Lastschrift';
 
   @override

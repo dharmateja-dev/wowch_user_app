@@ -25,28 +25,39 @@ class _WalletCardState extends State<WalletCard> {
   Widget build(BuildContext context) {
     return Container(
       height: 130,
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       width: context.width(),
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: primaryColor),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10), color: primaryColor),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SizedBox(
-            height: 100,
+            height: 70,
             width: context.width(),
             child: Card(
               color: context.scaffoldBackgroundColor,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(language.availableBalance, style: secondaryTextStyle(size: 12)),
-                  FittedBox(
-                    child: PriceWidget(price: widget.availableBalance.validate(), size: 26, color: context.primaryColor, isBoldText: true),
-                  ),
-                ],
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(language.availableBalance, style: boldTextStyle()),
+                    FittedBox(
+                      child: PriceWidget(
+                          price: widget.availableBalance.validate(),
+                          size: 18,
+                          color: context.primaryColor,
+                          isBoldText: true),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
+          12.height,
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -62,12 +73,14 @@ class _WalletCardState extends State<WalletCard> {
                   width: 16,
                   color: white,
                 ),
-                textStyle: secondaryTextStyle(color: white),
+                textStyle: boldTextStyle(color: whiteColor),
                 text: language.withdraw,
               ),
               TextIcon(
                 onTap: () {
-                  UserWalletBalanceScreen(isBackScreen: true).launch(context).then(widget.callback!);
+                  UserWalletBalanceScreen(isBackScreen: true)
+                      .launch(context)
+                      .then(widget.callback!);
                 },
                 suffix: const CachedImageWidget(
                   url: ic_plus,
@@ -75,13 +88,13 @@ class _WalletCardState extends State<WalletCard> {
                   width: 16,
                   color: white,
                 ),
-                textStyle: secondaryTextStyle(color: white),
+                textStyle: boldTextStyle(color: whiteColor),
                 text: language.topUp,
               ),
             ],
           ),
         ],
       ),
-    ).paddingSymmetric(horizontal: 16);
+    );
   }
 }

@@ -1422,6 +1422,9 @@ class LanguageAr extends BaseLanguage {
   String get walletHistory => 'تاريخ المحفظة';
 
   @override
+  String get lastTransaction => 'آخر معاملة';
+
+  @override
   String get debit => 'دَين';
 
   @override

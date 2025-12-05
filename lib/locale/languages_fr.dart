@@ -1493,6 +1493,9 @@ class LanguageFr extends BaseLanguage {
   String get walletHistory => 'Histoire du portefeuille';
 
   @override
+  String get lastTransaction => 'Dernière transaction';
+
+  @override
   String get debit => 'Débit';
 
   @override

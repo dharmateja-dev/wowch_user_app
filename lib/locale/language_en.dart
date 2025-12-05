@@ -1475,6 +1475,9 @@ class LanguageEn extends BaseLanguage {
   String get walletHistory => 'Wallet History';
 
   @override
+  String get lastTransaction => 'Last Transactions';
+
+  @override
   String get debit => 'Debit';
 
   @override
