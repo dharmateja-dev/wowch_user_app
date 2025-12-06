@@ -120,7 +120,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> with TickerPr
                                   ? primaryColor
                                   : Colors.white),
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 10),
+                        padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 6),
                         child: Text(
                           value.name.validate(),
                           style: boldTextStyle(color: isSelected ? Colors.white : textPrimaryColorGlobal),
