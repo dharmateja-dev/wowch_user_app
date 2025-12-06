@@ -27,7 +27,9 @@ class _UserItemWidgetState extends State<UserItemWidget> {
 
           return InkWell(
             onTap: () {
-              UserChatScreen(receiverUser: data).launch(context, pageRouteAnimation: PageRouteAnimation.Fade, duration: 300.milliseconds);
+              UserChatScreen(receiverUser: data).launch(context,
+                  pageRouteAnimation: PageRouteAnimation.Fade,
+                  duration: 300.milliseconds);
             },
             child: Container(
               padding: const EdgeInsets.all(16),
@@ -38,12 +40,23 @@ class _UserItemWidgetState extends State<UserItemWidget> {
                       height: 40,
                       width: 40,
                       padding: const EdgeInsets.all(6),
-                      color: context.primaryColor.withValues(alpha:0.2),
-                      child: Text(data.displayName.validate()[0].validate().toUpperCase(), style: boldTextStyle(color: context.primaryColor)).center().fit(),
+                      color: context.primaryColor.withValues(alpha: 0.2),
+                      child: Text(
+                              data.displayName
+                                  .validate()[0]
+                                  .validate()
+                                  .toUpperCase(),
+                              style: boldTextStyle(color: context.primaryColor))
+                          .center()
+                          .fit(),
                     ).cornerRadiusWithClipRRect(50)
                   else
-                    CachedImageWidget(url: data.profileImage.validate(), height: 40, circle: true, fit: BoxFit.cover),
-                  16.width,
+                    CachedImageWidget(
+                        url: data.profileImage.validate(),
+                        height: 40,
+                        circle: true,
+                        fit: BoxFit.cover),
+                  8.width,
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -51,24 +64,30 @@ class _UserItemWidgetState extends State<UserItemWidget> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            data.firstName.validate() + " " + data.lastName.validate(),
+                            data.firstName.validate() +
+                                " " +
+                                data.lastName.validate(),
                             style: boldTextStyle(),
                             maxLines: 1,
                             textAlign: TextAlign.start,
                             overflow: TextOverflow.ellipsis,
                           ),
                           StreamBuilder<int>(
-                            stream: chatServices.getUnReadCount(senderId: appStore.uid.validate(), receiverId: data.uid.validate()),
+                            stream: chatServices.getUnReadCount(
+                                senderId: appStore.uid.validate(),
+                                receiverId: data.uid.validate()),
                             builder: (context, snap) {
                               if (snap.hasData) {
                                 if (snap.data != 0) {
                                   return Container(
                                     height: 18,
                                     width: 18,
-                                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(20), color: primaryColor),
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(20),
+                                        color: primaryColor),
                                     child: Text(
                                       snap.data.validate().toString(),
-                                      style: secondaryTextStyle(color: white),
+                                      style: primaryTextStyle(color: white),
                                       textAlign: TextAlign.center,
                                     ).center(),
                                   );
@@ -79,7 +98,10 @@ class _UserItemWidgetState extends State<UserItemWidget> {
                           ),
                         ],
                       ),
-                      LastMessageChat(stream: chatServices.fetchLastMessageBetween(senderId: appStore.uid.validate(), receiverId: widget.userUid)),
+                      LastMessageChat(
+                          stream: chatServices.fetchLastMessageBetween(
+                              senderId: appStore.uid.validate(),
+                              receiverId: widget.userUid)),
                     ],
                   ).expand()
                 ],

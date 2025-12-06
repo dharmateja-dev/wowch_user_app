@@ -12,24 +12,12 @@ import 'package:booking_system_flutter/model/service_data_model.dart';
 import 'package:booking_system_flutter/model/service_detail_response.dart';
 import 'package:booking_system_flutter/model/user_data_model.dart';
 import 'package:booking_system_flutter/model/user_wallet_history.dart';
-import 'package:booking_system_flutter/network/rest_apis.dart';
-import 'package:booking_system_flutter/screens/about_screen.dart';
-import 'package:booking_system_flutter/screens/auth/change_password_screen.dart';
-import 'package:booking_system_flutter/screens/auth/edit_profile_screen.dart';
-import 'package:booking_system_flutter/screens/auth/sign_in_screen.dart';
-import 'package:booking_system_flutter/screens/bankDetails/view/add_bank.dart';
 import 'package:booking_system_flutter/screens/blog/model/blog_detail_response.dart';
 import 'package:booking_system_flutter/screens/blog/model/blog_response_model.dart';
+import 'package:booking_system_flutter/screens/chat/chat_list_screen.dart';
+import 'package:booking_system_flutter/screens/chat/user_chat_screen.dart';
 import 'package:booking_system_flutter/screens/dashboard/component/wallet_history.dart';
-import 'package:booking_system_flutter/screens/dashboard/dashboard_screen.dart';
-import 'package:booking_system_flutter/screens/dashboard/fragment/dashboard_fragment.dart';
-import 'package:booking_system_flutter/screens/dashboard/fragment/profile_fragment.dart';
 import 'package:booking_system_flutter/screens/helpDesk/model/help_desk_response.dart';
-import 'package:booking_system_flutter/screens/language_screen.dart';
-import 'package:booking_system_flutter/screens/newDashboard/dashboard_1/dashboard_fragment_1.dart';
-import 'package:booking_system_flutter/screens/setting_screen.dart';
-import 'package:booking_system_flutter/screens/wallet/user_wallet_balance_screen.dart';
-import 'package:booking_system_flutter/screens/withdraw/wallet_request.dart';
 import 'package:booking_system_flutter/services/auth_services.dart';
 import 'package:booking_system_flutter/services/chat_services.dart';
 import 'package:booking_system_flutter/services/user_services.dart';
@@ -182,7 +170,15 @@ class _MyAppState extends State<MyApp> {
               builder: (_) => MaterialApp(
                 debugShowCheckedModeBanner: false,
                 navigatorKey: navigatorKey,
-                home: UserWalletHistoryScreen(),
+                home: UserChatScreen(
+                  receiverUser: UserData(
+                    uid: 'receiver_user_456',
+                    firstName: 'John',
+                    lastName: 'Doe',
+                    displayName: 'John Doe',
+                    email: 'john.doe@example.com',
+                  ),
+                ), // Dummy data for UI testing - replace with your actual home screen
                 theme: AppTheme.lightTheme(color: snap.data),
                 darkTheme: AppTheme.darkTheme(color: snap.data),
                 themeMode:

@@ -1177,7 +1177,7 @@ class LanguageEn extends BaseLanguage {
   String get published => 'Published';
 
   @override
-  String get clearChatMessage => 'Do you want to clear this chat?';
+  String get clearChatMessage => 'Are you sure you want to clear this chat?';
 
   @override
   String get deleteMessage => 'Do you want to delete?';
@@ -1265,7 +1265,7 @@ class LanguageEn extends BaseLanguage {
   String get paymentHistory => 'Payment History';
 
   @override
-  String get message => 'Message';
+  String get message => 'Type a Message';
 
   @override
   String get wallet => 'Wallet';

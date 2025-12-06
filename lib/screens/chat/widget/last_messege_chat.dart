@@ -21,14 +21,14 @@ class LastMessageChat extends StatelessWidget {
           "${message.message.validate()}",
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: secondaryTextStyle(size: 14),
+          style: primaryTextStyle(size: 14),
         );
       case IMAGE:
         return Row(
           children: [
             const Icon(Icons.photo_sharp, size: 16),
             6.width,
-            Text(language.lblImage, style: secondaryTextStyle(size: 16)),
+            Text(language.lblImage, style: primaryTextStyle(size: 16)),
           ],
         );
       case VIDEO:
@@ -36,7 +36,7 @@ class LastMessageChat extends StatelessWidget {
           children: [
             const Icon(Icons.videocam_outlined, size: 16),
             6.width,
-            Text(language.lblVideo, style: secondaryTextStyle(size: 16)),
+            Text(language.lblVideo, style: primaryTextStyle(size: 16)),
           ],
         );
       case AUDIO:
@@ -44,7 +44,7 @@ class LastMessageChat extends StatelessWidget {
           children: [
             const Icon(Icons.audiotrack, size: 16),
             6.width,
-            Text(language.lblAudio, style: secondaryTextStyle(size: 16)),
+            Text(language.lblAudio, style: primaryTextStyle(size: 16)),
           ],
         );
       default:
@@ -61,15 +61,19 @@ class LastMessageChat extends StatelessWidget {
           var docList = snapshot.data!.docs;
 
           if (docList.isNotEmpty) {
-            ChatMessageModel message = ChatMessageModel.fromJson(docList.last.data() as Map<String, dynamic>);
+            ChatMessageModel message = ChatMessageModel.fromJson(
+                docList.last.data() as Map<String, dynamic>);
             String time = '';
-            DateTime date = DateTime.fromMicrosecondsSinceEpoch(message.createdAt! * 1000);
+            DateTime date =
+                DateTime.fromMicrosecondsSinceEpoch(message.createdAt! * 1000);
             if (date.isToday) {
-              time = formatDate(message.createdAt.validate().toString(), isFromMicrosecondsSinceEpoch: true, isTime: true);
+              time = formatDate(message.createdAt.validate().toString(),
+                  isFromMicrosecondsSinceEpoch: true, isTime: true);
             } else if (date.isYesterday) {
               time = language.yesterday;
             } else {
-              time = formatDate(message.createdAt.validate().toString(), isFromMicrosecondsSinceEpoch: true);
+              time = formatDate(message.createdAt.validate().toString(),
+                  isFromMicrosecondsSinceEpoch: true);
             }
             message.isMe = message.senderId == appStore.uid;
 
@@ -78,12 +82,14 @@ class LastMessageChat extends StatelessWidget {
               children: [
                 message.isMe.validate()
                     ? !message.isMessageRead.validate()
-                        ? Icon(Icons.done, size: 12, color: textSecondaryColorGlobal)
-                        : Icon(Icons.done_all, size: 12, color: textSecondaryColorGlobal)
+                        ? Icon(Icons.done,
+                            size: 12, color: textSecondaryColorGlobal)
+                        : Icon(Icons.done_all,
+                            size: 12, color: textSecondaryColorGlobal)
                     : const Offstage(),
                 typeWidget(message).expand(),
                 16.width,
-                Text(time, style: secondaryTextStyle(size: 10)),
+                Text(time, style: primaryTextStyle(size: 10)),
               ],
             ).paddingTop(2);
           }

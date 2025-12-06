@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:booking_system_flutter/component/back_widget.dart';
 import 'package:booking_system_flutter/component/loader_widget.dart';
 import 'package:booking_system_flutter/main.dart';
 import 'package:booking_system_flutter/model/chat_message_model.dart';
@@ -10,7 +11,6 @@ import 'package:booking_system_flutter/services/notification_services.dart';
 import 'package:booking_system_flutter/utils/colors.dart';
 import 'package:booking_system_flutter/utils/common.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
-import 'package:booking_system_flutter/utils/string_extensions.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_pagination/firebase_pagination.dart';
@@ -21,12 +21,15 @@ import 'package:image_picker/image_picker.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../component/cached_image_widget.dart';
-import '../../component/empty_error_state_widget.dart';
 import '../../services/chat_services.dart';
 import '../../utils/configs.dart';
 import '../../utils/getImage.dart';
 import '../../utils/images.dart';
+import '../../utils/string_extensions.dart';
 import 'send_file_screen.dart';
+
+// Set this to true to show dummy data for UI testing
+const bool USE_DUMMY_DATA = true;
 
 class UserChatScreen extends StatefulWidget {
   final UserData receiverUser;
@@ -38,7 +41,8 @@ class UserChatScreen extends StatefulWidget {
   _UserChatScreenState createState() => _UserChatScreenState();
 }
 
-class _UserChatScreenState extends State<UserChatScreen> with WidgetsBindingObserver {
+class _UserChatScreenState extends State<UserChatScreen>
+    with WidgetsBindingObserver {
   TextEditingController messageCont = TextEditingController();
 
   FocusNode messageFocus = FocusNode();
@@ -51,6 +55,8 @@ class _UserChatScreenState extends State<UserChatScreen> with WidgetsBindingObse
 
   bool get isReceiverUserOnline => isReceiverOnline == 1;
 
+  List<ChatMessageModel> dummyMessages = [];
+
   @override
   void initState() {
     super.initState();
@@ -62,27 +68,50 @@ class _UserChatScreenState extends State<UserChatScreen> with WidgetsBindingObse
 
     //OneSignal.shared.disablePush(true);
 
+    if (USE_DUMMY_DATA) {
+      _generateDummyMessages();
+      appStore.setLoading(false);
+      setState(() {});
+      return;
+    }
+
     if (widget.receiverUser.uid.validate().isEmpty) {
-      await userService.getUser(email: widget.receiverUser.email.validate()).then((value) {
+      await userService
+          .getUser(email: widget.receiverUser.email.validate())
+          .then((value) {
         widget.receiverUser.uid = value.uid;
       }).catchError((e) {
         log(e.toString());
       });
     }
 
-    senderUser = await userService.getUser(email: appStore.userEmail.validate());
+    senderUser =
+        await userService.getUser(email: appStore.userEmail.validate());
     appStore.setLoading(false);
     setState(() {});
 
-    if (await userService.isReceiverInContacts(senderUserId: appStore.uid.validate(), receiverUserId: widget.receiverUser.uid.validate())) {
-      await chatServices.setUnReadStatusToTrue(senderId: appStore.uid.validate(), receiverId: widget.receiverUser.uid.validate()).catchError((e) {
+    if (await userService.isReceiverInContacts(
+        senderUserId: appStore.uid.validate(),
+        receiverUserId: widget.receiverUser.uid.validate())) {
+      await chatServices
+          .setUnReadStatusToTrue(
+              senderId: appStore.uid.validate(),
+              receiverId: widget.receiverUser.uid.validate())
+          .catchError((e) {
         toast(e.toString());
       });
 
       log("receiver ID ${widget.receiverUser.uid}");
-      chatServices.setOnlineCount(senderId: widget.receiverUser.uid.validate(), receiverId: appStore.uid.validate(), status: 1);
+      chatServices.setOnlineCount(
+          senderId: widget.receiverUser.uid.validate(),
+          receiverId: appStore.uid.validate(),
+          status: 1);
       //
-      _streamSubscription = chatServices.isReceiverOnline(senderId: appStore.uid.validate(), receiverUserId: widget.receiverUser.uid.validate()).listen((event) {
+      _streamSubscription = chatServices
+          .isReceiverOnline(
+              senderId: appStore.uid.validate(),
+              receiverUserId: widget.receiverUser.uid.validate())
+          .listen((event) {
         isReceiverOnline = event.isOnline.validate();
         log("=======*=======*=======*=======*=======* User $isReceiverOnline =======*=======*=======*=======*=======");
       });
@@ -111,7 +140,9 @@ class _UserChatScreenState extends State<UserChatScreen> with WidgetsBindingObse
             mainAxisSize: MainAxisSize.min,
             children: [
               IconButton(
-                icon: Transform.rotate(angle: -0.75, child: const Icon(Icons.attach_file_outlined)),
+                icon: Transform.rotate(
+                    angle: -0.75,
+                    child: const Icon(Icons.attach_file_outlined)),
                 onPressed: () {
                   if (!appStore.isLoading) {
                     _handleDocumentClick();
@@ -128,17 +159,15 @@ class _UserChatScreenState extends State<UserChatScreen> with WidgetsBindingObse
               ),
             ],
           ),
-          decoration: inputDecoration(context).copyWith(hintText: language.message, hintStyle: secondaryTextStyle()),
+          decoration: inputDecoration(context).copyWith(
+              hintText: language.message, hintStyle: primaryTextStyle()),
         ).expand(),
         8.width,
-        Container(
-          decoration: boxDecorationDefault(borderRadius: radius(80), color: primaryColor),
-          child: IconButton(
-            icon: const Icon(Icons.send, color: Colors.white),
-            onPressed: () {
-              sendMessages();
-            },
-          ),
+        IconButton(
+          icon: ic_send_message.iconImage(size: 32, color: context.iconColor),
+          onPressed: () {
+            sendMessages();
+          },
         )
       ],
     );
@@ -175,7 +204,9 @@ class _UserChatScreenState extends State<UserChatScreen> with WidgetsBindingObse
     log('ChatMessageModel Data : ${data.toJson()}');
     messageCont.clear();
 
-    if (!(await userService.isReceiverInContacts(senderUserId: appStore.uid.validate(), receiverUserId: widget.receiverUser.uid.validate()))) {
+    if (!(await userService.isReceiverInContacts(
+        senderUserId: appStore.uid.validate(),
+        receiverUserId: widget.receiverUser.uid.validate()))) {
       log("========Adding To Contacts=========");
       await chatServices.addToContacts(
         senderId: data.senderId,
@@ -183,7 +214,11 @@ class _UserChatScreenState extends State<UserChatScreen> with WidgetsBindingObse
         receiverName: widget.receiverUser.displayName.validate(),
         senderName: senderUser.displayName.validate(),
       );
-      _streamSubscription = chatServices.isReceiverOnline(senderId: appStore.uid.validate(), receiverUserId: widget.receiverUser.uid.validate()).listen((event) {
+      _streamSubscription = chatServices
+          .isReceiverOnline(
+              senderId: appStore.uid.validate(),
+              receiverUserId: widget.receiverUser.uid.validate())
+          .listen((event) {
         isReceiverOnline = event.isOnline.validate();
         log("=======*=======*=======*=======*=======* User $isReceiverOnline =======*=======*=======*=======*=======");
       });
@@ -199,7 +234,9 @@ class _UserChatScreenState extends State<UserChatScreen> with WidgetsBindingObse
             .sendPushNotifications(
           appStore.userFullName,
           data.message.validate(),
-          image: data.attachmentfiles == null || data.attachmentfiles!.isEmpty ? null : data.attachmentfiles!.first,
+          image: data.attachmentfiles == null || data.attachmentfiles!.isEmpty
+              ? null
+              : data.attachmentfiles!.first,
           receiverUser: widget.receiverUser,
           senderUserData: senderUser,
         )
@@ -209,12 +246,22 @@ class _UserChatScreenState extends State<UserChatScreen> with WidgetsBindingObse
       }
 
       /// Save receiverId to Sender Doc.
-      userService.saveToContacts(senderId: appStore.uid, receiverId: widget.receiverUser.uid.validate()).then((value) => log("---ReceiverId to Sender Doc.---")).catchError((e) {
+      userService
+          .saveToContacts(
+              senderId: appStore.uid,
+              receiverId: widget.receiverUser.uid.validate())
+          .then((value) => log("---ReceiverId to Sender Doc.---"))
+          .catchError((e) {
         log(e.toString());
       });
 
       /// Save senderId to Receiver Doc.
-      userService.saveToContacts(senderId: widget.receiverUser.uid.validate(), receiverId: appStore.uid).then((value) => log("---SenderId to Receiver Doc.---")).catchError((e) {
+      userService
+          .saveToContacts(
+              senderId: widget.receiverUser.uid.validate(),
+              receiverId: appStore.uid)
+          .then((value) => log("---SenderId to Receiver Doc.---"))
+          .catchError((e) {
         log(e.toString());
       });
 
@@ -226,19 +273,235 @@ class _UserChatScreenState extends State<UserChatScreen> with WidgetsBindingObse
 
   //endregion
 
+  void _generateDummyMessages() {
+    DateTime now = DateTime.now();
+    String currentUserId = appStore.uid.validate().isNotEmpty
+        ? appStore.uid.validate()
+        : 'current_user_123'; // Dummy current user ID
+    String receiverUserId = widget.receiverUser.uid.validate().isNotEmpty
+        ? widget.receiverUser.uid.validate()
+        : 'receiver_user_456';
+
+    dummyMessages = [
+      // Recent messages (today)
+      ChatMessageModel(
+        uid: 'msg_1',
+        senderId: currentUserId,
+        receiverId: receiverUserId,
+        message: 'Hello! How are you doing today?',
+        messageType: MessageType.TEXT.name,
+        isMessageRead: true,
+        createdAt:
+            now.subtract(const Duration(minutes: 5)).millisecondsSinceEpoch,
+        createdAtTime:
+            Timestamp.fromDate(now.subtract(const Duration(minutes: 5))),
+        updatedAtTime:
+            Timestamp.fromDate(now.subtract(const Duration(minutes: 5))),
+      )..isMe = true,
+      ChatMessageModel(
+        uid: 'msg_2',
+        senderId: receiverUserId,
+        receiverId: currentUserId,
+        message: 'Hi! I\'m doing great, thanks for asking. How about you?',
+        messageType: MessageType.TEXT.name,
+        isMessageRead: true,
+        createdAt:
+            now.subtract(const Duration(minutes: 4)).millisecondsSinceEpoch,
+        createdAtTime:
+            Timestamp.fromDate(now.subtract(const Duration(minutes: 4))),
+        updatedAtTime:
+            Timestamp.fromDate(now.subtract(const Duration(minutes: 4))),
+      )..isMe = false,
+      ChatMessageModel(
+        uid: 'msg_3',
+        senderId: currentUserId,
+        receiverId: receiverUserId,
+        message:
+            'I\'m good too! Just wanted to check if you\'re available for a quick chat.',
+        messageType: MessageType.TEXT.name,
+        isMessageRead: true,
+        createdAt:
+            now.subtract(const Duration(minutes: 3)).millisecondsSinceEpoch,
+        createdAtTime:
+            Timestamp.fromDate(now.subtract(const Duration(minutes: 3))),
+        updatedAtTime:
+            Timestamp.fromDate(now.subtract(const Duration(minutes: 3))),
+      )..isMe = true,
+      ChatMessageModel(
+        uid: 'msg_4',
+        senderId: receiverUserId,
+        receiverId: currentUserId,
+        message: 'Sure! What would you like to discuss?',
+        messageType: MessageType.TEXT.name,
+        isMessageRead: true,
+        createdAt:
+            now.subtract(const Duration(minutes: 2)).millisecondsSinceEpoch,
+        createdAtTime:
+            Timestamp.fromDate(now.subtract(const Duration(minutes: 2))),
+        updatedAtTime:
+            Timestamp.fromDate(now.subtract(const Duration(minutes: 2))),
+      )..isMe = false,
+      ChatMessageModel(
+        uid: 'msg_5',
+        senderId: currentUserId,
+        receiverId: receiverUserId,
+        message:
+            'I wanted to follow up on our previous conversation about the project timeline.',
+        messageType: MessageType.TEXT.name,
+        isMessageRead: false,
+        createdAt:
+            now.subtract(const Duration(minutes: 1)).millisecondsSinceEpoch,
+        createdAtTime:
+            Timestamp.fromDate(now.subtract(const Duration(minutes: 1))),
+        updatedAtTime:
+            Timestamp.fromDate(now.subtract(const Duration(minutes: 1))),
+      )..isMe = true,
+      // Yesterday's messages
+      ChatMessageModel(
+        uid: 'msg_6',
+        senderId: receiverUserId,
+        receiverId: currentUserId,
+        message: 'Thanks for the update! I\'ll review it and get back to you.',
+        messageType: MessageType.TEXT.name,
+        isMessageRead: true,
+        createdAt: now
+            .subtract(const Duration(days: 1, hours: 2))
+            .millisecondsSinceEpoch,
+        createdAtTime:
+            Timestamp.fromDate(now.subtract(const Duration(days: 1, hours: 2))),
+        updatedAtTime:
+            Timestamp.fromDate(now.subtract(const Duration(days: 1, hours: 2))),
+      )..isMe = false,
+      ChatMessageModel(
+        uid: 'msg_7',
+        senderId: currentUserId,
+        receiverId: receiverUserId,
+        message: 'Perfect! Let me know if you need any clarification.',
+        messageType: MessageType.TEXT.name,
+        isMessageRead: true,
+        createdAt: now
+            .subtract(const Duration(days: 1, hours: 1))
+            .millisecondsSinceEpoch,
+        createdAtTime:
+            Timestamp.fromDate(now.subtract(const Duration(days: 1, hours: 1))),
+        updatedAtTime:
+            Timestamp.fromDate(now.subtract(const Duration(days: 1, hours: 1))),
+      )..isMe = true,
+      // Older messages
+      ChatMessageModel(
+        uid: 'msg_8',
+        senderId: receiverUserId,
+        receiverId: currentUserId,
+        message: 'Will do! Have a great day! 😊',
+        messageType: MessageType.TEXT.name,
+        isMessageRead: true,
+        createdAt: now.subtract(const Duration(days: 2)).millisecondsSinceEpoch,
+        createdAtTime:
+            Timestamp.fromDate(now.subtract(const Duration(days: 2))),
+        updatedAtTime:
+            Timestamp.fromDate(now.subtract(const Duration(days: 2))),
+      )..isMe = false,
+      ChatMessageModel(
+        uid: 'msg_9',
+        senderId: currentUserId,
+        receiverId: receiverUserId,
+        message: 'You too! Talk to you soon.',
+        messageType: MessageType.TEXT.name,
+        isMessageRead: true,
+        createdAt: now
+            .subtract(const Duration(days: 2, minutes: 30))
+            .millisecondsSinceEpoch,
+        createdAtTime: Timestamp.fromDate(
+            now.subtract(const Duration(days: 2, minutes: 30))),
+        updatedAtTime: Timestamp.fromDate(
+            now.subtract(const Duration(days: 2, minutes: 30))),
+      )..isMe = true,
+      ChatMessageModel(
+        uid: 'msg_10',
+        senderId: receiverUserId,
+        receiverId: currentUserId,
+        message: 'Hey! Just wanted to check in and see how things are going.',
+        messageType: MessageType.TEXT.name,
+        isMessageRead: true,
+        createdAt: now.subtract(const Duration(days: 3)).millisecondsSinceEpoch,
+        createdAtTime:
+            Timestamp.fromDate(now.subtract(const Duration(days: 3))),
+        updatedAtTime:
+            Timestamp.fromDate(now.subtract(const Duration(days: 3))),
+      )..isMe = false,
+      ChatMessageModel(
+        uid: 'msg_11',
+        senderId: currentUserId,
+        receiverId: receiverUserId,
+        message: 'Everything is going smoothly. Thanks for checking!',
+        messageType: MessageType.TEXT.name,
+        isMessageRead: true,
+        createdAt: now
+            .subtract(const Duration(days: 3, hours: 1))
+            .millisecondsSinceEpoch,
+        createdAtTime:
+            Timestamp.fromDate(now.subtract(const Duration(days: 3, hours: 1))),
+        updatedAtTime:
+            Timestamp.fromDate(now.subtract(const Duration(days: 3, hours: 1))),
+      )..isMe = true,
+      // File message example
+      ChatMessageModel(
+        uid: 'msg_12',
+        senderId: receiverUserId,
+        receiverId: currentUserId,
+        message: 'Here\'s the document you requested.',
+        messageType: MessageType.Files.name,
+        isMessageRead: true,
+        attachmentfiles: ['https://example.com/document.pdf'],
+        createdAt: now.subtract(const Duration(days: 4)).millisecondsSinceEpoch,
+        createdAtTime:
+            Timestamp.fromDate(now.subtract(const Duration(days: 4))),
+        updatedAtTime:
+            Timestamp.fromDate(now.subtract(const Duration(days: 4))),
+      )..isMe = false,
+      ChatMessageModel(
+        uid: 'msg_13',
+        senderId: currentUserId,
+        receiverId: receiverUserId,
+        message: 'Thank you! I\'ll take a look at it.',
+        messageType: MessageType.TEXT.name,
+        isMessageRead: true,
+        createdAt: now
+            .subtract(const Duration(days: 4, hours: 1))
+            .millisecondsSinceEpoch,
+        createdAtTime:
+            Timestamp.fromDate(now.subtract(const Duration(days: 4, hours: 1))),
+        updatedAtTime:
+            Timestamp.fromDate(now.subtract(const Duration(days: 4, hours: 1))),
+      )..isMe = true,
+    ];
+
+    // Reverse to show oldest first (like Firebase pagination reverse: true)
+    dummyMessages = dummyMessages.reversed.toList();
+  }
+
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) async {
     super.didChangeAppLifecycleState(state);
 
     if (state == AppLifecycleState.detached) {
-      chatServices.setOnlineCount(senderId: widget.receiverUser.uid.validate(), receiverId: appStore.uid.validate(), status: 0);
+      chatServices.setOnlineCount(
+          senderId: widget.receiverUser.uid.validate(),
+          receiverId: appStore.uid.validate(),
+          status: 0);
     }
 
     if (state == AppLifecycleState.paused) {
-      chatServices.setOnlineCount(senderId: widget.receiverUser.uid.validate(), receiverId: appStore.uid.validate(), status: 0);
+      chatServices.setOnlineCount(
+          senderId: widget.receiverUser.uid.validate(),
+          receiverId: appStore.uid.validate(),
+          status: 0);
     }
     if (state == AppLifecycleState.resumed) {
-      chatServices.setOnlineCount(senderId: widget.receiverUser.uid.validate(), receiverId: appStore.uid.validate(), status: 1);
+      chatServices.setOnlineCount(
+          senderId: widget.receiverUser.uid.validate(),
+          receiverId: appStore.uid.validate(),
+          status: 1);
     }
   }
 
@@ -251,11 +514,16 @@ class _UserChatScreenState extends State<UserChatScreen> with WidgetsBindingObse
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
 
-    chatServices.setOnlineCount(senderId: widget.receiverUser.uid.validate(), receiverId: appStore.uid.validate(), status: 0);
+    chatServices.setOnlineCount(
+        senderId: widget.receiverUser.uid.validate(),
+        receiverId: appStore.uid.validate(),
+        status: 0);
 
     _streamSubscription?.cancel();
 
-    setStatusBarColor(transparentColor, statusBarBrightness: Brightness.dark, statusBarIconBrightness: Brightness.dark);
+    setStatusBarColor(transparentColor,
+        statusBarBrightness: Brightness.dark,
+        statusBarIconBrightness: Brightness.dark);
 
     super.dispose();
   }
@@ -268,18 +536,19 @@ class _UserChatScreenState extends State<UserChatScreen> with WidgetsBindingObse
         appBar: AppBar(
           backgroundColor: context.primaryColor,
           leadingWidth: context.width(),
-          systemOverlayStyle: SystemUiOverlayStyle(statusBarColor: context.primaryColor, statusBarBrightness: Brightness.dark, statusBarIconBrightness: Brightness.light),
+          systemOverlayStyle: SystemUiOverlayStyle(
+              statusBarColor: context.primaryColor,
+              statusBarBrightness: Brightness.dark,
+              statusBarIconBrightness: Brightness.light),
           leading: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              IconButton(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                onPressed: () {
-                  finish(context);
-                },
-                icon: ic_arrow_left.iconImage(color: Colors.white),
-              ),
-              CachedImageWidget(url: widget.receiverUser.profileImage.validate(), height: 36, circle: true, fit: BoxFit.cover),
+              BackWidget(),
+              CachedImageWidget(
+                  url: widget.receiverUser.profileImage.validate(),
+                  height: 36,
+                  circle: true,
+                  fit: BoxFit.cover),
               12.width,
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -302,19 +571,36 @@ class _UserChatScreenState extends State<UserChatScreen> with WidgetsBindingObse
                 if (index == 0) {
                   showConfirmDialogCustom(
                     context,
+                    height: 80,
+                    width: 290,
                     positiveText: language.lblYes,
                     negativeText: language.lblNo,
-                    primaryColor: context.primaryColor,
+                    primaryColor: primaryColor,
+                    negativeTextColor: primaryColor,
                     title: language.clearChatMessage,
+                    customCenterWidget: Image.asset(ic_warning,
+                        height: 70, width: 70, fit: BoxFit.cover),
                     onAccept: (c) async {
-                      appStore.setLoading(true);
-                      await chatServices.clearAllMessages(senderId: appStore.uid, receiverId: widget.receiverUser.uid.validate()).then((value) {
-                        toast(language.chatCleared);
+                      if (USE_DUMMY_DATA) {
+                        // Clear dummy messages
+                        dummyMessages.clear();
                         hideKeyboard(context);
-                      }).catchError((e) {
-                        toast(e);
-                      });
-                      appStore.setLoading(false);
+                        setState(() {});
+                        toast(language.chatCleared);
+                      } else {
+                        appStore.setLoading(true);
+                        await chatServices
+                            .clearAllMessages(
+                                senderId: appStore.uid,
+                                receiverId: widget.receiverUser.uid.validate())
+                            .then((value) {
+                          toast(language.chatCleared);
+                          hideKeyboard(context);
+                        }).catchError((e) {
+                          toast(e);
+                        });
+                        appStore.setLoading(false);
+                      }
                     },
                   );
                 }
@@ -342,29 +628,38 @@ class _UserChatScreenState extends State<UserChatScreen> with WidgetsBindingObse
               fit: StackFit.expand,
               children: [
                 Container(
-                  margin: EdgeInsets.only(bottom: widget.isChattingAllow ? 0 : 80),
-                  child: FirestorePagination(
-                    reverse: true,
-                    isLive: true,
-                    padding: const EdgeInsets.only(left: 8, top: 8, right: 8, bottom: 0),
-                    physics: const BouncingScrollPhysics(),
-                    query: chatServices.chatMessagesWithPagination(senderId: appStore.uid.validate(), receiverUserId: widget.receiverUser.uid.validate()),
-                    initialLoader: LoaderWidget(),
-                    limit: PER_PAGE_CHAT_LIST_COUNT,
-                    onEmpty: NoDataWidget(
-                      title: language.noConversation,
-                      imageWidget: const EmptyStateWidget(),
-                    ),
-                    shrinkWrap: true,
-                    viewType: ViewType.list,
-                    itemBuilder: (context, snap, index) {
-                      ChatMessageModel data = ChatMessageModel.fromJson(snap[index].data() as Map<String, dynamic>);
-                      data.isMe = data.senderId == appStore.uid;
-                      data.chatDocumentReference = snap[index].reference;
-          
-                      return ChatItemWidget(chatItemData: data);
-                    },
-                  ),
+                  margin:
+                      EdgeInsets.only(bottom: widget.isChattingAllow ? 0 : 80),
+                  child: USE_DUMMY_DATA
+                      ? _buildDummyChatList()
+                      : FirestorePagination(
+                          reverse: true,
+                          isLive: true,
+                          padding: const EdgeInsets.only(
+                              left: 8, top: 8, right: 8, bottom: 0),
+                          physics: const BouncingScrollPhysics(),
+                          query: chatServices.chatMessagesWithPagination(
+                              senderId: appStore.uid.validate(),
+                              receiverUserId:
+                                  widget.receiverUser.uid.validate()),
+                          initialLoader: LoaderWidget(),
+                          limit: PER_PAGE_CHAT_LIST_COUNT,
+                          onEmpty: NoDataWidget(
+                            title: language.noConversation,
+                            imageWidget: Image.asset(no_conversation,
+                                height: 200, width: 200, fit: BoxFit.contain),
+                          ),
+                          shrinkWrap: true,
+                          viewType: ViewType.list,
+                          itemBuilder: (context, snap, index) {
+                            ChatMessageModel data = ChatMessageModel.fromJson(
+                                snap[index].data() as Map<String, dynamic>);
+                            data.isMe = data.senderId == appStore.uid;
+                            data.chatDocumentReference = snap[index].reference;
+
+                            return ChatItemWidget(chatItemData: data);
+                          },
+                        ),
                 ),
                 if (!widget.isChattingAllow)
                   Positioned(
@@ -373,7 +668,9 @@ class _UserChatScreenState extends State<UserChatScreen> with WidgetsBindingObse
                     right: 16,
                     child: _buildChatFieldWidget(),
                   ),
-                Observer(builder: (context) => LoaderWidget().visible(appStore.isLoading)),
+                Observer(
+                    builder: (context) =>
+                        LoaderWidget().visible(appStore.isLoading)),
               ],
             ),
           ),
@@ -407,7 +704,9 @@ class _UserChatScreenState extends State<UserChatScreen> with WidgetsBindingObse
 
   Future<void> handleUploadAndSendFiles(List<File> pickedfiles) async {
     if (pickedfiles.isEmpty) return;
-    await SendFilePreviewScreen(pickedfiles: pickedfiles).launch(context).then((value) async {
+    await SendFilePreviewScreen(pickedfiles: pickedfiles)
+        .launch(context)
+        .then((value) async {
       debugPrint('text: ${value}');
       debugPrint('text: ${value[MessageType.TEXT.name]}');
       debugPrint('files: ${value[MessageType.Files.name]}');
@@ -423,10 +722,13 @@ class _UserChatScreenState extends State<UserChatScreen> with WidgetsBindingObse
 
       if (messageCont.text.trim().isNotEmpty || pickedfiles.isNotEmpty) {
         appStore.setLoading(true);
-        await ChatServices().uploadFiles(pickedfiles).then((attached_files) async {
+        await ChatServices()
+            .uploadFiles(pickedfiles)
+            .then((attached_files) async {
           if (attached_files.isEmpty) return;
           log('ATTACHEDFILES: ${attached_files}');
-          await sendMessages(isFile: true, attachmentFiles: attached_files).whenComplete(() => appStore.setLoading(false));
+          await sendMessages(isFile: true, attachmentFiles: attached_files)
+              .whenComplete(() => appStore.setLoading(false));
         }).catchError((e) {
           toast(e);
           log('ChatServices().uploadFiles Err: ${e}');
@@ -434,5 +736,31 @@ class _UserChatScreenState extends State<UserChatScreen> with WidgetsBindingObse
         }).whenComplete(() => appStore.setLoading(false));
       }
     });
+  }
+
+  Widget _buildDummyChatList() {
+    if (dummyMessages.isEmpty) {
+      return NoDataWidget(
+        title: language.noConversation,
+        imageWidget: Image.asset(no_conversation,
+            height: 300, width: 300, fit: BoxFit.contain),
+      );
+    }
+
+    return ListView.builder(
+      reverse: true,
+      padding: const EdgeInsets.only(left: 8, top: 8, right: 8, bottom: 0),
+      physics: const BouncingScrollPhysics(),
+      itemCount: dummyMessages.length,
+      itemBuilder: (context, index) {
+        ChatMessageModel data = dummyMessages[index];
+        // Set isMe based on senderId compared with appStore.uid (same as real implementation)
+        String currentUserId = appStore.uid.validate().isNotEmpty
+            ? appStore.uid.validate()
+            : 'current_user_123';
+        data.isMe = data.senderId == currentUserId;
+        return ChatItemWidget(chatItemData: data);
+      },
+    );
   }
 }
