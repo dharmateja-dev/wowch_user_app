@@ -43,7 +43,6 @@ class CachedImageWidget extends StatelessWidget {
         ),
         height: height,
         width: width ?? height,
-        color: color ?? context.primaryColor.withValues(alpha: 0.1),
         alignment: alignment,
         child: Stack(
           children: [

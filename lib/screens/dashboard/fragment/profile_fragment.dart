@@ -111,42 +111,59 @@ class ProfileFragmentState extends State<ProfileFragment> {
                 children: [
                   if (!appStore.isLoggedIn)
                     Container(
-                      decoration: boxDecorationWithRoundedCorners(
-                        borderRadius: radius(),
-                        backgroundColor:
-                            context.primaryColor.withValues(alpha: 0.1),
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 2, vertical: 8),
+                      padding: const EdgeInsets.all(6),
+                      decoration: BoxDecoration(
+                        borderRadius: radius(8),
+                        color: context.primaryColor.withValues(alpha: 0.1),
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
+                              // Profile Picture
                               CachedImageWidget(
-                                      url: appStore.userProfileImage,
-                                      height: 70,
-                                      width: 70,
-                                      circle: true,
-                                      fit: BoxFit.cover)
-                                  .paddingBottom(6),
-                              24.width,
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Marquee(
-                                      child: Text(appStore.userFullName,
-                                          style: boldTextStyle(
-                                              color: primaryColor, size: 16))),
-                                  Marquee(
-                                      child: Text(appStore.userEmail,
-                                          style: secondaryTextStyle())),
-                                ],
-                              ).expand(),
+                                url: appStore.userProfileImage,
+                                height: 60,
+                                width: 60,
+                                circle: true,
+                                fit: BoxFit.cover,
+                              ),
+                              8.width,
+                              // Name and Email
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Marquee(
+                                      child: Text(
+                                        //appStore.userFullName,
+                                        'Abdul Kader',
+                                        style: boldTextStyle(
+                                            size: 16,
+                                            color: textPrimaryColorGlobal),
+                                      ),
+                                    ),
+                                    Marquee(
+                                      child: Text(
+                                        //appStore.userEmail,
+                                        'demouser@gmail.com',
+                                        style: primaryTextStyle(),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              // Edit Icon
+                              ic_edit_square
+                                  .iconImage(size: 20, color: context.iconColor)
+                                  .paddingOnly(right: 8),
                             ],
-                          )
-                              .paddingOnly(left: 16, top: 16, bottom: 16)
-                              .onTap(() {
+                          ).onTap(() {
                             EditProfileScreen().launch(context);
                           }),
                           Container(
