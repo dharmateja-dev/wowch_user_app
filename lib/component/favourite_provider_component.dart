@@ -16,13 +16,19 @@ class FavouriteProviderComponent extends StatefulWidget {
   final Function? onUpdate;
   final bool isFavouriteProvider;
 
-  FavouriteProviderComponent({required this.width, this.data, this.onUpdate, this.isFavouriteProvider = true});
+  FavouriteProviderComponent(
+      {required this.width,
+      this.data,
+      this.onUpdate,
+      this.isFavouriteProvider = true});
 
   @override
-  State<FavouriteProviderComponent> createState() => _FavouriteProviderComponentState();
+  State<FavouriteProviderComponent> createState() =>
+      _FavouriteProviderComponentState();
 }
 
-class _FavouriteProviderComponentState extends State<FavouriteProviderComponent> {
+class _FavouriteProviderComponentState
+    extends State<FavouriteProviderComponent> {
   //Favourite provider
   Future<bool> addProviderToWishList({required int providerId}) async {
     Map req = {"id": "", "provider_id": providerId, "user_id": appStore.userId};
@@ -67,30 +73,31 @@ class _FavouriteProviderComponentState extends State<FavouriteProviderComponent>
     return Stack(
       children: [
         Container(
+          padding: const EdgeInsets.all(8),
           width: widget.width,
-          decoration: boxDecorationWithRoundedCorners(borderRadius: radius(), backgroundColor: appStore.isDarkMode ? context.scaffoldBackgroundColor : white),
+          decoration: boxDecorationWithRoundedCorners(
+            borderRadius: radius(),
+            backgroundColor: greyColor.withValues(alpha: 0.2),
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: radiusOnly(topLeft: defaultRadius, topRight: defaultRadius),
-                  color: primaryColor.withValues(alpha:0.2),
-                ),
-                child: CachedImageWidget(
-                  url: widget.data!.profileImage.validate(),
-                  width: context.width(),
-                  height: 110,
-                  fit: BoxFit.cover,
-                  circle: false,
-                ).cornerRadiusWithClipRRectOnly(topRight: defaultRadius.toInt(), topLeft: defaultRadius.toInt()),
-              ),
+              CachedImageWidget(
+                url: widget.data!.profileImage.validate(),
+                width: context.width(),
+                height: 150,
+                fit: BoxFit.cover,
+                circle: false,
+              ).cornerRadiusWithClipRRectOnly(
+                  topRight: defaultRadius.toInt(),
+                  topLeft: defaultRadius.toInt()),
               16.height,
               Marquee(
                 directionMarguee: DirectionMarguee.oneDirection,
-                child: Text(widget.data!.displayName.validate(), style: boldTextStyle(), maxLines: 1),
+                child: Text(widget.data!.displayName.validate(),
+                    style: boldTextStyle(), maxLines: 1),
               ).center(),
-              16.height,
+              //16.height,
 
               /// Hide email and calling function
               /*8.height,
@@ -133,19 +140,24 @@ class _FavouriteProviderComponentState extends State<FavouriteProviderComponent>
         ),
         if (widget.isFavouriteProvider)
           Positioned(
-            top: 8,
-            right: 0,
+            top: 14,
+            right: 12,
             child: Container(
-              padding: const EdgeInsets.all(8),
-              margin: const EdgeInsets.only(right: 8),
-              decoration: boxDecorationWithShadow(boxShape: BoxShape.circle, backgroundColor: context.cardColor),
-              child: widget.data!.isFavourite == 1 ? ic_fill_heart.iconImage(color: favouriteColor, size: 18) : ic_heart.iconImage(color: unFavouriteColor, size: 22),
+              padding: const EdgeInsets.all(6),
+              margin: const EdgeInsets.only(right: 6),
+              decoration: boxDecorationWithShadow(
+                  boxShape: BoxShape.circle, backgroundColor: Colors.white),
+              child: widget.data!.isFavourite == 1
+                  ? ic_fill_heart.iconImage(color: favouriteColor, size: 16)
+                  : ic_heart.iconImage(color: unFavouriteColor, size: 16),
             ).onTap(() async {
               if (widget.data!.isFavourite == 1) {
                 widget.data!.isFavourite = 0;
                 setState(() {});
 
-                await removeProviderToWishList(providerId: widget.data!.providerId.validate()).then((value) {
+                await removeProviderToWishList(
+                        providerId: widget.data!.providerId.validate())
+                    .then((value) {
                   if (!value) {
                     widget.data!.isFavourite = 1;
                     setState(() {});
@@ -157,7 +169,9 @@ class _FavouriteProviderComponentState extends State<FavouriteProviderComponent>
                 widget.data!.isFavourite = 1;
                 setState(() {});
 
-                await addProviderToWishList(providerId: widget.data!.providerId.validate()).then((value) {
+                await addProviderToWishList(
+                        providerId: widget.data!.providerId.validate())
+                    .then((value) {
                   if (!value) {
                     widget.data!.isFavourite = 0;
                     setState(() {});

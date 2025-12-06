@@ -113,7 +113,7 @@ class ServiceComponentState extends State<ServiceComponent> {
           return Container(
             decoration: boxDecorationWithRoundedCorners(
               borderRadius: radius(),
-              backgroundColor: context.primaryColor.withValues(alpha: 0.1),
+              backgroundColor: greyColor.withValues(alpha: 0.2),
               border: widget.isBorderEnabled.validate(value: false)
                   ? appStore.isDarkMode
                       ? Border.all(color: context.dividerColor)

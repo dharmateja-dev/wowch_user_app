@@ -124,6 +124,7 @@ class _FavouriteServiceScreenState extends State<FavouriteServiceScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBarWidget(
+        center: true,
         language.lblFavorite,
         color: context.primaryColor,
         textColor: white,

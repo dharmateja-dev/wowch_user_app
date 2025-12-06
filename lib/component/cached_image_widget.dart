@@ -35,99 +35,115 @@ class CachedImageWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     if (url.validate().isEmpty) {
       return Container(
+        margin: const EdgeInsets.all(8),
+        decoration: boxDecorationWithRoundedCorners(
+          borderRadius: BorderRadius.circular(
+              radius ?? (circle ? (height / 2) : defaultRadius)),
+          backgroundColor: color ?? context.primaryColor.withValues(alpha: 0.1),
+        ),
         height: height,
         width: width ?? height,
-        color: color ?? grey.withValues(alpha:0.1),
+        color: color ?? context.primaryColor.withValues(alpha: 0.1),
         alignment: alignment,
-        //padding: EdgeInsets.all(10),
-        //child: Image.asset(ic_no_photo, color: appStore.isDarkMode ? Colors.white : Colors.black),
         child: Stack(
           children: [
             PlaceHolderWidget(
               height: height,
               width: width,
               alignment: alignment ?? Alignment.center,
-            ).cornerRadiusWithClipRRect(radius ?? (circle ? (height / 2) : 0)),
+            ),
             child ?? const Offstage(),
           ],
         ),
-      ).cornerRadiusWithClipRRect(radius ?? (circle ? (height / 2) : 0));
+      );
     } else if (url.validate().startsWith('http')) {
-      return CachedNetworkImage(
-        placeholder: (_, __) {
-          return Stack(
-            children: [
-              PlaceHolderWidget(
-                height: height,
-                width: width,
-                alignment: alignment ?? Alignment.center,
-              ).cornerRadiusWithClipRRect(radius ?? (circle ? (height / 2) : 0)),
-              child ?? const Offstage(),
-            ],
-          );
-        },
-        imageUrl: url,
-        height: height,
-        width: width ?? height,
-        fit: fit,
-        color: color,
-        alignment: alignment as Alignment? ?? Alignment.center,
-        errorWidget: (_, s, d) {
-          return Stack(
-            children: [
-              PlaceHolderWidget(
-                height: height,
-                width: width,
-                alignment: alignment ?? Alignment.center,
-              ).cornerRadiusWithClipRRect(radius ?? (circle ? (height / 2) : 0)),
-              child ?? const Offstage(),
-            ],
-          );
-        },
-      ).cornerRadiusWithClipRRect(radius ?? (circle ? (height / 2) : 0));
-    } else {
-      if (url.validate().startsWith(r"assets/")) {
-        return Image.asset(
-          url,
+      return ClipRRect(
+        borderRadius: BorderRadius.circular(
+            radius ?? (circle ? (height / 2) : defaultRadius)),
+        child: CachedNetworkImage(
+          placeholder: (_, __) {
+            return Stack(
+              children: [
+                PlaceHolderWidget(
+                  height: height,
+                  width: width,
+                  alignment: alignment ?? Alignment.center,
+                ),
+                child ?? const Offstage(),
+              ],
+            );
+          },
+          imageUrl: url,
           height: height,
           width: width ?? height,
-          fit: fit,
+          fit: fit ?? BoxFit.cover,
           color: color,
-          alignment: alignment ?? Alignment.center,
-          errorBuilder: (_, s, d) {
+          alignment: alignment as Alignment? ?? Alignment.center,
+          errorWidget: (_, s, d) {
             return Stack(
               children: [
                 PlaceHolderWidget(
                   height: height,
                   width: width,
                   alignment: alignment ?? Alignment.center,
-                ).cornerRadiusWithClipRRect(radius ?? (circle ? (height / 2) : 0)),
+                ),
                 child ?? const Offstage(),
               ],
             );
           },
-        ).cornerRadiusWithClipRRect(radius ?? (circle ? (height / 2) : 0));
+        ),
+      );
+    } else {
+      if (url.validate().startsWith(r"assets/")) {
+        return ClipRRect(
+          borderRadius: BorderRadius.circular(
+              radius ?? (circle ? (height / 2) : defaultRadius)),
+          child: Image.asset(
+            url,
+            height: height,
+            width: width ?? height,
+            fit: fit ?? BoxFit.cover,
+            color: color,
+            alignment: alignment ?? Alignment.center,
+            errorBuilder: (_, s, d) {
+              return Stack(
+                children: [
+                  PlaceHolderWidget(
+                    height: height,
+                    width: width,
+                    alignment: alignment ?? Alignment.center,
+                  ),
+                  child ?? const Offstage(),
+                ],
+              );
+            },
+          ),
+        );
       } else {
-        return Image.file(
-          File(url),
-          height: height,
-          width: width,
-          fit: fit,
-          color: color,
-          alignment: alignment ?? Alignment.center,
-          errorBuilder: (_, s, d) {
-            return Stack(
-              children: [
-                PlaceHolderWidget(
-                  height: height,
-                  width: width,
-                  alignment: alignment ?? Alignment.center,
-                ).cornerRadiusWithClipRRect(radius ?? (circle ? (height / 2) : 0)),
-                child ?? const Offstage(),
-              ],
-            );
-          },
-        ).cornerRadiusWithClipRRect(radius ?? (circle ? (height.validate() / 2) : 0));
+        return ClipRRect(
+          borderRadius: BorderRadius.circular(
+              radius ?? (circle ? (height.validate() / 2) : defaultRadius)),
+          child: Image.file(
+            File(url),
+            height: height,
+            width: width,
+            fit: fit ?? BoxFit.cover,
+            color: color,
+            alignment: alignment ?? Alignment.center,
+            errorBuilder: (_, s, d) {
+              return Stack(
+                children: [
+                  PlaceHolderWidget(
+                    height: height,
+                    width: width,
+                    alignment: alignment ?? Alignment.center,
+                  ),
+                  child ?? const Offstage(),
+                ],
+              );
+            },
+          ),
+        );
       }
     }
   }

@@ -17,6 +17,8 @@ import 'package:booking_system_flutter/screens/blog/model/blog_response_model.da
 import 'package:booking_system_flutter/screens/chat/chat_list_screen.dart';
 import 'package:booking_system_flutter/screens/chat/user_chat_screen.dart';
 import 'package:booking_system_flutter/screens/dashboard/component/wallet_history.dart';
+import 'package:booking_system_flutter/screens/dashboard/fragment/profile_fragment.dart';
+import 'package:booking_system_flutter/screens/favourite_provider_screen.dart';
 import 'package:booking_system_flutter/screens/helpDesk/model/help_desk_response.dart';
 import 'package:booking_system_flutter/screens/service/favourite_service_screen.dart';
 import 'package:booking_system_flutter/services/auth_services.dart';
@@ -171,7 +173,7 @@ class _MyAppState extends State<MyApp> {
               builder: (_) => MaterialApp(
                 debugShowCheckedModeBanner: false,
                 navigatorKey: navigatorKey,
-                home: FavouriteServiceScreen(),
+                home: ProfileFragment(),
                 theme: AppTheme.lightTheme(color: snap.data),
                 darkTheme: AppTheme.darkTheme(color: snap.data),
                 themeMode:
