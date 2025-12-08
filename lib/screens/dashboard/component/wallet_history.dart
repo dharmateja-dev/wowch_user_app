@@ -12,7 +12,6 @@ import '../../../component/base_scaffold_widget.dart';
 import '../../../component/empty_error_state_widget.dart';
 import '../../../component/loader_widget.dart';
 import '../../../model/user_wallet_history.dart';
-import '../../../network/rest_apis.dart';
 import '../../../utils/common.dart';
 import '../../wallet/component/wallet_card.dart';
 import 'wallet_history_shimmer.dart';

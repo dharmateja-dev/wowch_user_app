@@ -127,7 +127,7 @@ class ThemeSelectionDaiLogState extends State<ThemeSelectionDaiLog> {
                             border: Border.all(
                               color: isSelected
                                   ? primaryColor
-                                  : primaryColor.withOpacity(0.5),
+                                  : primaryColor.withValues(alpha: 0.5),
                               width: isSelected ? 2.0 : 1.5,
                             ),
                             color:

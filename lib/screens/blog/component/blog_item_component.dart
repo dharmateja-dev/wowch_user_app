@@ -31,21 +31,26 @@ class _BlogItemComponentState extends State<BlogItemComponent> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        BlogDetailScreen(blogId: widget.blogData!.id.validate()).launch(context);
+        BlogDetailScreen(blogId: widget.blogData!.id.validate())
+            .launch(context);
       },
       child: Container(
         padding: const EdgeInsets.all(12),
         margin: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
         decoration: boxDecorationWithRoundedCorners(
           borderRadius: radius(),
-          backgroundColor: context.cardColor,
-          border: appStore.isDarkMode ? Border.all(color: context.dividerColor) : null,
+          backgroundColor: context.primaryColor.withValues(alpha: 0.1),
+          border: appStore.isDarkMode
+              ? Border.all(color: context.dividerColor)
+              : null,
         ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             CachedImageWidget(
-              url: widget.blogData!.imageAttachments.validate().isNotEmpty ? widget.blogData!.imageAttachments!.first.validate() : '',
+              url: widget.blogData!.imageAttachments.validate().isNotEmpty
+                  ? widget.blogData!.imageAttachments!.first.validate()
+                  : '',
               fit: BoxFit.cover,
               height: 80,
               width: 80,
@@ -74,22 +79,31 @@ class _BlogItemComponentState extends State<BlogItemComponent> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(widget.blogData!.authorName.validate(), style: primaryTextStyle(size: 14), maxLines: 1, overflow: TextOverflow.ellipsis),
+                            Text(widget.blogData!.authorName.validate(),
+                                style: primaryTextStyle(size: 14),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis),
                             2.height,
-                            Text(widget.blogData!.publishDate.validate(), style: secondaryTextStyle(size: 10)),
+                            Text(widget.blogData!.publishDate.validate(),
+                                style: secondaryTextStyle(size: 10)),
                           ],
                         ).expand(),
                       ],
                     ).expand(),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Icon(Icons.remove_red_eye, size: 14, color: context.iconColor),
-                        4.width,
-                        Text('${widget.blogData!.totalViews.validate()} ', style: secondaryTextStyle()),
-                        Text(language.views, style: secondaryTextStyle(), maxLines: 1, overflow: TextOverflow.ellipsis),
-                      ],
-                    )
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.end,
+                    //   children: [
+                    //     Icon(Icons.remove_red_eye,
+                    //         size: 14, color: context.iconColor),
+                    //     4.width,
+                    //     Text('${widget.blogData!.totalViews.validate()} ',
+                    //         style: secondaryTextStyle()),
+                    //     Text(language.views,
+                    //         style: secondaryTextStyle(),
+                    //         maxLines: 1,
+                    //         overflow: TextOverflow.ellipsis),
+                    //   ],
+                    // )
                   ],
                 ),
               ],

@@ -14,13 +14,9 @@ import 'package:booking_system_flutter/model/user_data_model.dart';
 import 'package:booking_system_flutter/model/user_wallet_history.dart';
 import 'package:booking_system_flutter/screens/blog/model/blog_detail_response.dart';
 import 'package:booking_system_flutter/screens/blog/model/blog_response_model.dart';
-import 'package:booking_system_flutter/screens/chat/chat_list_screen.dart';
-import 'package:booking_system_flutter/screens/chat/user_chat_screen.dart';
-import 'package:booking_system_flutter/screens/dashboard/component/wallet_history.dart';
-import 'package:booking_system_flutter/screens/dashboard/fragment/profile_fragment.dart';
-import 'package:booking_system_flutter/screens/favourite_provider_screen.dart';
+import 'package:booking_system_flutter/screens/blog/view/blog_detail_screen.dart';
 import 'package:booking_system_flutter/screens/helpDesk/model/help_desk_response.dart';
-import 'package:booking_system_flutter/screens/service/favourite_service_screen.dart';
+import 'package:booking_system_flutter/screens/review/rating_view_all_screen.dart';
 import 'package:booking_system_flutter/services/auth_services.dart';
 import 'package:booking_system_flutter/services/chat_services.dart';
 import 'package:booking_system_flutter/services/user_services.dart';
@@ -173,7 +169,7 @@ class _MyAppState extends State<MyApp> {
               builder: (_) => MaterialApp(
                 debugShowCheckedModeBanner: false,
                 navigatorKey: navigatorKey,
-                home: ProfileFragment(),
+                home: RatingViewAllScreen(serviceId: 1),
                 theme: AppTheme.lightTheme(color: snap.data),
                 darkTheme: AppTheme.darkTheme(color: snap.data),
                 themeMode:
