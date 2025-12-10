@@ -596,7 +596,7 @@ class LanguageAr extends BaseLanguage {
   String get lblRating => "تقييم";
 
   @override
-  String get lblAvailableAt => "المواقع المتاحة";
+  String get lblAvailableAt => "متاح في";
 
   @override
   String get lblRelatedServices => "الخدمات ذات الصلة";

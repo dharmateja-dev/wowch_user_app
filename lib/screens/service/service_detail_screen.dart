@@ -14,6 +14,7 @@ import 'package:booking_system_flutter/model/user_data_model.dart';
 import 'package:booking_system_flutter/network/rest_apis.dart';
 import 'package:booking_system_flutter/screens/booking/book_service_screen.dart';
 import 'package:booking_system_flutter/screens/booking/component/booking_detail_provider_widget.dart';
+import 'package:booking_system_flutter/screens/auth/sign_in_screen.dart';
 import 'package:booking_system_flutter/screens/booking/provider_info_screen.dart';
 import 'package:booking_system_flutter/screens/dashboard/component/horizontal_shop_list_component.dart';
 import 'package:booking_system_flutter/screens/review/components/review_widget.dart';
@@ -27,6 +28,7 @@ import 'package:booking_system_flutter/store/service_addon_store.dart';
 import 'package:booking_system_flutter/utils/colors.dart';
 import 'package:booking_system_flutter/utils/common.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
+import 'package:booking_system_flutter/utils/string_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -196,15 +198,13 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           8.height,
-          Text(language.lblAvailableAt,
-              style: boldTextStyle(size: LABEL_TEXT_SIZE)),
+          Text(language.lblAvailableAt, style: boldTextStyle()),
           8.height,
           Align(
             alignment: Alignment.centerLeft,
-            child: Wrap(
-              alignment: WrapAlignment.start,
+            child: Column(
               spacing: 8,
-              runSpacing: 8,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: List.generate(
                 zone.zones.validate().length,
                 (index) {
@@ -222,24 +222,23 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen>
                       setState(() {});
                     },
                     child: Container(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 8.0, horizontal: 8),
                       decoration: boxDecorationDefault(
+                          borderRadius: radius(8),
                           color: appStore.isDarkMode
                               ? isSelected
                                   ? primaryColor
                                   : Colors.black
                               : isSelected
                                   ? primaryColor
-                                  : Colors.white),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 8.0, horizontal: 6),
-                        child: Text(
-                          value.name.validate(),
-                          style: boldTextStyle(
-                              color: isSelected
-                                  ? Colors.white
-                                  : textPrimaryColorGlobal),
-                        ),
+                                  : Color(0xFFE8F3EC)),
+                      child: Text(
+                        value.name.validate(),
+                        style: boldTextStyle(
+                            color: isSelected
+                                ? Colors.white
+                                : textPrimaryColorGlobal),
                       ),
                     ),
                   );
@@ -261,31 +260,28 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen>
           8.height,
           Align(
             alignment: Alignment.centerLeft,
-            child: Wrap(
-              crossAxisAlignment: WrapCrossAlignment.start,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               spacing: 8,
-              runSpacing: 8,
               children: List.generate(
-                data.serviceAddressMapping!.length,
+                zone.zones.validate().length,
                 (index) {
-                  ServiceAddressMapping value =
-                      data.serviceAddressMapping![index];
-                  if (value.providerAddressMapping == null)
-                    return const Offstage();
+                  Zones value = zone.zones.validate()[index];
+                  if (value.id == null) return Offstage();
                   bool isSelected = selectedAddressId == index;
                   if (selectedBookingAddressId == -1) {
-                    selectedBookingAddressId = data
-                        .serviceAddressMapping!.first.providerAddressId
-                        .validate();
+                    selectedBookingAddressId =
+                        zone.zones.validate().first.id.validate();
                   }
                   return GestureDetector(
                     onTap: () {
                       selectedAddressId = index;
-                      selectedBookingAddressId =
-                          value.providerAddressId.validate();
+                      selectedBookingAddressId = value.id.validate();
                       setState(() {});
                     },
                     child: Container(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 8.0, horizontal: 10),
                       decoration: boxDecorationDefault(
                           color: appStore.isDarkMode
                               ? isSelected
@@ -293,17 +289,13 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen>
                                   : Colors.black
                               : isSelected
                                   ? primaryColor
-                                  : Colors.white),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 8.0, horizontal: 10),
-                        child: Text(
-                          value.providerAddressMapping!.address.validate(),
-                          style: boldTextStyle(
-                              color: isSelected
-                                  ? Colors.white
-                                  : textPrimaryColorGlobal),
-                        ),
+                                  : Color(0xFFE8F3EC)),
+                      child: Text(
+                        value.name.validate(),
+                        style: boldTextStyle(
+                            color: isSelected
+                                ? Colors.white
+                                : textPrimaryColorGlobal),
                       ),
                     ),
                   );
@@ -569,6 +561,31 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen>
     });
   }
 
+  Future<void> _onTapFavourite(ServiceData serviceDetail) async {
+    if (serviceDetail.isFavourite == 1) {
+      serviceDetail.isFavourite = 0;
+      setState(() {});
+
+      await removeToWishList(serviceId: serviceDetail.id.validate())
+          .then((value) {
+        if (!value) {
+          serviceDetail.isFavourite = 1;
+          setState(() {});
+        }
+      });
+    } else {
+      serviceDetail.isFavourite = 1;
+      setState(() {});
+
+      await addToWishList(serviceId: serviceDetail.id.validate()).then((value) {
+        if (!value) {
+          serviceDetail.isFavourite = 0;
+          setState(() {});
+        }
+      });
+    }
+  }
+
   @override
   void setState(fn) {
     if (mounted) super.setState(fn);
@@ -597,6 +614,36 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen>
         return AppScaffold(
           appBarTitle: snap.data!.serviceDetail?.categoryName.validate() ?? '',
           showLoader: false,
+          actions: [
+            Container(
+              margin: const EdgeInsets.only(right: 8),
+              padding: const EdgeInsets.all(8),
+              decoration: boxDecorationWithShadow(
+                boxShape: BoxShape.circle,
+                backgroundColor: context.cardColor,
+              ),
+              child: snap.data!.serviceDetail!.isFavourite == 1
+                  ? ic_fill_heart.iconImage(color: favouriteColor, size: 24)
+                  : ic_heart.iconImage(color: unFavouriteColor, size: 24),
+            ).onTap(() async {
+              if (appStore.isLoggedIn) {
+                await _onTapFavourite(snap.data!.serviceDetail!);
+                setState(() {});
+              } else {
+                push(const SignInScreen(returnExpected: true)).then((value) {
+                  setStatusBarColor(transparentColor,
+                      delayInMilliSeconds: 1000);
+                  if (value) {
+                    _onTapFavourite(snap.data!.serviceDetail!);
+                    setState(() {});
+                  }
+                });
+              }
+            },
+                highlightColor: Colors.transparent,
+                splashColor: Colors.transparent,
+                hoverColor: Colors.transparent),
+          ],
           child: SafeArea(
             child: Column(
               children: [
@@ -613,10 +660,9 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen>
                       return await 2.seconds.delay;
                     },
                     children: [
-                      8.height,
                       // ServiceDetailHeaderComponent(
                       //     serviceDetail: snap.data!.serviceDetail!),
-                      4.height,
+                      16.height,
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -736,39 +782,61 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen>
                       ).paddingSymmetric(horizontal: 16),
                       8.height,
 
+                      //Service Visit Type
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            language.serviceVisitType,
+                            style: boldTextStyle(),
+                          ),
+                          8.height,
+                          Text(
+                            snap.data!.serviceDetail!.isOnlineService
+                                ? language.thisServiceIsOnlineRemote
+                                : snap.data!.serviceDetail!.isOnShopService
+                                    ? 'This Service will be completed ${language.lblAtShop.toLowerCase()}.'
+                                    : snap.data!.serviceDetail!.isOnSiteService
+                                        ? 'This Service will be completed at your location.'
+                                        : language.notAvailable,
+                            style: primaryTextStyle(),
+                          ),
+                        ],
+                      ).paddingSymmetric(horizontal: 16, vertical: 16),
+                      8.height,
+
                       //Description
                       2.height,
-                      Container(
-                        width: context.width(),
-                        padding: const EdgeInsets.all(16),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            snap.data!.serviceDetail!.description
-                                    .validate()
-                                    .isNotEmpty
-                                ? ReadMoreText(
-                                    snap.data!.serviceDetail!.description
-                                        .validate(),
-                                    style: secondaryTextStyle(),
-                                    colorClickableText: context.primaryColor,
-                                    textAlign: TextAlign.justify,
-                                  )
-                                : Text(language.lblNotDescription,
-                                    style: secondaryTextStyle()),
-                            8.height,
-                            slotsAvailable(
-                              data: snap.data!.serviceDetail!.bookingSlots
-                                  .validate(),
-                              isSlotAvailable:
-                                  snap.data!.serviceDetail!.isSlotAvailable,
-                            ),
-                            availableWidget(
-                              data: snap.data!.serviceDetail!,
-                              zone: snap.data!,
-                            ),
-                          ],
-                        ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(language.hintDescription,
+                              style: boldTextStyle()),
+                          8.height,
+                          snap.data!.serviceDetail!.description
+                                  .validate()
+                                  .isNotEmpty
+                              ? ReadMoreText(
+                                  snap.data!.serviceDetail!.description
+                                      .validate(),
+                                  style: primaryTextStyle(),
+                                  colorClickableText: context.primaryColor,
+                                  textAlign: TextAlign.justify,
+                                )
+                              : Text(language.lblNotDescription,
+                                  style: primaryTextStyle()),
+                          12.height,
+                          slotsAvailable(
+                            data: snap.data!.serviceDetail!.bookingSlots
+                                .validate(),
+                            isSlotAvailable:
+                                snap.data!.serviceDetail!.isSlotAvailable,
+                          ),
+                          availableWidget(
+                            data: snap.data!.serviceDetail!,
+                            zone: snap.data!,
+                          ),
+                        ],
                       ).paddingSymmetric(horizontal: 16, vertical: 8),
                       providerWidget(data: snap.data!.provider!),
                       if (snap.data!.shops.validate().isNotEmpty)

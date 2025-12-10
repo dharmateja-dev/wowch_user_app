@@ -599,7 +599,7 @@ class LanguageDe extends BaseLanguage {
   String get lblRating => "Nennen";
 
   @override
-  String get lblAvailableAt => "Deltine Available Locations";
+  String get lblAvailableAt => "Verfügbar bei";
 
   @override
   String get lblRelatedServices => "Zugehörige Dienstleistungen.";

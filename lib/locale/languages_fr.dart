@@ -601,7 +601,7 @@ class LanguageFr extends BaseLanguage {
   String get lblRating => "Notation";
 
   @override
-  String get lblAvailableAt => "Disponible à l'emplacement";
+  String get lblAvailableAt => "Disponible à";
 
   @override
   String get lblRelatedServices => "Services associés";

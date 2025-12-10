@@ -582,7 +582,7 @@ class LanguageHi extends BaseLanguage {
   String get lblRating => "रेटिंग";
 
   @override
-  String get lblAvailableAt => "उपलब्ध स्थान";
+  String get lblAvailableAt => "उपलब्ध पर";
 
   @override
   String get lblRelatedServices => "संबंधित सेवाएं";

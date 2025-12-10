@@ -597,7 +597,7 @@ class LanguageEn extends BaseLanguage {
   String get lblRating => "Rating";
 
   @override
-  String get lblAvailableAt => "Available Locations";
+  String get lblAvailableAt => "Available At";
 
   @override
   String get lblRelatedServices => "Related Services";
