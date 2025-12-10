@@ -1200,6 +1200,28 @@ class LanguageFr extends BaseLanguage {
       'Êtes-vous sûr de vouloir supprimer cette offre d’emploi ?';
 
   @override
+  String get lblEnterJobTitle => 'Saisir le titre du poste';
+
+  @override
+  String get lblEnterJobDescription => 'Saisir la description du poste';
+
+  @override
+  String get lblChooseImage => 'Choisir une image';
+
+  @override
+  String get lblEnterCategory => 'Saisir la catégorie';
+
+  @override
+  String get lblEnterServiceName => 'Saisir le nom du service';
+
+  @override
+  String get lblEnterServiceDescription => 'Saisir la description du service';
+
+  @override
+  String get lblDeleteImageConfirmation =>
+      'Êtes-vous sûr de vouloir supprimer cette image ?';
+
+  @override
   String get accepted => 'Accepté';
 
   @override

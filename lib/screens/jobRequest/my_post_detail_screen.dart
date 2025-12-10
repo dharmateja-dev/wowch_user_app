@@ -26,13 +26,15 @@ class MyPostDetailScreen extends StatefulWidget {
   final PostJobData? postJobData;
   final VoidCallback callback;
 
-  MyPostDetailScreen({required this.postRequestId, this.postJobData, required this.callback});
+  MyPostDetailScreen(
+      {required this.postRequestId, this.postJobData, required this.callback});
 
   @override
   _MyPostDetailScreenState createState() => _MyPostDetailScreenState();
 }
 
 class _MyPostDetailScreenState extends State<MyPostDetailScreen> {
+  static const bool USE_DUMMY_DATA = true;
   Future<PostJobDetailResponse>? future;
 
   int page = 1;
@@ -49,11 +51,47 @@ class _MyPostDetailScreenState extends State<MyPostDetailScreen> {
     init();
   }
 
-  void init() async {
-    future = getPostJobDetail({PostJob.postRequestId: widget.postRequestId.validate()});
+  PostJobDetailResponse _dummyDetail() {
+    final dummyService = ServiceData(
+      id: 1,
+      name: 'Nurses',
+      categoryName: 'Health Care',
+      attachments: [
+        'https://images.pexels.com/photos/3985166/pexels-photo-3985166.jpeg?auto=compress&cs=tinysrgb&w=800'
+      ],
+    );
+
+    final dummyPost = PostJobData(
+      id: widget.postRequestId,
+      title: 'Nurses',
+      description: 'Basic care and support for your loved ones.',
+      price: 600,
+      jobPrice: 60,
+      status: JOB_REQUEST_STATUS_REQUESTED,
+      createdAt: '2025-06-10',
+      service: [dummyService],
+    );
+
+    return PostJobDetailResponse(
+      postRequestDetail: dummyPost,
+      biderData: [],
+    );
   }
 
-  Widget titleWidget({required String title, required String detail, bool isReadMore = false, required TextStyle detailTextStyle}) {
+  void init() async {
+    if (USE_DUMMY_DATA) {
+      future = Future.value(_dummyDetail());
+    } else {
+      future = getPostJobDetail(
+          {PostJob.postRequestId: widget.postRequestId.validate()});
+    }
+  }
+
+  Widget titleWidget(
+      {required String title,
+      required String detail,
+      bool isReadMore = false,
+      required TextStyle detailTextStyle}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -76,7 +114,9 @@ class _MyPostDetailScreenState extends State<MyPostDetailScreen> {
     return Container(
       padding: const EdgeInsets.all(16),
       width: context.width(),
-      decoration: boxDecorationWithRoundedCorners(backgroundColor: context.cardColor, borderRadius: const BorderRadius.all(Radius.circular(16))),
+      decoration: boxDecorationWithRoundedCorners(
+          backgroundColor: context.cardColor,
+          borderRadius: const BorderRadius.all(Radius.circular(16))),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -93,10 +133,16 @@ class _MyPostDetailScreenState extends State<MyPostDetailScreen> {
               detailTextStyle: primaryTextStyle(),
               isReadMore: true,
             ),
-          Text(data.status.validate() == JOB_REQUEST_STATUS_ASSIGNED ? language.jobPrice : language.estimatedPrice, style: secondaryTextStyle()),
+          Text(
+              data.status.validate() == JOB_REQUEST_STATUS_ASSIGNED
+                  ? language.jobPrice
+                  : language.estimatedPrice,
+              style: secondaryTextStyle()),
           4.height,
           PriceWidget(
-            price: data.status.validate() == JOB_REQUEST_STATUS_ASSIGNED ? data.jobPrice.validate() : data.price.validate(),
+            price: data.status.validate() == JOB_REQUEST_STATUS_ASSIGNED
+                ? data.jobPrice.validate()
+                : data.price.validate(),
             isHourlyService: false,
             color: textPrimaryColorGlobal,
             isFreeService: false,
@@ -111,7 +157,8 @@ class _MyPostDetailScreenState extends State<MyPostDetailScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(language.services, style: boldTextStyle(size: LABEL_TEXT_SIZE)).paddingOnly(left: 16, right: 16),
+        Text(language.services, style: boldTextStyle(size: LABEL_TEXT_SIZE))
+            .paddingOnly(left: 16, right: 16),
         8.height,
         AnimatedListView(
           itemCount: serviceList.length,
@@ -126,18 +173,26 @@ class _MyPostDetailScreenState extends State<MyPostDetailScreen> {
               width: context.width(),
               margin: const EdgeInsets.all(8),
               padding: const EdgeInsets.all(8),
-              decoration: boxDecorationWithRoundedCorners(backgroundColor: context.cardColor, borderRadius: const BorderRadius.all(Radius.circular(16))),
+              decoration: boxDecorationWithRoundedCorners(
+                  backgroundColor: context.cardColor,
+                  borderRadius: const BorderRadius.all(Radius.circular(16))),
               child: Row(
                 children: [
                   CachedImageWidget(
-                    url: data.attachments.validate().isNotEmpty ? data.attachments!.first.validate() : "",
+                    url: data.attachments.validate().isNotEmpty
+                        ? data.attachments!.first.validate()
+                        : "",
                     fit: BoxFit.cover,
                     height: 50,
                     width: 50,
                     radius: defaultRadius,
                   ),
                   16.width,
-                  Text(data.name.validate(), style: primaryTextStyle(), maxLines: 2, overflow: TextOverflow.ellipsis).expand(),
+                  Text(data.name.validate(),
+                          style: primaryTextStyle(),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis)
+                      .expand(),
                 ],
               ),
             );
@@ -147,7 +202,8 @@ class _MyPostDetailScreenState extends State<MyPostDetailScreen> {
     );
   }
 
-  Widget bidderWidget(List<BidderData> bidderList, {required PostJobDetailResponse postJobDetailResponse}) {
+  Widget bidderWidget(List<BidderData> bidderList,
+      {required PostJobDetailResponse postJobDetailResponse}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -159,7 +215,9 @@ class _MyPostDetailScreenState extends State<MyPostDetailScreen> {
           },
         ).paddingSymmetric(horizontal: 16),
         AnimatedListView(
-          itemCount: bidderList.length > 4 ? bidderList.take(4).length : bidderList.length,
+          itemCount: bidderList.length > 4
+              ? bidderList.take(4).length
+              : bidderList.length,
           padding: EdgeInsets.zero,
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
@@ -172,7 +230,8 @@ class _MyPostDetailScreenState extends State<MyPostDetailScreen> {
               postJobData: postJobDetailResponse.postRequestDetail!,
               postJobDetailResponse: postJobDetailResponse,
             ).onTap(() async {
-              await ProviderInfoScreen(providerId: bidderList[i].providerId).launch(context);
+              await ProviderInfoScreen(providerId: bidderList[i].providerId)
+                  .launch(context);
               setStatusBarColor(Colors.transparent);
             });
           },
@@ -183,22 +242,27 @@ class _MyPostDetailScreenState extends State<MyPostDetailScreen> {
 
   Widget providerWidget(List<BidderData> bidderList, num? providerId) {
     try {
-      BidderData? bidderData = bidderList.firstWhere((element) => element.providerId == providerId);
+      BidderData? bidderData =
+          bidderList.firstWhere((element) => element.providerId == providerId);
       UserData? user = bidderData.provider;
 
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           16.height,
-          Text(language.assignedProvider, style: boldTextStyle(size: LABEL_TEXT_SIZE)),
+          Text(language.assignedProvider,
+              style: boldTextStyle(size: LABEL_TEXT_SIZE)),
           16.height,
           InkWell(
             onTap: () {
-              ProviderInfoScreen(providerId: user.id.validate()).launch(context);
+              ProviderInfoScreen(providerId: user.id.validate())
+                  .launch(context);
             },
             child: Container(
               padding: const EdgeInsets.all(16),
-              decoration: boxDecorationWithRoundedCorners(backgroundColor: context.cardColor, borderRadius: const BorderRadius.all(Radius.circular(16))),
+              decoration: boxDecorationWithRoundedCorners(
+                  backgroundColor: context.cardColor,
+                  borderRadius: const BorderRadius.all(Radius.circular(16))),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -240,7 +304,10 @@ class _MyPostDetailScreenState extends State<MyPostDetailScreen> {
                               ),
                             ),
                           6.height,
-                          if (user.providersServiceRating != null) DisabledRatingBarWidget(rating: user.providersServiceRating.validate(), size: 14),
+                          if (user.providersServiceRating != null)
+                            DisabledRatingBarWidget(
+                                rating: user.providersServiceRating.validate(),
+                                size: 14),
                         ],
                       ).expand(),
                     ],
@@ -284,15 +351,21 @@ class _MyPostDetailScreenState extends State<MyPostDetailScreen> {
                 fadeInConfiguration: FadeInConfiguration(duration: 2.seconds),
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  postJobDetailWidget(data: data.postRequestDetail!).paddingAll(16),
-                  if (data.postRequestDetail!.service.validate().isNotEmpty) postJobServiceWidget(serviceList: data.postRequestDetail!.service.validate()),
+                  postJobDetailWidget(data: data.postRequestDetail!)
+                      .paddingAll(16),
+                  if (data.postRequestDetail!.service.validate().isNotEmpty)
+                    postJobServiceWidget(
+                        serviceList:
+                            data.postRequestDetail!.service.validate()),
                   if (data.postRequestDetail!.providerId != null)
                     providerWidget(
                       data.biderData.validate(),
                       data.postRequestDetail!.providerId.validate(),
                     ),
                   16.height,
-                  if (data.biderData.validate().isNotEmpty) bidderWidget(data.biderData.validate(), postJobDetailResponse: data),
+                  if (data.biderData.validate().isNotEmpty)
+                    bidderWidget(data.biderData.validate(),
+                        postJobDetailResponse: data),
                 ],
                 onSwipeRefresh: () async {
                   page = 1;
@@ -303,25 +376,30 @@ class _MyPostDetailScreenState extends State<MyPostDetailScreen> {
                   return await 2.seconds.delay;
                 },
               ),
-              if (data.postRequestDetail!.status.validate() == JOB_REQUEST_STATUS_ASSIGNED)
+              if (data.postRequestDetail!.status.validate() ==
+                  JOB_REQUEST_STATUS_ASSIGNED)
                 Positioned(
                   bottom: 16,
                   left: 16,
                   right: 16,
                   child: AppButton(
-                    child: Text(language.bookTheService, style: boldTextStyle(color: white)),
+                    child: Text(language.bookTheService,
+                        style: boldTextStyle(color: white)),
                     color: context.primaryColor,
                     width: context.width(),
                     onTap: () async {
                       BookPostJobRequestScreen(
                         postJobDetailResponse: data,
-                        providerId: data.postRequestDetail!.providerId.validate(),
+                        providerId:
+                            data.postRequestDetail!.providerId.validate(),
                         jobPrice: data.postRequestDetail!.jobPrice.validate(),
                       ).launch(context);
                     },
                   ),
                 ),
-              Observer(builder: (context) => LoaderWidget().visible(appStore.isLoading))
+              Observer(
+                  builder: (context) =>
+                      LoaderWidget().visible(appStore.isLoading))
             ],
           );
         },

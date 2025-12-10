@@ -1172,6 +1172,28 @@ class LanguageHi extends BaseLanguage {
   String get lblDeletePostJob => 'क्या आप वाकई इस जॉब पोस्ट को हटाना चाहते हैं?';
 
   @override
+  String get lblEnterJobTitle => 'नौकरी का शीर्षक दर्ज करें';
+
+  @override
+  String get lblEnterJobDescription => 'नौकरी का विवरण दर्ज करें';
+
+  @override
+  String get lblChooseImage => 'छवि चुनें';
+
+  @override
+  String get lblEnterCategory => 'श्रेणी दर्ज करें';
+
+  @override
+  String get lblEnterServiceName => 'सेवा का नाम दर्ज करें';
+
+  @override
+  String get lblEnterServiceDescription => 'सेवा विवरण दर्ज करें';
+
+  @override
+  String get lblDeleteImageConfirmation =>
+      'क्या आप वाकई इस छवि को हटाना चाहते हैं?';
+
+  @override
   String get accepted => 'को स्वीकृत';
 
   @override

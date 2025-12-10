@@ -25,6 +25,7 @@ class NewJobRequestComponent extends StatelessWidget {
               .paddingSymmetric(horizontal: 12, vertical: 12),
           AppButton(
             padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 12),
+            color: Colors.white,
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [

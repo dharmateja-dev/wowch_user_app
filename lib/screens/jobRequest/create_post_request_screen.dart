@@ -19,11 +19,16 @@ import '../../component/empty_error_state_widget.dart';
 
 class CreatePostRequestScreen extends StatefulWidget {
   @override
-  _CreatePostRequestScreenState createState() => _CreatePostRequestScreenState();
+  _CreatePostRequestScreenState createState() =>
+      _CreatePostRequestScreenState();
 }
 
 class _CreatePostRequestScreenState extends State<CreatePostRequestScreen> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
+  // Toggle dummy data for UI showcase
+  static const bool USE_DUMMY_DATA = true;
+  static const Color _fieldFill = Color(0xFFEAF3EE);
 
   TextEditingController postTitleCont = TextEditingController();
   TextEditingController descriptionCont = TextEditingController();
@@ -44,18 +49,44 @@ class _CreatePostRequestScreenState extends State<CreatePostRequestScreen> {
   Future<void> init() async {
     appStore.setLoading(true);
 
-    await getMyServiceList().then((value) {
+    if (USE_DUMMY_DATA) {
+      // Showcase dummy services similar to the mock
+      myServiceList = [
+        ServiceData(
+          id: 1,
+          name: 'Nurses',
+          categoryName: 'Nurses',
+          attachments: [
+            'https://images.pexels.com/photos/3985166/pexels-photo-3985166.jpeg?auto=compress&cs=tinysrgb&w=800'
+          ],
+        ),
+        ServiceData(
+          id: 2,
+          name: 'Nurses',
+          categoryName: 'Nurses',
+          attachments: [
+            'https://images.pexels.com/photos/3985166/pexels-photo-3985166.jpeg?auto=compress&cs=tinysrgb&w=800'
+          ],
+        ),
+      ];
+      selectedServiceList = [];
+      cachedServiceFavList = []; // keep other caches untouched
       appStore.setLoading(false);
+      setState(() {});
+    } else {
+      await getMyServiceList().then((value) {
+        appStore.setLoading(false);
 
-      if (value.userServices != null) {
-        myServiceList = value.userServices.validate();
-      }
-    }).catchError((e) {
-      appStore.setLoading(false);
-      toast(e.toString());
-    });
+        if (value.userServices != null) {
+          myServiceList = value.userServices.validate();
+        }
+      }).catchError((e) {
+        appStore.setLoading(false);
+        toast(e.toString());
+      });
 
-    setState(() {});
+      setState(() {});
+    }
   }
 
   void createPostJobClick() {
@@ -126,45 +157,74 @@ class _CreatePostRequestScreenState extends State<CreatePostRequestScreen> {
                     key: formKey,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        //Post Title
                         16.height,
+                        Text(language.postJobTitle, style: boldTextStyle()),
+                        8.height,
                         AppTextField(
                           controller: postTitleCont,
                           textFieldType: TextFieldType.NAME,
                           errorThisFieldRequired: language.requiredText,
                           nextFocus: descriptionFocus,
-                          decoration: inputDecoration(context, labelText: language.postJobTitle),
+                          decoration: inputDecoration(
+                            context,
+                            hintText: language.lblEnterJobTitle,
+                            fillColor: Color(0xFFE8F3EC),
+                            borderRadius: 8,
+                          ),
                         ),
+                        //Post Description
                         16.height,
+                        Text(language.postJobDescription,
+                            style: boldTextStyle()),
+                        8.height,
                         AppTextField(
                           controller: descriptionCont,
                           textFieldType: TextFieldType.MULTILINE,
                           errorThisFieldRequired: language.requiredText,
-                          maxLines: 2,
+                          maxLines: 4,
                           focus: descriptionFocus,
                           nextFocus: priceFocus,
                           enableChatGPT: appConfigurationStore.chatGPTStatus,
-                          promptFieldInputDecorationChatGPT: inputDecoration(context).copyWith(
-                            hintText: language.writeHere,
-                            fillColor: context.scaffoldBackgroundColor,
+                          promptFieldInputDecorationChatGPT:
+                              inputDecoration(context).copyWith(
+                            hintText: language.lblEnterJobDescription,
+                            fillColor: Color(0xFFE8F3EC),
                             filled: true,
                           ),
-                          testWithoutKeyChatGPT: appConfigurationStore.testWithoutKey,
+                          testWithoutKeyChatGPT:
+                              appConfigurationStore.testWithoutKey,
                           loaderWidgetForChatGPT: const ChatGPTLoadingWidget(),
-                          decoration: inputDecoration(context, labelText: language.postJobDescription),
+                          decoration: inputDecoration(
+                            context,
+                            hintText: language.lblEnterJobDescription,
+                            fillColor: Color(0xFFE8F3EC),
+                            borderRadius: 8,
+                          ),
                         ),
                         16.height,
+                        Text(language.price, style: boldTextStyle()),
+                        8.height,
                         AppTextField(
                           textFieldType: TextFieldType.PHONE,
                           controller: priceCont,
                           focus: priceFocus,
                           errorThisFieldRequired: language.requiredText,
-                          decoration: inputDecoration(context, labelText: language.price),
-                          keyboardType: const TextInputType.numberWithOptions(decimal: true, signed: true),
+                          decoration: inputDecoration(
+                            context,
+                            hintText: language.price,
+                            fillColor: Color(0xFFE8F3EC),
+                            borderRadius: 8,
+                          ),
+                          keyboardType: const TextInputType.numberWithOptions(
+                              decimal: true, signed: true),
                           validator: (s) {
                             if (s!.isEmpty) return errorThisFieldRequired;
 
-                            if (s.toDouble() <= 0) return language.priceAmountValidationMessage;
+                            if (s.toDouble() <= 0)
+                              return language.priceAmountValidationMessage;
                             return null;
                           },
                         )
@@ -174,15 +234,21 @@ class _CreatePostRequestScreenState extends State<CreatePostRequestScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(language.services, style: boldTextStyle(size: LABEL_TEXT_SIZE)),
-                      AppButton(
-                        child: Text(language.addNewService, style: boldTextStyle(color: context.primaryColor)),
-                        onTap: () async {
+                      Text(language.services,
+                          style: boldTextStyle(size: LABEL_TEXT_SIZE)),
+                      TextButton(
+                        style: TextButton.styleFrom(
+                          foregroundColor: context.primaryColor,
+                          padding: EdgeInsets.zero,
+                        ),
+                        onPressed: () async {
                           hideKeyboard(context);
-
-                          bool? res = await CreateServiceScreen().launch(context);
+                          bool? res =
+                              await CreateServiceScreen().launch(context);
                           if (res ?? false) init();
                         },
+                        child: Text(language.addNewService,
+                            style: boldTextStyle(color: context.primaryColor)),
                       ),
                     ],
                   ).paddingOnly(right: 8, left: 16),
@@ -198,39 +264,89 @@ class _CreatePostRequestScreenState extends State<CreatePostRequestScreen> {
 
                         return Container(
                           padding: const EdgeInsets.all(8),
-                          margin: const EdgeInsets.all(8),
+                          margin: const EdgeInsets.symmetric(
+                              horizontal: 8, vertical: 6),
                           width: context.width(),
-                          decoration: boxDecorationWithRoundedCorners(backgroundColor: context.cardColor),
+                          decoration: boxDecorationWithRoundedCorners(
+                            backgroundColor: _fieldFill,
+                            borderRadius: radius(8),
+                          ),
                           child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               CachedImageWidget(
-                                url: data.attachments.validate().isNotEmpty ? data.attachments!.first.validate() : "",
+                                url: data.attachments.validate().isNotEmpty
+                                    ? data.attachments!.first.validate()
+                                    : "",
                                 fit: BoxFit.cover,
-                                height: 60,
-                                width: 60,
-                                radius: defaultRadius,
+                                height: 70,
+                                width: 70,
+                                radius: 12,
                               ),
-                              16.width,
+                              12.width,
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      data.name.validate(),
+                                      style: boldTextStyle(size: 18),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                    6.height,
+                                    Text(data.categoryName.validate(),
+                                        style: primaryTextStyle()),
+                                  ],
+                                ),
+                              ),
+                              12.width,
                               Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
-                                  Text(data.name.validate(), style: boldTextStyle()),
-                                  4.height,
-                                  Text(data.categoryName.validate(), style: secondaryTextStyle()),
-                                ],
-                              ).expand(),
-                              Column(
-                                children: [
+                                  selectedServiceList
+                                          .any((e) => e.id == data.id)
+                                      ? AppButton(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 20, vertical: 4),
+                                          shapeBorder: RoundedRectangleBorder(
+                                              borderRadius: radius(8),
+                                              side: BorderSide(
+                                                color: context.primaryColor,
+                                              )),
+                                          color:
+                                              context.scaffoldBackgroundColor,
+                                          elevation: 0,
+                                          onTap: () {
+                                            selectedServiceList.remove(data);
+                                            setState(() {});
+                                          },
+                                        )
+                                      : AppButton(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 20, vertical: 4),
+                                          shapeBorder: RoundedRectangleBorder(
+                                              borderRadius: radius(8),
+                                              side: BorderSide(
+                                                color: context.primaryColor,
+                                              )),
+                                          color:
+                                              context.scaffoldBackgroundColor,
+                                          elevation: 0,
+                                          onTap: () {
+                                            selectedServiceList.add(data);
+                                            setState(() {});
+                                          },
+                                          child: Text(language.add,
+                                              style: boldTextStyle(
+                                                  size: 12,
+                                                  color: context.primaryColor)),
+                                        ),
+                                  //8.height,
                                   IconButton(
-                                    icon: ic_edit_square.iconImage(size: 14),
-                                    visualDensity: VisualDensity.compact,
-                                    onPressed: () async {
-                                      bool? res = await CreateServiceScreen(data: data).launch(context);
-                                      if (res ?? false) init();
-                                    },
-                                  ),
-                                  IconButton(
-                                    icon: ic_delete.iconImage(size: 14),
+                                    icon: ic_delete.iconImage(
+                                        size: 18, color: context.iconColor),
                                     visualDensity: VisualDensity.compact,
                                     onPressed: () {
                                       showConfirmDialogCustom(
@@ -239,30 +355,13 @@ class _CreatePostRequestScreenState extends State<CreatePostRequestScreen> {
                                         positiveText: language.lblDelete,
                                         negativeText: language.lblCancel,
                                         onAccept: (p0) {
-                                          // ifNotTester(() {
                                           deleteService(data);
-                                          //});
                                         },
                                       );
                                     },
                                   ),
                                 ],
                               ),
-                              selectedServiceList.any((e) => e.id == data.id)
-                                  ? AppButton(
-                                      child: Text(language.remove, style: boldTextStyle(color: redColor, size: 14)),
-                                      onTap: () {
-                                        selectedServiceList.remove(data);
-                                        setState(() {});
-                                      },
-                                    )
-                                  : AppButton(
-                                      child: Text(language.add, style: boldTextStyle(size: 14, color: context.primaryColor)),
-                                      onTap: () {
-                                        selectedServiceList.add(data);
-                                        setState(() {});
-                                      },
-                                    ),
                             ],
                           ),
                         );
@@ -276,8 +375,10 @@ class _CreatePostRequestScreenState extends State<CreatePostRequestScreen> {
                     ).paddingOnly(top: 16),
                   30.height,
                   AppButton(
-                    child: Text(language.save, style: boldTextStyle(color: white)),
+                    child: Text(language.save,
+                        style: boldTextStyle(color: white, size: 18)),
                     color: context.primaryColor,
+                    height: 52,
                     width: context.width(),
                     onTap: () {
                       hideKeyboard(context);
@@ -297,7 +398,8 @@ class _CreatePostRequestScreenState extends State<CreatePostRequestScreen> {
               ),
             ],
           ),
-          Observer(builder: (context) => LoaderWidget().visible(appStore.isLoading)),
+          Observer(
+              builder: (context) => LoaderWidget().visible(appStore.isLoading)),
         ]),
       ),
     );

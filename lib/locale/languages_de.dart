@@ -1197,6 +1197,28 @@ class LanguageDe extends BaseLanguage {
       'Sind Sie sicher, dass Sie diesen Job-Post löschen möchten?';
 
   @override
+  String get lblEnterJobTitle => 'Jobtitel eingeben';
+
+  @override
+  String get lblEnterJobDescription => 'Jobbeschreibung eingeben';
+
+  @override
+  String get lblChooseImage => 'Bild auswählen';
+
+  @override
+  String get lblEnterCategory => 'Kategorie eingeben';
+
+  @override
+  String get lblEnterServiceName => 'Servicenamen eingeben';
+
+  @override
+  String get lblEnterServiceDescription => 'Servicebeschreibung eingeben';
+
+  @override
+  String get lblDeleteImageConfirmation =>
+      'Sind Sie sicher, dass Sie dieses Bild löschen möchten?';
+
+  @override
   String get accepted => 'Akzeptiert';
 
   @override

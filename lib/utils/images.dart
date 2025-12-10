@@ -114,3 +114,4 @@ const ic_down_arrow = 'assets/icons/ic_down_arrow.png';
 const ic_right = 'assets/icons/ic_right.png';
 const ic_plus = 'assets/icons/ic_plus.png';
 const ic_wallet_cartoon = 'assets/icons/ic_wallet_cartoon.png';
+const ic_gallery_add = 'assets/icons/Ic_gallery_add.png';

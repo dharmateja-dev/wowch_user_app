@@ -988,6 +988,20 @@ abstract class BaseLanguage {
 
   String get writeHere;
 
+  String get lblEnterJobTitle;
+
+  String get lblEnterJobDescription;
+
+  String get lblChooseImage;
+
+  String get lblEnterCategory;
+
+  String get lblEnterServiceName;
+
+  String get lblEnterServiceDescription;
+
+  String get lblDeleteImageConfirmation;
+
   String get isAvailableGoTo;
 
   String get later;

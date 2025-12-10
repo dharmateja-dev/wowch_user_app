@@ -1186,6 +1186,28 @@ class LanguageEn extends BaseLanguage {
   String get lblDeletePostJob => 'Are you sure you want to delete this job post?';
 
   @override
+  String get lblEnterJobTitle => 'Enter Job Title';
+
+  @override
+  String get lblEnterJobDescription => 'Enter Job Description';
+
+  @override
+  String get lblChooseImage => 'Choose Image';
+
+  @override
+  String get lblEnterCategory => 'Enter Category';
+
+  @override
+  String get lblEnterServiceName => 'Enter Service Name';
+
+  @override
+  String get lblEnterServiceDescription => 'Enter Service Description';
+
+  @override
+  String get lblDeleteImageConfirmation =>
+      'Are you sure you want to delete this image?';
+
+  @override
   String get accepted => 'Accepted';
 
   @override

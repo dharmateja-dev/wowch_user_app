@@ -92,8 +92,8 @@ class _MyPostRequestItemComponentState
                       .validate()
                   : "",
               fit: BoxFit.cover,
-              height: 90,
-              width: 90,
+              height: 80,
+              width: 80,
               circle: false,
             ).cornerRadiusWithClipRRect(defaultRadius),
             16.width,

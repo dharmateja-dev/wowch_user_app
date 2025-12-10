@@ -97,13 +97,11 @@ class _AddonComponentState extends State<AddonComponent> {
                 Row(
                   children: [
                     Expanded(
-                      child: Marquee(
-                        directionMarguee: DirectionMarguee.oneDirection,
-                        child: Text(
-                          addon.name.validate(),
-                          style: boldTextStyle(),
-                          overflow: TextOverflow.ellipsis,
-                        ),
+                      child: Text(
+                        addon.name.validate(),
+                        style: boldTextStyle(),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
                       ),
                     ),
                     if (!widget.isFromBookingDetails) ...[
@@ -179,13 +177,11 @@ class _AddonComponentState extends State<AddonComponent> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Expanded(
-                      child: Marquee(
-                        directionMarguee: DirectionMarguee.oneDirection,
-                        child: Text(
-                          data.name.validate(),
-                          style: boldTextStyle(),
-                          overflow: TextOverflow.ellipsis,
-                        ),
+                      child: Text(
+                        data.name.validate(),
+                        style: boldTextStyle(),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
                       ),
                     ),
                     8.width,

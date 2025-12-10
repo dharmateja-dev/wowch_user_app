@@ -15,6 +15,7 @@ import 'package:booking_system_flutter/utils/common.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
 import 'package:booking_system_flutter/utils/images.dart';
 import 'package:booking_system_flutter/utils/model_keys.dart';
+import 'package:booking_system_flutter/utils/string_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:http/http.dart';
@@ -38,6 +39,9 @@ class CreateServiceScreen extends StatefulWidget {
 class _CreateServiceScreenState extends State<CreateServiceScreen> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   UniqueKey formWidgetKey = UniqueKey();
+
+  // Use dummy data to showcase UI without backend dependency
+  static const bool USE_DUMMY_DATA = true;
   File? imageFile;
   XFile? pickedFile;
   ImagePicker picker = ImagePicker();
@@ -66,11 +70,27 @@ class _CreateServiceScreenState extends State<CreateServiceScreen> {
   void initState() {
     super.initState();
     init();
-    appStore.setSelectedLanguage(languageList().first);
   }
 
   Future<void> init() async {
     isUpdate = widget.data != null;
+
+    if (USE_DUMMY_DATA) {
+      // Dummy image and category to mirror the mock UI
+      imageFiles = [
+        XFile(
+            'https://images.pexels.com/photos/3985166/pexels-photo-3985166.jpeg?auto=compress&cs=tinysrgb&w=800')
+      ];
+      categoryList = [
+        CategoryData(id: 1, name: 'Health Care'),
+        CategoryData(id: 2, name: 'Cleaning'),
+      ];
+      selectedCategory = categoryList.first;
+      serviceNameCont.text = 'Nurses';
+      descriptionCont.text = 'Basic care and support';
+      setState(() {});
+      return;
+    }
 
     if (isUpdate) {
       if (widget.data?.translations?.isNotEmpty ?? false) {
@@ -78,10 +98,14 @@ class _CreateServiceScreenState extends State<CreateServiceScreen> {
         enTranslations = await translations[DEFAULT_LANGUAGE]!;
       }
 
-      //Fill Other Fileds
-      serviceNameCont.text = widget.data?.translations?[DEFAULT_LANGUAGE]?.name.validate() ?? "";
-      descriptionCont.text = widget.data?.translations?[DEFAULT_LANGUAGE]?.description.validate() ?? "";
-      imageFiles.addAll(widget.data!.attachments!.map((e) => XFile(e.validate().toString())));
+      serviceNameCont.text =
+          widget.data?.translations?[DEFAULT_LANGUAGE]?.name.validate() ?? "";
+      descriptionCont.text = widget
+              .data?.translations?[DEFAULT_LANGUAGE]?.description
+              .validate() ??
+          "";
+      imageFiles.addAll(
+          widget.data!.attachments!.map((e) => XFile(e.validate().toString())));
       attachmentsArray.addAll(widget.data!.attachmentsArray.validate());
     }
 
@@ -89,6 +113,11 @@ class _CreateServiceScreenState extends State<CreateServiceScreen> {
   }
 
   Future<void> getCategoryData() async {
+    if (USE_DUMMY_DATA) {
+      setState(() {});
+      return;
+    }
+
     appStore.setLoading(true);
     await getCategoryList(CATEGORY_LIST_ALL).then((value) {
       if (value.categoryList!.isNotEmpty) {
@@ -96,7 +125,8 @@ class _CreateServiceScreenState extends State<CreateServiceScreen> {
       }
 
       if (isUpdate) {
-        selectedCategory = value.categoryList!.firstWhere((element) => element.id == widget.data!.categoryId.validate());
+        selectedCategory = value.categoryList!.firstWhere(
+            (element) => element.id == widget.data!.categoryId.validate());
       }
 
       setState(() {});
@@ -157,7 +187,8 @@ class _CreateServiceScreenState extends State<CreateServiceScreen> {
   }
 
   //region Add Service
-  Future<void> checkValidation({required bool isSave, LanguageDataModel? code}) async {
+  Future<void> checkValidation(
+      {required bool isSave, LanguageDataModel? code}) async {
     if (imageFiles.isEmpty) {
       return toast(language.pleaseAddImage);
     }
@@ -180,6 +211,13 @@ class _CreateServiceScreenState extends State<CreateServiceScreen> {
           positiveText: language.lblYes,
           negativeText: language.lblNo,
           primaryColor: primaryColor,
+          positiveTextColor: white,
+          negativeTextColor: context.primaryColor,
+          customCenterWidget:
+              ic_warning.iconImage(size: 70, color: context.primaryColor),
+          height: 80,
+          width: 290,
+          shape: dialogShape(8),
           onAccept: (p0) async {
             await removeEnTranslations();
             final req = await _buildServiceRequest();
@@ -230,37 +268,50 @@ class _CreateServiceScreenState extends State<CreateServiceScreen> {
 
 //region service request
   Future<MultipartRequest> _buildServiceRequest() async {
-    MultipartRequest multiPartRequest = await getMultiPartRequest('service-save');
-    multiPartRequest.fields[CreateService.name] = enTranslations.name.validate();
-    multiPartRequest.fields[CreateService.description] = enTranslations.description.validate();
+    MultipartRequest multiPartRequest =
+        await getMultiPartRequest('service-save');
+    multiPartRequest.fields[CreateService.name] =
+        enTranslations.name.validate();
+    multiPartRequest.fields[CreateService.description] =
+        enTranslations.description.validate();
     multiPartRequest.fields[CreateService.type] = SERVICE_TYPE_FIXED;
     multiPartRequest.fields[CreateService.price] = '0';
-    multiPartRequest.fields[CreateService.addedBy] = appStore.userId.toString().validate();
-    multiPartRequest.fields[CreateService.providerId] = appStore.userId.toString();
-    multiPartRequest.fields[CreateService.categoryId] = selectedCategory!.id.toString();
+    multiPartRequest.fields[CreateService.addedBy] =
+        appStore.userId.toString().validate();
+    multiPartRequest.fields[CreateService.providerId] =
+        appStore.userId.toString();
+    multiPartRequest.fields[CreateService.categoryId] =
+        selectedCategory!.id.toString();
     multiPartRequest.fields[CreateService.status] = '1';
     multiPartRequest.fields[CreateService.duration] = "0";
 
     log("multiPart Request: ${multiPartRequest.fields}");
 
     if (isUpdate) {
-      multiPartRequest.fields[CreateService.id] = widget.data!.id.validate().toString();
+      multiPartRequest.fields[CreateService.id] =
+          widget.data!.id.validate().toString();
     }
 
     if (translations.isNotEmpty) {
-      multiPartRequest.fields[CreateService.translations] = jsonEncode(translations);
+      multiPartRequest.fields[CreateService.translations] =
+          jsonEncode(translations);
     }
 
     if (imageFiles.isNotEmpty) {
-      List<XFile> tempImages = imageFiles.where((element) => !element.path.contains("https")).toList();
+      List<XFile> tempImages = imageFiles
+          .where((element) => !element.path.contains("https"))
+          .toList();
 
       multiPartRequest.files.clear();
       await Future.forEach<XFile>(tempImages, (element) async {
         int i = tempImages.indexOf(element);
-        multiPartRequest.files.add(await MultipartFile.fromPath('${CreateService.serviceAttachment + i.toString()}', element.path));
+        multiPartRequest.files.add(await MultipartFile.fromPath(
+            '${CreateService.serviceAttachment + i.toString()}', element.path));
       });
 
-      if (tempImages.isNotEmpty) multiPartRequest.fields[CreateService.attachmentCount] = tempImages.length.toString();
+      if (tempImages.isNotEmpty)
+        multiPartRequest.fields[CreateService.attachmentCount] =
+            tempImages.length.toString();
     }
 
     multiPartRequest.headers.addAll(buildHeaderTokens());
@@ -366,17 +417,17 @@ class _CreateServiceScreenState extends State<CreateServiceScreen> {
   Widget build(BuildContext context) {
     return AppScaffold(
       appBarTitle: language.createServiceRequest,
-      child:Stack(
+      child: Stack(
         children: [
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              8.height,
-              MultiLanguageWidget(onTap: (LanguageDataModel code) async {
-                checkValidation(isSave: false, code: code);
-              }),
+              // 8.height,
+              // MultiLanguageWidget(onTap: (LanguageDataModel code) async {
+              //   checkValidation(isSave: false, code: code);
+              // }),
               8.height,
               Form(
                 key: formKey,
@@ -387,26 +438,30 @@ class _CreateServiceScreenState extends State<CreateServiceScreen> {
                     mainAxisSize: MainAxisSize.min,
                     key: formWidgetKey,
                     children: [
-                      SizedBox(
+                      //Text(language.lblChooseImage, style: boldTextStyle()),
+                      8.height,
+                      Container(
                         width: context.width(),
                         height: 120,
-                        child: DottedBorderWidget(
-                          color: primaryColor.withValues(alpha: 0.6),
-                          strokeWidth: 1,
-                          gap: 6,
-                          radius: 12,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.asset(selectImage, height: 25, width: 25, color: appStore.isDarkMode ? white : gray),
-                              8.height,
-                              Text(language.chooseImages, style: boldTextStyle()),
-                            ],
-                          ).center().onTap(borderRadius: radius(), () async {
-                            // getMultipleFile();
-                            _showImgPickDialog(context);
-                          }),
+                        decoration: boxDecorationWithRoundedCorners(
+                          backgroundColor: const Color(0xFFEAF3EE),
+                          borderRadius: radius(8),
+                          border: Border.all(
+                              color: primaryColor.withValues(alpha: 0.4)),
                         ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            ic_gallery_add.iconImage(
+                                size: 50, color: primaryColor),
+                            8.height,
+                            Text(language.lblChooseImage,
+                                style: primaryTextStyle(
+                                    color: textPrimaryColorGlobal)),
+                          ],
+                        ).onTap(() async {
+                          _showImgPickDialog(context);
+                        }),
                       ),
                       HorizontalList(
                         itemCount: imageFiles.length,
@@ -415,25 +470,50 @@ class _CreateServiceScreenState extends State<CreateServiceScreen> {
                             alignment: Alignment.topRight,
                             children: [
                               if (imageFiles[i].path.contains("https"))
-                                CachedImageWidget(url: imageFiles[i].path, height: 90, fit: BoxFit.cover).cornerRadiusWithClipRRect(16)
+                                CachedImageWidget(
+                                        url: imageFiles[i].path,
+                                        height: 90,
+                                        fit: BoxFit.cover)
+                                    .cornerRadiusWithClipRRect(16)
                               else
-                                Image.file(File(imageFiles[i].path), width: 90, height: 90, fit: BoxFit.cover).cornerRadiusWithClipRRect(16),
+                                Image.file(File(imageFiles[i].path),
+                                        width: 90,
+                                        height: 90,
+                                        fit: BoxFit.cover)
+                                    .cornerRadiusWithClipRRect(16),
                               Container(
-                                decoration: boxDecorationWithRoundedCorners(boxShape: BoxShape.circle, backgroundColor: primaryColor),
+                                decoration: boxDecorationWithRoundedCorners(
+                                    boxShape: BoxShape.circle,
+                                    backgroundColor: primaryColor),
                                 margin: const EdgeInsets.only(right: 8, top: 4),
                                 padding: const EdgeInsets.all(4),
-                                child: const Icon(Icons.close, size: 16, color: white),
+                                child: const Icon(Icons.close,
+                                    size: 16, color: white),
                               ).onTap(() {
                                 if (imageFiles[i].path.startsWith("https")) {
                                   showConfirmDialogCustom(
                                     context,
                                     dialogType: DialogType.DELETE,
-                                    positiveText: language.lblDelete,
-                                    negativeText: language.lblCancel,
+                                    positiveText: language.lblYes,
+                                    negativeText: language.lblNo,
+                                    height: 80,
+                                    width: 290,
+                                    shape: dialogShape(8),
+                                    positiveTextColor: white,
+                                    negativeTextColor: context.primaryColor,
+                                    title: language.lblDeleteImageConfirmation,
+                                    customCenterWidget: ic_warning.iconImage(
+                                        size: 70, color: context.primaryColor),
                                     primaryColor: context.primaryColor,
                                     onAccept: (p0) {
-                                      if (attachmentsArray.any((element) => element.url == imageFiles[i].path)) {
-                                        int id = attachmentsArray.firstWhere((element) => element.url == imageFiles[i].path).id.validate();
+                                      if (attachmentsArray.any((element) =>
+                                          element.url == imageFiles[i].path)) {
+                                        int id = attachmentsArray
+                                            .firstWhere((element) =>
+                                                element.url ==
+                                                imageFiles[i].path)
+                                            .id
+                                            .validate();
 
                                         imageFiles.removeAt(i);
                                         attachmentsArray.removeAt(i);
@@ -447,12 +527,22 @@ class _CreateServiceScreenState extends State<CreateServiceScreen> {
                                   showConfirmDialogCustom(
                                     context,
                                     dialogType: DialogType.DELETE,
-                                    positiveText: language.lblDelete,
-                                    negativeText: language.lblCancel,
+                                    positiveText: language.lblYes,
+                                    negativeText: language.lblNo,
+                                    height: 80,
+                                    width: 290,
+                                    shape: dialogShape(8),
+                                    positiveTextColor: white,
+                                    negativeTextColor: context.primaryColor,
+                                    title: language.lblDeleteImageConfirmation,
+                                    customCenterWidget: ic_warning.iconImage(
+                                        size: 70, color: context.primaryColor),
                                     primaryColor: context.primaryColor,
                                     onAccept: (p0) {
-                                      imageFiles.removeWhere((element) => element.path == imageFiles[i].path);
-                                      attachmentsArray.removeWhere((element) => element.url == imageFiles[i].path);
+                                      imageFiles.removeWhere((element) =>
+                                          element.path == imageFiles[i].path);
+                                      attachmentsArray.removeWhere((element) =>
+                                          element.url == imageFiles[i].path);
                                       //imageFiles.removeAt(i);
                                       setState(() {});
                                     },
@@ -464,9 +554,15 @@ class _CreateServiceScreenState extends State<CreateServiceScreen> {
                         },
                       ).paddingBottom(16).visible(imageFiles.isNotEmpty),
                       20.height,
+                      Text(language.lblCategory, style: boldTextStyle()),
+                      8.height,
                       DropdownButtonFormField<CategoryData>(
-                        decoration: inputDecoration(context, labelText: language.lblCategory),
-                        hint: Text(language.selectCategory, style: secondaryTextStyle()),
+                        decoration: inputDecoration(context,
+                            hintText: language.lblEnterCategory,
+                            fillColor: const Color(0xFFEAF3EE),
+                            borderRadius: 8),
+                        hint: Text(language.lblEnterCategory,
+                            style: secondaryTextStyle()),
                         initialValue: selectedCategory,
                         validator: (value) {
                           if (value == null) return errorThisFieldRequired;
@@ -477,48 +573,61 @@ class _CreateServiceScreenState extends State<CreateServiceScreen> {
                         items: categoryList.map((data) {
                           return DropdownMenuItem<CategoryData>(
                             value: data,
-                            child: Text(data.name.validate(), style: primaryTextStyle()),
+                            child: Text(data.name.validate(),
+                                style: primaryTextStyle()),
                           );
                         }).toList(),
                         onChanged: isUpdate
                             ? null
                             : (CategoryData? value) async {
-                          selectedCategory = value!;
-                          setState(() {});
-                        },
+                                selectedCategory = value!;
+                                setState(() {});
+                              },
                       ),
                       16.height,
+                      Text(language.serviceName, style: boldTextStyle()),
+                      8.height,
                       AppTextField(
                         controller: serviceNameCont,
                         textFieldType: TextFieldType.NAME,
                         nextFocus: descriptionFocus,
                         errorThisFieldRequired: language.requiredText,
                         isValidationRequired: checkValidationLanguage(),
-                        decoration: inputDecoration(context, labelText: language.serviceName),
+                        decoration: inputDecoration(context,
+                            hintText: language.lblEnterServiceName,
+                            fillColor: const Color(0xFFEAF3EE),
+                            borderRadius: 8),
                       ),
                       16.height,
+                      Text(language.serviceDescription, style: boldTextStyle()),
+                      8.height,
                       AppTextField(
                         controller: descriptionCont,
                         textFieldType: TextFieldType.MULTILINE,
                         errorThisFieldRequired: language.requiredText,
-                        maxLines: 2,
+                        maxLines: 5,
                         focus: descriptionFocus,
                         enableChatGPT: appConfigurationStore.chatGPTStatus,
                         isValidationRequired: checkValidationLanguage(),
-                        promptFieldInputDecorationChatGPT: inputDecoration(context).copyWith(
-                          hintText: language.writeHere,
-                          fillColor: context.scaffoldBackgroundColor,
+                        promptFieldInputDecorationChatGPT:
+                            inputDecoration(context).copyWith(
+                          hintText: language.lblEnterServiceDescription,
+                          fillColor: const Color(0xFFEAF3EE),
                           filled: true,
                         ),
-                        testWithoutKeyChatGPT: appConfigurationStore.testWithoutKey,
+                        testWithoutKeyChatGPT:
+                            appConfigurationStore.testWithoutKey,
                         loaderWidgetForChatGPT: const ChatGPTLoadingWidget(),
-                        decoration: inputDecoration(context, labelText: language.serviceDescription),
+                        decoration: inputDecoration(context,
+                            hintText: language.lblEnterServiceDescription,
+                            fillColor: const Color(0xFFEAF3EE),
+                            borderRadius: 8),
                         validator: (value) {
                           if (value!.isEmpty) return language.requiredText;
                           return null;
                         },
                       ),
-                      16.height,
+                      (context.height() * 0.08).toInt().height,
                       AppButton(
                         text: isUpdate ? language.lblUpdate : language.save,
                         color: context.primaryColor,
@@ -533,7 +642,8 @@ class _CreateServiceScreenState extends State<CreateServiceScreen> {
               ).paddingAll(16).expand(),
             ],
           ),
-          Observer(builder: (context) => LoaderWidget().visible(appStore.isLoading)),
+          Observer(
+              builder: (context) => LoaderWidget().visible(appStore.isLoading)),
         ],
       ),
     );
