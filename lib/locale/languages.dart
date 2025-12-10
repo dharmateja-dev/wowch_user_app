@@ -766,6 +766,8 @@ abstract class BaseLanguage {
 
   String get deleteMessage;
 
+  String get lblDeletePostJob;
+
   String get accepted;
 
   String get onGoing;

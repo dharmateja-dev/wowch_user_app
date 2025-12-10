@@ -30,14 +30,21 @@ class ViewAllLabel extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(label, style: boldTextStyle(size: labelSize ?? LABEL_TEXT_SIZE)),
-        TextButton(
-          onPressed: (list == null ? true : (alwaysShowViewAll == true ? true : isViewAllVisible(list!)))
-              ? () {
-                  onTap?.call();
-                }
-              : null,
-          child: (list == null ? true : (alwaysShowViewAll == true ? true : isViewAllVisible(list!))) ? Text(language.lblViewAll, style: trailingTextStyle ?? secondaryTextStyle()) : SizedBox(),
-        )
+        Builder(builder: (context) {
+          bool shouldShow = list == null
+              ? true
+              : (alwaysShowViewAll == true ? true : isViewAllVisible(list!));
+
+          if (!shouldShow) return const SizedBox();
+
+          return GestureDetector(
+            onTap: () => onTap?.call(),
+            child: Text(
+              language.lblViewAll,
+              style: trailingTextStyle ?? secondaryTextStyle(),
+            ),
+          );
+        }),
       ],
     );
   }

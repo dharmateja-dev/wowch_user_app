@@ -1146,6 +1146,10 @@ class LanguageAr extends BaseLanguage {
   String get deleteMessage => 'هل تريد أن تحذف';
 
   @override
+  String get lblDeletePostJob =>
+      'هل أنت متأكد أنك تريد حذف هذا الإعلان الوظيفي؟';
+
+  @override
   String get accepted => 'مقبول';
 
   @override

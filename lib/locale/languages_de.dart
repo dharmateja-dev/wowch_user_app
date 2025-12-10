@@ -1193,6 +1193,10 @@ class LanguageDe extends BaseLanguage {
   String get deleteMessage => 'Möchten Sie löschen?';
 
   @override
+  String get lblDeletePostJob =>
+      'Sind Sie sicher, dass Sie diesen Job-Post löschen möchten?';
+
+  @override
   String get accepted => 'Akzeptiert';
 
   @override

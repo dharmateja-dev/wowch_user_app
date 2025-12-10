@@ -11,33 +11,47 @@ class NewJobRequestComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(16),
+      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+      padding: const EdgeInsets.all(12),
       decoration: boxDecorationWithRoundedCorners(
         backgroundColor: context.primaryColor,
-        borderRadius: BorderRadius.only(topLeft: Radius.circular(defaultRadius), topRight: Radius.circular(defaultRadius)),
+        borderRadius: radius(defaultRadius),
       ),
-      width: context.width(),
       child: Column(
         children: [
-          16.height,
-          Text(language.jobRequestSubtitle, style: primaryTextStyle(color: white, size: 16), textAlign: TextAlign.center),
-          20.height,
+          Text(language.jobRequestSubtitle,
+                  style: primaryTextStyle(color: Colors.white, size: 20),
+                  textAlign: TextAlign.center)
+              .paddingSymmetric(horizontal: 12, vertical: 12),
           AppButton(
+            padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 12),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(Icons.add, color: appStore.isDarkMode ? Colors.white : context.primaryColor),
+                Icon(Icons.add,
+                    color: appStore.isDarkMode
+                        ? Colors.white
+                        : context.primaryColor),
                 4.width,
-                Text(language.newPostJobRequest, style: boldTextStyle(color: appStore.isDarkMode ? Colors.white : context.primaryColor)),
+                Text(language.newPostJobRequest,
+                    style: boldTextStyle(
+                        color: appStore.isDarkMode
+                            ? Colors.white
+                            : context.primaryColor)),
               ],
             ),
-            textStyle: primaryTextStyle(color: appStore.isDarkMode ? textPrimaryColorGlobal : context.primaryColor),
+            textStyle: primaryTextStyle(
+                color: appStore.isDarkMode
+                    ? textPrimaryColorGlobal
+                    : context.primaryColor),
             onTap: () async {
               if (appStore.isLoggedIn) {
                 MyPostRequestListScreen().launch(context);
               } else {
-                setStatusBarColor(Colors.white, statusBarIconBrightness: Brightness.dark);
-                bool? res = await const SignInScreen(returnExpected: true).launch(context);
+                setStatusBarColor(Colors.white,
+                    statusBarIconBrightness: Brightness.dark);
+                bool? res = await const SignInScreen(returnExpected: true)
+                    .launch(context);
 
                 if (res ?? false) {
                   MyPostRequestListScreen().launch(context);

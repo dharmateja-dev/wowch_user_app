@@ -39,17 +39,27 @@ class _PendingBookingComponentState extends State<PendingBookingComponent> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(
-                children: [
-                  Container(
-                    height: 20,
-                    width: 3,
-                    decoration: boxDecorationRoundedWithShadow(defaultRadius.toInt(), backgroundColor: Colors.white.withValues(alpha:0.6)),
-                  ),
-                  8.width,
-                  Marquee(child: Text(language.bookingConfirmedMsg, style: primaryTextStyle(color: Colors.white, size: LABEL_TEXT_SIZE, fontStyle: FontStyle.italic))).expand(),
-                ],
-              ).expand(),
+              Expanded(
+                child: Row(
+                  children: [
+                    Container(
+                      height: 20,
+                      width: 3,
+                      decoration: boxDecorationRoundedWithShadow(defaultRadius.toInt(), backgroundColor: Colors.white.withValues(alpha:0.6)),
+                    ),
+                    8.width,
+                    Expanded(
+                      child: Marquee(
+                        directionMarguee: DirectionMarguee.oneDirection,
+                        child: Text(
+                          language.bookingConfirmedMsg,
+                          style: primaryTextStyle(color: Colors.white, size: LABEL_TEXT_SIZE, fontStyle: FontStyle.italic),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
               SizedBox(
                 width: 30,
                 height: 22,

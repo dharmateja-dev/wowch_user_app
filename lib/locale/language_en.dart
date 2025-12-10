@@ -299,7 +299,7 @@ class LanguageEn extends BaseLanguage {
   String get btnNext => "Next";
 
   @override
-  String get lblViewAll => "View All";
+  String get lblViewAll => "See All";
 
   @override
   String get notAvailable => "Not Available";
@@ -1181,6 +1181,9 @@ class LanguageEn extends BaseLanguage {
 
   @override
   String get deleteMessage => 'Do you want to delete?';
+
+  @override
+  String get lblDeletePostJob => 'Are you sure you want to delete this job post?';
 
   @override
   String get accepted => 'Accepted';

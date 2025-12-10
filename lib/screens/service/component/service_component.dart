@@ -289,13 +289,16 @@ class ServiceComponentState extends State<ServiceComponent> {
                   children: [
                     Row(
                       children: [
-                        Marquee(
-                          directionMarguee: DirectionMarguee.oneDirection,
-                          child: Text(widget.serviceData.name.validate(),
-                                  style: boldTextStyle())
-                              .expand(),
+                        Expanded(
+                          child: Marquee(
+                            directionMarguee: DirectionMarguee.oneDirection,
+                            child: Text(
+                              widget.serviceData.name.validate(),
+                              style: boldTextStyle(),
+                            ),
+                          ),
                         ),
-                        Spacer(),
+                        8.width,
                         Icon(Icons.star, color: Colors.amberAccent, size: 14),
                         4.width,
                         Text(
@@ -323,16 +326,18 @@ class ServiceComponentState extends State<ServiceComponent> {
                         if (widget.serviceData.providerName
                             .validate()
                             .isNotEmpty)
-                          Text(
-                            widget.serviceData.providerName.validate(),
-                            style: boldTextStyle(
-                                size: 12,
-                                color: appStore.isDarkMode
-                                    ? Colors.white
-                                    : Colors.black),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ).expand()
+                          Expanded(
+                            child: Text(
+                              widget.serviceData.providerName.validate(),
+                              style: boldTextStyle(
+                                  size: 12,
+                                  color: appStore.isDarkMode
+                                      ? Colors.white
+                                      : Colors.black),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
                       ],
                     ).onTap(() async {
                       if (widget.serviceData.providerId !=
@@ -344,7 +349,7 @@ class ServiceComponentState extends State<ServiceComponent> {
                         setStatusBarColor(Colors.transparent);
                       }
                     }).paddingSymmetric(horizontal: 8),
-                    //12.height,
+                    12.height,
                   ],
                 ),
               ],

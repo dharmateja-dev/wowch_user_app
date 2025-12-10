@@ -1169,6 +1169,9 @@ class LanguageHi extends BaseLanguage {
   String get deleteMessage => 'क्या आप हटाना चाहते हैं?';
 
   @override
+  String get lblDeletePostJob => 'क्या आप वाकई इस जॉब पोस्ट को हटाना चाहते हैं?';
+
+  @override
   String get accepted => 'को स्वीकृत';
 
   @override

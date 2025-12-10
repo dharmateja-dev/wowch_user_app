@@ -1196,6 +1196,10 @@ class LanguageFr extends BaseLanguage {
   String get deleteMessage => 'Voulez-vous supprimer?';
 
   @override
+  String get lblDeletePostJob =>
+      'Êtes-vous sûr de vouloir supprimer cette offre d’emploi ?';
+
+  @override
   String get accepted => 'Accepté';
 
   @override
