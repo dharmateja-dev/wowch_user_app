@@ -69,7 +69,8 @@ class _BlogDetailScreenState extends State<BlogDetailScreen> {
     List<Attachments> attachments = [
       Attachments(
         id: 1,
-        url: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&h=600&fit=crop',
+        url:
+            'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&h=600&fit=crop',
       ),
     ];
 
@@ -102,7 +103,8 @@ class _BlogDetailScreenState extends State<BlogDetailScreen> {
       totalViews: 0,
       authorId: 1,
       authorName: 'Abdul Kader',
-      authorImage: 'https://i.pravatar.cc/150?img=12', // Man with glasses and beard
+      authorImage:
+          'https://i.pravatar.cc/150?img=12', // Man with glasses and beard
       status: 1,
       publishDate: 'November 19, 2025',
       createdAt: '2025-11-19',
@@ -127,7 +129,7 @@ class _BlogDetailScreenState extends State<BlogDetailScreen> {
   /// Get related blogs matching the design - returns list of blog cards for horizontal scrolling
   List<BlogData> _getRelatedBlogs() {
     List<BlogData> relatedBlogs = [];
-    
+
     if (USE_DUMMY_DATA) {
       // Generate dummy related blogs matching the design
       // All show "Rustin Home Decor Ideas." with date "November 19, 2025"
@@ -151,7 +153,8 @@ class _BlogDetailScreenState extends State<BlogDetailScreen> {
           attachment: [
             Attachments(
               id: 1,
-              url: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=300&fit=crop',
+              url:
+                  'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=300&fit=crop',
             )
           ],
           deletedAt: null,
@@ -202,10 +205,14 @@ class _BlogDetailScreenState extends State<BlogDetailScreen> {
                       height: 300,
                       width: context.width(),
                       child: CachedImageWidget(
-                        url: data.blogDetail!.imageAttachments.validate().isNotEmpty
-                            ? data.blogDetail!.imageAttachments!.first.validate()
+                        url: data.blogDetail!.imageAttachments
+                                .validate()
+                                .isNotEmpty
+                            ? data.blogDetail!.imageAttachments!.first
+                                .validate()
                             : data.blogDetail!.attachment.validate().isNotEmpty
-                                ? data.blogDetail!.attachment!.first.url.validate()
+                                ? data.blogDetail!.attachment!.first.url
+                                    .validate()
                                 : '',
                         fit: BoxFit.cover,
                         height: 300,
@@ -218,7 +225,6 @@ class _BlogDetailScreenState extends State<BlogDetailScreen> {
                     width: context.width(),
                     decoration: boxDecorationWithRoundedCorners(
                       borderRadius: radiusOnly(topLeft: 0, topRight: 0),
-                      backgroundColor: context.cardColor,
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -226,7 +232,8 @@ class _BlogDetailScreenState extends State<BlogDetailScreen> {
                         // Blog title - large and bold
                         Text(
                           data.blogDetail!.title.validate(),
-                          style: boldTextStyle(size: 22, color: textPrimaryColorGlobal),
+                          style: boldTextStyle(
+                              size: 22, color: textPrimaryColorGlobal),
                         ).paddingSymmetric(horizontal: 16, vertical: 20),
 
                         // Author info section - profile picture, name, and date
@@ -249,7 +256,8 @@ class _BlogDetailScreenState extends State<BlogDetailScreen> {
                               children: [
                                 Text(
                                   data.blogDetail!.authorName.validate(),
-                                  style: boldTextStyle(size: 14, color: textPrimaryColorGlobal),
+                                  style: boldTextStyle(
+                                      size: 14, color: textPrimaryColorGlobal),
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                 ),
@@ -288,12 +296,13 @@ class _BlogDetailScreenState extends State<BlogDetailScreen> {
                           32.height,
                           Text(
                             'Related Blogs',
-                            style: boldTextStyle(size: 20, color: textPrimaryColorGlobal),
+                            style: boldTextStyle(
+                                size: 20, color: textPrimaryColorGlobal),
                           ).paddingSymmetric(horizontal: 16),
                           16.height,
-                          // Horizontal scrollable related blogs - compact size
+                          // Horizontal scrollable related blogs
                           SizedBox(
-                            height: 150,
+                            height: 210,
                             child: ListView.builder(
                               scrollDirection: Axis.horizontal,
                               padding: EdgeInsets.symmetric(horizontal: 16),
@@ -301,55 +310,63 @@ class _BlogDetailScreenState extends State<BlogDetailScreen> {
                               itemBuilder: (context, index) {
                                 BlogData blog = relatedBlogs[index];
                                 return Container(
-                                  width: 120,
-                                  margin: EdgeInsets.only(right: 10),
+                                  width: 130,
+                                  margin: EdgeInsets.only(right: 12),
                                   decoration: boxDecorationWithRoundedCorners(
                                     borderRadius: radius(8),
-                                    backgroundColor: Color(0xFFE8F3EC), // Light green background
                                   ),
                                   child: GestureDetector(
                                     onTap: () {
-                                      BlogDetailScreen(blogId: blog.id.validate())
+                                      BlogDetailScreen(
+                                              blogId: blog.id.validate())
                                           .launch(context);
                                     },
                                     child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
-                                        // Blog image - reduced size
+                                        // Blog image
                                         ClipRRect(
                                           borderRadius: radiusOnly(
                                             topLeft: 8,
                                             topRight: 8,
-                                            bottomLeft: 0,
-                                            bottomRight: 0,
+                                            bottomLeft: 8,
+                                            bottomRight: 8,
                                           ),
                                           child: CachedImageWidget(
-                                            url: blog.imageAttachments.validate().isNotEmpty
-                                                ? blog.imageAttachments!.first.validate()
+                                            url: blog.imageAttachments
+                                                    .validate()
+                                                    .isNotEmpty
+                                                ? blog.imageAttachments!.first
+                                                    .validate()
                                                 : '',
                                             fit: BoxFit.cover,
-                                            height: 90,
-                                            width: 120,
+                                            height: 110,
+                                            width: 150,
                                           ),
                                         ),
-                                        6.height,
-                                        // Blog title - reduced font size
+                                        8.height,
+                                        // Blog title
                                         Padding(
-                                          padding: EdgeInsets.symmetric(horizontal: 6),
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 8),
                                           child: Text(
                                             blog.title.validate(),
-                                            style: boldTextStyle(size: 12, color: textPrimaryColorGlobal),
+                                            style: boldTextStyle(
+                                                size: 14,
+                                                color: textPrimaryColorGlobal),
                                             maxLines: 2,
                                             overflow: TextOverflow.ellipsis,
                                           ),
                                         ),
                                         4.height,
-                                        // Publication date - reduced font size
+                                        // Publication date
                                         Padding(
-                                          padding: EdgeInsets.symmetric(horizontal: 6),
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 8),
                                           child: Text(
                                             blog.publishDate.validate(),
-                                            style: secondaryTextStyle(size: 10),
+                                            style: secondaryTextStyle(size: 12),
                                           ),
                                         ),
                                       ],
