@@ -336,7 +336,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
                           padding:
                               EdgeInsets.symmetric(horizontal: 12, vertical: 2),
                           decoration: BoxDecoration(
-                            color: context.primaryColor.withValues(alpha: 0.1),
+                            color: Color(0xFFE8F3EC),
                             borderRadius: radius(16),
                             border: Border.all(color: context.primaryColor),
                           ),

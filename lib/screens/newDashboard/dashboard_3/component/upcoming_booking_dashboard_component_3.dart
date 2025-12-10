@@ -73,7 +73,7 @@ class _UpcomingBookingDashboardComponent3State extends State<UpcomingBookingDash
             Container(
               decoration: boxDecorationRoundedWithShadow(
                 defaultRadius.toInt(),
-                backgroundColor: appStore.isDarkMode ? context.primaryColor.withValues(alpha: 0.1) : primaryLightColor,
+                backgroundColor: appStore.isDarkMode ? Color(0xFFE8F3EC) : primaryLightColor,
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,

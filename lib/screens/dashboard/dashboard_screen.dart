@@ -170,7 +170,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           child: NavigationBarTheme(
             data: NavigationBarThemeData(
               backgroundColor: context.primaryColor.withValues(alpha: 0.02),
-              indicatorColor: context.primaryColor.withValues(alpha: 0.1),
+              indicatorColor: Color(0xFFE8F3EC),
               labelTextStyle:
                   WidgetStateProperty.all(primaryTextStyle(size: 12)),
               surfaceTintColor: Colors.transparent,

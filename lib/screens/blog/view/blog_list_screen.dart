@@ -19,6 +19,9 @@ class BlogListScreen extends StatefulWidget {
 }
 
 class _BlogListScreenState extends State<BlogListScreen> {
+  // Flag to use dummy data for UI design
+  static const bool USE_DUMMY_DATA = true;
+
   Future<List<BlogData>>? future;
 
   List<BlogData> blogList = [];
@@ -32,14 +35,48 @@ class _BlogListScreenState extends State<BlogListScreen> {
     init();
   }
 
+  /// Initialize blog list - uses dummy data if flag is enabled, otherwise uses API
   void init() async {
-    future = getBlogListAPI(
-      blogData: blogList,
-      page: page,
-      lastPageCallback: (b) {
-        isLastPage = b;
-      },
-    );
+    if (USE_DUMMY_DATA) {
+      // Use dummy data for UI design
+      future = Future.value(_getDummyBlogList());
+      blogList = _getDummyBlogList();
+      isLastPage = true;
+    } else {
+      // Use actual API call (backend logic remains intact)
+      future = getBlogListAPI(
+        blogData: blogList,
+        page: page,
+        lastPageCallback: (b) {
+          isLastPage = b;
+        },
+      );
+    }
+  }
+
+  /// Generate dummy blog data matching the design image
+  /// Returns a list of 5 identical blog posts as shown in the design
+  List<BlogData> _getDummyBlogList() {
+    return List.generate(5, (index) {
+      return BlogData(
+        id: index + 1,
+        title: "Rustin Home Decor Ideas To Create A Warm And...",
+        description:
+            "Discover amazing home decor ideas to create a warm and inviting atmosphere in your living space.",
+        isFeatured: 0,
+        totalViews: 0,
+        authorId: 1,
+        authorName: "Abdul Kader",
+        authorImage:
+            "https://i.pravatar.cc/150?img=12", // Placeholder for author profile
+        status: 1,
+        publishDate: "November 19, 2025",
+        imageAttachments: [
+          "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=400&fit=crop", // Home decor image
+        ],
+        createdAt: "2025-11-19",
+      );
+    });
   }
 
   @override
@@ -56,14 +93,19 @@ class _BlogListScreenState extends State<BlogListScreen> {
             onSuccess: (snap) {
               return AnimatedListView(
                 physics: const AlwaysScrollableScrollPhysics(),
-                padding: const EdgeInsets.all(8),
+                padding: const EdgeInsets.symmetric(
+                    vertical:
+                        8), // Vertical padding only, horizontal handled by card margins
                 listAnimationType: ListAnimationType.FadeIn,
                 fadeInConfiguration: FadeInConfiguration(duration: 2.seconds),
                 itemCount: snap.length,
-                emptyWidget: NoDataWidget(title: language.noBlogsFound, imageWidget: const EmptyStateWidget()),
+                emptyWidget: NoDataWidget(
+                    title: language.noBlogsFound,
+                    imageWidget: const EmptyStateWidget()),
                 shrinkWrap: true,
                 onNextPage: () {
-                  if (!isLastPage) {
+                  // Pagination logic - only works when not using dummy data
+                  if (!USE_DUMMY_DATA && !isLastPage) {
                     page++;
                     appStore.setLoading(true);
 
@@ -72,11 +114,15 @@ class _BlogListScreenState extends State<BlogListScreen> {
                   }
                 },
                 onSwipeRefresh: () async {
-                  page = 1;
+                  // Refresh logic - only works when not using dummy data
+                  if (!USE_DUMMY_DATA) {
+                    page = 1;
 
-                  init();
-                  setState(() {});
+                    init();
+                    setState(() {});
 
+                    return await 2.seconds.delay;
+                  }
                   return await 2.seconds.delay;
                 },
                 disposeScrollController: true,

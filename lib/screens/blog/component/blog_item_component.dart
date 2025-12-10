@@ -5,8 +5,6 @@ import 'package:booking_system_flutter/screens/blog/view/blog_detail_screen.dart
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-import '../../../component/image_border_component.dart';
-
 class BlogItemComponent extends StatefulWidget {
   final BlogData? blogData;
 
@@ -35,11 +33,12 @@ class _BlogItemComponentState extends State<BlogItemComponent> {
             .launch(context);
       },
       child: Container(
+        // Card styling matching the design - light green background with rounded corners
         padding: const EdgeInsets.all(12),
-        margin: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
+        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: boxDecorationWithRoundedCorners(
-          borderRadius: radius(),
-          backgroundColor: context.primaryColor.withValues(alpha: 0.1),
+          borderRadius: radius(12), // Rounded corners as shown in design
+          backgroundColor: Color(0xFFE8F3EC), // Light green background
           border: appStore.isDarkMode
               ? Border.all(color: context.dividerColor)
               : null,
@@ -47,67 +46,72 @@ class _BlogItemComponentState extends State<BlogItemComponent> {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CachedImageWidget(
-              url: widget.blogData!.imageAttachments.validate().isNotEmpty
-                  ? widget.blogData!.imageAttachments!.first.validate()
-                  : '',
-              fit: BoxFit.cover,
-              height: 80,
-              width: 80,
-              radius: defaultRadius,
+            // Thumbnail image on the left - square with rounded corners
+            ClipRRect(
+              borderRadius: radius(8),
+              child: CachedImageWidget(
+                url: widget.blogData!.imageAttachments.validate().isNotEmpty
+                    ? widget.blogData!.imageAttachments!.first.validate()
+                    : '',
+                fit: BoxFit.cover,
+                height: 80,
+                width: 80,
+                radius: 0, // No radius here as we're using ClipRRect
+              ),
             ),
-            16.width,
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  widget.blogData!.title.validate(),
-                  style: boldTextStyle(size: 14),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                6.height,
-                Row(
-                  children: [
-                    Row(
-                      children: [
-                        ImageBorder(
-                          src: widget.blogData!.authorImage.validate(),
+            12.width, // Spacing between image and content
+            // Content section on the right
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  // Blog title - truncated with ellipsis as shown in design
+                  Text(
+                    widget.blogData!.title.validate(),
+                    style:
+                        boldTextStyle(size: 14, color: textPrimaryColorGlobal),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  8.height, // Spacing between title and author info
+                  // Author information row
+                  Row(
+                    children: [
+                      // Circular author profile picture
+                      ClipOval(
+                        child: CachedImageWidget(
+                          url: widget.blogData!.authorImage.validate(),
                           height: 30,
+                          width: 30,
+                          fit: BoxFit.cover,
+                          radius: 0,
                         ),
-                        8.width,
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(widget.blogData!.authorName.validate(),
-                                style: primaryTextStyle(size: 14),
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis),
-                            2.height,
-                            Text(widget.blogData!.publishDate.validate(),
-                                style: secondaryTextStyle(size: 10)),
-                          ],
-                        ).expand(),
-                      ],
-                    ).expand(),
-                    // Row(
-                    //   mainAxisAlignment: MainAxisAlignment.end,
-                    //   children: [
-                    //     Icon(Icons.remove_red_eye,
-                    //         size: 14, color: context.iconColor),
-                    //     4.width,
-                    //     Text('${widget.blogData!.totalViews.validate()} ',
-                    //         style: secondaryTextStyle()),
-                    //     Text(language.views,
-                    //         style: secondaryTextStyle(),
-                    //         maxLines: 1,
-                    //         overflow: TextOverflow.ellipsis),
-                    //   ],
-                    // )
-                  ],
-                ),
-              ],
-            ).expand(),
+                      ),
+                      8.width, // Spacing between profile picture and name
+                      // Author name
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            widget.blogData!.authorName.validate(),
+                            style: primaryTextStyle(size: 12),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          Text(
+                            widget.blogData!.publishDate.validate(),
+                            style: secondaryTextStyle(size: 11),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+
+                  // Publication date
+                ],
+              ),
+            ),
           ],
         ),
       ),

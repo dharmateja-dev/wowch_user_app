@@ -30,7 +30,8 @@ class BookingItemComponent extends StatefulWidget {
 
 class _BookingItemComponentState extends State<BookingItemComponent> {
   Widget _buildEditBookingWidget() {
-    if (widget.bookingData.status == BookingStatusKeys.pending && isDateTimeAfterNow) {
+    if (widget.bookingData.status == BookingStatusKeys.pending &&
+        isDateTimeAfterNow) {
       return IconButton(
         padding: EdgeInsets.zero,
         constraints: const BoxConstraints(),
@@ -52,7 +53,9 @@ class _BookingItemComponentState extends State<BookingItemComponent> {
               context: context,
               isScrollControlled: true,
               isDismissible: true,
-              shape: RoundedRectangleBorder(borderRadius: radiusOnly(topLeft: defaultRadius, topRight: defaultRadius)),
+              shape: RoundedRectangleBorder(
+                  borderRadius: radiusOnly(
+                      topLeft: defaultRadius, topRight: defaultRadius)),
               builder: (_) {
                 return DraggableScrollableSheet(
                   initialChildSize: 0.65,
@@ -95,7 +98,9 @@ class _BookingItemComponentState extends State<BookingItemComponent> {
       return formatDate(bookingDetail.date.validate(), isTime: true);
     }
     return formatDate(
-      getSlotWithDate(date: bookingDetail.date.validate(), slotTime: bookingDetail.bookingSlot.validate()),
+      getSlotWithDate(
+          date: bookingDetail.date.validate(),
+          slotTime: bookingDetail.bookingSlot.validate()),
       isTime: true,
     );
   }
@@ -123,7 +128,14 @@ class _BookingItemComponentState extends State<BookingItemComponent> {
             children: [
               if (widget.bookingData.isPackageBooking)
                 CachedImageWidget(
-                  url: widget.bookingData.bookingPackage!.imageAttachments.validate().isNotEmpty ? widget.bookingData.bookingPackage!.imageAttachments.validate().first.validate() : "",
+                  url: widget.bookingData.bookingPackage!.imageAttachments
+                          .validate()
+                          .isNotEmpty
+                      ? widget.bookingData.bookingPackage!.imageAttachments
+                          .validate()
+                          .first
+                          .validate()
+                      : "",
                   height: 80,
                   width: 80,
                   fit: BoxFit.cover,
@@ -131,7 +143,11 @@ class _BookingItemComponentState extends State<BookingItemComponent> {
                 )
               else
                 CachedImageWidget(
-                  url: widget.bookingData.serviceAttachments.validate().isNotEmpty ? widget.bookingData.serviceAttachments!.first.validate() : '',
+                  url: widget.bookingData.serviceAttachments
+                          .validate()
+                          .isNotEmpty
+                      ? widget.bookingData.serviceAttachments!.first.validate()
+                      : '',
                   fit: BoxFit.cover,
                   width: 80,
                   height: 80,
@@ -147,51 +163,65 @@ class _BookingItemComponentState extends State<BookingItemComponent> {
                       Row(
                         children: [
                           Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 2),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 12, vertical: 2),
                             margin: const EdgeInsets.only(left: 4),
                             decoration: BoxDecoration(
-                              color: context.primaryColor.withValues(alpha:0.1),
+                              color:
+                                  context.primaryColor.withValues(alpha: 0.1),
                               borderRadius: radius(16),
                               border: Border.all(color: context.primaryColor),
                             ),
                             child: Text(
                               '#${widget.bookingData.id.validate()}',
-                              style: boldTextStyle(color: context.primaryColor, size: 12),
+                              style: boldTextStyle(
+                                  color: context.primaryColor, size: 12),
                             ),
                           ).flexible(),
                           5.width,
-                          if (widget.bookingData.isShopService)
-                            ...[
-                              Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-                                decoration: BoxDecoration(
-                                  color: context.primaryColor.withValues(alpha: 0.1),
-                                  borderRadius: radius(12),
-                                  border: Border.all(color: context.primaryColor),
+                          if (widget.bookingData.isShopService) ...[
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 8, vertical: 3),
+                              decoration: BoxDecoration(
+                                color: Color(0xFFE8F3EC),
+                                borderRadius: radius(12),
+                                border: Border.all(color: context.primaryColor),
+                              ),
+                              child: Text(
+                                language.lblAtShop,
+                                style: boldTextStyle(
+                                  size: 11,
+                                  color: context.primaryColor,
                                 ),
-                                child: Text(
-                                  language.lblAtShop,
-                                  style: boldTextStyle(
-                                    size: 11,
-                                    color: context.primaryColor,
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ).flexible(),
-                              5.width,
-                            ],
+                                textAlign: TextAlign.center,
+                              ),
+                            ).flexible(),
+                            5.width,
+                          ],
                           Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 2),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 12, vertical: 2),
                             decoration: BoxDecoration(
-                              color: widget.bookingData.status.validate().getPaymentStatusBackgroundColor.withValues(alpha:0.1),
+                              color: widget.bookingData.status
+                                  .validate()
+                                  .getPaymentStatusBackgroundColor
+                                  .withValues(alpha: 0.1),
                               borderRadius: radius(16),
-                              border: Border.all(color: widget.bookingData.status.validate().getPaymentStatusBackgroundColor),
+                              border: Border.all(
+                                  color: widget.bookingData.status
+                                      .validate()
+                                      .getPaymentStatusBackgroundColor),
                             ),
                             child: Marquee(
                               child: Text(
-                                widget.bookingData.status.validate().toBookingStatus(),
+                                widget.bookingData.status
+                                    .validate()
+                                    .toBookingStatus(),
                                 style: boldTextStyle(
-                                  color: widget.bookingData.status.validate().getPaymentStatusBackgroundColor,
+                                  color: widget.bookingData.status
+                                      .validate()
+                                      .getPaymentStatusBackgroundColor,
                                   size: 12,
                                 ),
                               ),
@@ -199,30 +229,36 @@ class _BookingItemComponentState extends State<BookingItemComponent> {
                           ).flexible(),
                           if (widget.bookingData.isPostJob)
                             Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 2),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 12, vertical: 2),
                               margin: const EdgeInsets.only(left: 4),
                               decoration: BoxDecoration(
-                                color: context.primaryColor.withValues(alpha:0.1),
+                                color:
+                                    context.primaryColor.withValues(alpha: 0.1),
                                 border: Border.all(color: context.primaryColor),
                                 borderRadius: radius(16),
                               ),
                               child: Text(
                                 language.postJob,
-                                style: boldTextStyle(color: context.primaryColor, size: 12),
+                                style: boldTextStyle(
+                                    color: context.primaryColor, size: 12),
                               ),
                             ),
                           if (widget.bookingData.isPackageBooking)
                             Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 2),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 12, vertical: 2),
                               margin: const EdgeInsets.only(left: 4),
                               decoration: BoxDecoration(
-                                color: context.primaryColor.withValues(alpha:0.1),
+                                color:
+                                    context.primaryColor.withValues(alpha: 0.1),
                                 border: Border.all(color: context.primaryColor),
                                 borderRadius: radius(16),
                               ),
                               child: Text(
                                 language.package,
-                                style: boldTextStyle(color: context.primaryColor, size: 12),
+                                style: boldTextStyle(
+                                    color: context.primaryColor, size: 12),
                               ),
                             ),
                         ],
@@ -232,7 +268,9 @@ class _BookingItemComponentState extends State<BookingItemComponent> {
                   12.height,
                   Marquee(
                     child: Text(
-                      widget.bookingData.isPackageBooking ? '${widget.bookingData.bookingPackage!.name.validate()}' : '${widget.bookingData.serviceName.validate()}',
+                      widget.bookingData.isPackageBooking
+                          ? '${widget.bookingData.bookingPackage!.name.validate()}'
+                          : '${widget.bookingData.serviceName.validate()}',
                       style: boldTextStyle(size: 14),
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
@@ -255,8 +293,10 @@ class _BookingItemComponentState extends State<BookingItemComponent> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               PriceWidget(
-                                isFreeService: widget.bookingData.type == SERVICE_TYPE_FREE,
-                                price: widget.bookingData.totalAmount.validate(),
+                                isFreeService: widget.bookingData.type ==
+                                    SERVICE_TYPE_FREE,
+                                price:
+                                    widget.bookingData.totalAmount.validate(),
                                 color: primaryColor,
                               ),
                               if (widget.bookingData.isHourlyService)
@@ -264,7 +304,8 @@ class _BookingItemComponentState extends State<BookingItemComponent> {
                                   children: [
                                     4.width,
                                     PriceWidget(
-                                      price: widget.bookingData.amount.validate(),
+                                      price:
+                                          widget.bookingData.amount.validate(),
                                       color: textSecondaryColorGlobal,
                                       isHourlyService: true,
                                       size: 12,
@@ -275,7 +316,8 @@ class _BookingItemComponentState extends State<BookingItemComponent> {
                               if (widget.bookingData.discount.validate() != 0)
                                 Text(
                                   '(${widget.bookingData.discount!}% ${language.lblOff})',
-                                  style: boldTextStyle(size: 12, color: Colors.green),
+                                  style: boldTextStyle(
+                                      size: 12, color: Colors.green),
                                   overflow: TextOverflow.ellipsis,
                                   maxLines: 1,
                                 ).paddingLeft(4),
@@ -292,7 +334,8 @@ class _BookingItemComponentState extends State<BookingItemComponent> {
           Container(
             padding: const EdgeInsets.all(8),
             decoration: boxDecorationWithRoundedCorners(
-              backgroundColor: appStore.isDarkMode ? context.cardColor : whiteColor,
+              backgroundColor:
+                  appStore.isDarkMode ? context.cardColor : whiteColor,
               border: Border.all(color: context.dividerColor),
               borderRadius: const BorderRadius.all(Radius.circular(8)),
             ),
@@ -305,7 +348,9 @@ class _BookingItemComponentState extends State<BookingItemComponent> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      widget.bookingData.isShopService ? '${language.lblShopAddress}:' : '${language.hintAddress}:',
+                      widget.bookingData.isShopService
+                          ? '${language.lblShopAddress}:'
+                          : '${language.hintAddress}:',
                       style: secondaryTextStyle(),
                     ).expand(flex: 2),
                     8.width,
@@ -339,12 +384,22 @@ class _BookingItemComponentState extends State<BookingItemComponent> {
 
                 if (widget.bookingData.paymentStatus != null &&
                     (widget.bookingData.status == BookingStatusKeys.complete ||
-                        widget.bookingData.status == BookingStatusKeys.cancelled ||
-                        widget.bookingData.status == BookingStatusKeys.pending ||
-                        widget.bookingData.paymentStatus == SERVICE_PAYMENT_STATUS_ADVANCE_PAID ||
-                        widget.bookingData.paymentStatus == SERVICE_PAYMENT_STATUS_PAID ||
+                        widget.bookingData.status ==
+                            BookingStatusKeys.cancelled ||
+                        widget.bookingData.status ==
+                            BookingStatusKeys.pending ||
+                        widget.bookingData.paymentStatus ==
+                            SERVICE_PAYMENT_STATUS_ADVANCE_PAID ||
+                        widget.bookingData.paymentStatus ==
+                            SERVICE_PAYMENT_STATUS_PAID ||
                         widget.bookingData.paymentStatus == PENDING_BY_ADMIN))
-                  if ((widget.bookingData.paymentStatus == SERVICE_PAYMENT_STATUS_PAID || widget.bookingData.paymentStatus == PENDING_BY_ADMIN) || getPaymentStatusText(widget.bookingData.paymentStatus, widget.bookingData.paymentMethod).isNotEmpty)
+                  if ((widget.bookingData.paymentStatus ==
+                              SERVICE_PAYMENT_STATUS_PAID ||
+                          widget.bookingData.paymentStatus ==
+                              PENDING_BY_ADMIN) ||
+                      getPaymentStatusText(widget.bookingData.paymentStatus,
+                              widget.bookingData.paymentMethod)
+                          .isNotEmpty)
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -361,7 +416,9 @@ class _BookingItemComponentState extends State<BookingItemComponent> {
                             ),
                             style: boldTextStyle(
                               size: 12,
-                              color: widget.bookingData.status.validate().getPaymentStatusBackgroundColor,
+                              color: widget.bookingData.status
+                                  .validate()
+                                  .getPaymentStatusBackgroundColor,
                             ),
                             textAlign: TextAlign.left,
                           ),
@@ -370,8 +427,11 @@ class _BookingItemComponentState extends State<BookingItemComponent> {
                     ).paddingOnly(left: 8, bottom: 8, right: 8)
                   else if (widget.bookingData.paymentStatus == null &&
                       (widget.bookingData.status == BookingStatusKeys.pending ||
-                          widget.bookingData.status == BookingStatusKeys.cancelled || // Handle null payment status for cancellation
-                          widget.bookingData.status == BookingStatusKeys.complete))
+                          widget.bookingData.status ==
+                              BookingStatusKeys
+                                  .cancelled || // Handle null payment status for cancellation
+                          widget.bookingData.status ==
+                              BookingStatusKeys.complete))
                     Column(
                       children: [
                         Row(
@@ -387,10 +447,14 @@ class _BookingItemComponentState extends State<BookingItemComponent> {
                             const SizedBox(width: 8),
                             Marquee(
                               child: Text(
-                                widget.bookingData.status.validate().toBookingStatus(),
+                                widget.bookingData.status
+                                    .validate()
+                                    .toBookingStatus(),
                                 style: boldTextStyle(
                                   size: 12,
-                                  color: widget.bookingData.status.validate().getPaymentStatusBackgroundColor,
+                                  color: widget.bookingData.status
+                                      .validate()
+                                      .getPaymentStatusBackgroundColor,
                                 ),
                                 textAlign: TextAlign.left,
                               ),
@@ -402,7 +466,9 @@ class _BookingItemComponentState extends State<BookingItemComponent> {
                 Column(
                   children: [
                     DottedLine(
-                      dashColor: appStore.isDarkMode ? lightGray.withValues(alpha: 0.4) : lightGray,
+                      dashColor: appStore.isDarkMode
+                          ? lightGray.withValues(alpha: 0.4)
+                          : lightGray,
                       dashGapLength: 5,
                       dashLength: 8,
                     ).paddingAll(8),
@@ -414,8 +480,11 @@ class _BookingItemComponentState extends State<BookingItemComponent> {
                             src: widget.bookingData.handyman!.isEmpty
                                 ? widget.bookingData.providerImage.validate()
                                 : widget.bookingData.isProviderAndHandymanSame
-                                    ? widget.bookingData.providerImage.validate()
-                                    : widget.bookingData.handyman!.first.handyman!.handymanImage.validate(),
+                                    ? widget.bookingData.providerImage
+                                        .validate()
+                                    : widget.bookingData.handyman!.first
+                                        .handyman!.handymanImage
+                                        .validate(),
                             height: 40,
                           ),
                           16.width,
@@ -428,10 +497,15 @@ class _BookingItemComponentState extends State<BookingItemComponent> {
                                   Marquee(
                                     child: Text(
                                       widget.bookingData.handyman!.isEmpty
-                                          ? widget.bookingData.providerName.validate()
-                                          : widget.bookingData.isProviderAndHandymanSame
-                                              ? widget.bookingData.providerName.validate()
-                                              : widget.bookingData.handyman!.first.handyman!.displayName.validate(),
+                                          ? widget.bookingData.providerName
+                                              .validate()
+                                          : widget.bookingData
+                                                  .isProviderAndHandymanSame
+                                              ? widget.bookingData.providerName
+                                                  .validate()
+                                              : widget.bookingData.handyman!
+                                                  .first.handyman!.displayName
+                                                  .validate(),
                                       style: boldTextStyle(size: 14),
                                     ),
                                   ).flexible(),
@@ -442,10 +516,19 @@ class _BookingItemComponentState extends State<BookingItemComponent> {
                                     color: Colors.green,
                                   ).visible(
                                     widget.bookingData.handyman!.isEmpty
-                                        ? widget.bookingData.providerIsVerified.validate() == 1
-                                        : widget.bookingData.isProviderAndHandymanSame
-                                            ? widget.bookingData.providerIsVerified.validate() == 1
-                                            : widget.bookingData.handyman!.first.handyman!.isVerifyHandyman.validate() == 1,
+                                        ? widget.bookingData.providerIsVerified
+                                                .validate() ==
+                                            1
+                                        : widget.bookingData
+                                                .isProviderAndHandymanSame
+                                            ? widget.bookingData
+                                                    .providerIsVerified
+                                                    .validate() ==
+                                                1
+                                            : widget.bookingData.handyman!.first
+                                                    .handyman!.isVerifyHandyman
+                                                    .validate() ==
+                                                1,
                                   ),
                                 ],
                               ),
@@ -473,11 +556,18 @@ class _BookingItemComponentState extends State<BookingItemComponent> {
   bool get isDateTimeAfterNow {
     try {
       if (widget.bookingData.bookingSlot != null) {
-        final bookingDateTimeForTimeSlots = widget.bookingData.date.validate().split(" ").isNotEmpty ? widget.bookingData.date.validate().split(" ").first : "";
-        final bookingTimeForTimeSlots = widget.bookingData.bookingSlot.validate();
-        return DateTime.parse(bookingDateTimeForTimeSlots + " " + bookingTimeForTimeSlots).isAfter(DateTime.now());
+        final bookingDateTimeForTimeSlots =
+            widget.bookingData.date.validate().split(" ").isNotEmpty
+                ? widget.bookingData.date.validate().split(" ").first
+                : "";
+        final bookingTimeForTimeSlots =
+            widget.bookingData.bookingSlot.validate();
+        return DateTime.parse(
+                bookingDateTimeForTimeSlots + " " + bookingTimeForTimeSlots)
+            .isAfter(DateTime.now());
       } else {
-        return DateTime.parse(widget.bookingData.date.validate()).isAfter(DateTime.now());
+        return DateTime.parse(widget.bookingData.date.validate())
+            .isAfter(DateTime.now());
       }
     } catch (e) {
       log('Error parsing date: $e');

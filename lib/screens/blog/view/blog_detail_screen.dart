@@ -3,7 +3,6 @@ import 'package:booking_system_flutter/component/base_scaffold_widget.dart';
 import 'package:booking_system_flutter/main.dart';
 import 'package:booking_system_flutter/model/package_data_model.dart';
 import 'package:booking_system_flutter/screens/blog/blog_repository.dart';
-import 'package:booking_system_flutter/screens/blog/component/blog_detail_header_component.dart';
 import 'package:booking_system_flutter/screens/blog/model/blog_detail_response.dart';
 import 'package:booking_system_flutter/screens/blog/model/blog_response_model.dart';
 import 'package:booking_system_flutter/utils/model_keys.dart';
@@ -13,8 +12,28 @@ import 'package:nb_utils/nb_utils.dart';
 
 import '../../../component/cached_image_widget.dart';
 import '../../../component/empty_error_state_widget.dart';
-import '../../../component/image_border_component.dart';
 import '../shimmer/blog_detail_shimmer.dart';
+
+/// Custom clipper for curved bottom edge of hero image
+class _CurvedBottomClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    final path = Path();
+    path.lineTo(0, size.height - 30);
+    path.quadraticBezierTo(
+      size.width / 2,
+      size.height,
+      size.width,
+      size.height - 30,
+    );
+    path.lineTo(size.width, 0);
+    path.close();
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
+}
 
 class BlogDetailScreen extends StatefulWidget {
   final int blogId;
@@ -39,84 +58,54 @@ class _BlogDetailScreenState extends State<BlogDetailScreen> {
     init();
   }
 
-  // Generate dummy blog detail data for UI testing
+  /// Generate dummy blog detail data matching the design image
+  /// Returns blog data with title "Rustin Home Decor ideas.", author "Abdul Kader", date "November 19, 2025"
   Future<BlogDetailResponse> _getDummyBlogDetail() async {
     await Future.delayed(Duration(milliseconds: 500)); // Simulate network delay
 
     int blogId = widget.blogId.validate();
-    List<String> authorNames = [
-      'John Doe',
-      'Jane Smith',
-      'Mike Johnson',
-      'Sarah Williams',
-      'David Brown'
-    ];
-    String authorName = authorNames[blogId % 5];
 
-    // Generate multiple images for the blog
-    List<Attachments> attachments = List.generate(
-      4, // 4 images for gallery
-      (index) => Attachments(
-        id: index + 1,
-        url: 'https://picsum.photos/800/600?random=${blogId * 10 + index}',
+    // Hero image - woman with dark skin, dark hair, dark blue top
+    List<Attachments> attachments = [
+      Attachments(
+        id: 1,
+        url: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&h=600&fit=crop',
       ),
-    );
+    ];
 
-    // Generate rich HTML content
+    // Blog content text matching the design - about rustic interior design
     String htmlDescription = '''
       <div>
-        <p style="font-size: 16px; line-height: 1.6; margin-bottom: 16px;">
-          Welcome to our comprehensive guide on home maintenance and improvement. This article will provide you with valuable insights and practical tips to keep your home in excellent condition.
+        <p style="font-size: 16px; line-height: 1.6; margin-bottom: 16px; color: #333333;">
+          Rustic interior design style emphasizes nature, earthy beauty, and has evolved to include warmth, comfort, and freshness. The rustic style brings the outdoors inside, creating a cozy and inviting atmosphere that celebrates natural materials and textures.
         </p>
         
-        <h2 style="font-size: 20px; font-weight: bold; margin-top: 24px; margin-bottom: 12px;">Essential Home Maintenance Tips</h2>
-        
-        <p style="font-size: 16px; line-height: 1.6; margin-bottom: 16px;">
-          Regular home maintenance is crucial for preserving the value of your property and ensuring a safe living environment. Here are some key areas to focus on:
+        <p style="font-size: 16px; line-height: 1.6; margin-bottom: 16px; color: #333333;">
+          Rustic decor can be incorporated into various parts of a home, from the living room to the bedroom, kitchen, and even outdoor spaces. This style is popular for its balance of authenticity and elegance, making it a timeless choice for homeowners who appreciate natural beauty and comfort.
         </p>
         
-        <ul style="margin-left: 20px; margin-bottom: 16px;">
-          <li style="margin-bottom: 8px;">Inspect and clean your HVAC system regularly</li>
-          <li style="margin-bottom: 8px;">Check for water leaks and fix them immediately</li>
-          <li style="margin-bottom: 8px;">Maintain your roof and gutters</li>
-          <li style="margin-bottom: 8px;">Test smoke detectors and carbon monoxide alarms</li>
-          <li style="margin-bottom: 8px;">Service your appliances annually</li>
-        </ul>
-        
-        <h2 style="font-size: 20px; font-weight: bold; margin-top: 24px; margin-bottom: 12px;">Seasonal Maintenance Checklist</h2>
-        
-        <p style="font-size: 16px; line-height: 1.6; margin-bottom: 16px;">
-          Different seasons require different maintenance tasks. In spring, focus on cleaning and preparing your home for warmer weather. Summer is ideal for outdoor projects and landscaping. Fall is perfect for preparing your home for winter, and winter maintenance focuses on keeping your home warm and safe.
+        <p style="font-size: 16px; line-height: 1.6; margin-bottom: 16px; color: #333333;">
+          The key elements of rustic design include exposed wood beams, stone accents, natural fabrics, and earthy color palettes. These elements work together to create a warm and welcoming environment that feels both sophisticated and down-to-earth.
         </p>
         
-        <h2 style="font-size: 20px; font-weight: bold; margin-top: 24px; margin-bottom: 12px;">DIY vs Professional Services</h2>
-        
-        <p style="font-size: 16px; line-height: 1.6; margin-bottom: 16px;">
-          While many home maintenance tasks can be done yourself, some require professional expertise. Electrical work, major plumbing issues, and structural repairs should always be handled by licensed professionals. For simple tasks like changing air filters, cleaning gutters, or painting, DIY can save you money and give you a sense of accomplishment.
-        </p>
-        
-        <p style="font-size: 16px; line-height: 1.6; margin-bottom: 16px;">
-          Remember, regular maintenance is an investment in your home's future. By staying proactive, you can prevent costly repairs and maintain your property's value for years to come.
+        <p style="font-size: 16px; line-height: 1.6; margin-bottom: 16px; color: #333333;">
+          Whether you're looking to transform your entire home or just add rustic touches to specific rooms, this design style offers endless possibilities for creating a space that reflects your personal style and connection to nature.
         </p>
       </div>
     ''';
 
     BlogData blogDetail = BlogData(
       id: blogId,
-      title: 'Complete Guide to Home Maintenance: Tips and Best Practices',
+      title: 'Rustin Home Decor ideas.',
       description: htmlDescription,
-      isFeatured: blogId % 3 == 0 ? 1 : 0,
-      totalViews: 100 + (blogId * 23),
-      authorId: 1 + (blogId % 5),
-      authorName: authorName,
-      authorImage: 'https://i.pravatar.cc/150?img=${blogId % 70}',
+      isFeatured: 0,
+      totalViews: 0,
+      authorId: 1,
+      authorName: 'Abdul Kader',
+      authorImage: 'https://i.pravatar.cc/150?img=12', // Man with glasses and beard
       status: 1,
-      publishDate: DateTime.now()
-          .subtract(Duration(days: blogId % 30))
-          .toString()
-          .split(' ')[0],
-      createdAt:
-          DateTime.now().subtract(Duration(days: blogId % 30)).toString(),
+      publishDate: 'November 19, 2025',
+      createdAt: '2025-11-19',
       imageAttachments: attachments.map((e) => e.url.validate()).toList(),
       attachment: attachments,
       deletedAt: null,
@@ -135,54 +124,46 @@ class _BlogDetailScreenState extends State<BlogDetailScreen> {
     }
   }
 
-  // Get related blogs (excluding current blog)
+  /// Get related blogs matching the design - returns list of blog cards for horizontal scrolling
   List<BlogData> _getRelatedBlogs() {
     List<BlogData> relatedBlogs = [];
-    if (cachedBlogList != null && cachedBlogList!.isNotEmpty) {
-      relatedBlogs = cachedBlogList!
-          .where((blog) => blog.id != widget.blogId.validate())
-          .take(5)
-          .toList();
-    }
-
-    // If no cached blogs or not enough, generate dummy related blogs
-    if (relatedBlogs.length < 3 && USE_DUMMY_DATA) {
+    
+    if (USE_DUMMY_DATA) {
+      // Generate dummy related blogs matching the design
+      // All show "Rustin Home Decor Ideas." with date "November 19, 2025"
       for (int i = 1; i <= 5; i++) {
         int relatedId = widget.blogId.validate() + i;
-        if (relatedId != widget.blogId.validate()) {
-          relatedBlogs.add(BlogData(
-            id: relatedId,
-            title: 'Rustin Home Decor Ideas',
-            description: 'Sample blog description',
-            isFeatured: 0,
-            totalViews: 100 + (relatedId * 23),
-            authorId: 1 + (relatedId % 5),
-            authorName: [
-              'John Doe',
-              'Jane Smith',
-              'Mike Johnson',
-              'Sarah Williams',
-              'David Brown'
-            ][relatedId % 5],
-            authorImage: 'https://i.pravatar.cc/150?img=${relatedId % 70}',
-            status: 1,
-            publishDate: DateTime.now()
-                .subtract(Duration(days: relatedId % 30))
-                .toString()
-                .split(' ')[0],
-            createdAt: DateTime.now()
-                .subtract(Duration(days: relatedId % 30))
-                .toString(),
-            imageAttachments: [
-              'https://picsum.photos/400/300?random=$relatedId'
-            ],
-            attachment: [
-              Attachments(
-                  id: 1, url: 'https://picsum.photos/400/300?random=$relatedId')
-            ],
-            deletedAt: null,
-          ));
-        }
+        relatedBlogs.add(BlogData(
+          id: relatedId,
+          title: 'Rustin Home Decor Ideas.',
+          description: 'Sample blog description',
+          isFeatured: 0,
+          totalViews: 0,
+          authorId: 1,
+          authorName: 'Abdul Kader',
+          authorImage: 'https://i.pravatar.cc/150?img=12',
+          status: 1,
+          publishDate: 'November 19, 2025',
+          createdAt: '2025-11-19',
+          imageAttachments: [
+            'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=300&fit=crop'
+          ],
+          attachment: [
+            Attachments(
+              id: 1,
+              url: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=300&fit=crop',
+            )
+          ],
+          deletedAt: null,
+        ));
+      }
+    } else {
+      // Use cached blogs if available
+      if (cachedBlogList != null && cachedBlogList!.isNotEmpty) {
+        relatedBlogs = cachedBlogList!
+            .where((blog) => blog.id != widget.blogId.validate())
+            .take(5)
+            .toList();
       }
     }
 
@@ -214,170 +195,173 @@ class _BlogDetailScreenState extends State<BlogDetailScreen> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  BlogDetailHeaderComponent(blogData: data.blogDetail!),
-                  // White card section with content - overlapping the image with rounded corners
-                  Transform.translate(
-                    offset:
-                        const Offset(0, -20), // slight overlap over the image
-                    child: Container(
+                  // Hero image with curved bottom edge
+                  ClipPath(
+                    clipper: _CurvedBottomClipper(),
+                    child: SizedBox(
+                      height: 300,
                       width: context.width(),
-                      decoration: boxDecorationWithRoundedCorners(
-                        borderRadius: radiusOnly(topLeft: 20, topRight: 20),
-                        backgroundColor: context.cardColor,
+                      child: CachedImageWidget(
+                        url: data.blogDetail!.imageAttachments.validate().isNotEmpty
+                            ? data.blogDetail!.imageAttachments!.first.validate()
+                            : data.blogDetail!.attachment.validate().isNotEmpty
+                                ? data.blogDetail!.attachment!.first.url.validate()
+                                : '',
+                        fit: BoxFit.cover,
+                        height: 300,
+                        width: context.width(),
                       ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          // Title
+                    ),
+                  ),
+                  // White content section
+                  Container(
+                    width: context.width(),
+                    decoration: boxDecorationWithRoundedCorners(
+                      borderRadius: radiusOnly(topLeft: 0, topRight: 0),
+                      backgroundColor: context.cardColor,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // Blog title - large and bold
+                        Text(
+                          data.blogDetail!.title.validate(),
+                          style: boldTextStyle(size: 22, color: textPrimaryColorGlobal),
+                        ).paddingSymmetric(horizontal: 16, vertical: 20),
+
+                        // Author info section - profile picture, name, and date
+                        Row(
+                          children: [
+                            // Circular author profile picture
+                            ClipOval(
+                              child: CachedImageWidget(
+                                url: data.blogDetail!.authorImage.validate(),
+                                height: 40,
+                                width: 40,
+                                fit: BoxFit.cover,
+                                radius: 0,
+                              ),
+                            ),
+                            12.width,
+                            // Author name and date column
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  data.blogDetail!.authorName.validate(),
+                                  style: boldTextStyle(size: 14, color: textPrimaryColorGlobal),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                4.height,
+                                Text(
+                                  data.blogDetail!.publishDate.validate(),
+                                  style: secondaryTextStyle(size: 12),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ).paddingSymmetric(horizontal: 16),
+
+                        24.height,
+
+                        // Blog content text
+                        Html(
+                          data: data.blogDetail!.description.validate(),
+                          style: {
+                            "div": Style(
+                              margin: Margins.zero,
+                            ),
+                            "p": Style(
+                              fontSize: FontSize(16),
+                              lineHeight: LineHeight(1.6),
+                              margin: Margins.only(bottom: 16),
+                              color: appStore.isDarkMode
+                                  ? Colors.white
+                                  : Color(0xFF333333),
+                            ),
+                          },
+                        ).paddingSymmetric(horizontal: 16),
+
+                        // Related Blogs Section
+                        if (relatedBlogs.isNotEmpty) ...[
+                          32.height,
                           Text(
-                            data.blogDetail!.title.validate(),
-                            style: boldTextStyle(size: 20),
-                          ).paddingAll(16),
-
-                          // Author info
-                          Row(
-                            children: [
-                              ImageBorder(
-                                src: data.blogDetail!.authorImage.validate(),
-                                height: 30,
-                              ),
-                              8.width,
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    data.blogDetail!.authorName.validate(),
-                                    style: primaryTextStyle(size: 14),
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                  if (data.blogDetail!.publishDate
-                                      .validate()
-                                      .isNotEmpty)
-                                    2.height,
-                                  if (data.blogDetail!.publishDate
-                                      .validate()
-                                      .isNotEmpty)
-                                    Text(
-                                      data.blogDetail!.publishDate.validate(),
-                                      style: secondaryTextStyle(size: 12),
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                ],
-                              ).expand(),
-                            ],
+                            'Related Blogs',
+                            style: boldTextStyle(size: 20, color: textPrimaryColorGlobal),
                           ).paddingSymmetric(horizontal: 16),
-
                           16.height,
-
-                          // Content
-                          Html(
-                            data: data.blogDetail!.description.validate(),
-                            style: {
-                              "div": Style(
-                                margin: Margins.zero,
-                              ),
-                              "p": Style(
-                                fontSize: FontSize(16),
-                                lineHeight: LineHeight(1.6),
-                                margin: Margins.only(bottom: 16),
-                                color: appStore.isDarkMode
-                                    ? Colors.white
-                                    : Colors.black,
-                              ),
-                              "h2": Style(
-                                fontSize: FontSize(20),
-                                fontWeight: FontWeight.bold,
-                                margin: Margins.only(top: 24, bottom: 12),
-                                color: appStore.isDarkMode
-                                    ? Colors.white
-                                    : Colors.black,
-                              ),
-                              "ul": Style(
-                                margin: Margins.only(left: 20, bottom: 16),
-                              ),
-                              "li": Style(
-                                margin: Margins.only(bottom: 8),
-                                color: appStore.isDarkMode
-                                    ? Colors.white
-                                    : Colors.black,
-                              ),
-                              "span": Style(
-                                color: appStore.isDarkMode
-                                    ? Colors.white
-                                    : Colors.black,
-                              ),
-                            },
-                          ).paddingSymmetric(horizontal: 16),
-
-                          // Related Blogs Section
-                          if (relatedBlogs.isNotEmpty) ...[
-                            32.height,
-                            Text(
-                              'Related Blogs',
-                              style: boldTextStyle(size: 18),
-                            ).paddingSymmetric(horizontal: 16),
-                            16.height,
-                            SizedBox(
-                              height: 220,
-                              child: ListView.builder(
-                                scrollDirection: Axis.horizontal,
-                                padding: EdgeInsets.symmetric(horizontal: 14),
-                                itemCount: relatedBlogs.length,
-                                itemBuilder: (context, index) {
-                                  BlogData blog = relatedBlogs[index];
-                                  return Container(
-                                    //height: 160,
-                                    width: 160,
-                                    margin: EdgeInsets.only(right: 4),
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        BlogDetailScreen(
-                                                blogId: blog.id.validate())
-                                            .launch(context);
-                                      },
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          ClipRRect(
-                                            borderRadius: radius(),
-                                            child: CachedImageWidget(
-                                              url: blog.imageAttachments
-                                                      .validate()
-                                                      .isNotEmpty
-                                                  ? blog.imageAttachments!.first
-                                                      .validate()
-                                                  : '',
-                                              fit: BoxFit.cover,
-                                              height: 150,
-                                              width: 140,
-                                            ),
+                          // Horizontal scrollable related blogs - compact size
+                          SizedBox(
+                            height: 150,
+                            child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              padding: EdgeInsets.symmetric(horizontal: 16),
+                              itemCount: relatedBlogs.length,
+                              itemBuilder: (context, index) {
+                                BlogData blog = relatedBlogs[index];
+                                return Container(
+                                  width: 120,
+                                  margin: EdgeInsets.only(right: 10),
+                                  decoration: boxDecorationWithRoundedCorners(
+                                    borderRadius: radius(8),
+                                    backgroundColor: Color(0xFFE8F3EC), // Light green background
+                                  ),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      BlogDetailScreen(blogId: blog.id.validate())
+                                          .launch(context);
+                                    },
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        // Blog image - reduced size
+                                        ClipRRect(
+                                          borderRadius: radiusOnly(
+                                            topLeft: 8,
+                                            topRight: 8,
+                                            bottomLeft: 0,
+                                            bottomRight: 0,
                                           ),
-                                          8.height,
-                                          Text(
+                                          child: CachedImageWidget(
+                                            url: blog.imageAttachments.validate().isNotEmpty
+                                                ? blog.imageAttachments!.first.validate()
+                                                : '',
+                                            fit: BoxFit.cover,
+                                            height: 90,
+                                            width: 120,
+                                          ),
+                                        ),
+                                        6.height,
+                                        // Blog title - reduced font size
+                                        Padding(
+                                          padding: EdgeInsets.symmetric(horizontal: 6),
+                                          child: Text(
                                             blog.title.validate(),
-                                            style: boldTextStyle(size: 14),
+                                            style: boldTextStyle(size: 12, color: textPrimaryColorGlobal),
                                             maxLines: 2,
                                             overflow: TextOverflow.ellipsis,
                                           ),
-                                          4.height,
-                                          Text(
+                                        ),
+                                        4.height,
+                                        // Publication date - reduced font size
+                                        Padding(
+                                          padding: EdgeInsets.symmetric(horizontal: 6),
+                                          child: Text(
                                             blog.publishDate.validate(),
-                                            style: secondaryTextStyle(size: 12),
+                                            style: secondaryTextStyle(size: 10),
                                           ),
-                                        ],
-                                      ),
+                                        ),
+                                      ],
                                     ),
-                                  );
-                                },
-                              ),
+                                  ),
+                                );
+                              },
                             ),
-                            16.height,
-                          ],
+                          ),
+                          16.height,
                         ],
-                      ),
+                      ],
                     ),
                   ),
                 ],

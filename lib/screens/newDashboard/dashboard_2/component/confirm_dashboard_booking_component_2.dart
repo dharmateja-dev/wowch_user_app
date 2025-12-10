@@ -49,7 +49,7 @@ class _ConfirmDashboardBookingComponent2State extends State<ConfirmDashboardBook
             Container(
               decoration: boxDecorationRoundedWithShadow(
                 defaultRadius.toInt(),
-                backgroundColor: appStore.isDarkMode ? context.primaryColor.withValues(alpha: 0.1) : white,
+                backgroundColor: appStore.isDarkMode ? Color(0xFFE8F3EC) : white,
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,

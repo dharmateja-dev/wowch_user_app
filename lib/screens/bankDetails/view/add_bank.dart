@@ -152,7 +152,7 @@ class _AddBankScreenState extends State<AddBankScreen> {
                     Container(
                       padding: const EdgeInsets.all(14),
                       decoration: BoxDecoration(
-                        color: context.primaryColor.withValues(alpha: 0.1),
+                        color: Color(0xFFE8F3EC),
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: Row(

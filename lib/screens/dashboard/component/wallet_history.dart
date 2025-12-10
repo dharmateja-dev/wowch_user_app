@@ -308,7 +308,7 @@ class _UserWalletHistoryScreenState extends State<UserWalletHistoryScreen> {
                           decoration: boxDecorationWithRoundedCorners(
                             borderRadius: BorderRadius.circular(8),
                             backgroundColor:
-                                context.primaryColor.withValues(alpha: 0.1),
+                                Color(0xFFE8F3EC),
                           ),
                           width: context.width(),
                           child: Row(

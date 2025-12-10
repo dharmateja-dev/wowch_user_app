@@ -37,7 +37,7 @@ class CachedImageWidget extends StatelessWidget {
       return Container(
         height: height,
         width: width ?? height,
-        color: color ?? context.primaryColor.withValues(alpha: 0.1),
+        color: color ?? Color(0xFFE8F3EC),
         alignment: alignment,
         //padding: EdgeInsets.all(10),
         //child: Image.asset(ic_no_photo, color: appStore.isDarkMode ? Colors.white : Colors.black),
