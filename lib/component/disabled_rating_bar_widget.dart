@@ -19,7 +19,7 @@ class DisabledRatingBarWidget extends StatelessWidget {
           disable: true,
           rating: rating.validate().toDouble(),
           // activeColor: ratingBarColor,
-          activeColor: getRatingBarColor(rating.toInt()),
+          activeColor: Color(0xFFFFC107),
         ),
       ],
     );
