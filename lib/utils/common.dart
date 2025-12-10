@@ -574,7 +574,7 @@ Color getRatingBarColor(int rating, {bool showRedForZeroRating = false}) {
   } else if (rating == 3) {
     return Color(0xFFff6200);
   } else if (rating == 4 || rating == 5) {
-    return Color(0xFF73CB92);
+    return Color(0xFFffC107);
   } else {
     return showRedForZeroRating ? showRedForZeroRatingColor : ratingBarColor;
   }
