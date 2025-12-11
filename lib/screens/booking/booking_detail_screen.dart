@@ -217,7 +217,30 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
           activityData: '{"status": "pending", "label": "Pending"}',
         ),
       ],
-      ratingData: [],
+      ratingData: [
+        RatingData(
+          id: 1,
+          serviceId: 101,
+          customerId: 5,
+          customerName: "Jorge Perez",
+          profileImage: "",
+          rating: 5.0,
+          review:
+              "Incredible selection and quality in contemporary style clothing my new go to for fashion forward pieces that make a statement.",
+          createdAt: "2025-09-29T10:30:00.000Z",
+        ),
+        RatingData(
+          id: 2,
+          serviceId: 101,
+          customerId: 6,
+          customerName: "Maria Garcia",
+          profileImage: "",
+          rating: 4.5,
+          review:
+              "Very professional service. The team was punctual and did an excellent job. Highly recommended for anyone looking for quality work.",
+          createdAt: "2025-09-25T14:00:00.000Z",
+        ),
+      ],
       customerReview: null,
       taxes: [
         TaxData(
@@ -398,6 +421,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
     );
   }
 
+  //completed
   Widget serviceDetailWidget(
       {required BookingData bookingDetail,
       required ServiceData serviceDetail}) {
@@ -410,14 +434,19 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
               .launch(context);
         }
       },
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              // Image section
-              CachedImageWidget(
+      child: Container(
+        padding: EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          borderRadius: radius(8),
+          color: Color(0xFFE8F3EC),
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            // Image section with rounded corners
+            ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: CachedImageWidget(
                 url: serviceDetail.attachments!.isNotEmpty &&
                         !bookingDetail.isPackageBooking
                     ? serviceDetail.attachments!.first
@@ -436,188 +465,64 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
                 fit: BoxFit.cover,
                 radius: 8,
               ),
-              16.width,
-              // Service Name section
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      if (bookingDetail.isPackageBooking)
-                        Text(
-                          bookingDetail.bookingPackage!.name.validate(),
-                          style: boldTextStyle(size: LABEL_TEXT_SIZE),
-                          maxLines: 3,
-                          overflow: TextOverflow.ellipsis,
-                        ).expand()
-                      else
-                        Text(
-                          bookingDetail.serviceName.validate(),
-                          style: boldTextStyle(size: LABEL_TEXT_SIZE),
-                          maxLines: 3,
-                          overflow: TextOverflow.ellipsis,
-                        ).expand(),
-                      if (serviceDetail.isOnShopService)
-                        Container(
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 12, vertical: 2),
-                          decoration: BoxDecoration(
-                            color: Color(0xFFE8F3EC),
-                            borderRadius: radius(16),
-                            border: Border.all(color: context.primaryColor),
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Image.asset(
-                                Assets.iconsIcDefaultShop,
-                                height: 12,
-                                color: context.primaryColor,
-                              ),
-                              4.width,
-                              Text(
-                                language.lblAtShop,
-                                style: boldTextStyle(
-                                    color: context.primaryColor, size: 12),
-                              ),
-                            ],
-                          ),
-                        ),
-                    ],
-                  ),
-
-                  /// Pricing Section
-                  8.height,
-                  if (bookingDetail.bookingPackage != null)
-                    PriceWidget(
-                      price: bookingDetail.totalAmount.validate(),
-                      color: primaryColor,
-                    )
-                  else
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        PriceWidget(
-                          isFreeService:
-                              bookingDetail.type == SERVICE_TYPE_FREE,
-                          price: bookingDetail.amount.validate(),
-                          color: primaryColor,
-                          isHourlyService: bookingDetail.isHourlyService,
-                        ),
-                        if (bookingDetail.discount.validate() != 0)
-                          Text(
-                            '(${bookingDetail.discount!}% ${language.lblOff})',
-                            style: boldTextStyle(size: 12, color: Colors.green),
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 1,
-                          ).paddingLeft(4).expand(),
-                      ],
-                    ),
-                ],
-              ).expand(),
-            ],
-          ),
-          if (bookingDetail.description.validate().isNotEmpty)
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                16.height,
-                ReadMoreText(
-                  trimLength: 65,
-                  bookingDetail.description.validate(),
-                  style: secondaryTextStyle(),
-                  colorClickableText: context.primaryColor,
-                )
-              ],
             ),
-          // Date and Time section
-          if (bookingDetail.date.validate().isNotEmpty)
-            Container(
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: appStore.isDarkMode ? context.cardColor : whiteColor,
-                border: Border.all(color: context.dividerColor),
-                borderRadius: BorderRadius.circular(8),
-              ),
+            8.width,
+            // Service details section
+            Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  if (bookingDetail.address.validate().isNotEmpty)
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          '${language.hintAddress}: ',
-                          style: secondaryTextStyle(),
-                        ).expand(flex: 2),
-                        8.width,
-                        Marquee(
-                          child: Text(
-                            bookingDetail.address.validate(),
-                            style: boldTextStyle(size: 12),
-                            textAlign: TextAlign.left,
-                          ),
-                        ).expand(flex: 5),
-                      ],
-                    ).paddingAll(8),
+                  // Service Name
+                  Text(
+                    bookingDetail.isPackageBooking
+                        ? bookingDetail.bookingPackage!.name.validate()
+                        : bookingDetail.serviceName.validate(),
+                    style: boldTextStyle(size: 16),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  6.height,
+                  // Duration (Date)
                   Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        '${language.lblDate} & ${language.lblTime}:',
-                        style: secondaryTextStyle(),
-                      ).expand(flex: 2),
-                      8.width,
-                      Marquee(
-                        child: Text(
-                          "${formatDate(bookingDetail.date.validate())} ${language.at} ${buildTimeString(bookingDetail: bookingDetail)}",
-                          style: boldTextStyle(size: 12),
-                          textAlign: TextAlign.left,
+                        'Duration: ',
+                        style: primaryTextStyle(
+                          size: 12,
                         ),
-                      ).expand(flex: 5),
+                      ),
+                      Text(
+                        formatDate(bookingDetail.date.validate()),
+                        style: primaryTextStyle(
+                          size: 12,
+                        ),
+                      ),
                     ],
-                  ).paddingOnly(left: 8, bottom: 8, right: 8),
-                  if ((bookingDetail.paymentStatus.validate() ==
-                              SERVICE_PAYMENT_STATUS_PAID ||
-                          bookingDetail.paymentStatus.validate() ==
-                              PENDING_BY_ADMIN) ||
-                      (getPaymentStatusText(
-                              bookingDetail.paymentStatus.validate(),
-                              bookingDetail.paymentMethod.validate())
-                          .isNotEmpty))
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "${language.paymentStatus}:",
-                          style: secondaryTextStyle(),
-                        ).expand(flex: 2),
-                        3.width,
-                        Marquee(
-                          child: Text(
-                            buildPaymentStatusWithMethod(
-                              bookingDetail.paymentStatus.validate(),
-                              bookingDetail.paymentMethod.validate(),
-                            ),
-                            style: boldTextStyle(
-                              size: 12,
-                              color: bookingDetail.paymentStatus ==
-                                          SERVICE_PAYMENT_STATUS_ADVANCE_PAID ||
-                                      bookingDetail.paymentStatus ==
-                                          SERVICE_PAYMENT_STATUS_PAID
-                                  ? Colors.green
-                                  : Colors.red,
-                            ),
-                            textAlign: TextAlign.left,
-                          ),
-                        ).expand(flex: 5),
-                      ],
-                    ).paddingOnly(left: 8, bottom: 8, right: 8),
+                  ),
+                  6.height,
+                  // Time
+                  Row(
+                    children: [
+                      Text(
+                        'Time: ',
+                        style: primaryTextStyle(
+                          size: 12,
+                        ),
+                      ),
+                      Text(
+                        buildTimeString(bookingDetail: bookingDetail),
+                        style: primaryTextStyle(
+                          size: 12,
+                        ),
+                      ),
+                    ],
+                  ),
                 ],
               ),
-            ).paddingTop(16)
-        ],
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -743,43 +648,25 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        16.height,
-        Row(
-          mainAxisAlignment:
-              MainAxisAlignment.spaceBetween, // Space between items
-          children: [
-            RichText(
-              text: TextSpan(
-                children: [
-                  TextSpan(
-                    text: language.lblAboutProvider,
-                    style: boldTextStyle(size: LABEL_TEXT_SIZE),
-                  ),
-                  if (res.handymanData.validate().isNotEmpty &&
-                      (res.providerData!.id ==
-                          res.handymanData!.first.id.validate()))
-                    TextSpan(
-                      text: ' (${language.asHandyman})',
-                      style: secondaryTextStyle(size: LABEL_TEXT_SIZE),
-                    ),
-                ],
+        32.height,
+        RichText(
+          text: TextSpan(
+            children: [
+              TextSpan(
+                text: language.lblAboutProvider,
+                style: boldTextStyle(),
               ),
-            ),
-            Spacer(),
-            TextButton(
-              onPressed: () {
-                ProviderInfoScreen(
-                        providerId: res.providerData!.id.validate(),
-                        canCustomerContact: canCustomerContact)
-                    .launch(context)
-                    .then((value) {
-                  setStatusBarColor(context.primaryColor);
-                });
-              },
-              child: Text(language.viewDetail, style: secondaryTextStyle()),
-            ),
-          ],
+              if (res.handymanData.validate().isNotEmpty &&
+                  (res.providerData!.id ==
+                      res.handymanData!.first.id.validate()))
+                TextSpan(
+                  text: ' (${language.asHandyman})',
+                  style: primaryTextStyle(),
+                ),
+            ],
+          ),
         ),
+        16.height,
         BookingDetailProviderWidget(
           providerData: res.providerData!,
           canCustomerContact: canCustomerContact,
@@ -1087,86 +974,113 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
       {required List<RatingData> ratingList,
       required RatingData? customerReview,
       required BookingData bookingDetail}) {
+    // Combine customer review with rating list if exists
+    List<RatingData> allReviews = [];
+    if (customerReview != null) {
+      allReviews.add(customerReview);
+    }
+    allReviews.addAll(ratingList);
+
+    if (allReviews.isEmpty) return const Offstage();
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        if (bookingDetail.status == BookingStatusKeys.complete)
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+        24.height,
+        // Reviews heading with count and optional View All
+        Text(
+          '${language.review} (${bookingDetail.totalReview ?? allReviews.length})',
+          style: boldTextStyle(size: 16),
+        ),
+        16.height,
+        // Customer's own review with edit/delete options
+        if (customerReview != null &&
+            bookingDetail.status == BookingStatusKeys.complete)
+          Stack(
             children: [
-              24.height,
-              if (customerReview != null)
-                Row(
+              ReviewWidget(data: customerReview),
+              Positioned(
+                top: 8,
+                right: 8,
+                child: Row(
                   children: [
-                    16.height,
-                    Text(language.myReviews,
-                            style: boldTextStyle(size: LABEL_TEXT_SIZE))
-                        .expand(),
-                    ic_edit_square.iconImage(size: 16).paddingAll(8).onTap(() {
-                      showInDialog(
-                        context,
-                        contentPadding: EdgeInsets.zero,
-                        builder: (p0) {
-                          return AddReviewDialog(
-                              customerReview: customerReview);
-                        },
-                      ).then((value) {
-                        if (value ?? false) {
-                          init();
-                          setState(() {});
-                        }
-                      }).catchError((e) {
-                        toast(e.toString());
-                      });
-                    }),
-                    ic_delete.iconImage(size: 16).paddingAll(8).onTap(() {
-                      showConfirmDialogCustom(
-                        context,
-                        title: language.lblDeleteReview,
-                        subTitle: language.lblConfirmReviewSubTitle,
-                        positiveText: language.lblYes,
-                        negativeText: language.lblNo,
-                        dialogType: DialogType.DELETE,
-                        onAccept: (p0) async {
-                          appStore.setLoading(true);
-                          await deleteReview(id: customerReview.id.validate())
-                              .then((value) {
-                            toast(value.message);
-                          }).catchError((e) {
-                            toast(e.toString());
-                          });
-                          init();
-                          setState(() {});
-                        },
-                      );
-                      return;
-                    }),
+                    GestureDetector(
+                      onTap: () {
+                        showInDialog(
+                          context,
+                          contentPadding: EdgeInsets.zero,
+                          builder: (p0) {
+                            return AddReviewDialog(
+                                customerReview: customerReview);
+                          },
+                        ).then((value) {
+                          if (value ?? false) {
+                            init();
+                            setState(() {});
+                          }
+                        }).catchError((e) {
+                          toast(e.toString());
+                        });
+                      },
+                      child: Container(
+                        padding: EdgeInsets.all(6),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          shape: BoxShape.circle,
+                        ),
+                        child: Icon(Icons.edit,
+                            size: 16, color: context.primaryColor),
+                      ),
+                    ),
+                    8.width,
+                    GestureDetector(
+                      onTap: () {
+                        showConfirmDialogCustom(
+                          context,
+                          title: language.lblDeleteReview,
+                          subTitle: language.lblConfirmReviewSubTitle,
+                          positiveText: language.lblYes,
+                          negativeText: language.lblNo,
+                          dialogType: DialogType.DELETE,
+                          onAccept: (p0) async {
+                            appStore.setLoading(true);
+                            await deleteReview(id: customerReview.id.validate())
+                                .then((value) {
+                              toast(value.message);
+                            }).catchError((e) {
+                              toast(e.toString());
+                            });
+                            init();
+                            setState(() {});
+                          },
+                        );
+                      },
+                      child: Container(
+                        padding: EdgeInsets.all(6),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          shape: BoxShape.circle,
+                        ),
+                        child: Icon(Icons.delete_outline,
+                            size: 16, color: Colors.red),
+                      ),
+                    ),
                   ],
                 ),
-              16.height,
-              if (customerReview != null) ReviewWidget(data: customerReview),
+              ),
             ],
           ),
-        16.height,
+        // Other reviews list
         if (ratingList.isNotEmpty)
-          ViewAllLabel(
-            label: '${language.review} (${bookingDetail.totalReview})',
-            list: ratingList,
-            onTap: () {
-              RatingViewAllScreen(
-                      ratingData: ratingList,
-                      serviceId: bookingDetail.serviceId)
-                  .launch(context);
-            },
+          ListView.builder(
+            shrinkWrap: true,
+            padding: EdgeInsets.zero,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: ratingList.length > 3 ? 3 : ratingList.length,
+            itemBuilder: (context, index) =>
+                ReviewWidget(data: ratingList[index]),
           ),
-        8.height,
-        ListView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: ratingList.length,
-          itemBuilder: (context, index) =>
-              ReviewWidget(data: ratingList[index]),
-        ),
       ],
     );
   }
@@ -2062,76 +1976,36 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
                 _buildReasonWidget(snap: snap.data!),
                 _pendingMessage(snap: snap.data!),
                 _completeMessage(snap: snap.data!),
+                Row(
+                  children: [
+                    Text(
+                      language.lblBookingID,
+                      style: boldTextStyle(color: grey, size: 14),
+                    ),
+                    const Spacer(),
+                    Text(
+                      '#' + widget.bookingId.validate().toString(),
+                      style: boldTextStyle(color: context.primaryColor),
+                    ),
+                    16.height,
+                  ],
+                ).paddingSymmetric(horizontal: 12, vertical: 12),
+                Divider(
+                  color: lightGray,
+                  thickness: 1,
+                  height: 2,
+                ).paddingSymmetric(horizontal: 12),
                 Padding(
                   padding:
-                      const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+                      const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       8.height,
-                      Container(
-                        decoration: boxDecorationDefault(
-                          color: primaryColor,
-                          borderRadius: radiusOnly(topLeft: 8, topRight: 8),
-                        ),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 16,
-                            vertical: 8), // Space around content
-                        child: bookingIdWidget(),
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                          color: context.cardColor,
-                          borderRadius:
-                              radiusOnly(bottomLeft: 8, bottomRight: 8),
-                        ),
-                        padding:
-                            const EdgeInsets.only(left: 16, right: 16, top: 16),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            serviceDetailWidget(
-                              bookingDetail: snap.data!.bookingDetail!,
-                              serviceDetail: snap.data!.service!,
-                            ),
-                            if (snap.hasData)
-                              TextButton(
-                                onPressed: () {
-                                  showModalBottomSheet(
-                                    backgroundColor: Colors.transparent,
-                                    context: context,
-                                    isScrollControlled: true,
-                                    isDismissible: true,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.vertical(
-                                        top: Radius.circular(16),
-                                      ),
-                                    ),
-                                    builder: (_) {
-                                      return DraggableScrollableSheet(
-                                        initialChildSize: 0.50,
-                                        minChildSize: 0.2,
-                                        maxChildSize: 1,
-                                        builder: (context, scrollController) {
-                                          return BookingHistoryComponent(
-                                            data: snap
-                                                .data!.bookingActivity!.reversed
-                                                .toList(),
-                                            scrollController: scrollController,
-                                          );
-                                        },
-                                      );
-                                    },
-                                  );
-                                },
-                                child: Text(
-                                  language.viewStatus,
-                                  style: boldTextStyle(
-                                      color: primaryColor, size: 14),
-                                ),
-                              ).center(),
-                          ],
-                        ),
+
+                      serviceDetailWidget(
+                        bookingDetail: snap.data!.bookingDetail!,
+                        serviceDetail: snap.data!.service!,
                       ),
 
                       if (snap.data!.isBookedAtShop)
@@ -2167,12 +2041,35 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
                       providerWidget(res: snap.data!),
 
                       /// About Handyman Card
-                      handymanWidget(
-                        handymanList: snap.data!.handymanData.validate(),
-                        res: snap.data!,
-                        serviceDetail: snap.data!.service!,
-                        bookingDetail: snap.data!.bookingDetail!,
-                      ),
+                      // handymanWidget(
+                      //   handymanList: snap.data!.handymanData.validate(),
+                      //   res: snap.data!,
+                      //   serviceDetail: snap.data!.service!,
+                      //   bookingDetail: snap.data!.bookingDetail!,
+                      // ),
+                      24.height,
+
+                      /// Booking Description
+                      if (snap.data!.bookingDetail!.description
+                          .validate()
+                          .isNotEmpty)
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Booking Description',
+                              style: boldTextStyle(size: 16),
+                            ),
+                            8.height,
+                            Text(
+                              snap.data!.bookingDetail!.description.validate(),
+                              style: primaryTextStyle(
+                                size: 14,
+                              ),
+                            ),
+                            24.height,
+                          ],
+                        ),
 
                       /// Refund Payment Details
                       refundPaymentDetailsWidget(snap: snap.data!),
@@ -2622,6 +2519,41 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
                   return await 2.seconds.delay;
                 },
                 child: AppScaffold(
+                  actions: [
+                    TextButton(
+                      onPressed: () {
+                        showModalBottomSheet(
+                          backgroundColor: Colors.transparent,
+                          context: context,
+                          isScrollControlled: true,
+                          isDismissible: true,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.vertical(
+                              top: Radius.circular(16),
+                            ),
+                          ),
+                          builder: (_) {
+                            return DraggableScrollableSheet(
+                              initialChildSize: 0.50,
+                              minChildSize: 0.2,
+                              maxChildSize: 1,
+                              builder: (context, scrollController) {
+                                return BookingHistoryComponent(
+                                  data: snap.data!.bookingActivity!.reversed
+                                      .toList(),
+                                  scrollController: scrollController,
+                                );
+                              },
+                            );
+                          },
+                        );
+                      },
+                      child: Text(
+                        language.lblCheckStatus,
+                        style: boldTextStyle(color: white, size: 14),
+                      ),
+                    ),
+                  ],
                   appBarTitle: snap.hasData
                       ? snap.data!.bookingDetail!.status
                           .validate()

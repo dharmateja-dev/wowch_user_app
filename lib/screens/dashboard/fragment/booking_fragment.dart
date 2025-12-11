@@ -478,6 +478,7 @@ class _BookingFragmentState extends State<BookingFragment> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBarWidget(
+        center: true,
         language.booking,
         textColor: white,
         showBack: false,

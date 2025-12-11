@@ -1,11 +1,8 @@
 import 'package:booking_system_flutter/component/cached_image_widget.dart';
-import 'package:booking_system_flutter/component/image_border_component.dart';
 import 'package:booking_system_flutter/main.dart';
 import 'package:booking_system_flutter/model/user_data_model.dart';
-import 'package:booking_system_flutter/utils/colors.dart';
 import 'package:booking_system_flutter/utils/common.dart';
 import 'package:booking_system_flutter/utils/images.dart';
-import 'package:booking_system_flutter/utils/string_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -63,64 +60,59 @@ class BookingDetailProviderWidgetState
         color: Color(0xFFE8F3EC),
         borderRadius: radius(8),
       ),
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // Provider info row
           Row(
             children: [
-              ImageBorder(
-                  src: widget.providerData.profileImage.validate(), height: 60),
-              32.width,
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Row(
-                        children: [
-                          Marquee(
-                                  child: Text(
-                                      widget.providerData.displayName
-                                          .validate(),
-                                      style: boldTextStyle()))
-                              .flexible(),
-                          8.width,
-                          Image.asset(ic_verified,
-                              height: 16, color: Colors.green)
-                          //remove comments of visibility the when using main logic for verification
-                          // .visible(
-                          //     widget.providerData.isVerifyProvider == 1),
-                        ],
-                      ).expand(),
-                      if (widget.providerIsHandyman &&
-                          widget.providerData.isProvider)
-                        GestureDetector(
-                          onTap: () async {
-                            String phoneNumber = "";
-                            if (widget.providerData.contactNumber
-                                .validate()
-                                .contains('+')) {
-                              phoneNumber =
-                                  "${widget.providerData.contactNumber.validate().replaceAll('-', '')}";
-                            } else {
-                              phoneNumber =
-                                  "+${widget.providerData.contactNumber.validate().replaceAll('-', '')}";
-                            }
-                            launchUrl(
-                                Uri.parse(
-                                    '${getSocialMediaLink(LinkProvider.WHATSAPP)}$phoneNumber'),
-                                mode: LaunchMode.externalApplication);
-                          },
-                          child: const CachedImageWidget(
-                              url: ic_whatsapp, height: 22, width: 22),
-                        ),
-                    ],
+              // Circular profile image
+              Container(
+                width: 70,
+                height: 70,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Color(0xFF2D2D2D),
+                  border: Border.all(color: Colors.white, width: 2),
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(30),
+                  child: CachedImageWidget(
+                    url: widget.providerData.profileImage.validate(),
+                    height: 70,
+                    width: 70,
+                    fit: BoxFit.cover,
                   ),
-                  4.height,
-                  Row(
-                    children: [
-                      ...List.generate(
+                ),
+              ),
+              16.width,
+              // Provider name and rating
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Name with info icon
+                    Row(
+                      children: [
+                        Text(
+                          widget.providerData.displayName.validate(),
+                          style: boldTextStyle(size: 16),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        8.width,
+                        Icon(
+                          Icons.info_outline,
+                          size: 18,
+                          color: Colors.grey[500],
+                        ),
+                      ],
+                    ),
+                    6.height,
+                    // Star rating
+                    Row(
+                      children: List.generate(
                         5,
                         (index) {
                           final rating = widget
@@ -130,199 +122,129 @@ class BookingDetailProviderWidgetState
                           final filledStars = rating.round();
                           final isFilled = index < filledStars;
                           return Padding(
-                            padding: EdgeInsets.only(right: index < 4 ? 2 : 0),
-                            child: Image.asset(
-                              isFilled ? ic_star_fill : ic_star,
-                              height: 14,
-                              fit: BoxFit.fitWidth,
+                            padding: EdgeInsets.only(right: 2),
+                            child: Icon(
+                              Icons.star,
+                              size: 16,
                               color: isFilled
-                                  ? getRatingBarColor(rating.toInt())
-                                  : Color(0xFF73CB92),
+                                  ? Color(0xFFFFB800)
+                                  : Color(0xFFE0E0E0),
                             ),
                           );
                         },
                       ),
-                      // 4.width,
-                      // Text(
-                      //     widget.providerData.providersServiceRating
-                      //         .validate()
-                      //         .toStringAsFixed(1)
-                      //         .toString(),
-                      //     style: boldTextStyle(
-                      //         color: textSecondaryColor, size: 14)),
-                    ],
-                  ),
-                ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          16.height,
+          // Action buttons row
+          Row(
+            children: [
+              // Call button
+              AppButton(
+                padding: EdgeInsets.zero,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.call_outlined,
+                        size: 18, color: context.iconColor),
+                    8.width,
+                    Text(language.lblCall, style: boldTextStyle(size: 14)),
+                  ],
+                ),
+                color: Colors.white,
+                elevation: 0,
+                shapeBorder: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  side: BorderSide(color: context.primaryColor),
+                ),
+                onTap: () {
+                  if (widget.providerData.contactNumber.validate().isNotEmpty) {
+                    launchCall(widget.providerData.contactNumber.validate());
+                  }
+                },
+              ).expand(),
+              12.width,
+              // Chat button
+              AppButton(
+                padding: EdgeInsets.zero,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.chat_bubble_outline,
+                        size: 18, color: context.iconColor),
+                    8.width,
+                    Text(language.lblChat, style: boldTextStyle(size: 14)),
+                  ],
+                ),
+                color: Colors.white,
+                elevation: 0,
+                shapeBorder: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  side: BorderSide(color: context.primaryColor),
+                ),
+                onTap: () async {
+                  toast(language.pleaseWaitWhileWeLoadChatDetails);
+                  UserData? user = await userService.getUserNull(
+                      email: widget.providerData.email.validate());
+                  if (user != null) {
+                    Fluttertoast.cancel();
+                    if (widget.bookingDetail != null) {
+                      isChattingAllow = widget.bookingDetail!.status ==
+                              BookingStatusKeys.complete ||
+                          widget.bookingDetail!.status ==
+                              BookingStatusKeys.cancelled;
+                    }
+                    UserChatScreen(
+                            receiverUser: user,
+                            isChattingAllow: isChattingAllow)
+                        .launch(context);
+                  } else {
+                    Fluttertoast.cancel();
+                    toast(
+                        "${widget.providerData.firstName} ${language.isNotAvailableForChat}");
+                  }
+                },
+              ).expand(),
+              12.width,
+              // WhatsApp button
+              AppButton(
+                padding: EdgeInsets.zero,
+                child: CachedImageWidget(
+                  url: ic_whatsapp,
+                  height: 20,
+                  width: 20,
+                ),
+                color: Colors.white,
+                elevation: 0,
+                shapeBorder: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  side: BorderSide(color: context.primaryColor),
+                ),
+                onTap: () async {
+                  String phoneNumber = "";
+                  if (widget.providerData.contactNumber
+                      .validate()
+                      .contains('+')) {
+                    phoneNumber =
+                        "${widget.providerData.contactNumber.validate().replaceAll('-', '')}";
+                  } else {
+                    phoneNumber =
+                        "+${widget.providerData.contactNumber.validate().replaceAll('-', '')}";
+                  }
+                  launchUrl(
+                      Uri.parse(
+                          '${getSocialMediaLink(LinkProvider.WHATSAPP)}$phoneNumber'),
+                      mode: LaunchMode.externalApplication);
+                },
               ).expand(),
             ],
           ),
-          if (widget.canCustomerContact)
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        '${language.email}:',
-                        style: boldTextStyle(
-                            size: 12,
-                            color: appStore.isDarkMode
-                                ? textSecondaryColor
-                                : textPrimaryColor),
-                      ).expand(),
-                      8.width,
-                      Expanded(
-                        flex: 4,
-                        child: GestureDetector(
-                          onTap: () {
-                            launchMail(widget.providerData.email.validate());
-                          },
-                          child: Text(
-                            widget.providerData.email.validate(),
-                            style: boldTextStyle(
-                                size: 12,
-                                color: appStore.isDarkMode
-                                    ? white
-                                    : textSecondaryColor,
-                                weight: FontWeight.w400),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  8.height,
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        language.mobile,
-                        style: boldTextStyle(
-                            size: 12,
-                            color: appStore.isDarkMode
-                                ? textSecondaryColor
-                                : textPrimaryColor),
-                      ).expand(),
-                      8.width,
-                      Expanded(
-                        flex: 4,
-                        child: GestureDetector(
-                          onTap: () {
-                            if (!widget.providerIsHandyman) {
-                              launchCall(
-                                  widget.providerData.contactNumber.validate());
-                            }
-                          },
-                          child: Text(
-                            widget.providerData.contactNumber.validate(),
-                            style: boldTextStyle(
-                                size: 12,
-                                color: appStore.isDarkMode
-                                    ? white
-                                    : textSecondaryColor,
-                                weight: FontWeight.w400),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  8.height,
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        '${language.hintAddress}:',
-                        style: boldTextStyle(
-                            size: 12,
-                            color: appStore.isDarkMode
-                                ? textSecondaryColor
-                                : textPrimaryColor),
-                      ).expand(),
-                      8.width,
-                      Expanded(
-                        flex: 4,
-                        child: GestureDetector(
-                          onTap: () {
-                            launchMap(widget.providerData.address.validate());
-                          },
-                          child: Text(
-                            widget.providerData.address.validate(),
-                            style: boldTextStyle(
-                                size: 12,
-                                color: appStore.isDarkMode
-                                    ? white
-                                    : textSecondaryColor,
-                                weight: FontWeight.w400),
-                            softWrap: true,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ).visible(widget.providerData.address.validate().isNotEmpty),
-                ],
-              ),
-            ),
-          if (widget.providerIsHandyman)
-            Row(
-              children: [
-                if (widget.providerData.contactNumber.validate().isNotEmpty)
-                  AppButton(
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        ic_calling.iconImage(size: 18, color: Colors.white),
-                        8.width,
-                        Text(language.lblCall,
-                            style: boldTextStyle(color: white)),
-                      ],
-                    ).fit(),
-                    width: context.width(),
-                    color: primaryColor,
-                    elevation: 0,
-                    onTap: () {
-                      launchCall(widget.providerData.contactNumber.validate());
-                    },
-                  ).expand(),
-                16.width,
-                AppButton(
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      ic_chat.iconImage(size: 18),
-                      8.width,
-                      Text(language.lblChat, style: boldTextStyle()),
-                    ],
-                  ).fit(),
-                  width: context.width(),
-                  elevation: 0,
-                  color: context.scaffoldBackgroundColor,
-                  onTap: () async {
-                    toast(language.pleaseWaitWhileWeLoadChatDetails);
-                    UserData? user = await userService.getUserNull(
-                        email: widget.providerData.email.validate());
-                    if (user != null) {
-                      Fluttertoast.cancel();
-                      if (widget.bookingDetail != null) {
-                        isChattingAllow = widget.bookingDetail!.status ==
-                                BookingStatusKeys.complete ||
-                            widget.bookingDetail!.status ==
-                                BookingStatusKeys.cancelled;
-                      }
-                      UserChatScreen(
-                              receiverUser: user,
-                              isChattingAllow: isChattingAllow)
-                          .launch(context);
-                    } else {
-                      Fluttertoast.cancel();
-                      toast(
-                          "${widget.providerData.firstName} ${language.isNotAvailableForChat}");
-                    }
-                  },
-                ).expand(),
-              ],
-            ).paddingTop(8),
         ],
       ),
     );

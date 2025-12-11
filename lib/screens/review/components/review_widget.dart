@@ -16,11 +16,11 @@ class ReviewWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 8),
+      margin: const EdgeInsets.only(bottom: 10),
       padding: const EdgeInsets.all(16),
       width: context.width(),
       decoration: boxDecorationWithRoundedCorners(
-        borderRadius: radius(12),
+        borderRadius: radius(8),
         backgroundColor: appStore.isDarkMode
             ? context.cardColor
             : Color(0xFFE8F3EC), // Light green/off-white background
@@ -29,13 +29,13 @@ class ReviewWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ImageBorder(
                 src: isCustomer
                     ? data.customerProfileImage.validate()
                     : data.profileImage.validate(),
-                height: 70,
+                height: 60,
               ),
               12.width,
               Expanded(

@@ -36,58 +36,47 @@ class BookingHistoryComponentState extends State<BookingHistoryComponent> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: boxDecorationWithRoundedCorners(borderRadius: radiusOnly(topLeft: defaultRadius, topRight: defaultRadius), backgroundColor: context.cardColor),
-      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 6.0),
+      decoration: boxDecorationWithRoundedCorners(
+          borderRadius:
+              radiusOnly(topLeft: defaultRadius, topRight: defaultRadius),
+          backgroundColor: context.cardColor),
       child: SingleChildScrollView(
         controller: widget.scrollController,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.max,
           children: [
+            Container(width: 50, height: 4, color: gray.withValues(alpha: 0.3))
+                .center()
+                .paddingSymmetric(vertical: 16),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                40.width,
-                Container(width: 40, height: 2, color: gray.withValues(alpha:0.3)).center(),
-                IconButton(
-                  onPressed: () => finish(context),
-                  icon: const Icon(
-                    Icons.close_sharp,
-                    size: 20.0,
-                  ),
-                )
-              ],
-            ),
-            4.height,
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(language.bookingHistory, style: boldTextStyle(size: LABEL_TEXT_SIZE)),
+                Text(language.bookingHistory, style: boldTextStyle()),
                 if (widget.data.validate().isNotEmpty)
-                  Row(
-                    children: [
-                      Text('${language.lblID}:', style: boldTextStyle(color: primaryColor)),
-                      4.width,
-                      Text(' #' + widget.data[0].bookingId.validate().toString(), style: boldTextStyle(color: primaryColor)),
-                    ],
-                  )
+                  Text(' #' + widget.data[0].bookingId.validate().toString(),
+                      style: boldTextStyle(color: primaryColor))
               ],
-            ),
-            16.height,
-            Divider(color: context.dividerColor),
-            16.height,
+            ).paddingSymmetric(horizontal: 12),
+            8.height,
+            Divider(color: context.primaryColor, thickness: 0.8),
+            8.height,
             widget.data.isNotEmpty
                 ? AnimatedListView(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                     itemCount: widget.data.length,
                     listAnimationType: ListAnimationType.FadeIn,
-                    fadeInConfiguration: FadeInConfiguration(duration: 2.seconds),
+                    fadeInConfiguration:
+                        FadeInConfiguration(duration: 2.seconds),
                     itemBuilder: (_, i) {
                       BookingActivity data = widget.data[i];
-                      return BookingHistoryListWidget(data: data, index: i, length: widget.data.length.validate());
+                      return BookingHistoryListWidget(
+                          data: data,
+                          index: i,
+                          length: widget.data.length.validate());
                     },
-                  )
+                  ).paddingSymmetric(horizontal: 12)
                 : Text(language.noDataAvailable).center().paddingAll(16),
           ],
         ),
