@@ -21,6 +21,7 @@ import 'package:booking_system_flutter/screens/review/components/review_widget.d
 import 'package:booking_system_flutter/screens/review/rating_view_all_screen.dart';
 import 'package:booking_system_flutter/screens/service/component/service_component.dart';
 import 'package:booking_system_flutter/screens/service/component/service_faq_widget.dart';
+import 'package:booking_system_flutter/screens/service/component/service_header_component.dart';
 import 'package:booking_system_flutter/screens/service/package/package_component.dart';
 import 'package:booking_system_flutter/screens/service/shimmer/service_detail_shimmer.dart';
 import 'package:booking_system_flutter/screens/shop/shop_list_screen.dart';
@@ -680,123 +681,11 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen>
                       // ServiceDetailHeaderComponent(
                       //     serviceDetail: snap.data!.serviceDetail!),
                       16.height,
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          CachedImageWidget(
-                            url: snap.data!.serviceDetail!.attachments
-                                    .validate()
-                                    .isNotEmpty
-                                ? snap.data!.serviceDetail!.attachments!.first
-                                    .validate()
-                                : '',
-                            height: 80,
-                            width: 80,
-                            fit: BoxFit.cover,
-                            radius: 12,
-                          ),
-                          8.width,
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                // Service Name
-                                Row(
-                                  children: [
-                                    Expanded(
-                                      child: Text(
-                                        snap.data!.serviceDetail!.name
-                                            .validate(),
-                                        style: boldTextStyle(),
-                                        maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                    ),
-                                    Text(
-                                      'Specially Abled',
-                                      style: boldTextStyle(
-                                          color: primaryColor, size: 12),
-                                    ),
-                                  ],
-                                ),
-                                2.height,
-                                // Price
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    PriceWidget(
-                                      price: snap.data!.serviceDetail!.price
-                                          .validate(),
-                                      size: 14,
-                                    ),
-                                    if (snap.data!.serviceDetail!.discount
-                                            .validate() >
-                                        0) ...[
-                                      6.width,
-                                      PriceWidget(
-                                        price: snap.data!.serviceDetail!
-                                            .getDiscountedPrice
-                                            .validate(),
-                                        size: 12,
-                                        isLineThroughEnabled: true,
-                                        color: textSecondaryColorGlobal,
-                                      ),
-                                      6.width,
-                                      Text(
-                                        "(${snap.data!.serviceDetail!.discount.validate()}% ${language.lblOff})",
-                                        style: boldTextStyle(
-                                            color: defaultActivityStatus,
-                                            size: 12),
-                                      ),
-                                    ],
-                                  ],
-                                ),
-                                2.height,
-                                //Duration and timing
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(language.duration,
-                                        style: primaryTextStyle()),
-                                    4.height,
-                                    Text(
-                                      convertToHourMinute(snap
-                                          .data!.serviceDetail!.duration
-                                          .validate()),
-                                      style: boldTextStyle(color: primaryColor),
-                                    ),
-                                  ],
-                                ),
-                                //Rating
-                                2.height,
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(language.lblRating,
-                                        style: primaryTextStyle(size: 12)),
-                                    Spacer(),
-                                    Image.asset(
-                                      ic_star_fill,
-                                      height: 16,
-                                      color: Colors.amber,
-                                    ),
-                                    4.width,
-                                    Text(
-                                      snap.data!.serviceDetail!.totalRating
-                                          .validate()
-                                          .toStringAsFixed(1),
-                                      style: boldTextStyle(),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ).paddingSymmetric(horizontal: 16),
+                      ServiceHeaderComponent(
+                        serviceData: snap.data!.serviceDetail!,
+                        badgeText: language.speciallyAbled,
+                        padding: EdgeInsets.symmetric(horizontal: 16),
+                      ),
                       8.height,
 
                       //Service Visit Type

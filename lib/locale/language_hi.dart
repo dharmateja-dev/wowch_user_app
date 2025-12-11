@@ -2357,7 +2357,13 @@ class LanguageHi extends BaseLanguage {
 
   @override
   String get lblZone => 'क्षेत्र';
-  
+
+  @override
+  String get speciallyAbled => 'विशेष रूप से सक्षम';
+
+  @override
+  String get landmark => 'लैंडमार्क';
+
   @override
   String get lblContactNumber => 'संपर्क नंबर';
   

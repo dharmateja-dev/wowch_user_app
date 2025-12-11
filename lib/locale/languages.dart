@@ -1517,4 +1517,8 @@ abstract class BaseLanguage {
   String lblShopsOffer(String serviceName);
 
   String get lblZone;
+
+  String get speciallyAbled;
+
+  String get landmark;
 }

@@ -2403,4 +2403,10 @@ class LanguageDe extends BaseLanguage {
 
   @override
   String get lblZone => 'Zone';
+
+  @override
+  String get speciallyAbled => 'Besonders Befähigt';
+
+  @override
+  String get landmark => 'Wahrzeichen';
 }

@@ -2398,4 +2398,10 @@ class LanguageFr extends BaseLanguage {
   String lblShopsOffer(String serviceName) => 'Magasins proposant $serviceName';
   @override
   String get lblZone => 'Zone';
+
+  @override
+  String get speciallyAbled => 'Spécialement Capable';
+
+  @override
+  String get landmark => 'Point de repère';
 }

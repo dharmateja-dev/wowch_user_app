@@ -2366,4 +2366,10 @@ class LanguageEn extends BaseLanguage {
 
   @override
   String get lblZone => 'Zone';
+
+  @override
+  String get speciallyAbled => 'Specially Abled';
+
+  @override
+  String get landmark => 'Landmark';
 }

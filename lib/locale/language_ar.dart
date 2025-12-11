@@ -2344,4 +2344,10 @@ class LanguageAr extends BaseLanguage {
 
   @override
   String get lblZone => 'منطقة';
+
+  @override
+  String get speciallyAbled => 'ذوو الاحتياجات الخاصة';
+
+  @override
+  String get landmark => 'معلم';
 }
