@@ -91,8 +91,10 @@ const phonepe_logo = 'assets/icons/phonepe_logo.png';
 const airtel_logo = 'assets/icons/airtel_logo.png';
 const ic_cancel_booking = 'assets/icons/ic_cancel_booking.png';
 const paystack_logo = 'assets/icons/paystack_logo.png';
-const ic_diagonal_left_down_arrow = 'assets/icons/ic_diagonal_left_down_arrow.png';
-const ic_diagonal_right_up_arrow = 'assets/icons/ic_diagonal_right_up_arrow.png';
+const ic_diagonal_left_down_arrow =
+    'assets/icons/ic_diagonal_left_down_arrow.png';
+const ic_diagonal_right_up_arrow =
+    'assets/icons/ic_diagonal_right_up_arrow.png';
 const ic_pending = 'assets/icons/ic_pending.png';
 const ic_coupon_prefix = 'assets/icons/ic_discount_prefix.png';
 const ic_share = 'assets/icons/ic_share.png';
@@ -115,3 +117,6 @@ const ic_right = 'assets/icons/ic_right.png';
 const ic_plus = 'assets/icons/ic_plus.png';
 const ic_wallet_cartoon = 'assets/icons/ic_wallet_cartoon.png';
 const ic_gallery_add = 'assets/icons/Ic_gallery_add.png';
+
+// SVG Icons
+const icVerifiedCheck = 'assets/icons/ic_verified_check.svg';

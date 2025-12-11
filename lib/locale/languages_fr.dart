@@ -479,7 +479,8 @@ class LanguageFr extends BaseLanguage {
   String get lblDeleteReview => "Supprimer l'examen";
 
   @override
-  String get lblClearReviewConfirmation => "Êtes-vous sûr de vouloir effacer cet avis?";
+  String get lblClearReviewConfirmation =>
+      "Êtes-vous sûr de vouloir effacer cet avis?";
 
   @override
   String get lblConfirmReviewSubTitle => 'Voulez-vous supprimer cet avis?';
@@ -641,7 +642,8 @@ class LanguageFr extends BaseLanguage {
   String get lblLogoutSubTitle => "Voulez-vous vous déconnecter?";
 
   @override
-  String get lblLogoutConfirmation => "Êtes-vous sûr de vouloir vous déconnecter?";
+  String get lblLogoutConfirmation =>
+      "Êtes-vous sûr de vouloir vous déconnecter?";
 
   @override
   String get lblFeaturedProduct => "Ceci est produit en vedette";
@@ -2404,4 +2406,17 @@ class LanguageFr extends BaseLanguage {
 
   @override
   String get landmark => 'Point de repère';
+
+  @override
+  String get enterYourLocation => 'Entrez votre emplacement';
+
+  @override
+  String get doYouWantToConfirmBooking =>
+      'Voulez-vous confirmer cette réservation?';
+
+  @override
+  String get iAgreeToYour => 'J\'accepte vos';
+
+  @override
+  String get termsAndPrivacy => 'Conditions et Politique de confidentialité';
 }

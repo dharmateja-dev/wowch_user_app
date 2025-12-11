@@ -1,12 +1,9 @@
 import 'package:booking_system_flutter/component/app_common_dialog.dart';
 import 'package:booking_system_flutter/component/cached_image_widget.dart';
-import 'package:booking_system_flutter/component/dotted_line.dart';
-import 'package:booking_system_flutter/component/image_border_component.dart';
 import 'package:booking_system_flutter/component/price_widget.dart';
 import 'package:booking_system_flutter/main.dart';
 import 'package:booking_system_flutter/model/booking_data_model.dart';
 import 'package:booking_system_flutter/screens/booking/component/edit_booking_service_dialog.dart';
-import 'package:booking_system_flutter/utils/colors.dart';
 import 'package:booking_system_flutter/utils/common.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
 import 'package:booking_system_flutter/utils/images.dart';
@@ -38,7 +35,7 @@ class _BookingItemComponentState extends State<BookingItemComponent> {
         style: const ButtonStyle(
           tapTargetSize: MaterialTapTargetSize.shrinkWrap,
         ),
-        icon: ic_edit_square.iconImage(size: 16),
+        icon: ic_edit_square.iconImage(size: 16, color: context.iconColor),
         visualDensity: VisualDensity.compact,
         onPressed: () async {
           ServiceDetailResponse res = await getServiceDetails(
@@ -111,446 +108,273 @@ class _BookingItemComponentState extends State<BookingItemComponent> {
           : '---'
       : widget.bookingData.address.validate();
 
+  String get providerName {
+    if (widget.bookingData.handyman!.isEmpty) {
+      return widget.bookingData.providerName.validate();
+    } else if (widget.bookingData.isProviderAndHandymanSame) {
+      return widget.bookingData.providerName.validate();
+    } else {
+      return widget.bookingData.handyman!.first.handyman!.displayName
+          .validate();
+    }
+  }
+
+  String get serviceImageUrl {
+    if (widget.bookingData.isPackageBooking) {
+      return widget.bookingData.bookingPackage!.imageAttachments
+              .validate()
+              .isNotEmpty
+          ? widget.bookingData.bookingPackage!.imageAttachments
+              .validate()
+              .first
+              .validate()
+          : "";
+    } else {
+      return widget.bookingData.serviceAttachments.validate().isNotEmpty
+          ? widget.bookingData.serviceAttachments!.first.validate()
+          : '';
+    }
+  }
+
+  String get serviceName {
+    return widget.bookingData.isPackageBooking
+        ? widget.bookingData.bookingPackage!.name.validate()
+        : widget.bookingData.serviceName.validate();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(8),
       margin: const EdgeInsets.only(bottom: 16),
-      width: context.width(),
+      padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
-        color: appStore.isDarkMode ? context.cardColor : cardLightColor,
-        borderRadius: radius(),
+        border: Border.all(color: darkGrey, width: 1.5),
+        borderRadius: BorderRadius.circular(8),
       ),
       child: Column(
         children: [
+          // Header Section - Image, Title, Status Badge
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              if (widget.bookingData.isPackageBooking)
-                CachedImageWidget(
-                  url: widget.bookingData.bookingPackage!.imageAttachments
-                          .validate()
-                          .isNotEmpty
-                      ? widget.bookingData.bookingPackage!.imageAttachments
-                          .validate()
-                          .first
-                          .validate()
-                      : "",
+              // Service Image
+              ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: CachedImageWidget(
+                  url: serviceImageUrl,
+                  radius: 8,
                   height: 80,
                   width: 80,
                   fit: BoxFit.cover,
-                  radius: defaultRadius,
-                )
-              else
-                CachedImageWidget(
-                  url: widget.bookingData.serviceAttachments
-                          .validate()
-                          .isNotEmpty
-                      ? widget.bookingData.serviceAttachments!.first.validate()
-                      : '',
-                  fit: BoxFit.cover,
-                  width: 80,
-                  height: 80,
-                  radius: defaultRadius,
                 ),
-              16.width,
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 12, vertical: 2),
-                            margin: const EdgeInsets.only(left: 4),
-                            decoration: BoxDecoration(
-                              color:
-                                  context.primaryColor.withValues(alpha: 0.1),
-                              borderRadius: radius(16),
-                              border: Border.all(color: context.primaryColor),
-                            ),
-                            child: Text(
-                              '#${widget.bookingData.id.validate()}',
-                              style: boldTextStyle(
-                                  color: context.primaryColor, size: 12),
-                            ),
-                          ).flexible(),
-                          5.width,
-                          if (widget.bookingData.isShopService) ...[
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 8, vertical: 3),
-                              decoration: BoxDecoration(
-                                color: Color(0xFFE8F3EC),
-                                borderRadius: radius(12),
-                                border: Border.all(color: context.primaryColor),
-                              ),
-                              child: Text(
-                                language.lblAtShop,
-                                style: boldTextStyle(
-                                  size: 11,
-                                  color: context.primaryColor,
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                            ).flexible(),
-                            5.width,
-                          ],
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 12, vertical: 2),
-                            decoration: BoxDecoration(
-                              color: widget.bookingData.status
-                                  .validate()
-                                  .getPaymentStatusBackgroundColor
-                                  .withValues(alpha: 0.1),
-                              borderRadius: radius(16),
-                              border: Border.all(
-                                  color: widget.bookingData.status
-                                      .validate()
-                                      .getPaymentStatusBackgroundColor),
-                            ),
-                            child: Marquee(
-                              child: Text(
-                                widget.bookingData.status
-                                    .validate()
-                                    .toBookingStatus(),
-                                style: boldTextStyle(
-                                  color: widget.bookingData.status
-                                      .validate()
-                                      .getPaymentStatusBackgroundColor,
-                                  size: 12,
-                                ),
-                              ),
-                            ),
-                          ).flexible(),
-                          if (widget.bookingData.isPostJob)
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 12, vertical: 2),
-                              margin: const EdgeInsets.only(left: 4),
-                              decoration: BoxDecoration(
-                                color:
-                                    context.primaryColor.withValues(alpha: 0.1),
-                                border: Border.all(color: context.primaryColor),
-                                borderRadius: radius(16),
-                              ),
-                              child: Text(
-                                language.postJob,
-                                style: boldTextStyle(
-                                    color: context.primaryColor, size: 12),
-                              ),
-                            ),
-                          if (widget.bookingData.isPackageBooking)
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 12, vertical: 2),
-                              margin: const EdgeInsets.only(left: 4),
-                              decoration: BoxDecoration(
-                                color:
-                                    context.primaryColor.withValues(alpha: 0.1),
-                                border: Border.all(color: context.primaryColor),
-                                borderRadius: radius(16),
-                              ),
-                              child: Text(
-                                language.package,
-                                style: boldTextStyle(
-                                    color: context.primaryColor, size: 12),
-                              ),
-                            ),
-                        ],
-                      ).flexible(),
-                    ],
-                  ),
-                  12.height,
-                  Marquee(
-                    child: Text(
-                      widget.bookingData.isPackageBooking
-                          ? '${widget.bookingData.bookingPackage!.name.validate()}'
-                          : '${widget.bookingData.serviceName.validate()}',
-                      style: boldTextStyle(size: 14),
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                    ),
-                  ),
-                  8.height,
-                  if (widget.bookingData.bookingPackage != null)
-                    PriceWidget(
-                      price: widget.bookingData.totalAmount.validate(),
-                      color: primaryColor,
-                    )
-                  else
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Marquee(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              PriceWidget(
-                                isFreeService: widget.bookingData.type ==
-                                    SERVICE_TYPE_FREE,
-                                price:
-                                    widget.bookingData.totalAmount.validate(),
-                                color: primaryColor,
-                              ),
-                              if (widget.bookingData.isHourlyService)
-                                Row(
-                                  children: [
-                                    4.width,
-                                    PriceWidget(
-                                      price:
-                                          widget.bookingData.amount.validate(),
-                                      color: textSecondaryColorGlobal,
-                                      isHourlyService: true,
-                                      size: 12,
-                                      isBoldText: false,
-                                    ),
-                                  ],
-                                ),
-                              if (widget.bookingData.discount.validate() != 0)
-                                Text(
-                                  '(${widget.bookingData.discount!}% ${language.lblOff})',
-                                  style: boldTextStyle(
-                                      size: 12, color: Colors.green),
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 1,
-                                ).paddingLeft(4),
-                            ],
-                          ),
-                        ).expand(),
-                        _buildEditBookingWidget(),
-                      ],
-                    ),
-                ],
-              ).expand(),
-            ],
-          ).paddingAll(8),
-          Container(
-            padding: const EdgeInsets.all(8),
-            decoration: boxDecorationWithRoundedCorners(
-              backgroundColor:
-                  appStore.isDarkMode ? context.cardColor : whiteColor,
-              border: Border.all(color: context.dividerColor),
-              borderRadius: const BorderRadius.all(Radius.circular(8)),
-            ),
-            margin: const EdgeInsets.all(8),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Address Section
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      widget.bookingData.isShopService
-                          ? '${language.lblShopAddress}:'
-                          : '${language.hintAddress}:',
-                      style: secondaryTextStyle(),
-                    ).expand(flex: 2),
-                    8.width,
-                    Text(
-                      bookingAddress,
-                      style: boldTextStyle(size: 12),
-                      textAlign: TextAlign.left,
-                      maxLines: 4,
-                      overflow: TextOverflow.ellipsis,
-                    ).expand(flex: 5),
-                  ],
-                ).paddingAll(8),
-                // Date & Time Section
-                Row(
+              ),
+              8.width,
+              // Title, Booking ID, Price
+              Expanded(
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      '${language.lblDate} & ${language.lblTime}:',
-                      style: secondaryTextStyle(),
-                    ).expand(flex: 2),
-                    8.width,
-                    Marquee(
-                      child: Text(
-                        "${formatDate(widget.bookingData.date.validate())} ${language.at} ${buildTimeWidget(bookingDetail: widget.bookingData)}",
-                        style: boldTextStyle(size: 12),
-                        textAlign: TextAlign.left,
-                      ),
-                    ).expand(flex: 5),
-                  ],
-                ).paddingOnly(left: 8, bottom: 8, right: 8),
-
-                if (widget.bookingData.paymentStatus != null &&
-                    (widget.bookingData.status == BookingStatusKeys.complete ||
-                        widget.bookingData.status ==
-                            BookingStatusKeys.cancelled ||
-                        widget.bookingData.status ==
-                            BookingStatusKeys.pending ||
-                        widget.bookingData.paymentStatus ==
-                            SERVICE_PAYMENT_STATUS_ADVANCE_PAID ||
-                        widget.bookingData.paymentStatus ==
-                            SERVICE_PAYMENT_STATUS_PAID ||
-                        widget.bookingData.paymentStatus == PENDING_BY_ADMIN))
-                  if ((widget.bookingData.paymentStatus ==
-                              SERVICE_PAYMENT_STATUS_PAID ||
-                          widget.bookingData.paymentStatus ==
-                              PENDING_BY_ADMIN) ||
-                      getPaymentStatusText(widget.bookingData.paymentStatus,
-                              widget.bookingData.paymentMethod)
-                          .isNotEmpty)
+                    // Service Name and Status Badge Row
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          '${language.paymentStatus}:',
-                          style: secondaryTextStyle(),
-                        ).expand(flex: 2),
-                        3.width,
-                        Marquee(
+                        Expanded(
                           child: Text(
-                            buildPaymentStatusWithMethod(
-                              widget.bookingData.paymentStatus.validate(),
-                              widget.bookingData.paymentMethod.validate(),
-                            ),
-                            style: boldTextStyle(
-                              size: 12,
+                            serviceName,
+                            style: boldTextStyle(size: 16),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                        // Status Badge
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 4,
+                          ),
+                          decoration: BoxDecoration(
+                            color: widget.bookingData.status
+                                .validate()
+                                .getPaymentStatusBackgroundColor
+                                .withValues(alpha: 0.15),
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          child: Text(
+                            widget.bookingData.status
+                                .validate()
+                                .toBookingStatus(),
+                            style: TextStyle(
                               color: widget.bookingData.status
                                   .validate()
                                   .getPaymentStatusBackgroundColor,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
                             ),
-                            textAlign: TextAlign.left,
                           ),
-                        ).expand(flex: 5),
-                      ],
-                    ).paddingOnly(left: 8, bottom: 8, right: 8)
-                  else if (widget.bookingData.paymentStatus == null &&
-                      (widget.bookingData.status == BookingStatusKeys.pending ||
-                          widget.bookingData.status ==
-                              BookingStatusKeys
-                                  .cancelled || // Handle null payment status for cancellation
-                          widget.bookingData.status ==
-                              BookingStatusKeys.complete))
-                    Column(
-                      children: [
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Text(
-                              '${language.paymentStatus}:',
-                              style: secondaryTextStyle(),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ).expand(flex: 2),
-                            const SizedBox(width: 8),
-                            Marquee(
-                              child: Text(
-                                widget.bookingData.status
-                                    .validate()
-                                    .toBookingStatus(),
-                                style: boldTextStyle(
-                                  size: 12,
-                                  color: widget.bookingData.status
-                                      .validate()
-                                      .getPaymentStatusBackgroundColor,
-                                ),
-                                textAlign: TextAlign.left,
-                              ),
-                            ).expand(flex: 5),
-                          ],
-                        ).paddingOnly(left: 8, bottom: 8, right: 8)
+                        ),
                       ],
                     ),
-                Column(
-                  children: [
-                    DottedLine(
-                      dashColor: appStore.isDarkMode
-                          ? lightGray.withValues(alpha: 0.4)
-                          : lightGray,
-                      dashGapLength: 5,
-                      dashLength: 8,
-                    ).paddingAll(8),
-                    Padding(
-                      padding: const EdgeInsets.all(8),
-                      child: Row(
-                        children: [
-                          ImageBorder(
-                            src: widget.bookingData.handyman!.isEmpty
-                                ? widget.bookingData.providerImage.validate()
-                                : widget.bookingData.isProviderAndHandymanSame
-                                    ? widget.bookingData.providerImage
-                                        .validate()
-                                    : widget.bookingData.handyman!.first
-                                        .handyman!.handymanImage
-                                        .validate(),
-                            height: 40,
+                    4.height,
+                    // Booking ID
+                    Text(
+                      '${language.lblBookingID} #${widget.bookingData.id.validate()}',
+                      style: primaryTextStyle(size: 12),
+                    ),
+                    8.height,
+                    // Price Row
+                    Row(
+                      children: [
+                        PriceWidget(
+                            currencySymbol: '₹',
+                            isFreeService:
+                                widget.bookingData.type == SERVICE_TYPE_FREE,
+                            price: widget.bookingData.totalAmount.validate(),
+                            color: textPrimaryColorGlobal),
+                        if (widget.bookingData.isHourlyService) ...[
+                          6.width,
+                          Text(
+                            '₹ ${widget.bookingData.amount.validate().toStringAsFixed(0)}/hr',
+                            style: primaryTextStyle(size: 12),
                           ),
-                          16.width,
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Row(
-                                children: [
-                                  Marquee(
-                                    child: Text(
-                                      widget.bookingData.handyman!.isEmpty
-                                          ? widget.bookingData.providerName
-                                              .validate()
-                                          : widget.bookingData
-                                                  .isProviderAndHandymanSame
-                                              ? widget.bookingData.providerName
-                                                  .validate()
-                                              : widget.bookingData.handyman!
-                                                  .first.handyman!.displayName
-                                                  .validate(),
-                                      style: boldTextStyle(size: 14),
-                                    ),
-                                  ).flexible(),
-                                  4.width,
-                                  const ImageIcon(
-                                    AssetImage(ic_verified),
-                                    size: 14,
-                                    color: Colors.green,
-                                  ).visible(
-                                    widget.bookingData.handyman!.isEmpty
-                                        ? widget.bookingData.providerIsVerified
-                                                .validate() ==
-                                            1
-                                        : widget.bookingData
-                                                .isProviderAndHandymanSame
-                                            ? widget.bookingData
-                                                    .providerIsVerified
-                                                    .validate() ==
-                                                1
-                                            : widget.bookingData.handyman!.first
-                                                    .handyman!.isVerifyHandyman
-                                                    .validate() ==
-                                                1,
-                                  ),
-                                ],
-                              ),
-                              Text(
-                                widget.bookingData.handyman!.isEmpty
-                                    ? language.textProvider
-                                    : language.textHandyman,
-                                style: secondaryTextStyle(size: 12),
-                              ),
-                            ],
-                          ).expand(),
                         ],
-                      ),
+                        const Spacer(),
+                        _buildEditBookingWidget(),
+                      ],
                     ),
                   ],
                 ),
+              ),
+            ],
+          ),
+          16.height,
+          // Details Section
+          Container(
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: Color(0xFFE8F3EC),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Column(
+              children: [
+                // Your Address Row
+                _buildDetailRow(
+                  label: widget.bookingData.isShopService
+                      ? language.lblShopAddress
+                      : language.hintAddress,
+                  value: bookingAddress.isNotEmpty ? bookingAddress : '---',
+                ),
+                _buildDivider(),
+
+                // Date & Time Row
+                _buildDetailRow(
+                  label: '${language.lblDate} & ${language.lblTime}',
+                  value:
+                      "${formatDate(widget.bookingData.date.validate())} ${language.at} ${buildTimeWidget(bookingDetail: widget.bookingData)}",
+                ),
+                _buildDivider(),
+
+                // Provider Row
+                _buildDetailRow(
+                  label: widget.bookingData.handyman!.isEmpty
+                      ? language.textProvider
+                      : language.textHandyman,
+                  value: providerName,
+                ),
+
+                // Payment Status Row (conditional)
+                if (_shouldShowPaymentStatus()) ...[
+                  _buildDivider(),
+                  _buildDetailRow(
+                    label: language.paymentStatus,
+                    value: _getPaymentStatusText(),
+                    valueColor: widget.bookingData.status
+                        .validate()
+                        .getPaymentStatusBackgroundColor,
+                  ),
+                ],
               ],
             ),
           ),
         ],
       ),
     );
+  }
+
+  Widget _buildDetailRow({
+    required String label,
+    required String value,
+    Color? valueColor,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            label,
+            style: primaryTextStyle(size: 12),
+          ),
+          Expanded(
+            child: Text(
+              value,
+              style: boldTextStyle(
+                size: 12,
+                color: valueColor,
+              ),
+              textAlign: TextAlign.end,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDivider() {
+    return Divider(
+      height: 4,
+      color: context.dividerColor,
+      thickness: 0.5,
+    );
+  }
+
+  bool _shouldShowPaymentStatus() {
+    if (widget.bookingData.paymentStatus != null &&
+        (widget.bookingData.status == BookingStatusKeys.complete ||
+            widget.bookingData.status == BookingStatusKeys.cancelled ||
+            widget.bookingData.status == BookingStatusKeys.pending ||
+            widget.bookingData.paymentStatus ==
+                SERVICE_PAYMENT_STATUS_ADVANCE_PAID ||
+            widget.bookingData.paymentStatus == SERVICE_PAYMENT_STATUS_PAID ||
+            widget.bookingData.paymentStatus == PENDING_BY_ADMIN)) {
+      return true;
+    }
+
+    if (widget.bookingData.paymentStatus == null &&
+        (widget.bookingData.status == BookingStatusKeys.pending ||
+            widget.bookingData.status == BookingStatusKeys.cancelled ||
+            widget.bookingData.status == BookingStatusKeys.complete)) {
+      return true;
+    }
+
+    return false;
+  }
+
+  String _getPaymentStatusText() {
+    if (widget.bookingData.paymentStatus != null) {
+      if ((widget.bookingData.paymentStatus == SERVICE_PAYMENT_STATUS_PAID ||
+              widget.bookingData.paymentStatus == PENDING_BY_ADMIN) ||
+          getPaymentStatusText(widget.bookingData.paymentStatus,
+                  widget.bookingData.paymentMethod)
+              .isNotEmpty) {
+        return buildPaymentStatusWithMethod(
+          widget.bookingData.paymentStatus.validate(),
+          widget.bookingData.paymentMethod.validate(),
+        );
+      }
+    }
+    return widget.bookingData.status.validate().toBookingStatus();
   }
 
   bool get isDateTimeAfterNow {

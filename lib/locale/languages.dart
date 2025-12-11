@@ -1521,4 +1521,12 @@ abstract class BaseLanguage {
   String get speciallyAbled;
 
   String get landmark;
+
+  String get enterYourLocation;
+
+  String get doYouWantToConfirmBooking;
+
+  String get iAgreeToYour;
+
+  String get termsAndPrivacy;
 }

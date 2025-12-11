@@ -461,7 +461,8 @@ class LanguageHi extends BaseLanguage {
   String get lblDeleteReview => "समीक्षा हटाएं";
 
   @override
-  String get lblClearReviewConfirmation => "क्या आप वाकई इस समीक्षा को साफ करना चाहते हैं?";
+  String get lblClearReviewConfirmation =>
+      "क्या आप वाकई इस समीक्षा को साफ करना चाहते हैं?";
 
   @override
   String get lblConfirmReviewSubTitle => 'क्या आप यह समीक्षा हटाना चाहते हैं?';
@@ -1169,7 +1170,8 @@ class LanguageHi extends BaseLanguage {
   String get deleteMessage => 'क्या आप हटाना चाहते हैं?';
 
   @override
-  String get lblDeletePostJob => 'क्या आप वाकई इस जॉब पोस्ट को हटाना चाहते हैं?';
+  String get lblDeletePostJob =>
+      'क्या आप वाकई इस जॉब पोस्ट को हटाना चाहते हैं?';
 
   @override
   String get lblEnterJobTitle => 'नौकरी का शीर्षक दर्ज करें';
@@ -2365,20 +2367,33 @@ class LanguageHi extends BaseLanguage {
   String get landmark => 'लैंडमार्क';
 
   @override
+  String get enterYourLocation => 'अपना स्थान दर्ज करें';
+
+  @override
   String get lblContactNumber => 'संपर्क नंबर';
-  
+
   @override
   String get lblMobileNumber => 'फोन नंबर';
-  
+
   @override
   String get lblApartment => 'अपार्टमेंट';
-  
+
   @override
   String get lblFirstName => 'पहला नाम';
-  
+
   @override
   String get lblLastName => 'अंतिम नाम';
-  
+
   @override
   String get lblUserName => 'उपयोगकर्ता नाम';
+
+  @override
+  String get doYouWantToConfirmBooking =>
+      'क्या आप इस बुकिंग की पुष्टि करना चाहते हैं?';
+
+  @override
+  String get iAgreeToYour => 'मैं आपकी';
+
+  @override
+  String get termsAndPrivacy => 'शर्तों और गोपनीयता नीति से सहमत हूं';
 }

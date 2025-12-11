@@ -1183,7 +1183,8 @@ class LanguageEn extends BaseLanguage {
   String get deleteMessage => 'Do you want to delete?';
 
   @override
-  String get lblDeletePostJob => 'Are you sure you want to delete this job post?';
+  String get lblDeletePostJob =>
+      'Are you sure you want to delete this job post?';
 
   @override
   String get lblEnterJobTitle => 'Enter Job Title';
@@ -2372,4 +2373,17 @@ class LanguageEn extends BaseLanguage {
 
   @override
   String get landmark => 'Landmark';
+
+  @override
+  String get enterYourLocation => 'Enter Your Location';
+
+  @override
+  String get doYouWantToConfirmBooking =>
+      'Do You Want To Confirm This Booking?';
+
+  @override
+  String get iAgreeToYour => 'I agree to your';
+
+  @override
+  String get termsAndPrivacy => 'Terms and Privacy Policy';
 }

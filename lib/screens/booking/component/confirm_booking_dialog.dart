@@ -1,5 +1,4 @@
 import 'package:booking_system_flutter/component/loader_widget.dart';
-import 'package:booking_system_flutter/generated/assets.dart';
 import 'package:booking_system_flutter/main.dart';
 import 'package:booking_system_flutter/model/package_data_model.dart';
 import 'package:booking_system_flutter/model/service_detail_response.dart';
@@ -11,12 +10,14 @@ import 'package:booking_system_flutter/utils/model_keys.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:nb_utils/nb_utils.dart';
 import '../../../model/booking_amount_model.dart';
 import '../../../model/shop_model.dart';
 import '../../../utils/app_configuration.dart';
 import '../../../utils/common.dart';
 import '../../../utils/constant.dart';
+import '../../../utils/images.dart';
 import '../../payment/payment_screen.dart';
 import 'booking_confirmation_dialog.dart';
 
@@ -29,7 +30,14 @@ class ConfirmBookingDialog extends StatefulWidget {
   final BookingAmountModel? bookingAmountModel;
   final ShopModel? shopModel;
 
-  ConfirmBookingDialog({required this.data, required this.bookingPrice, this.qty = 1, this.couponCode, this.selectedPackage, this.bookingAmountModel, this.shopModel});
+  ConfirmBookingDialog(
+      {required this.data,
+      required this.bookingPrice,
+      this.qty = 1,
+      this.couponCode,
+      this.selectedPackage,
+      this.bookingAmountModel,
+      this.shopModel});
 
   @override
   State<ConfirmBookingDialog> createState() => _ConfirmBookingDialogState();
@@ -41,7 +49,16 @@ class _ConfirmBookingDialogState extends State<ConfirmBookingDialog> {
 
   bool isSelected = false;
 
+  // TODO: Set to false when backend is ready
+  static const bool _useDummyData = true;
+
   Future<void> bookServices() async {
+    // Use dummy data for UI testing
+    if (_useDummyData) {
+      await _bookServicesWithDummyData();
+      return;
+    }
+
     if (widget.selectedPackage != null) {
       if (widget.selectedPackage!.serviceList != null) {
         widget.selectedPackage!.serviceList!.forEach((element) {
@@ -51,13 +68,16 @@ class _ConfirmBookingDialogState extends State<ConfirmBookingDialog> {
 
       selectedPackage = {
         PackageKey.packageId: widget.selectedPackage!.id.validate(),
-        PackageKey.categoryId: widget.selectedPackage!.categoryId != -1 ? widget.selectedPackage!.categoryId.validate() : null,
+        PackageKey.categoryId: widget.selectedPackage!.categoryId != -1
+            ? widget.selectedPackage!.categoryId.validate()
+            : null,
         PackageKey.name: widget.selectedPackage!.name.validate(),
         PackageKey.price: widget.selectedPackage!.price.validate(),
         PackageKey.serviceId: selectedService.join(','),
         PackageKey.startDate: widget.selectedPackage!.startDate.validate(),
         PackageKey.endDate: widget.selectedPackage!.endDate.validate(),
-        PackageKey.isFeatured: widget.selectedPackage!.isFeatured == 1 ? '1' : '0',
+        PackageKey.isFeatured:
+            widget.selectedPackage!.isFeatured == 1 ? '1' : '0',
         PackageKey.packageType: widget.selectedPackage!.packageType.validate(),
       };
     }
@@ -69,22 +89,40 @@ class _ConfirmBookingDialogState extends State<ConfirmBookingDialog> {
       CommonKeys.serviceId: widget.data.serviceDetail!.id.toString(),
       CommonKeys.providerId: widget.data.provider!.id.validate().toString(),
       CommonKeys.customerId: appStore.userId.toString(),
-      BookingServiceKeys.description: widget.data.serviceDetail!.bookingDescription.validate(),
+      BookingServiceKeys.description:
+          widget.data.serviceDetail!.bookingDescription.validate(),
       CommonKeys.address: widget.data.serviceDetail!.address.validate(),
-      CommonKeys.date: widget.data.serviceDetail!.isSlotAvailable ? widget.data.serviceDetail!.bookingDate.validate() : widget.data.serviceDetail!.dateTimeVal.validate(),
+      CommonKeys.date: widget.data.serviceDetail!.isSlotAvailable
+          ? widget.data.serviceDetail!.bookingDate.validate()
+          : widget.data.serviceDetail!.dateTimeVal.validate(),
       BookingServiceKeys.couponId: widget.couponCode.validate(),
-      BookService.amount: widget.selectedPackage != null ? widget.selectedPackage!.price : widget.data.serviceDetail!.price,
+      BookService.amount: widget.selectedPackage != null
+          ? widget.selectedPackage!.price
+          : widget.data.serviceDetail!.price,
       BookService.quantity: '${widget.qty}',
-      BookingServiceKeys.totalAmount: !widget.data.serviceDetail!.isFreeService ? widget.bookingPrice.validate().toStringAsFixed(getIntAsync(PRICE_DECIMAL_POINTS)) : 0,
-      CouponKeys.discount: widget.data.serviceDetail!.discount != null ? widget.data.serviceDetail!.discount.toString() : "",
-      BookService.bookingAddressId: widget.data.serviceDetail!.bookingAddressId != -1 ? widget.data.serviceDetail!.bookingAddressId : null,
+      BookingServiceKeys.totalAmount: !widget.data.serviceDetail!.isFreeService
+          ? widget.bookingPrice
+              .validate()
+              .toStringAsFixed(getIntAsync(PRICE_DECIMAL_POINTS))
+          : 0,
+      CouponKeys.discount: widget.data.serviceDetail!.discount != null
+          ? widget.data.serviceDetail!.discount.toString()
+          : "",
+      BookService.bookingAddressId:
+          widget.data.serviceDetail!.bookingAddressId != -1
+              ? widget.data.serviceDetail!.bookingAddressId
+              : null,
       BookingServiceKeys.type: BOOKING_TYPE_SERVICE,
-      BookingServiceKeys.bookingPackage: widget.selectedPackage != null ? selectedPackage : null,
-      BookingServiceKeys.serviceAddonId: serviceAddonStore.selectedServiceAddon.map((e) => e.id).toList(),
+      BookingServiceKeys.bookingPackage:
+          widget.selectedPackage != null ? selectedPackage : null,
+      BookingServiceKeys.serviceAddonId:
+          serviceAddonStore.selectedServiceAddon.map((e) => e.id).toList(),
     };
 
     // Add shop information if this is a shop service
-    if (widget.data.serviceDetail!.visitType?.trim().toLowerCase() == VISIT_OPTION_ON_SHOP && widget.data.shops.isNotEmpty) {
+    if (widget.data.serviceDetail!.visitType?.trim().toLowerCase() ==
+            VISIT_OPTION_ON_SHOP &&
+        widget.data.shops.isNotEmpty) {
       final selectedShop = widget.shopModel ?? widget.data.shops.first;
       request.putIfAbsent(ShopKey.shopId, () => selectedShop.id);
       request.putIfAbsent(ShopKey.shopName, () => selectedShop.name);
@@ -93,7 +131,8 @@ class _ConfirmBookingDialogState extends State<ConfirmBookingDialog> {
       request.putIfAbsent(ShopKey.shopState, () => selectedShop.stateName);
       request.putIfAbsent(ShopKey.shopCountry, () => selectedShop.countryName);
       request.putIfAbsent(ShopKey.shopEmail, () => selectedShop.email);
-      request.putIfAbsent(ShopKey.shopContactNumber, () => selectedShop.contactNumber);
+      request.putIfAbsent(
+          ShopKey.shopContactNumber, () => selectedShop.contactNumber);
       request.putIfAbsent(ShopKey.shopImage, () => selectedShop.shopImage);
     }
 
@@ -102,16 +141,24 @@ class _ConfirmBookingDialogState extends State<ConfirmBookingDialog> {
     }
 
     if (widget.data.serviceDetail!.isSlotAvailable) {
-      request.putIfAbsent(BookingServiceKeys.bookingDate, () => widget.data.serviceDetail!.bookingDate.validate().toString());
-      request.putIfAbsent(BookingServiceKeys.bookingSlot, () => widget.data.serviceDetail!.bookingSlot.validate().toString());
-      request.putIfAbsent(BookingServiceKeys.bookingDay, () => widget.data.serviceDetail!.bookingDay.validate().toString());
+      request.putIfAbsent(BookingServiceKeys.bookingDate,
+          () => widget.data.serviceDetail!.bookingDate.validate().toString());
+      request.putIfAbsent(BookingServiceKeys.bookingSlot,
+          () => widget.data.serviceDetail!.bookingSlot.validate().toString());
+      request.putIfAbsent(BookingServiceKeys.bookingDay,
+          () => widget.data.serviceDetail!.bookingDay.validate().toString());
     }
 
-    if (!widget.data.serviceDetail!.isFreeService && widget.data.taxes.validate().isNotEmpty) {
+    if (!widget.data.serviceDetail!.isFreeService &&
+        widget.data.taxes.validate().isNotEmpty) {
       request.putIfAbsent(BookingServiceKeys.tax, () => widget.data.taxes);
     }
-    if (widget.data.serviceDetail != null && widget.data.serviceDetail!.isAdvancePayment && !widget.data.serviceDetail!.isFreeService && widget.data.serviceDetail!.isFixedService) {
-      request.putIfAbsent(CommonKeys.status, () => BookingStatusKeys.waitingAdvancedPayment);
+    if (widget.data.serviceDetail != null &&
+        widget.data.serviceDetail!.isAdvancePayment &&
+        !widget.data.serviceDetail!.isFreeService &&
+        widget.data.serviceDetail!.isFixedService) {
+      request.putIfAbsent(
+          CommonKeys.status, () => BookingStatusKeys.waitingAdvancedPayment);
     }
 
     appStore.setLoading(true);
@@ -119,9 +166,14 @@ class _ConfirmBookingDialogState extends State<ConfirmBookingDialog> {
     await saveBooking(request).then((bookingDetailResponse) async {
       appStore.setLoading(false);
 
-      if (widget.data.serviceDetail != null && widget.data.serviceDetail!.isAdvancePayment && !widget.data.serviceDetail!.isFreeService && widget.data.serviceDetail!.isFixedService) {
+      if (widget.data.serviceDetail != null &&
+          widget.data.serviceDetail!.isAdvancePayment &&
+          !widget.data.serviceDetail!.isFreeService &&
+          widget.data.serviceDetail!.isFixedService) {
         finish(context);
-        PaymentScreen(bookings: bookingDetailResponse, isForAdvancePayment: true).launch(context);
+        PaymentScreen(
+                bookings: bookingDetailResponse, isForAdvancePayment: true)
+            .launch(context);
       } else {
         finish(context);
         showInDialog(
@@ -144,6 +196,32 @@ class _ConfirmBookingDialogState extends State<ConfirmBookingDialog> {
     });
   }
 
+  // Dummy booking for UI testing
+  Future<void> _bookServicesWithDummyData() async {
+    appStore.setLoading(true);
+
+    // Simulate API delay
+    await Future.delayed(Duration(seconds: 1));
+
+    appStore.setLoading(false);
+    finish(context);
+
+    // Show success confirmation dialog with dummy booking ID
+    showInDialog(
+      context,
+      barrierDismissible: false,
+      builder: (BuildContext context) => BookingConfirmationDialog(
+        data: widget.data,
+        bookingId: 12345, // Dummy booking ID
+        bookingPrice: widget.bookingPrice,
+        selectedPackage: widget.selectedPackage,
+        bookingDetailResponse: null,
+      ),
+      backgroundColor: transparentColor,
+      contentPadding: EdgeInsets.zero,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Observer(
@@ -151,122 +229,145 @@ class _ConfirmBookingDialogState extends State<ConfirmBookingDialog> {
         return Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(language.lblConfirmBooking, style: boldTextStyle(size: 16)),
-                GestureDetector(
-                  onTap: () {
-                    finish(context);
-                  },
-                  child: Image.asset(
-                    Assets.iconsIcClose,
-                    height: 20.0,
-                    color: context.iconColor,
-                  ),
-                ),
-              ],
+            // Checkmark icon in circle
+            SvgPicture.asset(
+              icVerifiedCheck,
+              height: 90,
+              width: 90,
             ),
-            Divider(),
-            10.height,
-            Text(language.wouldYouLikeTo, textAlign: TextAlign.left, style: secondaryTextStyle(size: 14, color: appTextSecondaryColor, weight: FontWeight.w600)),
             16.height,
-            Container(
-              padding: EdgeInsets.all(14),
-              decoration: boxDecorationWithRoundedCorners(borderRadius: BorderRadius.circular(8), backgroundColor: appStore.isDarkMode ? context.dividerColor : dashboard3CardColor),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  serviceDetailsWidget("${language.serviceName}:", widget.data.serviceDetail?.name.validate() ?? "", false).visible(widget.selectedPackage == null),
-                  serviceDetailsWidget("${language.packageName}:", widget.selectedPackage?.name.validate() ?? "", false).visible(widget.selectedPackage != null),
-                  serviceDetailsWidget(
-                      "${language.lblDateAndTime}",
-                      widget.data.serviceDetail!.isSlotAvailable
-                          ? getConfirmBookingDateFormat(date: "${widget.data.serviceDetail!.bookingDate} ${widget.data.serviceDetail!.bookingSlot}")
-                          : getConfirmBookingDateFormat(date: widget.data.serviceDetail!.dateTimeVal.validate()),
-                      false),
-                  serviceDetailsWidget("${language.price}:", widget.data.serviceDetail!.isFreeService ? "Free" : widget.bookingPrice.validate().toStringAsFixed(getIntAsync(PRICE_DECIMAL_POINTS)), !widget.data.serviceDetail!.isFreeService)
-                ],
+            // Title
+            Text(
+              language.lblConfirmBooking,
+              style: boldTextStyle(size: 24),
+              textAlign: TextAlign.center,
+            ),
+            12.height,
+            // Subtitle
+            Text(
+              language.doYouWantToConfirmBooking,
+              style: primaryTextStyle(
+                size: 16,
               ),
+              textAlign: TextAlign.center,
             ),
-            16.height,
+
+            // Cancellation notice
             Container(
               width: double.infinity,
-              padding: EdgeInsets.all(14),
+              padding: EdgeInsets.all(12),
               decoration: boxDecorationWithRoundedCorners(
                 borderRadius: BorderRadius.circular(8),
                 backgroundColor: cancellationsBgColor,
               ),
               child: Text(
                 '* ${language.a} ${appConfigurationStore.cancellationChargeAmount}% ${language.feeAppliesForCancellations} ${appConfigurationStore.cancellationChargeHours} ${language.hoursOfTheScheduled}',
-                style: secondaryTextStyle(size: 10, color: redColor, fontStyle: FontStyle.italic, weight: FontWeight.w600),
+                style: secondaryTextStyle(
+                    size: 10,
+                    color: redColor,
+                    fontStyle: FontStyle.italic,
+                    weight: FontWeight.w600),
               ),
-            ).visible(!widget.data.serviceDetail!.isFreeService && appConfigurationStore.cancellationCharge),
+            ).visible(!widget.data.serviceDetail!.isFreeService &&
+                appConfigurationStore.cancellationCharge),
             16.height,
-            ExcludeSemantics(
-              child: CheckboxListTile(
-                checkboxShape: RoundedRectangleBorder(borderRadius: radius(4)),
-                autofocus: false,
-                activeColor: context.primaryColor,
-                checkColor: appStore.isDarkMode ? context.iconColor : context.cardColor,
-                value: isSelected,
-                onChanged: (val) async {
-                  isSelected = !isSelected;
-                  setState(() {});
-                },
-                title: RichTextWidget(
-                  list: [
-                    TextSpan(text: '${language.byConfirmingYouAgree} ', style: secondaryTextStyle(size: 14, fontFamily: fontFamilySecondaryGlobal)),
-                    TextSpan(
-                      text: language.lblTermsOfService,
-                      style: boldTextStyle(color: primaryColor, size: 14),
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () {
-                          checkIfLink(context, appConfigurationStore.termConditions, title: language.termsCondition);
-                        },
-                    ),
-                    TextSpan(text: ' ${language.and} ', style: secondaryTextStyle()),
-                    TextSpan(
-                      text: language.privacyPolicy,
-                      style: boldTextStyle(color: primaryColor, size: 14),
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () {
-                          checkIfLink(context, appConfigurationStore.privacyPolicy, title: language.privacyPolicy);
-                        },
-                    ),
-                  ],
+            // Checkbox with Terms and Privacy Policy
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(
+                  width: 24,
+                  height: 24,
+                  child: Checkbox(
+                    shape: RoundedRectangleBorder(borderRadius: radius(2)),
+                    activeColor: context.primaryColor,
+                    checkColor: Colors.white,
+                    value: isSelected,
+                    onChanged: (val) {
+                      isSelected = !isSelected;
+                      setState(() {});
+                    },
+                  ),
                 ),
-                controlAffinity: ListTileControlAffinity.leading,
-                contentPadding: EdgeInsets.zero,
-              ),
+                10.width,
+                Expanded(
+                  child: RichText(
+                    text: TextSpan(
+                      children: [
+                        TextSpan(
+                          text: '${language.iAgreeToYour}  ',
+                          style: boldTextStyle(size: 14),
+                        ),
+                        TextSpan(
+                          text: language.termsAndPrivacy,
+                          style: boldTextStyle(
+                              color: context.primaryColor, size: 14),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              checkIfLink(
+                                  context, appConfigurationStore.termConditions,
+                                  title: language.termsCondition);
+                            },
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
             ),
-            32.height,
-            AppButton(
-              width: context.width(),
-              text: language.confirm,
-              textColor: isSelected ? Colors.white : darkGray,
-              color: isSelected ? context.primaryColor : context.dividerColor,
-              onTap: () {
-                if (isSelected) {
-                  bookServices();
-                } else {
-                  toast(language.termsConditionsAccept);
-                }
-              },
+            16.height,
+            // Buttons row
+            Row(
+              children: [
+                // Cancel button
+                Expanded(
+                  child: OutlinedButton(
+                    onPressed: () {
+                      finish(context);
+                    },
+                    style: OutlinedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      side: BorderSide.none,
+                    ),
+                    child: Text(
+                      language.lblCancel,
+                      style:
+                          boldTextStyle(color: context.primaryColor, size: 16),
+                    ),
+                  ),
+                ),
+                16.width,
+                // Confirm button
+                Expanded(
+                  child: AppButton(
+                    textStyle: boldTextStyle(
+                        size: 16, color: isSelected ? Colors.white : darkGray),
+                    padding: EdgeInsets.symmetric(vertical: 12),
+                    text: language.confirm,
+                    color: isSelected
+                        ? context.primaryColor
+                        : context.dividerColor,
+                    shapeBorder: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    onTap: () {
+                      if (isSelected) {
+                        bookServices();
+                      } else {
+                        toast(language.termsConditionsAccept);
+                      }
+                    },
+                  ),
+                ),
+              ],
             ),
-            TextButton(
-                onPressed: () {
-                  finish(context);
-                },
-                child: Text(language.lblCancel, style: boldTextStyle(size: 14, color: primaryColor, decoration: TextDecoration.underline, decorationColor: primaryColor)))
           ],
-        ).visible(
-          !appStore.isLoading,
-          defaultWidget: LoaderWidget().withSize(width: 250, height: 280),
-        );
+        ).paddingAll(12).visible(
+              !appStore.isLoading,
+              defaultWidget: LoaderWidget().withSize(width: 250, height: 280),
+            );
       },
     );
   }
@@ -277,8 +378,15 @@ Widget serviceDetailsWidget(String title, String value, bool isPrice) {
     mainAxisAlignment: MainAxisAlignment.start,
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      Text(title, style: secondaryTextStyle(size: 12, color: appStore.isDarkMode ? darkGray : appTextSecondaryColor)).expand(flex: 2),
-      Text(isPrice ? num.parse(value).toPriceFormat() : value, style: boldTextStyle(size: 12)).expand(flex: 3),
+      Text(title,
+              style: secondaryTextStyle(
+                  size: 12,
+                  color:
+                      appStore.isDarkMode ? darkGray : appTextSecondaryColor))
+          .expand(flex: 2),
+      Text(isPrice ? num.parse(value).toPriceFormat() : value,
+              style: boldTextStyle(size: 12))
+          .expand(flex: 3),
     ],
   ).paddingBottom(6.0);
 }

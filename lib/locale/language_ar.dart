@@ -2350,4 +2350,16 @@ class LanguageAr extends BaseLanguage {
 
   @override
   String get landmark => 'معلم';
+
+  @override
+  String get enterYourLocation => 'أدخل موقعك';
+
+  @override
+  String get doYouWantToConfirmBooking => 'هل تريد تأكيد هذا الحجز؟';
+
+  @override
+  String get iAgreeToYour => 'أوافق على';
+
+  @override
+  String get termsAndPrivacy => 'الشروط وسياسة الخصوصية';
 }

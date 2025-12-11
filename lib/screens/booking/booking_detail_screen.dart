@@ -69,6 +69,9 @@ class BookingDetailScreen extends StatefulWidget {
 
 class _BookingDetailScreenState extends State<BookingDetailScreen>
     with WidgetsBindingObserver {
+  // TODO: Set to false when backend is ready
+  static const bool _useDummyData = true;
+
   Future<BookingDetailResponse>? future;
   bool isSentInvoiceOnEmail = false;
   UpdateLocationResponse? providerLocation;
@@ -91,22 +94,145 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
 
   void init({isLoading = true}) async {
     appStore.setLoading(isLoading);
-    future = getBookingDetail(
-      {
-        CommonKeys.bookingId: widget.bookingId.toString(),
-        CommonKeys.customerId: appStore.userId
-      },
-      callbackForStatus: (status) {
-        bookingStatus = status;
-        if (bookingStatus == BookingStatusKeys.onGoing) {
-          refreshProviderLocation();
-          startLocationUpdates();
-        } else {
-          stopLocationUpdates();
-        }
-      },
-    );
+
+    // Use dummy data for UI testing
+    if (_useDummyData) {
+      future = _getDummyBookingDetail();
+    } else {
+      future = getBookingDetail(
+        {
+          CommonKeys.bookingId: widget.bookingId.toString(),
+          CommonKeys.customerId: appStore.userId
+        },
+        callbackForStatus: (status) {
+          bookingStatus = status;
+          if (bookingStatus == BookingStatusKeys.onGoing) {
+            refreshProviderLocation();
+            startLocationUpdates();
+          } else {
+            stopLocationUpdates();
+          }
+        },
+      );
+    }
     if (isLoading) setState(() {});
+  }
+
+  // Generate dummy booking detail for UI testing
+  Future<BookingDetailResponse> _getDummyBookingDetail() async {
+    // Simulate API delay
+    await Future.delayed(Duration(milliseconds: 500));
+
+    final now = DateTime.now();
+    final bookingDate = now.add(Duration(days: 1));
+
+    return BookingDetailResponse(
+      bookingDetail: BookingData(
+        id: widget.bookingId,
+        serviceName: "Home Cleaning Service",
+        serviceId: 101,
+        customerId: appStore.userId,
+        customerName: appStore.userFullName,
+        providerId: 1,
+        providerName: "John's Cleaning Co.",
+        providerImage: "",
+        status:
+            BookingStatusKeys.pending, // Can change to test different states
+        statusLabel: "Pending",
+        date: DateFormat(BOOKING_SAVE_FORMAT).format(bookingDate),
+        bookingSlot: "10:00:00",
+        address: "123 Main Street, City Center, State 12345",
+        description: "Deep cleaning required for 3BHK apartment",
+        type: SERVICE_TYPE_FIXED,
+        amount: 1500,
+        totalAmount: 1650,
+        discount: 10,
+        quantity: 1,
+        paymentStatus: null,
+        paymentMethod: null,
+        bookingType: BOOKING_TYPE_SERVICE,
+        totalReview: 45,
+        totalRating: 4.5,
+        taxes: [
+          TaxData(
+            id: 1,
+            title: "GST",
+            type: "percent",
+            value: 10,
+            totalCalculatedValue: 150,
+          ),
+        ],
+      ),
+      service: ServiceData(
+        id: 101,
+        name: "Home Cleaning Service",
+        description:
+            "Professional home cleaning service with eco-friendly products",
+        price: 1500,
+        type: SERVICE_TYPE_FIXED,
+        status: 1,
+        discount: 10,
+        categoryId: 1,
+        categoryName: "Cleaning",
+        providerId: 1,
+        attachments: [
+          "https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=400"
+        ],
+        isFeatured: 1,
+      ),
+      providerData: UserData(
+        id: 1,
+        firstName: "John",
+        lastName: "Smith",
+        email: "john.smith@example.com",
+        contactNumber: "+1234567890",
+        profileImage: "",
+        address: "456 Provider Street, Business District",
+        isVerifyProvider: 1,
+      ),
+      handymanData: [
+        UserData(
+          id: 2,
+          firstName: "Mike",
+          lastName: "Johnson",
+          email: "mike.johnson@example.com",
+          contactNumber: "+0987654321",
+          profileImage: "",
+        ),
+      ],
+      customer: UserData(
+        id: appStore.userId,
+        firstName: appStore.userFirstName,
+        lastName: appStore.userLastName,
+        email: appStore.userEmail,
+        contactNumber: appStore.userContactNumber,
+      ),
+      bookingActivity: [
+        BookingActivity(
+          id: 1,
+          bookingId: widget.bookingId,
+          activityType: "created",
+          activityMessage: "Booking created",
+          datetime: DateFormat(BOOKING_SAVE_FORMAT).format(now),
+          activityData: '{"status": "pending", "label": "Pending"}',
+        ),
+      ],
+      ratingData: [],
+      customerReview: null,
+      taxes: [
+        TaxData(
+          id: 1,
+          title: "GST",
+          type: "percent",
+          value: 10,
+          totalCalculatedValue: 150,
+        ),
+      ],
+      serviceProof: [],
+      couponData: null,
+      postRequestDetail: null,
+      shop: null,
+    );
   }
 
   //region Widgets
