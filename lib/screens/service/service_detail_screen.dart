@@ -19,7 +19,7 @@ import 'package:booking_system_flutter/screens/booking/provider_info_screen.dart
 import 'package:booking_system_flutter/screens/dashboard/component/horizontal_shop_list_component.dart';
 import 'package:booking_system_flutter/screens/review/components/review_widget.dart';
 import 'package:booking_system_flutter/screens/review/rating_view_all_screen.dart';
-import 'package:booking_system_flutter/screens/service/component/related_service_component.dart';
+import 'package:booking_system_flutter/screens/service/component/service_component.dart';
 import 'package:booking_system_flutter/screens/service/component/service_faq_widget.dart';
 import 'package:booking_system_flutter/screens/service/package/package_component.dart';
 import 'package:booking_system_flutter/screens/service/shimmer/service_detail_shimmer.dart';
@@ -118,6 +118,9 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen>
         attachments: [demoImage],
         totalRating: 4.8,
         totalReview: 20,
+        providerId: 1,
+        providerName: 'Abdul Kader',
+        providerImage: demoImage,
       ),
       ServiceData(
         id: 3,
@@ -129,6 +132,9 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen>
         attachments: [demoImage],
         totalRating: 4.8,
         totalReview: 20,
+        providerId: 1,
+        providerName: 'Abdul Kader',
+        providerImage: demoImage,
       ),
     ];
 
@@ -334,6 +340,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen>
         children: [
           8.height,
           ViewAllLabel(label: language.lblFaq, list: data),
+          8.height,
           ListView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
@@ -413,7 +420,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen>
                   (index) => ReviewWidget(data: data[index]),
                 ),
               ).paddingTop(8)
-            : Text(language.lblNoReviews, style: secondaryTextStyle()),
+            : Text(language.lblNoReviews, style: primaryTextStyle()),
       ],
     ).paddingSymmetric(horizontal: 16);
   }
@@ -434,19 +441,25 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen>
           ).paddingSymmetric(horizontal: 16),
         8.height,
         if (serviceList.isNotEmpty)
-          ListView.builder(
-            padding: const EdgeInsets.all(8),
+          GridView.builder(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
             shrinkWrap: true,
             itemCount: serviceList.length,
             physics: const NeverScrollableScrollPhysics(),
-            itemBuilder: (_, index) => RelatedServiceComponent(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              crossAxisSpacing: 12,
+              mainAxisSpacing: 12,
+              childAspectRatio: 0.69,
+            ),
+            itemBuilder: (_, index) => ServiceComponent(
               serviceData: serviceList[index],
               width: appConfigurationStore.userDashboardType ==
                       DEFAULT_USER_DASHBOARD
                   ? context.width() / 2 - 26
                   : 280,
-            ).paddingOnly(bottom: 16, left: 8, right: 8),
-          )
+            ),
+          ),
       ],
     );
   }
@@ -456,8 +469,8 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen>
       width: context.width(),
       padding: const EdgeInsets.all(12),
       decoration: boxDecorationWithRoundedCorners(
-        borderRadius: radius(12),
-        backgroundColor: context.cardColor,
+        borderRadius: radius(8),
+        backgroundColor: Color(0xFFE8F3EC),
       ),
       child: Row(
         children: [
@@ -477,7 +490,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen>
               children: [
                 Text(data.name.validate(),
                     style: boldTextStyle(),
-                    maxLines: 1,
+                    maxLines: 2,
                     overflow: TextOverflow.ellipsis),
                 4.height,
                 PriceWidget(
@@ -485,21 +498,25 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen>
                   size: 14,
                   color: textPrimaryColorGlobal,
                   isFreeService: false,
+                  currencySymbol: '₹',
                 ),
               ],
             ),
           ),
           12.width,
           AppButton(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
             color: context.primaryColor,
             elevation: 0,
-            shapeBorder: RoundedRectangleBorder(borderRadius: radius(10)),
+            shapeBorder: RoundedRectangleBorder(borderRadius: radius(8)),
             onTap: () {
               // Dummy interaction; in live mode integrate with cart/booking flow
               toast(language.lblBookNow);
             },
-            child: Text('Buy', style: boldTextStyle(color: white, size: 12)),
+            child: Text(language.buy,
+                style: boldTextStyle(
+                  color: white,
+                )),
           ),
         ],
       ),
@@ -849,18 +866,20 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen>
                               snap.data!.serviceDetail!.name.validate(),
                           showServices: false,
                         ),
+                      //Frequently Bought Together
                       if (snap.data!.relatedService.validate().isNotEmpty)
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             16.height,
-                            Text('Frequently Bought Together',
-                                style: boldTextStyle(size: LABEL_TEXT_SIZE)),
+                            Text(language.frequentlyBoughtTogether,
+                                style: boldTextStyle()),
                             8.height,
                             _frequentlyBoughtCard(
                                 snap.data!.relatedService!.first),
                           ],
                         ).paddingSymmetric(horizontal: 16),
+                      //
                       if (snap.data!.serviceDetail!.servicePackage
                           .validate()
                           .isNotEmpty)
@@ -877,6 +896,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen>
                             bookNow(snap.data!);
                           },
                         ),
+                      //Add-ons
                       if (snap.data!.serviceaddon.validate().isNotEmpty)
                         AddonComponent(
                           serviceAddon: snap.data!.serviceaddon.validate(),
@@ -884,8 +904,12 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen>
                             serviceAddonStore.setSelectedServiceAddon(v);
                           },
                         ),
+                      8.height,
+                      //FAQ
                       serviceFaqWidget(data: snap.data!.serviceFaq.validate())
                           .paddingSymmetric(horizontal: 16),
+                      8.height,
+                      //Reviews
                       reviewWidget(
                           data: snap.data!.ratingData!,
                           serviceDetailResponse: snap.data!),

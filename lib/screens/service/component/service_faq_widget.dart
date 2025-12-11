@@ -2,39 +2,39 @@ import 'package:booking_system_flutter/model/service_detail_response.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-import '../../../main.dart';
-
 class ServiceFaqWidget extends StatelessWidget {
-  const ServiceFaqWidget({Key? key, required this.serviceFaq}) : super(key: key);
+  const ServiceFaqWidget({Key? key, required this.serviceFaq})
+      : super(key: key);
 
   final ServiceFaq serviceFaq;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 4),
-      decoration: BoxDecoration(color: context.cardColor,
-        borderRadius: radius(),
-        border: appStore.isDarkMode ? Border.all(color: context.dividerColor) : null,
-      ),
-      child: Theme(
-        data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
-        child: ExpansionTile(
-          title: Text(
-            serviceFaq.title.validate(),
-            style: primaryTextStyle(weight: FontWeight.bold, size: 12),
-          ),
-          tilePadding: const EdgeInsets.symmetric(horizontal: 16),
-          children: [
-            ListTile(
-              title: Text(
-                serviceFaq.description.validate(),
-                style: secondaryTextStyle(),
-              ),
-              contentPadding: const EdgeInsets.only(left: 32),
-            ),
-          ],
+    return Theme(
+      data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+      child: ExpansionTile(
+        backgroundColor: Colors.transparent,
+        collapsedBackgroundColor: Colors.transparent,
+        splashColor: Colors.transparent,
+        clipBehavior: Clip.none,
+        title: Text(
+          serviceFaq.title.validate(),
+          style: boldTextStyle(),
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
         ),
+        tilePadding: const EdgeInsets.symmetric(horizontal: 8),
+        children: [
+          ListTile(
+            contentPadding: const EdgeInsets.only(left: 8),
+            title: Text(
+              serviceFaq.description.validate(),
+              style: primaryTextStyle(),
+              maxLines: 5,
+              overflow: TextOverflow.ellipsis,
+            ),
+          )
+        ],
       ),
     );
   }

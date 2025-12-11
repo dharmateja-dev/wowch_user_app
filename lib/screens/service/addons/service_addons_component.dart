@@ -7,6 +7,7 @@ import '../../../component/price_widget.dart';
 import '../../../component/view_all_label_component.dart';
 import '../../../main.dart';
 import '../../../model/service_detail_response.dart';
+import '../../../utils/images.dart';
 
 class AddonComponent extends StatefulWidget {
   final List<Serviceaddon> serviceAddon;
@@ -63,21 +64,27 @@ class _AddonComponentState extends State<AddonComponent> {
           list: [],
           onTap: () {},
         ),
-        isSingleAddon ? buildSingleAddonWidget(widget.serviceAddon[0]) : buildMultipleAddonsWidget(),
+        8.height,
+        isSingleAddon
+            ? buildSingleAddonWidget(widget.serviceAddon[0])
+            : buildMultipleAddonsWidget(),
       ],
     ).paddingSymmetric(
-      horizontal: widget.isFromBookingLastStep || widget.isFromBookingDetails ? 0 : 16,
+      horizontal:
+          widget.isFromBookingLastStep || widget.isFromBookingDetails ? 0 : 16,
     );
   }
 
   Widget buildSingleAddonWidget(Serviceaddon addon) {
     return Container(
       width: context.width(),
-      padding: EdgeInsets.all(16),
+      padding: EdgeInsets.all(12),
       decoration: boxDecorationWithRoundedCorners(
-        border: appStore.isDarkMode ? Border.all(color: context.dividerColor) : null,
-        borderRadius: radius(),
-        backgroundColor: context.cardColor,
+        border: appStore.isDarkMode
+            ? Border.all(color: context.dividerColor)
+            : null,
+        borderRadius: radius(8),
+        backgroundColor: Color(0xFFE8F3EC),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -110,11 +117,13 @@ class _AddonComponentState extends State<AddonComponent> {
                     ],
                   ],
                 ),
-                10.height,
+                4.height,
                 PriceWidget(
                   price: addon.price.validate(),
-                  hourlyTextColor: Colors.white,
-                  size: 12,
+                  currencySymbol: '₹',
+                  size: 14,
+                  color: textPrimaryColorGlobal,
+                  isFreeService: false,
                 ),
               ],
             ),
@@ -135,7 +144,8 @@ class _AddonComponentState extends State<AddonComponent> {
             return Observer(builder: (context) {
               return GestureDetector(
                 onTap: () {
-                  if (!widget.isFromBookingLastStep && !widget.isFromBookingDetails) {
+                  if (!widget.isFromBookingLastStep &&
+                      !widget.isFromBookingDetails) {
                     handleAddRemove(data);
                   }
                 },
@@ -155,7 +165,9 @@ class _AddonComponentState extends State<AddonComponent> {
       margin: EdgeInsets.only(right: 16),
       padding: EdgeInsets.all(16),
       decoration: boxDecorationWithRoundedCorners(
-        border: appStore.isDarkMode ? Border.all(color: context.dividerColor) : null,
+        border: appStore.isDarkMode
+            ? Border.all(color: context.dividerColor)
+            : null,
         borderRadius: radius(),
         backgroundColor: context.cardColor,
       ),
@@ -184,8 +196,7 @@ class _AddonComponentState extends State<AddonComponent> {
                         maxLines: 1,
                       ),
                     ),
-                    8.width,
-                    if (!widget.isFromBookingDetails) buildAddButton(data),
+                    //8.width,
                   ],
                 ),
                 10.height,
@@ -194,6 +205,8 @@ class _AddonComponentState extends State<AddonComponent> {
                   hourlyTextColor: Colors.white,
                   size: 12,
                 ),
+                12.width,
+                if (!widget.isFromBookingDetails) buildAddButton(data),
               ],
             ),
           ),
@@ -205,16 +218,15 @@ class _AddonComponentState extends State<AddonComponent> {
   Widget buildAddButton(Serviceaddon data) {
     return Container(
       decoration: BoxDecoration(
-        color: appStore.isDarkMode ? Colors.black : Colors.white,
-        borderRadius: radius(5),
+        color: context.primaryColor,
+        borderRadius: radius(50),
       ),
-      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-      child: Center(
-        child: Text(
-          data.isSelected ? language.remove : language.add, // Toggle between Add and Remove
-          textAlign: TextAlign.center,
-          style: boldTextStyle(color: context.primaryColor, size: 12),
-        ),
+      padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+      child: Image.asset(
+        data.isSelected ? ic_close : ic_add,
+        height: 14,
+        width: 14,
+        color: white,
       ),
     ).onTap(() => handleAddRemove(data));
   }
@@ -227,7 +239,8 @@ class _AddonComponentState extends State<AddonComponent> {
       toast('${data.name.validate()} removed successfully');
     }
 
-    selectedServiceAddon = widget.serviceAddon.where((p0) => p0.isSelected).toList();
+    selectedServiceAddon =
+        widget.serviceAddon.where((p0) => p0.isSelected).toList();
     widget.onSelectionChange?.call(selectedServiceAddon);
     setState(() {});
   }

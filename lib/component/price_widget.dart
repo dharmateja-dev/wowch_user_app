@@ -15,6 +15,7 @@ class PriceWidget extends StatelessWidget {
   final bool isHourlyService;
   final bool isFreeService;
   final int? decimalPoint;
+  final String? currencySymbol;
 
   PriceWidget({
     required this.price,
@@ -27,6 +28,7 @@ class PriceWidget extends StatelessWidget {
     this.isHourlyService = false,
     this.isFreeService = false,
     this.decimalPoint,
+    this.currencySymbol,
   });
 
   @override
@@ -59,15 +61,17 @@ class PriceWidget extends StatelessWidget {
         ),
         Observer(
           builder: (_) {
-            String currencySymbol;
-            if (appConfigurationStore.currencySymbol.isNotEmpty) {
-              currencySymbol = appConfigurationStore.currencySymbol.trim();
+            String finalCurrencySymbol;
+            if (currencySymbol != null && currencySymbol!.isNotEmpty) {
+              finalCurrencySymbol = currencySymbol!.trim();
+            } else if (appConfigurationStore.currencySymbol.isNotEmpty) {
+              finalCurrencySymbol = appConfigurationStore.currencySymbol.trim();
             } else {
               // Set currency symbol based on language
               if (appStore.selectedLanguageCode == 'en') {
-                currencySymbol = '₹'; // Indian Rupee for English
+                finalCurrencySymbol = '₹'; // Indian Rupee for English
               } else {
-                currencySymbol = '\$'; // Default to dollar
+                finalCurrencySymbol = '\$'; // Default to dollar
               }
             }
             return Row(
@@ -76,7 +80,7 @@ class PriceWidget extends StatelessWidget {
                   Text(language.lblFree, style: _textStyle())
                 else ...[
                   Text(
-                    '$currencySymbol ',
+                    '$finalCurrencySymbol ',
                     style: _textStyle(),
                   ),
                   Text(

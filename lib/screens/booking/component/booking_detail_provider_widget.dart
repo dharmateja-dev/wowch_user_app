@@ -61,9 +61,9 @@ class BookingDetailProviderWidgetState
     return Container(
       decoration: BoxDecoration(
         color: Color(0xFFE8F3EC),
-        borderRadius: radius(),
+        borderRadius: radius(8),
       ),
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -71,7 +71,7 @@ class BookingDetailProviderWidgetState
             children: [
               ImageBorder(
                   src: widget.providerData.profileImage.validate(), height: 60),
-              16.width,
+              32.width,
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -85,11 +85,12 @@ class BookingDetailProviderWidgetState
                                           .validate(),
                                       style: boldTextStyle()))
                               .flexible(),
-                          16.width,
+                          8.width,
                           Image.asset(ic_verified,
-                                  height: 16, color: Colors.green)
-                              .visible(
-                                  widget.providerData.isVerifyProvider == 1),
+                              height: 16, color: Colors.green)
+                          //remove comments of visibility the when using main logic for verification
+                          // .visible(
+                          //     widget.providerData.isVerifyProvider == 1),
                         ],
                       ).expand(),
                       if (widget.providerIsHandyman &&
@@ -141,14 +142,14 @@ class BookingDetailProviderWidgetState
                           );
                         },
                       ),
-                      4.width,
-                      Text(
-                          widget.providerData.providersServiceRating
-                              .validate()
-                              .toStringAsFixed(1)
-                              .toString(),
-                          style: boldTextStyle(
-                              color: textSecondaryColor, size: 14)),
+                      // 4.width,
+                      // Text(
+                      //     widget.providerData.providersServiceRating
+                      //         .validate()
+                      //         .toStringAsFixed(1)
+                      //         .toString(),
+                      //     style: boldTextStyle(
+                      //         color: textSecondaryColor, size: 14)),
                     ],
                   ),
                 ],

@@ -19,55 +19,99 @@ class ReviewWidget extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 8),
       padding: const EdgeInsets.all(16),
       width: context.width(),
-      decoration: boxDecorationDefault(color: context.cardColor),
+      decoration: boxDecorationWithRoundedCorners(
+        borderRadius: radius(12),
+        backgroundColor: appStore.isDarkMode
+            ? context.cardColor
+            : Color(0xFFE8F3EC), // Light green/off-white background
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               ImageBorder(
-                src: isCustomer ? data.customerProfileImage.validate() : data.profileImage.validate(),
-                height: 50,
+                src: isCustomer
+                    ? data.customerProfileImage.validate()
+                    : data.profileImage.validate(),
+                height: 70,
               ),
-              16.width,
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(data.customerName.validate(), style: boldTextStyle(), maxLines: 1, overflow: TextOverflow.ellipsis).flexible(),
-                      Container(
-                        decoration: BoxDecoration(
-                          color: appStore.isDarkMode ? Colors.black : Colors.white,
-                          borderRadius: radius(5)
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 3),
-                          child: Row(
+              12.width,
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Image.asset(ic_star_fill, height: 12, fit: BoxFit.fitWidth, color: getRatingBarColor(data.rating.validate().toInt())),
-                              4.width,
-                              Text(data.rating.validate().toStringAsFixed(1).toString(), style: boldTextStyle(color: getRatingBarColor(data.rating.validate().toInt()), size: 12)),
+                              Text(
+                                data.customerName.validate(),
+                                style: boldTextStyle(
+                                  color: textPrimaryColorGlobal,
+                                ),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              4.height,
+                              data.createdAt.validate().isNotEmpty
+                                  ? Text(
+                                      formatDate(data.createdAt.validate()),
+                                      style: secondaryTextStyle(
+                                        color: textSecondaryColorGlobal,
+                                      ),
+                                    )
+                                  : const SizedBox(),
                             ],
                           ),
                         ),
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Image.asset(
+                              ic_star_fill,
+                              height: 16,
+                              width: 16,
+                              color: Colors.amber, // Yellow star
+                            ),
+                            4.width,
+                            Text(
+                              data.rating
+                                  .validate()
+                                  .toStringAsFixed(1)
+                                  .toString(),
+                              style: boldTextStyle(
+                                color: appStore.isDarkMode
+                                    ? Colors.white
+                                    : Color(0xFF1C1F34), // Dark gray
+                                size: 14,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    if (data.review.validate().isNotEmpty) ...[
+                      8.height,
+                      ReadMoreText(
+                        data.review.validate(),
+                        style: primaryTextStyle(
+                          color: textSecondaryColorGlobal,
+                        ),
+                        trimLength: 100,
+                        colorClickableText: context.primaryColor,
                       ),
                     ],
-                  ),
-                  4.height,
-                  data.createdAt.validate().isNotEmpty ? Text(formatDate(data.createdAt.validate()), style: secondaryTextStyle()) : const SizedBox(),
-                ],
-              ).flexible(),
+                  ],
+                ),
+              ),
             ],
           ),
-          if (data.review.validate().isNotEmpty)
-            ReadMoreText(
-              data.review.validate(),
-              style: secondaryTextStyle(),
-              trimLength: 100,
-              colorClickableText: context.primaryColor,
-            ).paddingTop(8),
         ],
       ),
     );
