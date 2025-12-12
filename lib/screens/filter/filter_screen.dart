@@ -1,20 +1,12 @@
 import 'package:booking_system_flutter/component/base_scaffold_widget.dart';
 import 'package:booking_system_flutter/main.dart';
-import 'package:booking_system_flutter/model/category_model.dart';
 import 'package:booking_system_flutter/model/user_data_model.dart';
-import 'package:booking_system_flutter/network/rest_apis.dart';
-import 'package:booking_system_flutter/screens/booking_filter/components/filter_service_list_component.dart';
-import 'package:booking_system_flutter/screens/filter/component/filter_category_component.dart';
 import 'package:booking_system_flutter/screens/filter/component/filter_price_component.dart';
 import 'package:booking_system_flutter/screens/filter/component/filter_provider_component.dart';
 import 'package:booking_system_flutter/screens/filter/component/filter_rating_component.dart';
-import 'package:booking_system_flutter/screens/filter/component/filter_zone_component.dart';
-import 'package:booking_system_flutter/model/zone_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
-
-import '../../utils/constant.dart';
 
 class FilterScreen extends StatefulWidget {
   final bool isFromProvider;
@@ -34,13 +26,10 @@ class FilterScreen extends StatefulWidget {
 class _FilterScreenState extends State<FilterScreen> {
   int isSelected = 0;
 
-  List<CategoryData> catList = [];
   List<UserData> providerList = [];
-  List<ZoneModel> zoneList = [];
 
   num? minPrice;
   num? maxPrice;
-  int? selectedZoneId;
 
   @override
   void initState() {
@@ -50,48 +39,100 @@ class _FilterScreenState extends State<FilterScreen> {
   }
 
   void init() async {
-    Future.wait([
-      if (widget.isFromProvider) getProviders(),
-      if (!widget.isFromCategory) getCategories(),
-    ]);
-
-    // Initialize selected zone from filter store
-    selectedZoneId = filterStore.zoneId;
-
-    appStore.setLoading(false);
-    getZoneList(services: zoneList);
+    getProviders();
   }
 
   Future<void> getProviders() async {
     appStore.setLoading(true);
-    await getProvider(type: FILTER_PROVIDER).then((value) {
-      minPrice = value.min;
-      maxPrice = value.max;
 
-      providerList = value.providerList.validate();
-      for (var element in providerList) {
-        if (filterStore.providerId.contains(element.id)) {
-          element.isSelected = true;
-        }
-      }
-      setState(() {});
-    }).catchError((e) {
-      toast(e.toString());
-    }).whenComplete(() => appStore.setLoading(false));
-  }
+    // Using dummy provider data
+    minPrice = 100;
+    maxPrice = 5000;
 
-  Future<void> getCategories() async {
-    await getCategoryList(CATEGORY_LIST_ALL).then((value) {
-      catList = value.categoryList.validate();
-      for (var element in catList) {
-        if (filterStore.categoryId.contains(element.id)) {
-          element.isSelected = true;
-        }
+    providerList = [
+      UserData(
+        id: 1,
+        displayName: 'Jorge Perez',
+        profileImage: '',
+        providersServiceRating: 5.0,
+        createdAt: '2020-01-15T00:00:00.000Z',
+        totalBooking: 150,
+      ),
+      UserData(
+        id: 2,
+        displayName: 'Jorge Perez',
+        profileImage: '',
+        providersServiceRating: 5.0,
+        createdAt: '2020-03-20T00:00:00.000Z',
+        totalBooking: 120,
+      ),
+      UserData(
+        id: 3,
+        displayName: 'Jorge Perez',
+        profileImage: '',
+        providersServiceRating: 5.0,
+        createdAt: '2020-05-10T00:00:00.000Z',
+        totalBooking: 200,
+      ),
+      UserData(
+        id: 4,
+        displayName: 'Jorge Perez',
+        profileImage: '',
+        providersServiceRating: 5.0,
+        createdAt: '2020-07-25T00:00:00.000Z',
+        totalBooking: 85,
+      ),
+      UserData(
+        id: 5,
+        displayName: 'Jorge Perez',
+        profileImage: '',
+        providersServiceRating: 5.0,
+        createdAt: '2020-09-12T00:00:00.000Z',
+        totalBooking: 175,
+      ),
+      UserData(
+        id: 6,
+        displayName: 'Jorge Perez',
+        profileImage: '',
+        providersServiceRating: 5.0,
+        createdAt: '2020-11-30T00:00:00.000Z',
+        totalBooking: 95,
+      ),
+      UserData(
+        id: 7,
+        displayName: 'Jorge Perez',
+        profileImage: '',
+        providersServiceRating: 5.0,
+        createdAt: '2020-02-18T00:00:00.000Z',
+        totalBooking: 140,
+      ),
+      UserData(
+        id: 8,
+        displayName: 'Jorge Perez',
+        profileImage: '',
+        providersServiceRating: 5.0,
+        createdAt: '2020-04-05T00:00:00.000Z',
+        totalBooking: 110,
+      ),
+      UserData(
+        id: 9,
+        displayName: 'Jorge Perez',
+        profileImage: '',
+        providersServiceRating: 5.0,
+        createdAt: '2020-06-22T00:00:00.000Z',
+        totalBooking: 165,
+      ),
+    ];
+
+    // Apply any existing filter selections
+    for (var element in providerList) {
+      if (filterStore.providerId.contains(element.id)) {
+        element.isSelected = true;
       }
-      setState(() {});
-    }).catchError((e) {
-      toast(e.toString());
-    });
+    }
+
+    setState(() {});
+    appStore.setLoading(false);
   }
 
   @override
@@ -113,7 +154,6 @@ class _FilterScreenState extends State<FilterScreen> {
 
   void clearFilter() {
     filterStore.clearFilters();
-    selectedZoneId = null; // Clear the local state as well
     finish(context, true);
   }
 
@@ -128,7 +168,7 @@ class _FilterScreenState extends State<FilterScreen> {
           children: [
             Row(
               children: [
-                /// LEFT FILTER MENU
+                /// LEFT FILTER MENU - Only 3 options: Provider, Price, Ratings
                 Container(
                   decoration: boxDecorationDefault(
                     color: context.scaffoldBackgroundColor,
@@ -136,110 +176,56 @@ class _FilterScreenState extends State<FilterScreen> {
                   ),
                   child: Column(
                     children: [
-                      if (widget.isFromProvider)
-                        buildItem(
-                          isSelected: isSelected == 0,
-                          name: language.textProvider,
-                        ).onTap(() {
-                          if (!appStore.isLoading) {
-                            isSelected = 0;
-                            setState(() {});
-                          }
-                        }),
-                      if (widget.isFromShop)
-                        buildItem(
-                          isSelected: isSelected == (widget.isFromProvider ? 1 : 0),
-                          name: language.lblServices,
-                        ).onTap(() {
-                          if (!appStore.isLoading) {
-                            isSelected = widget.isFromProvider ? 1 : 0;
-                            setState(() {});
-                          }
-                        }),
-                      if (!widget.isFromShop) ...[
-                        if (!widget.isFromCategory)
-                          buildItem(
-                            isSelected: isSelected == (widget.isFromProvider ? (widget.isFromShop ? 2 : 1) : (widget.isFromShop ? 1 : 0)),
-                            name: language.lblCategory,
-                          ).onTap(() {
-                            if (!appStore.isLoading) {
-                              isSelected = widget.isFromProvider ? (widget.isFromShop ? 2 : 1) : (widget.isFromShop ? 1 : 0);
-                              setState(() {});
-                            }
-                          }),
-                        buildItem(
-                          isSelected: isSelected ==
-                              (widget.isFromProvider
-                                  ? (widget.isFromShop ? (widget.isFromCategory ? 2 : 3) : (widget.isFromCategory ? 1 : 2))
-                                  : (widget.isFromShop ? (widget.isFromCategory ? 1 : 2) : (widget.isFromCategory ? 0 : 1))),
-                          name: language.lblPrice,
-                        ).onTap(() {
-                          if (!appStore.isLoading) {
-                            isSelected = widget.isFromProvider
-                                ? (widget.isFromShop ? (widget.isFromCategory ? 2 : 3) : (widget.isFromCategory ? 1 : 2))
-                                : (widget.isFromShop ? (widget.isFromCategory ? 1 : 2) : (widget.isFromCategory ? 0 : 1));
-                            setState(() {});
-                          }
-                        }),
-                        buildItem(
-                          isSelected: isSelected ==
-                              (widget.isFromProvider
-                                  ? (widget.isFromShop ? (widget.isFromCategory ? 3 : 4) : (widget.isFromCategory ? 2 : 3))
-                                  : (widget.isFromShop ? (widget.isFromCategory ? 2 : 3) : (widget.isFromCategory ? 1 : 2))),
-                          name: language.lblRating,
-                        ).onTap(() {
-                          if (!appStore.isLoading) {
-                            isSelected = widget.isFromProvider
-                                ? (widget.isFromShop ? (widget.isFromCategory ? 3 : 4) : (widget.isFromCategory ? 2 : 3))
-                                : (widget.isFromShop ? (widget.isFromCategory ? 2 : 3) : (widget.isFromCategory ? 1 : 2));
-                            setState(() {});
-                          }
-                        }),
-                        buildItem(
-                          isSelected: isSelected ==
-                              (widget.isFromProvider
-                                  ? (widget.isFromShop ? (widget.isFromCategory ? 4 : 5) : (widget.isFromCategory ? 3 : 4))
-                                  : (widget.isFromShop ? (widget.isFromCategory ? 3 : 4) : (widget.isFromCategory ? 2 : 3))),
-                          name: language.lblZone,
-                        ).onTap(() {
-                          if (!appStore.isLoading) {
-                            isSelected = widget.isFromProvider
-                                ? (widget.isFromShop ? (widget.isFromCategory ? 4 : 5) : (widget.isFromCategory ? 3 : 4))
-                                : (widget.isFromShop ? (widget.isFromCategory ? 3 : 4) : (widget.isFromCategory ? 2 : 3));
-                            setState(() {});
-                          }
-                        }),
-                      ],
+                      // Provider Filter
+                      buildItem(
+                        isSelected: isSelected == 0,
+                        name: language.textProvider,
+                      ).onTap(() {
+                        if (!appStore.isLoading) {
+                          isSelected = 0;
+                          setState(() {});
+                        }
+                      }),
+                      // Price Filter
+                      buildItem(
+                        isSelected: isSelected == 1,
+                        name: language.lblPrice,
+                      ).onTap(() {
+                        if (!appStore.isLoading) {
+                          isSelected = 1;
+                          setState(() {});
+                        }
+                      }),
+                      // Ratings Filter
+                      buildItem(
+                        isSelected: isSelected == 2,
+                        name: language.lblRating,
+                      ).onTap(() {
+                        if (!appStore.isLoading) {
+                          isSelected = 2;
+                          setState(() {});
+                        }
+                      }),
                     ],
                   ),
                 ).expand(flex: 2),
 
-                /// RIGHT FILTER PANEL
+                /// RIGHT FILTER PANEL - Only 3 panels
                 [
-                  if (appStore.isLoading) Offstage(),
-                  if (widget.isFromProvider)
-                    Observer(
-                      builder: (context) => FilterProviderComponent(
-                        providerList: providerList,
-                        showLoader: appStore.isLoading,
-                      ),
+                  // Provider Panel (index 0)
+                  Observer(
+                    builder: (context) => FilterProviderComponent(
+                      providerList: providerList,
+                      showLoader: appStore.isLoading,
                     ),
-                  if (widget.isFromShop) FilterServiceListComponent(showLoader: false),
-                  if (!widget.isFromCategory) FilterCategoryComponent(catList: catList),
+                  ),
+                  // Price Panel (index 1)
                   FilterPriceComponent(
                     min: minPrice.validate(),
                     max: maxPrice.validate(),
                   ),
+                  // Rating Panel (index 2)
                   FilterRatingComponent(),
-                  FilterServiceZoneComponent(
-                    providerList: zoneList,
-                    initialSelectedZoneId: selectedZoneId,
-                    onZoneSelected: (id) {
-                      setState(() {
-                        selectedZoneId = id;
-                      });
-                    },
-                  ),
                 ][isSelected]
                     .flexible(flex: 5),
               ],
@@ -248,16 +234,16 @@ class _FilterScreenState extends State<FilterScreen> {
             /// BOTTOM BUTTONS
             Observer(
               builder: (_) => Container(
-                decoration: boxDecorationDefault(color: context.scaffoldBackgroundColor),
+                decoration: boxDecorationDefault(
+                    color: context.scaffoldBackgroundColor),
                 width: context.width(),
                 padding: const EdgeInsets.all(16),
                 child: Row(
                   children: [
                     if (filterStore.providerId.validate().isNotEmpty ||
-                        filterStore.categoryId.validate().isNotEmpty ||
-                        (filterStore.isPriceMin.validate().isNotEmpty && filterStore.isPriceMax.validate().isNotEmpty) ||
-                        filterStore.ratingId.validate().isNotEmpty ||
-                        filterStore.zoneId != null)
+                        (filterStore.isPriceMin.validate().isNotEmpty &&
+                            filterStore.isPriceMax.validate().isNotEmpty) ||
+                        filterStore.ratingId.validate().isNotEmpty)
                       AppButton(
                         text: language.lblClearFilter,
                         textColor: context.primaryColor,
@@ -275,24 +261,13 @@ class _FilterScreenState extends State<FilterScreen> {
                       textColor: Colors.white,
                       color: context.primaryColor,
                       onTap: () {
-                        filterStore.categoryId = [];
-                        catList.forEach((element) {
-                          if (element.isSelected) {
-                            filterStore.addToCategoryIdList(prodId: element.id.validate());
-                          }
-                        });
-
                         filterStore.providerId = [];
                         providerList.forEach((element) {
                           if (element.isSelected) {
-                            filterStore.addToProviderList(prodId: element.id.validate());
+                            filterStore.addToProviderList(
+                                prodId: element.id.validate());
                           }
                         });
-                        if (selectedZoneId != null) {
-                          filterStore.zoneId = selectedZoneId;
-                        } else {
-                          filterStore.zoneId = null;
-                        }
                         finish(context, true);
                       },
                     ).expand(),

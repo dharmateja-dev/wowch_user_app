@@ -14,7 +14,8 @@ class FilterCategoryComponent extends StatefulWidget {
   const FilterCategoryComponent({required this.catList});
 
   @override
-  State<FilterCategoryComponent> createState() => _FilterCategoryComponentState();
+  State<FilterCategoryComponent> createState() =>
+      _FilterCategoryComponentState();
 }
 
 class _FilterCategoryComponentState extends State<FilterCategoryComponent> {
@@ -46,6 +47,11 @@ class _FilterCategoryComponentState extends State<FilterCategoryComponent> {
       itemBuilder: (context, index) {
         CategoryData data = widget.catList[index];
         return Container(
+          margin: const EdgeInsets.only(bottom: 8),
+          decoration: BoxDecoration(
+            color: Color(0xFFE8F3EC),
+            borderRadius: BorderRadius.circular(8),
+          ),
           padding: const EdgeInsets.all(16),
           child: Row(
             children: [
@@ -59,11 +65,14 @@ class _FilterCategoryComponentState extends State<FilterCategoryComponent> {
                 children: [
                   Text(data.name.validate(), style: boldTextStyle()),
                   4.height,
-                  Text('${data.services} ${language.service}', style: secondaryTextStyle()),
+                  Text('${data.services} ${language.service}',
+                      style: secondaryTextStyle()),
                 ],
               ).expand(),
               8.width,
-              SelectedItemWidget(isSelected: data.isSelected),
+              SelectedItemWidget(
+                isSelected: data.isSelected,
+              ),
             ],
           ),
         ).onTap(() {

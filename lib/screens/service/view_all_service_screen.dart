@@ -1,19 +1,15 @@
 import 'package:booking_system_flutter/component/base_scaffold_widget.dart';
-import 'package:booking_system_flutter/screens/service/shimmer/view_all_service_shimmer.dart';
 import 'package:booking_system_flutter/store/filter_store.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../component/cached_image_widget.dart';
-import '../../component/empty_error_state_widget.dart';
 import '../../main.dart';
 import '../../model/category_model.dart';
 import '../../model/service_data_model.dart';
 import '../../network/rest_apis.dart';
-import '../../utils/common.dart';
 import '../../utils/constant.dart';
 import '../../utils/images.dart';
 import '../filter/filter_screen.dart';
@@ -60,6 +56,70 @@ class _ViewAllServiceScreenState extends State<ViewAllServiceScreen> {
 
   int page = 1;
   bool isLastPage = false;
+
+  // Dummy service data for subcategories
+  final List<ServiceData> dummyServices = [
+    ServiceData(
+      id: 1,
+      name: 'Washing Utensils Service',
+      price: 250,
+      duration: '30 min',
+      totalRating: 4.8,
+      providerName: 'Priya Sharma',
+      providerImage: '',
+      categoryName: 'Household',
+    ),
+    ServiceData(
+      id: 2,
+      name: 'Clothes Washing',
+      price: 350,
+      duration: '45 min',
+      totalRating: 4.6,
+      providerName: 'Rahul Verma',
+      providerImage: '',
+      categoryName: 'Household',
+    ),
+    ServiceData(
+      id: 3,
+      name: 'Floor Tile Cleaning',
+      price: 500,
+      duration: '1 hour',
+      totalRating: 4.9,
+      providerName: 'Amit Kumar',
+      providerImage: '',
+      categoryName: 'Cleaning',
+    ),
+    ServiceData(
+      id: 4,
+      name: 'Bathroom Deep Clean',
+      price: 600,
+      duration: '1.5 hours',
+      totalRating: 4.7,
+      providerName: 'Sunita Devi',
+      providerImage: '',
+      categoryName: 'Cleaning',
+    ),
+    ServiceData(
+      id: 5,
+      name: 'Kitchen Cleaning',
+      price: 450,
+      duration: '1 hour',
+      totalRating: 4.5,
+      providerName: 'Mohan Lal',
+      providerImage: '',
+      categoryName: 'Cleaning',
+    ),
+    ServiceData(
+      id: 6,
+      name: 'Car Washing',
+      price: 300,
+      duration: '40 min',
+      totalRating: 4.8,
+      providerName: 'Vijay Singh',
+      providerImage: '',
+      categoryName: 'Cleaning',
+    ),
+  ];
 
   @override
   void initState() {
@@ -135,87 +195,54 @@ class _ViewAllServiceScreenState extends State<ViewAllServiceScreen> {
       {'name': 'Car Washing', 'image': 'car_washing'},
     ];
 
-    return SnapHelperWidget<List<CategoryData>>(
-      future: futureCategory,
-      initialData: cachedSubcategoryList
-          .firstWhere((element) => element?.$1 == widget.categoryId.validate(),
-              orElse: () => null)
-          ?.$2,
-      loadingWidget: const Offstage(),
-      onSuccess: (list) {
-        // Use demo data if list is empty or only has 'All' item
-        final bool useDemoData = list.isEmpty || list.length <= 1;
-        final int itemCount =
-            useDemoData ? demoSubcategories.length : list.validate().length;
-
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            16.height,
-            Text(
-              language.lblSubcategories,
-              style: boldTextStyle(size: LABEL_TEXT_SIZE),
-            ).paddingSymmetric(horizontal: 16),
-            12.height,
-            // Grid layout for subcategories
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Wrap(
-                spacing: 16,
-                runSpacing: 16,
-                children: List.generate(itemCount, (index) {
-                  if (useDemoData) {
-                    final demo = demoSubcategories[index];
-                    return _buildSubcategoryItem(
-                      context,
-                      name: demo['name']!,
-                      imageKey: demo['image']!,
-                      index: index,
-                      isSelected: filterStore.selectedSubCategoryId == index,
-                      onTap: () {
-                        filterStore.setSelectedSubCategory(catId: index);
-                        if (index != 0) {
-                          subCategory = index;
-                        } else {
-                          subCategory = null;
-                        }
-                        page = 1;
-                        appStore.setLoading(true);
-                        fetchAllServiceData();
-                        setState(() {});
-                      },
-                    );
-                  } else {
-                    CategoryData data = list[index];
-                    return Observer(
-                      builder: (_) {
-                        bool isSelected =
-                            filterStore.selectedSubCategoryId == index;
-                        return _buildSubcategoryItemFromData(
-                          context,
-                          data: data,
-                          index: index,
-                          isSelected: isSelected,
-                          onTap: () {
-                            filterStore.setSelectedSubCategory(catId: index);
-                            subCategory = data.id;
-                            page = 1;
-                            appStore.setLoading(true);
-                            fetchAllServiceData();
-                            setState(() {});
-                          },
-                        );
-                      },
-                    );
-                  }
-                }),
-              ),
-            ),
-            16.height,
-          ],
-        );
-      },
+    // Always show dummy subcategories
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        16.height,
+        Text(
+          language.lblSubcategories,
+          style: boldTextStyle(),
+        ).paddingSymmetric(horizontal: 16),
+        12.height,
+        // Grid layout for subcategories
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Wrap(
+            spacing: 16,
+            runSpacing: 16,
+            children: List.generate(demoSubcategories.length, (index) {
+              final demo = demoSubcategories[index];
+              return Observer(
+                builder: (_) {
+                  bool isSelected = filterStore.selectedSubCategoryId == index;
+                  return _buildSubcategoryItem(
+                    context,
+                    name: demo['name']!,
+                    imageKey: demo['image']!,
+                    index: index,
+                    isSelected: isSelected,
+                    onTap: () {
+                      filterStore.setSelectedSubCategory(catId: index);
+                      if (index != 0) {
+                        subCategory = index;
+                      } else {
+                        subCategory = null;
+                      }
+                      page = 1;
+                      appStore.setLoading(true);
+                      fetchAllServiceData();
+                      setState(() {});
+                    },
+                  );
+                },
+              );
+            }),
+          ),
+        ),
+        16.height,
+      ],
     );
   }
 
@@ -244,22 +271,11 @@ class _ViewAllServiceScreenState extends State<ViewAllServiceScreen> {
                   width: 60,
                   height: 60,
                   decoration: BoxDecoration(
-                    color: isSelected
-                        ? const Color(0xFFE8F3EC)
-                        : context.cardColor,
-                    borderRadius: BorderRadius.circular(16),
+                    color: Color(0xFFE8F3EC),
+                    borderRadius: BorderRadius.circular(8),
                     border: isSelected
                         ? Border.all(color: context.primaryColor, width: 2)
-                        : Border.all(color: Colors.grey.withAlpha(26)),
-                    boxShadow: [
-                      BoxShadow(
-                        color: isSelected
-                            ? context.primaryColor.withAlpha(51)
-                            : Colors.black.withAlpha(10),
-                        blurRadius: 8,
-                        offset: const Offset(0, 2),
-                      ),
-                    ],
+                        : Border.all(color: Colors.transparent),
                   ),
                   child: index == 0
                       ? Icon(
@@ -270,7 +286,7 @@ class _ViewAllServiceScreenState extends State<ViewAllServiceScreen> {
                               : context.iconColor,
                         )
                       : ClipRRect(
-                          borderRadius: BorderRadius.circular(14),
+                          borderRadius: BorderRadius.circular(8),
                           child: CachedImageWidget(
                             url: imageUrl,
                             fit: BoxFit.contain,
@@ -304,120 +320,7 @@ class _ViewAllServiceScreenState extends State<ViewAllServiceScreen> {
                 color: isSelected ? context.primaryColor : null,
               ),
               textAlign: TextAlign.center,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildSubcategoryItemFromData(
-    BuildContext context, {
-    required CategoryData data,
-    required int index,
-    required bool isSelected,
-    required VoidCallback onTap,
-  }) {
-    final double itemWidth = (context.width() - 48) / 4;
-    final String imageUrl = data.categoryImage.validate().isEmpty
-        ? getDemoSubcategoryImage(data.name)
-        : data.categoryImage.validate();
-
-    return GestureDetector(
-      onTap: onTap,
-      child: SizedBox(
-        width: itemWidth,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Stack(
-              children: [
-                Container(
-                  width: 60,
-                  height: 60,
-                  decoration: BoxDecoration(
-                    color: isSelected
-                        ? const Color(0xFFE8F3EC)
-                        : context.cardColor,
-                    borderRadius: BorderRadius.circular(16),
-                    border: isSelected
-                        ? Border.all(color: context.primaryColor, width: 2)
-                        : Border.all(color: Colors.grey.withAlpha(26)),
-                    boxShadow: [
-                      BoxShadow(
-                        color: isSelected
-                            ? context.primaryColor.withAlpha(51)
-                            : Colors.black.withAlpha(10),
-                        blurRadius: 8,
-                        offset: const Offset(0, 2),
-                      ),
-                    ],
-                  ),
-                  child: index == 0
-                      ? Center(
-                          child: Text(
-                            data.name.validate(),
-                            style: boldTextStyle(size: 10),
-                            textAlign: TextAlign.center,
-                          ),
-                        )
-                      : data.categoryImage.validate().endsWith('.svg')
-                          ? SvgPicture.network(
-                              data.categoryImage.validate(),
-                              height: 32,
-                              width: 32,
-                              colorFilter: ColorFilter.mode(
-                                appStore.isDarkMode
-                                    ? Colors.white
-                                    : data.color
-                                        .validate(value: '000')
-                                        .toColor(),
-                                BlendMode.srcIn,
-                              ),
-                              placeholderBuilder: (context) =>
-                                  const PlaceHolderWidget(
-                                      height: 32,
-                                      width: 32,
-                                      color: transparentColor),
-                            ).paddingAll(14)
-                          : ClipRRect(
-                              borderRadius: BorderRadius.circular(14),
-                              child: CachedImageWidget(
-                                url: imageUrl,
-                                fit: BoxFit.contain,
-                                width: 36,
-                                height: 36,
-                              ),
-                            ).paddingAll(12),
-                ),
-                if (isSelected)
-                  Positioned(
-                    top: -4,
-                    right: -4,
-                    child: Container(
-                      padding: const EdgeInsets.all(2),
-                      decoration: BoxDecoration(
-                        color: context.primaryColor,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: const Icon(Icons.check,
-                          size: 14, color: Colors.white),
-                    ),
-                  ),
-              ],
-            ),
-            8.height,
-            Text(
-              index == 0 ? language.lblViewAll : data.name.validate(),
-              style: primaryTextStyle(
-                size: 10,
-                weight: isSelected ? FontWeight.w600 : FontWeight.normal,
-                color: isSelected ? context.primaryColor : null,
-              ),
-              textAlign: TextAlign.center,
-              maxLines: 2,
+              maxLines: 3,
               overflow: TextOverflow.ellipsis,
             ),
           ],
@@ -446,155 +349,124 @@ class _ViewAllServiceScreenState extends State<ViewAllServiceScreen> {
       onTap: () => hideKeyboard(context),
       child: AppScaffold(
         appBarTitle: setSearchString,
-        child: SizedBox(
-          height: context.height(),
-          width: context.width(),
-          child: Column(
-            children: [
-              Container(
-                padding: const EdgeInsets.all(16),
-                child: Row(
+        child: Stack(
+          children: [
+            RefreshIndicator(
+              onRefresh: () async {
+                page = 1;
+                appStore.setLoading(true);
+                fetchAllServiceData();
+                setState(() {});
+              },
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    AppTextField(
-                      textFieldType: TextFieldType.OTHER,
-                      focus: myFocusNode,
-                      controller: searchCont,
-                      suffix: CloseButton(
-                        onPressed: () {
-                          page = 1;
-                          searchCont.clear();
-                          filterStore.setSearch('');
-                          appStore.setLoading(true);
-                          fetchAllServiceData();
-                          setState(() {});
-                        },
-                      ).visible(searchCont.text.isNotEmpty),
-                      onFieldSubmitted: (s) {
-                        page = 1;
+                    // Search Bar Section (matching CategoryScreen style)
+                    _buildSearchBar(context),
 
-                        filterStore.setSearch(s);
-                        appStore.setLoading(true);
+                    // Subcategory Section
+                    if (widget.categoryId != null) subCategoryWidget(),
 
-                        fetchAllServiceData();
-                        setState(() {});
-                      },
-                      decoration: inputDecoration(context).copyWith(
-                        hintText: "${language.lblSearchFor} $setSearchString",
-                        prefixIcon:
-                            ic_search.iconImage(size: 10).paddingAll(14),
-                        hintStyle: secondaryTextStyle(),
-                      ),
-                    ).expand(),
-                    16.width,
-                    Container(
-                      padding: const EdgeInsets.all(10),
-                      decoration:
-                          boxDecorationDefault(color: context.primaryColor),
-                      child: const CachedImageWidget(
-                        url: ic_filter,
-                        height: 26,
-                        width: 26,
-                        color: Colors.white,
-                      ),
-                    ).onTap(() {
-                      hideKeyboard(context);
-
-                      FilterScreen(
-                        isFromProvider: widget.isFromProvider,
-                        isFromCategory: widget.isFromCategory,
-                        // isFromShop: true,
-                      ).launch(context).then((value) {
-                        if (value != null) {
-                          page = 1;
-                          appStore.setLoading(true);
-
-                          fetchAllServiceData();
-                          setState(() {});
-                        }
-                      });
-                    }, borderRadius: radius())
+                    // Services Section
+                    _buildServicesSection(context),
                   ],
                 ),
               ),
-              AnimatedScrollView(
-                keyboardDismissBehavior:
-                    ScrollViewKeyboardDismissBehavior.onDrag,
-                onSwipeRefresh: () {
-                  page = 1;
-                  appStore.setLoading(true);
-                  fetchAllServiceData();
-                  setState(() {});
-                  return Future.value(false);
-                },
-                onNextPage: () {
-                  if (!isLastPage) {
-                    page++;
+            ),
+            Observer(
+              builder: (_) => Positioned.fill(
+                child: Container(
+                  color: Colors.transparent,
+                ).visible(appStore.isLoading),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSearchBar(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+      child: Container(
+        decoration: BoxDecoration(
+          color: const Color(0xFFE8F3EC),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: AppTextField(
+          textFieldType: TextFieldType.OTHER,
+          focus: myFocusNode,
+          controller: searchCont,
+          decoration: InputDecoration(
+            hintText: "${language.lblSearchFor} $setSearchString",
+            prefixIcon: ic_search.iconImage(size: 16).paddingAll(14),
+            suffixIcon: ic_filter.iconImage(size: 16).paddingAll(14).onTap(
+              () {
+                hideKeyboard(context);
+                FilterScreen(
+                  isFromProvider: widget.isFromProvider,
+                  isFromCategory: widget.isFromCategory,
+                ).launch(context).then((value) {
+                  if (value != null) {
+                    page = 1;
                     appStore.setLoading(true);
                     fetchAllServiceData();
                     setState(() {});
                   }
-                },
-                children: [
-                  if (widget.categoryId != null) subCategoryWidget(),
-                  16.height,
-                  SnapHelperWidget(
-                    future: futureService,
-                    loadingWidget: const ViewAllServiceShimmer(),
-                    errorBuilder: (p0) {
-                      return NoDataWidget(
-                        title: p0,
-                        retryText: language.reload,
-                        imageWidget: const ErrorStateWidget(),
-                        onRetry: () {
-                          page = 1;
-                          appStore.setLoading(true);
-
-                          fetchAllServiceData();
-                          setState(() {});
-                        },
-                      );
-                    },
-                    onSuccess: (data) {
-                      return Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(language.service,
-                                  style: boldTextStyle(size: LABEL_TEXT_SIZE))
-                              .paddingSymmetric(horizontal: 16),
-                          AnimatedListView(
-                            itemCount: serviceList.length,
-                            listAnimationType: ListAnimationType.FadeIn,
-                            fadeInConfiguration:
-                                FadeInConfiguration(duration: 2.seconds),
-                            physics: const NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            emptyWidget: NoDataWidget(
-                              title: language.lblNoServicesFound,
-                              subTitle: (searchCont.text.isNotEmpty ||
-                                      filterStore.providerId.isNotEmpty ||
-                                      filterStore.categoryId.isNotEmpty)
-                                  ? language.noDataFoundInFilter
-                                  : null,
-                              imageWidget: const EmptyStateWidget(),
-                            ),
-                            itemBuilder: (_, index) {
-                              return ServiceComponent(
-                                serviceData: serviceList[index],
-                                isFromViewAllService: true,
-                              ).paddingAll(8);
-                            },
-                          ).paddingAll(8),
-                        ],
-                      );
-                    },
-                  ),
-                ],
-              ).expand(),
-            ],
+                });
+              },
+            ),
+            border: InputBorder.none,
+            contentPadding:
+                const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
           ),
+          onFieldSubmitted: (s) {
+            page = 1;
+            filterStore.setSearch(s);
+            appStore.setLoading(true);
+            fetchAllServiceData();
+            setState(() {});
+          },
         ),
       ),
+    );
+  }
+
+  Widget _buildServicesSection(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        16.height,
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Text(
+            language.service,
+            style: boldTextStyle(size: LABEL_TEXT_SIZE),
+          ),
+        ),
+        12.height,
+        GridView.builder(
+          padding: const EdgeInsets.symmetric(horizontal: 12),
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            crossAxisSpacing: 12,
+            mainAxisSpacing: 12,
+            childAspectRatio: 0.7,
+          ),
+          itemCount: dummyServices.length,
+          itemBuilder: (context, index) {
+            return ServiceComponent(
+              serviceData: dummyServices[index],
+              isFromViewAllService: true,
+            );
+          },
+        ),
+        16.height, // Bottom padding
+      ],
     );
   }
 }

@@ -26,7 +26,8 @@ class _FilterPriceComponentState extends State<FilterPriceComponent> {
     super.initState();
 
     // Use filterStore values if already set, else use widget.min/max
-    if (filterStore.isPriceMax.isNotEmpty && filterStore.isPriceMin.isNotEmpty) {
+    if (filterStore.isPriceMax.isNotEmpty &&
+        filterStore.isPriceMin.isNotEmpty) {
       rangeValues = RangeValues(
         filterStore.isPriceMin.toDouble(),
         filterStore.isPriceMax.toDouble(),
@@ -45,12 +46,33 @@ class _FilterPriceComponentState extends State<FilterPriceComponent> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(language.lblPrice, style: boldTextStyle()).paddingAll(16),
+          Marquee(
+            child: Row(
+              children: [
+                PriceWidget(
+                  currencySymbol: "₹",
+                  price: rangeValues.start.toInt(),
+                  isBoldText: true,
+                  color: textPrimaryColorGlobal,
+                  decimalPoint: 0,
+                ),
+                Text(" - ", style: boldTextStyle()),
+                PriceWidget(
+                  currencySymbol: "₹",
+                  price: rangeValues.end.toInt(),
+                  isBoldText: true,
+                  color: textPrimaryColorGlobal,
+                  decimalPoint: 0,
+                ),
+              ],
+            ),
+          ).paddingSymmetric(horizontal: 16),
           RangeSlider(
             min: widget.min.toDouble(),
             max: widget.max.toDouble(),
             divisions: (widget.max - widget.min).toInt() > 0
                 ? (widget.max - widget.min).toInt()
-                : null, // or just set to a default like 10
+                : null,
             labels: RangeLabels(
               rangeValues.start.toInt().toString(),
               rangeValues.end.toInt().toString(),
@@ -64,29 +86,7 @@ class _FilterPriceComponentState extends State<FilterPriceComponent> {
               });
             },
           ),
-
           16.height,
-          Marquee(
-            child: Row(
-              children: [
-                Text("[ ", style: primaryTextStyle()),
-                PriceWidget(
-                  price: rangeValues.start.toInt(),
-                  isBoldText: false,
-                  color: textPrimaryColorGlobal,
-                  decimalPoint: 0,
-                ),
-                Text(" - ", style: primaryTextStyle()),
-                PriceWidget(
-                  price: rangeValues.end.toInt(),
-                  isBoldText: false,
-                  color: textPrimaryColorGlobal,
-                  decimalPoint: 0,
-                ),
-                Text(" ]", style: primaryTextStyle()),
-              ],
-            ),
-          ).center(),
         ],
       ),
     );

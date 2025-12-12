@@ -21,6 +21,7 @@ import 'package:booking_system_flutter/screens/dashboard/component/wallet_histor
 import 'package:booking_system_flutter/screens/dashboard/dashboard_screen.dart';
 import 'package:booking_system_flutter/screens/dashboard/fragment/profile_fragment.dart';
 import 'package:booking_system_flutter/screens/helpDesk/model/help_desk_response.dart';
+import 'package:booking_system_flutter/screens/splash_screen.dart';
 import 'package:booking_system_flutter/screens/review/rating_view_all_screen.dart';
 import 'package:booking_system_flutter/screens/setting_screen.dart';
 import 'package:booking_system_flutter/screens/withdraw/wallet_request.dart';
@@ -177,7 +178,7 @@ class _MyAppState extends State<MyApp> {
               builder: (_) => MaterialApp(
                 debugShowCheckedModeBanner: false,
                 navigatorKey: navigatorKey,
-                home: DashboardScreen(),
+                home: SplashScreen(),
                 theme: AppTheme.lightTheme(color: snap.data),
                 darkTheme: AppTheme.darkTheme(color: snap.data),
                 themeMode:

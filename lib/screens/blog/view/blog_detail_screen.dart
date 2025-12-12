@@ -14,27 +14,6 @@ import '../../../component/cached_image_widget.dart';
 import '../../../component/empty_error_state_widget.dart';
 import '../shimmer/blog_detail_shimmer.dart';
 
-/// Custom clipper for curved bottom edge of hero image
-class _CurvedBottomClipper extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    final path = Path();
-    path.lineTo(0, size.height - 30);
-    path.quadraticBezierTo(
-      size.width / 2,
-      size.height,
-      size.width,
-      size.height - 30,
-    );
-    path.lineTo(size.width, 0);
-    path.close();
-    return path;
-  }
-
-  @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
-}
-
 class BlogDetailScreen extends StatefulWidget {
   final int blogId;
 
@@ -195,190 +174,200 @@ class _BlogDetailScreenState extends State<BlogDetailScreen> {
             padding: EdgeInsets.only(bottom: 120),
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // Column layout with overlapping card using Transform
               Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Hero image with curved bottom edge
-                  ClipPath(
-                    clipper: _CurvedBottomClipper(),
-                    child: SizedBox(
-                      height: 300,
+                  // Hero image
+                  SizedBox(
+                    height: 280,
+                    width: context.width(),
+                    child: CachedImageWidget(
+                      url: data.blogDetail!.imageAttachments
+                              .validate()
+                              .isNotEmpty
+                          ? data.blogDetail!.imageAttachments!.first.validate()
+                          : data.blogDetail!.attachment.validate().isNotEmpty
+                              ? data.blogDetail!.attachment!.first.url
+                                  .validate()
+                              : '',
+                      fit: BoxFit.cover,
+                      height: 280,
                       width: context.width(),
-                      child: CachedImageWidget(
-                        url: data.blogDetail!.imageAttachments
-                                .validate()
-                                .isNotEmpty
-                            ? data.blogDetail!.imageAttachments!.first
-                                .validate()
-                            : data.blogDetail!.attachment.validate().isNotEmpty
-                                ? data.blogDetail!.attachment!.first.url
-                                    .validate()
-                                : '',
-                        fit: BoxFit.cover,
-                        height: 300,
-                        width: context.width(),
-                      ),
                     ),
                   ),
-                  // White content section
-                  Container(
-                    width: context.width(),
-                    decoration: boxDecorationWithRoundedCorners(
-                      borderRadius: radiusOnly(topLeft: 0, topRight: 0),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        // Blog title - large and bold
-                        Text(
-                          data.blogDetail!.title.validate(),
-                          style: boldTextStyle(
-                              size: 22, color: textPrimaryColorGlobal),
-                        ).paddingSymmetric(horizontal: 16, vertical: 20),
+                  // White content card with negative margin to overlap image
+                  Transform.translate(
+                    offset: Offset(0, -30),
+                    child: Container(
+                      width: context.width(),
+                      decoration: BoxDecoration(
+                        color: context.cardColor,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(20),
+                          topRight: Radius.circular(20),
+                        ),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          24.height,
+                          // Blog title - large and bold
+                          Text(
+                            data.blogDetail!.title.validate(),
+                            style: boldTextStyle(
+                                size: 22, color: textPrimaryColorGlobal),
+                          ).paddingSymmetric(horizontal: 16),
 
-                        // Author info section - profile picture, name, and date
-                        Row(
-                          children: [
-                            // Circular author profile picture
-                            ClipOval(
-                              child: CachedImageWidget(
-                                url: data.blogDetail!.authorImage.validate(),
-                                height: 40,
-                                width: 40,
-                                fit: BoxFit.cover,
-                                radius: 0,
+                          16.height,
+
+                          // Author info section - profile picture, name, and date
+                          Row(
+                            children: [
+                              // Circular author profile picture
+                              ClipOval(
+                                child: CachedImageWidget(
+                                  url: data.blogDetail!.authorImage.validate(),
+                                  height: 44,
+                                  width: 44,
+                                  fit: BoxFit.cover,
+                                  radius: 0,
+                                ),
+                              ),
+                              12.width,
+                              // Author name and date column
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    data.blogDetail!.authorName.validate(),
+                                    style: boldTextStyle(
+                                        size: 14,
+                                        color: textPrimaryColorGlobal),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                  4.height,
+                                  Text(
+                                    data.blogDetail!.publishDate.validate(),
+                                    style: secondaryTextStyle(
+                                        size: 12, color: Colors.grey),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ).paddingSymmetric(horizontal: 16),
+
+                          24.height,
+
+                          // Blog content text
+                          Html(
+                            data: data.blogDetail!.description.validate(),
+                            style: {
+                              "div": Style(
+                                margin: Margins.zero,
+                              ),
+                              "p": Style(
+                                fontSize: FontSize(16),
+                                lineHeight: LineHeight(1.6),
+                                margin: Margins.only(bottom: 16),
+                                color: appStore.isDarkMode
+                                    ? Colors.white
+                                    : Color(0xFF333333),
+                              ),
+                            },
+                          ).paddingSymmetric(horizontal: 16),
+
+                          // Related Blogs Section
+                          if (relatedBlogs.isNotEmpty) ...[
+                            32.height,
+                            Text(
+                              'Related Blogs',
+                              style: boldTextStyle(
+                                  size: 20, color: textPrimaryColorGlobal),
+                            ).paddingSymmetric(horizontal: 16),
+                            16.height,
+                            // Horizontal scrollable related blogs
+                            SizedBox(
+                              height: 210,
+                              child: ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                padding: EdgeInsets.symmetric(horizontal: 16),
+                                itemCount: relatedBlogs.length,
+                                itemBuilder: (context, index) {
+                                  BlogData blog = relatedBlogs[index];
+                                  return Container(
+                                    width: 130,
+                                    margin: EdgeInsets.only(right: 12),
+                                    decoration: boxDecorationWithRoundedCorners(
+                                      borderRadius: radius(8),
+                                    ),
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        BlogDetailScreen(
+                                                blogId: blog.id.validate())
+                                            .launch(context);
+                                      },
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          // Blog image
+                                          ClipRRect(
+                                            borderRadius: radiusOnly(
+                                              topLeft: 8,
+                                              topRight: 8,
+                                              bottomLeft: 8,
+                                              bottomRight: 8,
+                                            ),
+                                            child: CachedImageWidget(
+                                              url: blog.imageAttachments
+                                                      .validate()
+                                                      .isNotEmpty
+                                                  ? blog.imageAttachments!.first
+                                                      .validate()
+                                                  : '',
+                                              fit: BoxFit.cover,
+                                              height: 110,
+                                              width: 150,
+                                            ),
+                                          ),
+                                          8.height,
+                                          // Blog title
+                                          Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 8),
+                                            child: Text(
+                                              blog.title.validate(),
+                                              style: boldTextStyle(
+                                                  size: 14,
+                                                  color:
+                                                      textPrimaryColorGlobal),
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                          4.height,
+                                          // Publication date
+                                          Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 8),
+                                            child: Text(
+                                              blog.publishDate.validate(),
+                                              style:
+                                                  secondaryTextStyle(size: 12),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                },
                               ),
                             ),
-                            12.width,
-                            // Author name and date column
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  data.blogDetail!.authorName.validate(),
-                                  style: boldTextStyle(
-                                      size: 14, color: textPrimaryColorGlobal),
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                                4.height,
-                                Text(
-                                  data.blogDetail!.publishDate.validate(),
-                                  style: secondaryTextStyle(size: 12),
-                                ),
-                              ],
-                            ),
+                            16.height,
                           ],
-                        ).paddingSymmetric(horizontal: 16),
-
-                        24.height,
-
-                        // Blog content text
-                        Html(
-                          data: data.blogDetail!.description.validate(),
-                          style: {
-                            "div": Style(
-                              margin: Margins.zero,
-                            ),
-                            "p": Style(
-                              fontSize: FontSize(16),
-                              lineHeight: LineHeight(1.6),
-                              margin: Margins.only(bottom: 16),
-                              color: appStore.isDarkMode
-                                  ? Colors.white
-                                  : Color(0xFF333333),
-                            ),
-                          },
-                        ).paddingSymmetric(horizontal: 16),
-
-                        // Related Blogs Section
-                        if (relatedBlogs.isNotEmpty) ...[
-                          32.height,
-                          Text(
-                            'Related Blogs',
-                            style: boldTextStyle(
-                                size: 20, color: textPrimaryColorGlobal),
-                          ).paddingSymmetric(horizontal: 16),
-                          16.height,
-                          // Horizontal scrollable related blogs
-                          SizedBox(
-                            height: 210,
-                            child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              padding: EdgeInsets.symmetric(horizontal: 16),
-                              itemCount: relatedBlogs.length,
-                              itemBuilder: (context, index) {
-                                BlogData blog = relatedBlogs[index];
-                                return Container(
-                                  width: 130,
-                                  margin: EdgeInsets.only(right: 12),
-                                  decoration: boxDecorationWithRoundedCorners(
-                                    borderRadius: radius(8),
-                                  ),
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      BlogDetailScreen(
-                                              blogId: blog.id.validate())
-                                          .launch(context);
-                                    },
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        // Blog image
-                                        ClipRRect(
-                                          borderRadius: radiusOnly(
-                                            topLeft: 8,
-                                            topRight: 8,
-                                            bottomLeft: 8,
-                                            bottomRight: 8,
-                                          ),
-                                          child: CachedImageWidget(
-                                            url: blog.imageAttachments
-                                                    .validate()
-                                                    .isNotEmpty
-                                                ? blog.imageAttachments!.first
-                                                    .validate()
-                                                : '',
-                                            fit: BoxFit.cover,
-                                            height: 110,
-                                            width: 150,
-                                          ),
-                                        ),
-                                        8.height,
-                                        // Blog title
-                                        Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 8),
-                                          child: Text(
-                                            blog.title.validate(),
-                                            style: boldTextStyle(
-                                                size: 14,
-                                                color: textPrimaryColorGlobal),
-                                            maxLines: 2,
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                        ),
-                                        4.height,
-                                        // Publication date
-                                        Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 8),
-                                          child: Text(
-                                            blog.publishDate.validate(),
-                                            style: secondaryTextStyle(size: 12),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
-                          16.height,
                         ],
-                      ],
+                      ),
                     ),
                   ),
                 ],
