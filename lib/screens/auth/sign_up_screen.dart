@@ -225,6 +225,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   Future<void> createUsers({required UserData tempRegisterData}) async {
+    if (demoModeStore.isDemoMode) {
+      appStore.setLoading(true);
+      await Future.delayed(Duration(seconds: 1));
+      appStore.setLoading(false);
+      toast("Registration successful (Demo Mode)");
+
+      // Simulate successful registration
+      finish(context);
+      return;
+    }
+
     await createUser(tempRegisterData.toJson()).then((registerResponse) async {
       registerResponse.userData!.password = passwordCont.text.trim();
 

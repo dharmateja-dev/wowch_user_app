@@ -10,6 +10,7 @@ import 'package:booking_system_flutter/screens/dashboard/customer_rating_screen.
 import 'package:booking_system_flutter/screens/dashboard/dashboard_screen.dart';
 import 'package:booking_system_flutter/screens/service/favourite_service_screen.dart';
 import 'package:booking_system_flutter/screens/setting_screen.dart';
+import 'package:booking_system_flutter/screens/static_content_screen.dart';
 import 'package:booking_system_flutter/screens/wallet/user_wallet_balance_screen.dart';
 import 'package:booking_system_flutter/utils/colors.dart';
 import 'package:booking_system_flutter/utils/common.dart';
@@ -182,10 +183,9 @@ class ProfileFragmentState extends State<ProfileFragment> {
                         ),
                         divider: const Offstage(),
                         items: [
-                          //wallet balance
-                          //toggle after wallet balance feature is enabled
                           if (appStore.isLoggedIn &&
-                              appConfigurationStore.isEnableUserWallet)
+                              (appConfigurationStore.isEnableUserWallet ||
+                                  demoModeStore.isDemoMode))
                             SettingItemWidget(
                               decoration: boxDecorationDefault(
                                   color: context.cardColor,
@@ -206,15 +206,16 @@ class ProfileFragmentState extends State<ProfileFragment> {
                                 ),
                               ),
                               onTap: () {
-                                if (appConfigurationStore.isEnableUserWallet) {
+                                if (appConfigurationStore.isEnableUserWallet ||
+                                    demoModeStore.isDemoMode) {
                                   UserWalletBalanceScreen().launch(context);
                                 }
                               },
                             ),
-                          //wallet History
-                          //toggle after wallet history feature is enabled
+
                           if (appStore.isLoggedIn &&
-                              appConfigurationStore.isEnableUserWallet)
+                              (appConfigurationStore.isEnableUserWallet ||
+                                  demoModeStore.isDemoMode))
                             SettingItemWidget(
                               decoration: boxDecorationDefault(
                                   color: context.cardColor,
@@ -322,7 +323,8 @@ class ProfileFragmentState extends State<ProfileFragment> {
                             onTap: () {
                               const BlogListScreen().launch(context);
                             },
-                          ).visible(!rolesAndPermissionStore.blogList),
+                          ).visible(demoModeStore.isDemoMode ||
+                              rolesAndPermissionStore.blogList),
 
                           //rate us
                           SettingItemWidget(
@@ -368,24 +370,25 @@ class ProfileFragmentState extends State<ProfileFragment> {
                           ),
 
                           //my reviews
-                          SettingItemWidget(
-                            decoration: boxDecorationDefault(
-                                color: context.cardColor,
-                                borderRadius:
-                                    const BorderRadiusDirectional.vertical(
-                                        bottom: Radius.circular(0))),
-                            leading: ic_my_review.iconImage(
-                                color: context.iconColor,
-                                size: SETTING_ICON_SIZE),
-                            title: language.myReviews,
-                            titleTextStyle: boldTextStyle(),
-                            trailing: trailing(context),
-                            onTap: () async {
-                              doIfLoggedIn(context, () {
-                                CustomerRatingScreen().launch(context);
-                              });
-                            },
-                          ),
+                          if (appStore.isLoggedIn)
+                            SettingItemWidget(
+                              decoration: boxDecorationDefault(
+                                  color: context.cardColor,
+                                  borderRadius:
+                                      const BorderRadiusDirectional.vertical(
+                                          bottom: Radius.circular(0))),
+                              leading: ic_my_review.iconImage(
+                                  color: context.iconColor,
+                                  size: SETTING_ICON_SIZE),
+                              title: language.myReviews,
+                              titleTextStyle: boldTextStyle(),
+                              trailing: trailing(context),
+                              onTap: () async {
+                                doIfLoggedIn(context, () {
+                                  CustomerRatingScreen().launch(context);
+                                });
+                              },
+                            ),
 
                           //toggle after help desk feature is enabled
                           // SettingItemWidget(
@@ -428,8 +431,9 @@ class ProfileFragmentState extends State<ProfileFragment> {
                         titleTextStyle: boldTextStyle(),
                         onTap: () {
                           AboutScreen().launch(context);
-                        }, //un commment visible after about us feature is enabled
-                      ), //.visible(rolesAndPermissionStore.aboutUs),
+                        },
+                      ).visible(demoModeStore.isDemoMode ||
+                          rolesAndPermissionStore.aboutUs),
                       SettingItemWidget(
                         decoration: boxDecorationDefault(
                             color: context.cardColor,
@@ -442,11 +446,11 @@ class ProfileFragmentState extends State<ProfileFragment> {
                         title: language.privacyPolicy,
                         titleTextStyle: boldTextStyle(),
                         onTap: () {
-                          checkIfLink(
-                              context, appConfigurationStore.privacyPolicy,
-                              title: language.privacyPolicy);
-                        }, //un commment visible after privacy policy feature is enabled
-                      ), //.visible(rolesAndPermissionStore.privacyPolicy),
+                          StaticContentScreen(title: language.privacyPolicy)
+                              .launch(context);
+                        },
+                      ).visible(demoModeStore.isDemoMode ||
+                          rolesAndPermissionStore.privacyPolicy),
                       SettingItemWidget(
                         decoration: boxDecorationDefault(
                             color: context.cardColor,
@@ -459,11 +463,11 @@ class ProfileFragmentState extends State<ProfileFragment> {
                         title: language.termsCondition,
                         titleTextStyle: boldTextStyle(),
                         onTap: () {
-                          checkIfLink(
-                              context, appConfigurationStore.termConditions,
-                              title: language.termsCondition);
-                        }, //un commment visible after terms condition feature is enabled
-                      ), //.visible(rolesAndPermissionStore.termCondition),
+                          StaticContentScreen(title: language.termsCondition)
+                              .launch(context);
+                        },
+                      ).visible(demoModeStore.isDemoMode ||
+                          rolesAndPermissionStore.termCondition),
                       SettingItemWidget(
                         decoration: boxDecorationDefault(
                             color: context.cardColor,
@@ -476,12 +480,11 @@ class ProfileFragmentState extends State<ProfileFragment> {
                         title: language.refundPolicy,
                         titleTextStyle: boldTextStyle(),
                         onTap: () {
-                          checkIfLink(
-                              context, appConfigurationStore.refundPolicy,
-                              title: language.refundPolicy);
-                        }, //un commment visible after refund policy feature is enabled
-                      ), //.visible(
-                      //rolesAndPermissionStore.refundAndCancellationPolicy),
+                          StaticContentScreen(title: language.refundPolicy)
+                              .launch(context);
+                        },
+                      ).visible(demoModeStore.isDemoMode ||
+                          rolesAndPermissionStore.refundAndCancellationPolicy),
 
                       SettingItemWidget(
                         decoration: boxDecorationDefault(
@@ -631,10 +634,8 @@ class ProfileFragmentState extends State<ProfileFragment> {
                             dialogType: DialogType.CONFIRMATION,
                           );
                         },
-                        //un commment visible after delete account feature is enabled
-                      ), //.visible(appStore.isLoggedIn),
+                      ).visible(appStore.isLoggedIn),
                       80.height,
-                      //toggle after logout feature is enabled
                       if (appStore.isLoggedIn)
                         GestureDetector(
                           onTap: () {

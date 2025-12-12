@@ -99,6 +99,19 @@ class _OTPLoginScreenState extends State<OTPLoginScreen> {
 
       appStore.setLoading(true);
 
+      // Demo Mode Logic
+      if (demoModeStore.isDemoMode) {
+        await Future.delayed(Duration(seconds: 1));
+
+        String otp = demoModeStore.generateDemoOtp();
+        toast("${language.otpCodeIsSentToYourMobileNumber} (Demo: $otp)");
+
+        appStore.setLoading(false);
+        isCodeSent = true;
+        setState(() {});
+        return;
+      }
+
       toast(language.sendingOTP);
 
       try {
@@ -156,6 +169,30 @@ class _OTPLoginScreenState extends State<OTPLoginScreen> {
       if (otpCode.validate().length >= OTP_TEXT_FIELD_LENGTH) {
         hideKeyboard(context);
         appStore.setLoading(true);
+
+        // Demo Mode Logic
+        if (demoModeStore.isDemoMode) {
+          if (demoModeStore.verifyDemoOtp(otpCode)) {
+            // Create demo user
+            demoModeStore.createDemoUserFromOtp(
+              phoneNumber: numberController.text.trim(),
+              countryCode: selectedCountry.phoneCode,
+            );
+
+            if (demoModeStore.demoUser != null) {
+              await saveUserData(demoModeStore.demoUser!);
+            }
+            await appStore.setLoginType(LOGIN_TYPE_OTP);
+
+            appStore.setLoading(false);
+            DashboardScreen().launch(context,
+                isNewTask: true, pageRouteAnimation: PageRouteAnimation.Fade);
+          } else {
+            appStore.setLoading(false);
+            toast(language.theEnteredCodeIsInvalidPleaseTryAgain);
+          }
+          return;
+        }
 
         try {
           PhoneAuthCredential credential = PhoneAuthProvider.credential(

@@ -31,10 +31,12 @@ import '../../utils/images.dart';
 
 class UserWalletBalanceScreen extends StatefulWidget {
   bool isBackScreen;
-  UserWalletBalanceScreen({Key? key, this.isBackScreen = false}) : super(key: key);
+  UserWalletBalanceScreen({Key? key, this.isBackScreen = false})
+      : super(key: key);
 
   @override
-  State<UserWalletBalanceScreen> createState() => _UserWalletBalanceScreenState();
+  State<UserWalletBalanceScreen> createState() =>
+      _UserWalletBalanceScreenState();
 }
 
 class _UserWalletBalanceScreenState extends State<UserWalletBalanceScreen> {
@@ -53,6 +55,21 @@ class _UserWalletBalanceScreenState extends State<UserWalletBalanceScreen> {
   }
 
   void init() async {
+    if (demoModeStore.isDemoMode) {
+      // Mock payment gateways
+      future = Future.value([
+        PaymentSetting(
+            id: 1, type: PAYMENT_METHOD_STRIPE, status: 1, isTest: 1),
+        PaymentSetting(id: 2, type: PAYMENT_METHOD_RAZOR, status: 1, isTest: 1),
+        PaymentSetting(
+            id: 3, type: PAYMENT_METHOD_PAYPAL, status: 1, isTest: 1),
+      ]);
+
+      // Sync app store wallet with demo wallet
+      appStore.userWalletAmount = demoModeStore.demoWalletBalance;
+      return;
+    }
+
     future = getPaymentGateways(requireCOD: false, requireWallet: false);
 
     appStore.setUserWalletAmount();
@@ -65,12 +82,45 @@ class _UserWalletBalanceScreenState extends State<UserWalletBalanceScreen> {
       return toast(language.theAmountShouldBeEntered);
     }
 
+    // Demo Mode Logic
+    if (demoModeStore.isDemoMode) {
+      appStore.setLoading(true);
+      await Future.delayed(Duration(seconds: 1));
+
+      double amount = walletAmountCont.text.toDouble();
+
+      // Add transaction to demo store
+      demoModeStore.addDemoWalletTransaction(
+        amount: amount,
+        type: 'credit',
+        description: 'Wallet Top-up via ${currentPaymentMethod!.type}',
+      );
+
+      // Update app store
+      appStore.userWalletAmount = demoModeStore.demoWalletBalance;
+
+      appStore.setLoading(false);
+
+      if (widget.isBackScreen) {
+        finish(context, true);
+      } else {
+        toast("Top up successful (Demo Mode)");
+        walletAmountCont.text = '0';
+        setState(() {});
+      }
+      return;
+    }
+
     if (currentPaymentMethod!.type == PAYMENT_METHOD_STRIPE) {
       StripeServiceNew stripeServiceNew = StripeServiceNew(
         paymentSetting: currentPaymentMethod!,
         totalAmount: walletAmountCont.text.toDouble(),
         onComplete: (p0) {
-          Map req = {"amount": walletAmountCont.text.toDouble(), "transaction_type": PAYMENT_METHOD_STRIPE, "transaction_id": p0['transaction_id']};
+          Map req = {
+            "amount": walletAmountCont.text.toDouble(),
+            "transaction_type": PAYMENT_METHOD_STRIPE,
+            "transaction_id": p0['transaction_id']
+          };
 
           walletTopUpApi(request: req);
         },
@@ -86,7 +136,11 @@ class _UserWalletBalanceScreenState extends State<UserWalletBalanceScreen> {
         totalAmount: walletAmountCont.text.toDouble(),
         onComplete: (p0) {
           log(p0);
-          Map req = {"amount": walletAmountCont.text.toDouble(), "transaction_type": PAYMENT_METHOD_RAZOR, "transaction_id": p0['orderId']};
+          Map req = {
+            "amount": walletAmountCont.text.toDouble(),
+            "transaction_type": PAYMENT_METHOD_RAZOR,
+            "transaction_id": p0['orderId']
+          };
 
           walletTopUpApi(request: req);
         },
@@ -102,7 +156,11 @@ class _UserWalletBalanceScreenState extends State<UserWalletBalanceScreen> {
         paymentSetting: currentPaymentMethod!,
         totalAmount: walletAmountCont.text.toDouble(),
         onComplete: (p0) {
-          Map req = {"amount": walletAmountCont.text.toDouble(), "transaction_type": PAYMENT_METHOD_FLUTTER_WAVE, "transaction_id": p0['transaction_id']};
+          Map req = {
+            "amount": walletAmountCont.text.toDouble(),
+            "transaction_type": PAYMENT_METHOD_FLUTTER_WAVE,
+            "transaction_id": p0['transaction_id']
+          };
 
           walletTopUpApi(request: req);
         },
@@ -114,16 +172,22 @@ class _UserWalletBalanceScreenState extends State<UserWalletBalanceScreen> {
         toast(language.cinetPayNotSupportedMessage);
         return;
       } else if (walletAmountCont.text.toDouble() < 100) {
-        return toast('${language.totalAmountShouldBeMoreThan} ${100.toPriceFormat()}');
+        return toast(
+            '${language.totalAmountShouldBeMoreThan} ${100.toPriceFormat()}');
       } else if (walletAmountCont.text.toDouble() > 1500000) {
-        return toast('${language.totalAmountShouldBeLessThan} ${1500000.toPriceFormat()}');
+        return toast(
+            '${language.totalAmountShouldBeLessThan} ${1500000.toPriceFormat()}');
       }
 
       CinetPayServicesNew cinetPayServices = CinetPayServicesNew(
         paymentSetting: currentPaymentMethod!,
         totalAmount: walletAmountCont.text.toDouble(),
         onComplete: (p0) {
-          Map req = {"amount": walletAmountCont.text.toDouble(), "transaction_type": PAYMENT_METHOD_CINETPAY, "transaction_id": p0['transaction_id']};
+          Map req = {
+            "amount": walletAmountCont.text.toDouble(),
+            "transaction_type": PAYMENT_METHOD_CINETPAY,
+            "transaction_id": p0['transaction_id']
+          };
 
           walletTopUpApi(request: req);
         },
@@ -160,7 +224,11 @@ class _UserWalletBalanceScreenState extends State<UserWalletBalanceScreen> {
         totalAmount: walletAmountCont.text.toDouble(),
         onComplete: (p0) {
           log('PayPalService onComplete: $p0');
-          Map req = {"amount": walletAmountCont.text.toDouble(), "transaction_type": PAYMENT_METHOD_PAYPAL, "transaction_id": p0['transaction_id']};
+          Map req = {
+            "amount": walletAmountCont.text.toDouble(),
+            "transaction_type": PAYMENT_METHOD_PAYPAL,
+            "transaction_id": p0['transaction_id']
+          };
           walletTopUpApi(request: req);
         },
       );
@@ -179,7 +247,11 @@ class _UserWalletBalanceScreenState extends State<UserWalletBalanceScreen> {
               bookingId: appStore.userId.validate().toInt(),
               onComplete: (res) {
                 log('RES: $res');
-                Map req = {"amount": walletAmountCont.text.toDouble(), "transaction_type": PAYMENT_METHOD_AIRTEL, "transaction_id": res['transaction_id']};
+                Map req = {
+                  "amount": walletAmountCont.text.toDouble(),
+                  "transaction_type": PAYMENT_METHOD_AIRTEL,
+                  "transaction_id": res['transaction_id']
+                };
                 walletTopUpApi(request: req);
               },
             ),
@@ -199,7 +271,11 @@ class _UserWalletBalanceScreenState extends State<UserWalletBalanceScreen> {
         bookingId: appStore.userId.validate().toInt(),
         onComplete: (res) {
           log('RES: $res');
-          Map req = {"amount": walletAmountCont.text.toDouble(), "transaction_type": PAYMENT_METHOD_PAYSTACK, "transaction_id": res['transaction_id']};
+          Map req = {
+            "amount": walletAmountCont.text.toDouble(),
+            "transaction_type": PAYMENT_METHOD_PAYSTACK,
+            "transaction_id": res['transaction_id']
+          };
           walletTopUpApi(request: req);
         },
       );
@@ -220,7 +296,11 @@ class _UserWalletBalanceScreenState extends State<UserWalletBalanceScreen> {
         },
         onComplete: (res) {
           log('RES: $res');
-          Map req = {"amount": walletAmountCont.text.toDouble(), "transaction_type": PAYMENT_METHOD_MIDTRANS, "transaction_id": res['transaction_id']};
+          Map req = {
+            "amount": walletAmountCont.text.toDouble(),
+            "transaction_type": PAYMENT_METHOD_MIDTRANS,
+            "transaction_id": res['transaction_id']
+          };
           walletTopUpApi(request: req);
         },
       );
@@ -236,7 +316,11 @@ class _UserWalletBalanceScreenState extends State<UserWalletBalanceScreen> {
         totalAmount: walletAmountCont.text.toDouble(),
         onComplete: (res) {
           log('RES: $res');
-          Map req = {"amount": walletAmountCont.text.toDouble(), "transaction_type": PAYMENT_METHOD_PHONEPE, "transaction_id": res['transaction_id']};
+          Map req = {
+            "amount": walletAmountCont.text.toDouble(),
+            "transaction_type": PAYMENT_METHOD_PHONEPE,
+            "transaction_id": res['transaction_id']
+          };
           walletTopUpApi(request: req);
         },
       );
@@ -304,8 +388,16 @@ class _UserWalletBalanceScreenState extends State<UserWalletBalanceScreen> {
                     color: context.cardColor,
                     child: Row(
                       children: [
-                        Text(language.balance, style: boldTextStyle(color: context.primaryColor)).expand(),
-                        Observer(builder: (context) => PriceWidget(price: appStore.userWalletAmount, size: 16, isBoldText: true, color: Colors.green)),
+                        Text(language.balance,
+                                style:
+                                    boldTextStyle(color: context.primaryColor))
+                            .expand(),
+                        Observer(
+                            builder: (context) => PriceWidget(
+                                price: appStore.userWalletAmount,
+                                size: 16,
+                                isBoldText: true,
+                                color: Colors.green)),
                       ],
                     ),
                   ),
@@ -313,9 +405,11 @@ class _UserWalletBalanceScreenState extends State<UserWalletBalanceScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       16.height,
-                      Text(language.topUpWallet, style: boldTextStyle(size: LABEL_TEXT_SIZE)),
+                      Text(language.topUpWallet,
+                          style: boldTextStyle(size: LABEL_TEXT_SIZE)),
                       8.height,
-                      Text(language.topUpAmountQuestion, style: secondaryTextStyle()),
+                      Text(language.topUpAmountQuestion,
+                          style: secondaryTextStyle()),
                       Container(
                         width: context.width(),
                         margin: const EdgeInsets.symmetric(vertical: 16),
@@ -332,17 +426,28 @@ class _UserWalletBalanceScreenState extends State<UserWalletBalanceScreen> {
                               controller: walletAmountCont,
                               focus: walletAmountFocus,
                               textStyle: primaryTextStyle(color: Colors.white),
-                              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                              inputFormatters: [
+                                FilteringTextInputFormatter.digitsOnly
+                              ],
                               onTap: () {
                                 if (walletAmountCont.text == '0') {
-                                  walletAmountCont.selection = TextSelection(baseOffset: 0, extentOffset: walletAmountCont.text.length);
+                                  walletAmountCont.selection = TextSelection(
+                                      baseOffset: 0,
+                                      extentOffset:
+                                          walletAmountCont.text.length);
                                 }
                               },
                               decoration: InputDecoration(
-                                prefixText: isCurrencyPositionLeft ? appConfigurationStore.currencySymbol + " " : '',
-                                prefixStyle: primaryTextStyle(color: Colors.white),
-                                suffixText: isCurrencyPositionRight ? appConfigurationStore.currencySymbol + " " : '',
-                                suffixStyle: primaryTextStyle(color: Colors.white),
+                                prefixText: isCurrencyPositionLeft
+                                    ? appConfigurationStore.currencySymbol + " "
+                                    : '',
+                                prefixStyle:
+                                    primaryTextStyle(color: Colors.white),
+                                suffixText: isCurrencyPositionRight
+                                    ? appConfigurationStore.currencySymbol + " "
+                                    : '',
+                                suffixStyle:
+                                    primaryTextStyle(color: Colors.white),
                               ),
                               onChanged: (p0) {
                                 //
@@ -353,20 +458,38 @@ class _UserWalletBalanceScreenState extends State<UserWalletBalanceScreen> {
                               spacing: 30,
                               runSpacing: 12,
                               alignment: WrapAlignment.center,
-                              children: List.generate(defaultAmounts.length, (index) {
+                              children:
+                                  List.generate(defaultAmounts.length, (index) {
                                 return Container(
-                                  padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 8, horizontal: 16),
                                   decoration: boxDecorationDefault(
-                                    color: defaultAmounts[index].toString() == walletAmountCont.text ? white : Colors.white12,
+                                    color: defaultAmounts[index].toString() ==
+                                            walletAmountCont.text
+                                        ? white
+                                        : Colors.white12,
                                     borderRadius: radius(8),
-                                    border: Border.all(color: defaultAmounts[index].toString() == walletAmountCont.text ? context.primaryColor : Colors.white12),
+                                    border: Border.all(
+                                        color:
+                                            defaultAmounts[index].toString() ==
+                                                    walletAmountCont.text
+                                                ? context.primaryColor
+                                                : Colors.white12),
                                   ),
                                   child: Text(
-                                    defaultAmounts[index].toString().formatNumberWithComma(),
-                                    style: primaryTextStyle(color: defaultAmounts[index].toString() == walletAmountCont.text ? context.primaryColor : Colors.white),
+                                    defaultAmounts[index]
+                                        .toString()
+                                        .formatNumberWithComma(),
+                                    style: primaryTextStyle(
+                                        color:
+                                            defaultAmounts[index].toString() ==
+                                                    walletAmountCont.text
+                                                ? context.primaryColor
+                                                : Colors.white),
                                   ),
                                 ).onTap(() {
-                                  walletAmountCont.text = defaultAmounts[index].toString();
+                                  walletAmountCont.text =
+                                      defaultAmounts[index].toString();
                                   setState(() {});
                                 });
                               }),
@@ -375,9 +498,11 @@ class _UserWalletBalanceScreenState extends State<UserWalletBalanceScreen> {
                         ),
                       ),
                       16.height,
-                      Text(language.paymentMethod, style: boldTextStyle(size: LABEL_TEXT_SIZE)),
+                      Text(language.paymentMethod,
+                          style: boldTextStyle(size: LABEL_TEXT_SIZE)),
                       4.height,
-                      Text(language.selectYourPaymentMethodToAddBalance, style: secondaryTextStyle()),
+                      Text(language.selectYourPaymentMethodToAddBalance,
+                          style: secondaryTextStyle()),
                       4.height,
                       SnapHelperWidget<List<PaymentSetting>>(
                         future: future,
@@ -385,7 +510,8 @@ class _UserWalletBalanceScreenState extends State<UserWalletBalanceScreen> {
                           return AnimatedWrap(
                             itemCount: list.length,
                             listAnimationType: ListAnimationType.FadeIn,
-                            fadeInConfiguration: FadeInConfiguration(duration: 2.seconds),
+                            fadeInConfiguration:
+                                FadeInConfiguration(duration: 2.seconds),
                             spacing: 8,
                             runSpacing: 16,
                             itemBuilder: (context, index) {
@@ -395,23 +521,30 @@ class _UserWalletBalanceScreenState extends State<UserWalletBalanceScreen> {
                                   imageWidget: const EmptyStateWidget(),
                                 );
                               PaymentSetting value = list[index];
-                              if (value.status.validate() == 0) return const Offstage();
-                              String icon = getPaymentMethodIcon(value.type.validate());
+                              if (value.status.validate() == 0)
+                                return const Offstage();
+                              String icon =
+                                  getPaymentMethodIcon(value.type.validate());
 
                               return Stack(
                                 children: [
                                   Container(
-                                    padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 8, horizontal: 8),
                                     child: Container(
                                       width: context.width() * 0.240,
                                       height: 60,
-                                      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 8, horizontal: 8),
                                       decoration: boxDecorationDefault(
                                         borderRadius: radius(8),
                                         border: Border.all(color: primaryColor),
                                       ),
                                       alignment: Alignment.center,
-                                      child: icon.isNotEmpty ? Image.asset(icon) : Text(value.type.validate(), style: primaryTextStyle()),
+                                      child: icon.isNotEmpty
+                                          ? Image.asset(icon)
+                                          : Text(value.type.validate(),
+                                              style: primaryTextStyle()),
                                     ).onTap(() {
                                       currentPaymentMethod = value;
 
@@ -422,9 +555,15 @@ class _UserWalletBalanceScreenState extends State<UserWalletBalanceScreen> {
                                     top: 0,
                                     right: 0,
                                     child: Container(
-                                      padding: currentPaymentMethod == value ? const EdgeInsets.all(2) : EdgeInsets.zero,
-                                      decoration: boxDecorationDefault(color: context.primaryColor),
-                                      child: currentPaymentMethod == value ? const Icon(Icons.done, size: 16, color: Colors.white) : const Offstage(),
+                                      padding: currentPaymentMethod == value
+                                          ? const EdgeInsets.all(2)
+                                          : EdgeInsets.zero,
+                                      decoration: boxDecorationDefault(
+                                          color: context.primaryColor),
+                                      child: currentPaymentMethod == value
+                                          ? const Icon(Icons.done,
+                                              size: 16, color: Colors.white)
+                                          : const Offstage(),
                                     ),
                                   ),
                                 ],

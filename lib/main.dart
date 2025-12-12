@@ -12,19 +12,13 @@ import 'package:booking_system_flutter/model/service_data_model.dart';
 import 'package:booking_system_flutter/model/service_detail_response.dart';
 import 'package:booking_system_flutter/model/user_data_model.dart';
 import 'package:booking_system_flutter/model/user_wallet_history.dart';
-import 'package:booking_system_flutter/screens/auth/edit_profile_screen.dart';
-import 'package:booking_system_flutter/screens/auth/otp_login_screen.dart';
-import 'package:booking_system_flutter/screens/auth/sign_in_screen.dart';
+
 import 'package:booking_system_flutter/screens/blog/model/blog_detail_response.dart';
 import 'package:booking_system_flutter/screens/blog/model/blog_response_model.dart';
-import 'package:booking_system_flutter/screens/dashboard/component/wallet_history.dart';
-import 'package:booking_system_flutter/screens/dashboard/dashboard_screen.dart';
-import 'package:booking_system_flutter/screens/dashboard/fragment/profile_fragment.dart';
+
 import 'package:booking_system_flutter/screens/helpDesk/model/help_desk_response.dart';
 import 'package:booking_system_flutter/screens/splash_screen.dart';
-import 'package:booking_system_flutter/screens/review/rating_view_all_screen.dart';
-import 'package:booking_system_flutter/screens/setting_screen.dart';
-import 'package:booking_system_flutter/screens/withdraw/wallet_request.dart';
+
 import 'package:booking_system_flutter/services/auth_services.dart';
 import 'package:booking_system_flutter/services/chat_services.dart';
 import 'package:booking_system_flutter/services/user_services.dart';
@@ -34,6 +28,7 @@ import 'package:booking_system_flutter/store/filter_store.dart';
 import 'package:booking_system_flutter/store/roles_and_permission_store.dart';
 import 'package:booking_system_flutter/utils/colors.dart';
 import 'package:booking_system_flutter/utils/common.dart';
+import 'package:booking_system_flutter/store/demo_mode_store.dart';
 import 'package:booking_system_flutter/utils/configs.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
 import 'package:booking_system_flutter/utils/firebase_messaging_utils.dart';
@@ -44,7 +39,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:geolocator/geolocator.dart';
+
 import 'package:nb_utils/nb_utils.dart';
 
 import 'model/bank_list_response.dart';
@@ -72,6 +67,9 @@ RolesAndPermissionStore rolesAndPermissionStore = RolesAndPermissionStore();
 
 //region Global Variables
 BaseLanguage language = LanguageEn();
+
+DemoModeStore demoModeStore = DemoModeStore();
+
 //endregion
 
 //region Services

@@ -24,7 +24,8 @@ class DummyDataHelper {
         id: 1,
         title: "Professional Home Services",
         description: "Get the best services for your home",
-        sliderImage: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=800",
+        sliderImage:
+            "https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=800",
         status: 1,
         type: "service",
         typeId: 1,
@@ -34,7 +35,8 @@ class DummyDataHelper {
         id: 2,
         title: "Expert Handyman Services",
         description: "Quality repairs and maintenance",
-        sliderImage: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800",
+        sliderImage:
+            "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800",
         status: 1,
         type: "service",
         typeId: 2,
@@ -44,7 +46,8 @@ class DummyDataHelper {
         id: 3,
         title: "Plumbing Solutions",
         description: "Fast and reliable plumbing services",
-        sliderImage: "https://images.unsplash.com/photo-1621905251918-48416bd8575a?w=800",
+        sliderImage:
+            "https://images.unsplash.com/photo-1621905251918-48416bd8575a?w=800",
         status: 1,
         type: "service",
         typeId: 3,
@@ -59,7 +62,8 @@ class DummyDataHelper {
         id: 1,
         title: "Special Offer",
         description: "Get 20% off on all services",
-        image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800",
+        image:
+            "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800",
         bannerType: "service",
         serviceId: 1,
         serviceName: "Home Cleaning",
@@ -580,7 +584,9 @@ class DummyDataHelper {
         totalRating: 5.0,
         totalReview: 200,
         type: "fixed",
-        serviceAttachments: [],
+        serviceAttachments: [
+          'https://res.cloudinary.com/daqvdhmw8/image/upload/v1765533642/image_brqkx5.png'
+        ],
         isFavourite: 0,
       ),
       ServiceData(
@@ -600,7 +606,9 @@ class DummyDataHelper {
         totalRating: 4.9,
         totalReview: 178,
         type: "fixed",
-        serviceAttachments: [],
+        serviceAttachments: [
+          'https://res.cloudinary.com/daqvdhmw8/image/upload/v1765533642/image_brqkx5.png'
+        ],
         isFavourite: 0,
       ),
       ServiceData(
@@ -620,7 +628,9 @@ class DummyDataHelper {
         totalRating: 4.8,
         totalReview: 156,
         type: "fixed",
-        serviceAttachments: [],
+        serviceAttachments: [
+          'https://res.cloudinary.com/daqvdhmw8/image/upload/v1765533642/image_brqkx5.png'
+        ],
         isFavourite: 0,
       ),
       ServiceData(
@@ -640,7 +650,9 @@ class DummyDataHelper {
         totalRating: 4.7,
         totalReview: 98,
         type: "fixed",
-        serviceAttachments: [],
+        serviceAttachments: [
+          'https://res.cloudinary.com/daqvdhmw8/image/upload/v1765533642/image_brqkx5.png'
+        ],
         isFavourite: 0,
       ),
     ];
@@ -662,7 +674,8 @@ class DummyDataHelper {
         ],
         providerId: 1,
         providerName: "John Smith",
-        providerImage: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200",
+        providerImage:
+            "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200",
         serviceCount: 25,
         providerServiceRating: 4.8,
         isFavourite: 0,
@@ -685,7 +698,8 @@ class DummyDataHelper {
         ],
         providerId: 2,
         providerName: "Sarah Johnson",
-        providerImage: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200",
+        providerImage:
+            "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200",
         serviceCount: 18,
         providerServiceRating: 4.9,
         isFavourite: 0,
@@ -708,7 +722,8 @@ class DummyDataHelper {
         ],
         providerId: 3,
         providerName: "Mike Davis",
-        providerImage: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200",
+        providerImage:
+            "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200",
         serviceCount: 30,
         providerServiceRating: 4.7,
         isFavourite: 0,
@@ -720,4 +735,3 @@ class DummyDataHelper {
     ];
   }
 }
-

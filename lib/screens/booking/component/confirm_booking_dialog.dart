@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:booking_system_flutter/model/booking_data_model.dart';
 import '../../../model/booking_amount_model.dart';
 import '../../../model/shop_model.dart';
 import '../../../utils/app_configuration.dart';
@@ -49,13 +50,72 @@ class _ConfirmBookingDialogState extends State<ConfirmBookingDialog> {
 
   bool isSelected = false;
 
-  // TODO: Set to false when backend is ready
-  static const bool _useDummyData = true;
-
   Future<void> bookServices() async {
-    // Use dummy data for UI testing
-    if (_useDummyData) {
-      await _bookServicesWithDummyData();
+    // Demo Mode logic
+    if (demoModeStore.isDemoMode) {
+      appStore.setLoading(true);
+
+      // Simulate API delay
+      await Future.delayed(Duration(seconds: 1));
+
+      // Create mock booking data to add to store
+      final bookingId = DateTime.now().millisecondsSinceEpoch % 100000;
+
+      final booking = BookingData(
+        id: bookingId,
+        serviceName: widget.data.serviceDetail?.name,
+        serviceId: widget.data.serviceDetail?.id,
+        customerId: appStore.userId,
+        customerName: appStore.userFullName,
+        providerId: widget.data.provider?.id,
+        providerName: widget.data.provider?.displayName,
+        providerImage: widget.data.provider?.profileImage,
+        status: BookingStatusKeys.pending,
+        statusLabel: "Pending",
+        date:
+            widget.data.serviceDetail?.bookingDate ?? DateTime.now().toString(),
+        bookingSlot: widget.data.serviceDetail?.bookingSlot,
+        address: widget.data.serviceDetail?.address,
+        description: widget.data.serviceDetail?.bookingDescription,
+        type: widget.data.serviceDetail?.type,
+        amount: widget.data.serviceDetail?.price,
+        totalAmount: widget.bookingPrice,
+        taxes: widget.data.taxes,
+        discount: widget.data.serviceDetail?.discount,
+        couponData: widget.couponCode != null
+            ? CouponData(code: widget.couponCode)
+            : null,
+        finalTotalServicePrice:
+            widget.bookingAmountModel?.finalTotalServicePrice,
+        finalTotalTax: widget.bookingAmountModel?.finalTotalTax,
+        finalSubTotal: widget.bookingAmountModel?.finalSubTotal,
+        finalDiscountAmount: widget.bookingAmountModel?.finalDiscountAmount,
+        finalCouponDiscountAmount:
+            widget.bookingAmountModel?.finalCouponDiscountAmount,
+        quantity: widget.qty,
+        serviceAttachments: widget.data.serviceDetail?.attachments,
+        handyman: [],
+      );
+
+      demoModeStore.addDemoBooking(booking);
+
+      // Show success
+      appStore.setLoading(false);
+      finish(context);
+
+      showInDialog(
+        context,
+        barrierDismissible: false,
+        builder: (BuildContext context) => BookingConfirmationDialog(
+          data: widget.data,
+          bookingId: bookingId,
+          bookingPrice: widget.bookingPrice,
+          selectedPackage: widget.selectedPackage,
+          bookingDetailResponse: null,
+        ),
+        backgroundColor: transparentColor,
+        contentPadding: EdgeInsets.zero,
+      );
       return;
     }
 
@@ -194,32 +254,6 @@ class _ConfirmBookingDialogState extends State<ConfirmBookingDialog> {
       appStore.setLoading(false);
       toast(e.toString(), print: true);
     });
-  }
-
-  // Dummy booking for UI testing
-  Future<void> _bookServicesWithDummyData() async {
-    appStore.setLoading(true);
-
-    // Simulate API delay
-    await Future.delayed(Duration(seconds: 1));
-
-    appStore.setLoading(false);
-    finish(context);
-
-    // Show success confirmation dialog with dummy booking ID
-    showInDialog(
-      context,
-      barrierDismissible: false,
-      builder: (BuildContext context) => BookingConfirmationDialog(
-        data: widget.data,
-        bookingId: 12345, // Dummy booking ID
-        bookingPrice: widget.bookingPrice,
-        selectedPackage: widget.selectedPackage,
-        bookingDetailResponse: null,
-      ),
-      backgroundColor: transparentColor,
-      contentPadding: EdgeInsets.zero,
-    );
   }
 
   @override

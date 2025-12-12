@@ -592,7 +592,8 @@ class _BookingFragmentState extends State<BookingFragment> {
                       bottom: 60, top: 16, right: 16, left: 16),
                   itemCount: list.length,
                   shrinkWrap: true,
-                  disposeScrollController: false, // Don't auto-dispose, we'll manage it manually
+                  disposeScrollController:
+                      false, // Don't auto-dispose, we'll manage it manually
                   listAnimationType: ListAnimationType.FadeIn,
                   fadeInConfiguration: FadeInConfiguration(duration: 2.seconds),
                   slideConfiguration: SlideConfiguration(verticalOffset: 400),
@@ -608,7 +609,8 @@ class _BookingFragmentState extends State<BookingFragment> {
                       onTap: () {
                         BookingDetailScreen(
                           bookingId: data.id.validate(),
-                          bookingData: data, // Pass the booking data to detail screen
+                          bookingData:
+                              data, // Pass the booking data to detail screen
                         ).launch(context);
                       },
                       child: BookingItemComponent(bookingData: data),

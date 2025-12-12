@@ -10,6 +10,7 @@ import 'package:nb_utils/nb_utils.dart';
 
 import '../component/loader_widget.dart';
 import '../network/rest_apis.dart';
+import 'package:booking_system_flutter/screens/auth/sign_in_screen.dart';
 import 'walk_through_screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -48,9 +49,32 @@ class _SplashScreenState extends State<SplashScreen> {
     });
 
     appStore.setLoading(false);
-    if (!getBoolAsync(IS_APP_CONFIGURATION_SYNCED_AT_LEAST_ONCE)) {
-      appNotSynced = true;
-      setState(() {});
+    // Demo mode bypass for configuration sync
+    if (demoModeStore.isDemoMode ||
+        !getBoolAsync(IS_APP_CONFIGURATION_SYNCED_AT_LEAST_ONCE)) {
+      if (!demoModeStore.isDemoMode) {
+        appNotSynced = true;
+        setState(() {});
+      } else {
+        // In demo mode, proceed even if not synced
+        appNotSynced = false;
+
+        int themeModeIndex =
+            getIntAsync(THEME_MODE_INDEX, defaultValue: THEME_MODE_SYSTEM);
+        if (themeModeIndex == THEME_MODE_SYSTEM) {
+          appStore.setDarkMode(
+              MediaQuery.of(context).platformBrightness == Brightness.dark);
+        }
+
+        if (appStore.isLoggedIn) {
+          DashboardScreen().launch(context,
+              isNewTask: true, pageRouteAnimation: PageRouteAnimation.Fade);
+        } else {
+          SignInScreen().launch(context,
+              isNewTask: true, pageRouteAnimation: PageRouteAnimation.Fade);
+        }
+        return;
+      }
     } else {
       int themeModeIndex =
           getIntAsync(THEME_MODE_INDEX, defaultValue: THEME_MODE_SYSTEM);

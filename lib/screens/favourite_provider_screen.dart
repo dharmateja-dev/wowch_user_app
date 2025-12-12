@@ -58,7 +58,8 @@ class _FavouriteProviderScreenState extends State<FavouriteProviderScreen> {
         firstName: 'Jorge',
         lastName: 'Perez',
         displayName: 'Jorge Perez',
-        profileImage: 'https://via.placeholder.com/300/4CAF50/FFFFFF?text=JP',
+        profileImage:
+            'https://res.cloudinary.com/daqvdhmw8/image/upload/v1765533347/Rectangle_303_zaodmv.png',
         isFavourite: 1, // First one is favorited (filled green heart)
         email: 'jorge.perez1@example.com',
         contactNumber: '+1234567890',
@@ -71,7 +72,8 @@ class _FavouriteProviderScreenState extends State<FavouriteProviderScreen> {
         firstName: 'Jorge',
         lastName: 'Perez',
         displayName: 'Jorge Perez',
-        profileImage: 'https://via.placeholder.com/300/4CAF50/FFFFFF?text=JP',
+        profileImage:
+            'https://res.cloudinary.com/daqvdhmw8/image/upload/v1765533347/Rectangle_303_zaodmv.png',
         isFavourite: 0, // Outlined heart
         email: 'jorge.perez2@example.com',
         contactNumber: '+1234567891',
@@ -84,7 +86,8 @@ class _FavouriteProviderScreenState extends State<FavouriteProviderScreen> {
         firstName: 'Jorge',
         lastName: 'Perez',
         displayName: 'Jorge Perez',
-        profileImage: 'https://via.placeholder.com/300/4CAF50/FFFFFF?text=JP',
+        profileImage:
+            'https://res.cloudinary.com/daqvdhmw8/image/upload/v1765533347/Rectangle_303_zaodmv.png',
         isFavourite: 0,
         email: 'jorge.perez3@example.com',
         contactNumber: '+1234567892',
@@ -97,7 +100,8 @@ class _FavouriteProviderScreenState extends State<FavouriteProviderScreen> {
         firstName: 'Jorge',
         lastName: 'Perez',
         displayName: 'Jorge Perez',
-        profileImage: 'https://via.placeholder.com/300/4CAF50/FFFFFF?text=JP',
+        profileImage:
+            'https://res.cloudinary.com/daqvdhmw8/image/upload/v1765533347/Rectangle_303_zaodmv.png',
         isFavourite: 0,
         email: 'jorge.perez4@example.com',
         contactNumber: '+1234567893',
@@ -110,7 +114,8 @@ class _FavouriteProviderScreenState extends State<FavouriteProviderScreen> {
         firstName: 'Jorge',
         lastName: 'Perez',
         displayName: 'Jorge Perez',
-        profileImage: 'https://via.placeholder.com/300/4CAF50/FFFFFF?text=JP',
+        profileImage:
+            'https://res.cloudinary.com/daqvdhmw8/image/upload/v1765533347/Rectangle_303_zaodmv.png',
         isFavourite: 0,
         email: 'jorge.perez5@example.com',
         contactNumber: '+1234567894',
@@ -123,7 +128,8 @@ class _FavouriteProviderScreenState extends State<FavouriteProviderScreen> {
         firstName: 'Jorge',
         lastName: 'Perez',
         displayName: 'Jorge Perez',
-        profileImage: 'https://via.placeholder.com/300/4CAF50/FFFFFF?text=JP',
+        profileImage:
+            'https://res.cloudinary.com/daqvdhmw8/image/upload/v1765533347/Rectangle_303_zaodmv.png',
         isFavourite: 0,
         email: 'jorge.perez6@example.com',
         contactNumber: '+1234567895',

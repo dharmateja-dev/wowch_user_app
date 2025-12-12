@@ -70,9 +70,6 @@ class BookingDetailScreen extends StatefulWidget {
 
 class _BookingDetailScreenState extends State<BookingDetailScreen>
     with WidgetsBindingObserver {
-  // TODO: Set to false when backend is ready
-  static const bool _useDummyData = true;
-
   Future<BookingDetailResponse>? future;
   bool isSentInvoiceOnEmail = false;
   UpdateLocationResponse? providerLocation;
@@ -96,8 +93,8 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
   void init({isLoading = true}) async {
     appStore.setLoading(isLoading);
 
-    // Use dummy data for UI testing
-    if (_useDummyData) {
+    // Demo Mode Logic
+    if (demoModeStore.isDemoMode) {
       // Initialize booking status from passed data
       if (widget.bookingData != null) {
         bookingStatus = widget.bookingData!.status ?? "";
@@ -441,34 +438,46 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
     await Future.delayed(Duration(milliseconds: 500));
 
     // Use passed booking data if available, otherwise create default
-    final bookingData = widget.bookingData ??
-        BookingData(
-          id: widget.bookingId,
-          serviceName: "Home Cleaning Service",
-          serviceId: 101,
-          customerId: appStore.userId,
-          customerName: appStore.userFullName,
-          providerId: 1,
-          providerName: "John's Cleaning Co.",
-          providerImage: "",
-          status: BookingStatusKeys.pending,
-          statusLabel: "Pending",
-          date: DateFormat(BOOKING_SAVE_FORMAT)
-              .format(DateTime.now().add(Duration(days: 1))),
-          bookingSlot: "10:00:00",
-          address: "123 Main Street, City Center, State 12345",
-          description: "Deep cleaning required for 3BHK apartment",
-          type: SERVICE_TYPE_FIXED,
-          amount: 1500,
-          totalAmount: 1650,
-          discount: 10,
-          quantity: 1,
-          paymentStatus: null,
-          paymentMethod: null,
-          bookingType: BOOKING_TYPE_SERVICE,
-          totalReview: 45,
-          totalRating: 4.5,
-        );
+    BookingData? bookingData = widget.bookingData;
+
+    // Check if in demo store
+    if (demoModeStore.isDemoMode) {
+      try {
+        final fromStore = demoModeStore.demoBookings
+            .firstWhere((b) => b.id == widget.bookingId);
+        bookingData = fromStore;
+      } catch (e) {
+        // Not found in store
+      }
+    }
+
+    bookingData ??= BookingData(
+      id: widget.bookingId,
+      serviceName: "Home Cleaning Service",
+      serviceId: 101,
+      customerId: appStore.userId,
+      customerName: appStore.userFullName,
+      providerId: 1,
+      providerName: "John's Cleaning Co.",
+      providerImage: "",
+      status: BookingStatusKeys.pending,
+      statusLabel: "Pending",
+      date: DateFormat(BOOKING_SAVE_FORMAT)
+          .format(DateTime.now().add(Duration(days: 1))),
+      bookingSlot: "10:00:00",
+      address: "123 Main Street, City Center, State 12345",
+      description: "Deep cleaning required for 3BHK apartment",
+      type: SERVICE_TYPE_FIXED,
+      amount: 1500,
+      totalAmount: 1650,
+      discount: 10,
+      quantity: 1,
+      paymentStatus: null,
+      paymentMethod: null,
+      bookingType: BOOKING_TYPE_SERVICE,
+      totalReview: 45,
+      totalRating: 4.5,
+    );
 
     // Get status-specific data
     final statusData = _generateStatusSpecificData(

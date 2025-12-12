@@ -12,6 +12,7 @@ import 'package:booking_system_flutter/utils/configs.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
 import 'package:booking_system_flutter/utils/images.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -64,6 +65,11 @@ class _SignInScreenState extends State<SignInScreen> {
       emailCont.text = DEFAULT_EMAIL;
       passwordCont.text = DEFAULT_PASS;
     }
+
+    if (demoModeStore.isDemoMode) {
+      emailCont.text = 'demouser@gmail.com';
+      passwordCont.text = '12345678';
+    }
   }
 
   //region Methods
@@ -84,6 +90,35 @@ class _SignInScreenState extends State<SignInScreen> {
     };
 
     appStore.setLoading(true);
+
+    // Demo Mode logic
+    if (demoModeStore.isDemoMode) {
+      // Simulate network delay
+      await Future.delayed(Duration(seconds: 1));
+
+      // Allow any login or check against default credentials
+      // For now, we allow any valid-looking login in demo mode
+      demoModeStore.createDemoUser(
+        firstName: 'Demo',
+        lastName: 'User',
+        email: emailCont.text.trim(),
+        password: passwordCont.text.trim(),
+      );
+
+      await setValue(USER_PASSWORD, passwordCont.text);
+      await setValue(IS_REMEMBERED, isRemember);
+      await appStore.setLoginType(LOGIN_TYPE_USER);
+
+      // Mock saving user data to preferences (using demo user)
+      if (demoModeStore.demoUser != null) {
+        await saveUserData(demoModeStore.demoUser!);
+      }
+
+      appStore.setLoading(false);
+      onLoginSuccessRedirection();
+      return;
+    }
+
     try {
       final loginResponse = await loginUser(request, isSocialLogin: false);
 
@@ -397,7 +432,13 @@ class _SignInScreenState extends State<SignInScreen> {
             color: context.scaffoldBackgroundColor,
             border: Border.all(color: grey300Color, width: 2.0),
           ),
-          child: const GoogleLogoWidget(size: 20),
+          child: CachedNetworkImage(
+            imageUrl:
+                "https://res.cloudinary.com/daqvdhmw8/image/upload/v1753412480/google_gy8mpr.png",
+            height: 20,
+            width: 20,
+            fit: BoxFit.contain,
+          ),
         ),
       ),
     );

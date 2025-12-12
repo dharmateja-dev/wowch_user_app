@@ -30,6 +30,11 @@ class _NotificationScreenState extends State<NotificationScreen> {
   }
 
   Future<void> init({Map? req}) async {
+    if (demoModeStore.isDemoMode) {
+      // Use demo notifications from store
+      future = Future.value(demoModeStore.demoNotifications);
+      return;
+    }
     future = getNotification(request: req);
   }
 
@@ -97,31 +102,41 @@ class _NotificationScreenState extends State<NotificationScreen> {
                     if (appConfigurationStore.onlinePaymentStatus) {
                       UserWalletBalanceScreen().launch(context);
                     }
-                  } else if(data.data!.notificationType.validate().contains(WITHDRAW)){
-                       const UserWalletHistoryScreen().launch(context);
-                  }else if (data.data!.notificationType.validate().contains(BOOKING) || data.data!.notificationType.validate().contains(PAYMENT_MESSAGE_STATUS)) {
-                    await BookingDetailScreen(bookingId: data.data!.id.validate()).launch(context);
+                  } else if (data.data!.notificationType
+                      .validate()
+                      .contains(WITHDRAW)) {
+                    const UserWalletHistoryScreen().launch(context);
+                  } else if (data.data!.notificationType
+                          .validate()
+                          .contains(BOOKING) ||
+                      data.data!.notificationType
+                          .validate()
+                          .contains(PAYMENT_MESSAGE_STATUS)) {
+                    await BookingDetailScreen(
+                            bookingId: data.data!.id.validate())
+                        .launch(context);
                     init();
                     setState(() {});
-                  }
-                  else if (data.data!.notificationType.validate().contains(PROVIDER_SEND_BID)) {
+                  } else if (data.data!.notificationType
+                      .validate()
+                      .contains(PROVIDER_SEND_BID)) {
                     int jobId = data.data!.jobId ?? 0;
 
-                      getPostJobDetail({PostJob.postRequestId: jobId}).then((response) {
-                        if (response.postRequestDetail != null) {
-                          MyPostDetailScreen(
-                            postJobData: response.postRequestDetail!,
-                            postRequestId: jobId,
-                            callback: () {},
-                          ).launch(context);
-                        } else {
-                          toast("Post job data not found.");
-                        }
-                      }).catchError((e) {
-                        toast(e.toString());
-                      });
-                  }
-                  else {
+                    getPostJobDetail({PostJob.postRequestId: jobId})
+                        .then((response) {
+                      if (response.postRequestDetail != null) {
+                        MyPostDetailScreen(
+                          postJobData: response.postRequestDetail!,
+                          postRequestId: jobId,
+                          callback: () {},
+                        ).launch(context);
+                      } else {
+                        toast("Post job data not found.");
+                      }
+                    }).catchError((e) {
+                      toast(e.toString());
+                    });
+                  } else {
                     //
                   }
                 },

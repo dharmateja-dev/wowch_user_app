@@ -48,7 +48,7 @@ class _AboutScreenState extends State<AboutScreen> {
         fadeInConfiguration: FadeInConfiguration(duration: 2.seconds),
         children: [
           // Illustration
-          Image.asset(about_us_page, fit: BoxFit.contain).center(),
+          Image.asset(no_conversation, fit: BoxFit.contain).center(),
           24.height,
           // App Name
           Text(
@@ -137,12 +137,10 @@ class _AboutScreenState extends State<AboutScreen> {
           30.height,
           // About text
           Text(
-            parseHtmlString(getStringAsync(SITE_DESCRIPTION)).isNotEmpty
-                ? parseHtmlString(getStringAsync(SITE_DESCRIPTION))
-                : "Welcome to ${APP_NAME}, your trusted partner for on-demand services. We connect you with skilled professionals who can help with a wide range of services including home repairs, cleaning, plumbing, electrical work, painting, and much more.\n\n"
-                    "Our mission is to make your life easier by providing quick, reliable, and professional services at your doorstep. Whether you need urgent repairs or scheduled maintenance, our network of verified service providers is ready to assist you.\n\n"
-                    "With ${APP_NAME}, booking a service is simple and convenient. Browse through our catalog of services, select your preferred time slot, and get connected with experienced professionals in your area. We ensure quality service delivery and customer satisfaction with every booking.\n\n"
-                    "Thank you for choosing ${APP_NAME} for all your service needs. We are committed to providing you with the best experience and look forward to serving you.",
+            "From among the many styles of interior design, the rustic style is one that emphasises inspiration from nature, coupled with earthy, incomplete, rough and uneven beauty. Though it may appear heavy in its original sense, rustic designs have evolved over the years to include other home styles that lend warmth, comfort, and a sense of freshness to any space.\n\n"
+            "Rustic decor can be incorporated into any part of your home, be it the living room, bedroom, balcony, kitchen and more. It is one of the most popular styles in modern homes today as it helps achieve a striking balance of authenticity and elegance.\n\n"
+            "From among the many styles of interior design, the rustic style is one that emphasises inspiration from nature, coupled with earthy, incomplete, rough and uneven beauty. Though it may appear heavy in its original sense, rustic designs have evolved over the years to include other home styles that lend warmth, comfort, and a sense of freshness to any space.\n\n"
+            "Rustic decor can be incorporated into any part of your home, be it the living room, bedroom, balcony, kitchen and more. It is one of the most popular styles in modern homes today as it helps achieve a striking balance of authenticity and elegance.",
             style: primaryTextStyle(size: 14, height: 1.5),
             textAlign: TextAlign.justify,
           ),

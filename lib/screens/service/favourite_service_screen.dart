@@ -62,7 +62,7 @@ class _FavouriteServiceScreenState extends State<FavouriteServiceScreen> {
         isFavourite: 1,
         categoryName: 'Cleaning',
         serviceAttachments: [
-          'https://via.placeholder.com/400/4CAF50/FFFFFF?text=Housekeeper'
+          'https://res.cloudinary.com/daqvdhmw8/image/upload/v1765500371/service_component_image_xuvtxo.png'
         ],
         type: SERVICE_TYPE_FIXED,
         status: 1,
@@ -79,7 +79,7 @@ class _FavouriteServiceScreenState extends State<FavouriteServiceScreen> {
         isFavourite: 1,
         categoryName: 'Cleaning',
         serviceAttachments: [
-          'https://via.placeholder.com/400/4CAF50/FFFFFF?text=Housekeeper'
+          'https://res.cloudinary.com/daqvdhmw8/image/upload/v1765500371/service_component_image_xuvtxo.png'
         ],
         type: SERVICE_TYPE_FIXED,
         status: 1,
@@ -96,7 +96,7 @@ class _FavouriteServiceScreenState extends State<FavouriteServiceScreen> {
         isFavourite: 1,
         categoryName: 'Cleaning',
         serviceAttachments: [
-          'https://via.placeholder.com/400/4CAF50/FFFFFF?text=Housekeeper'
+          'https://res.cloudinary.com/daqvdhmw8/image/upload/v1765500371/service_component_image_xuvtxo.png'
         ],
         type: SERVICE_TYPE_FIXED,
         status: 1,
@@ -113,7 +113,7 @@ class _FavouriteServiceScreenState extends State<FavouriteServiceScreen> {
         isFavourite: 1,
         categoryName: 'Cleaning',
         serviceAttachments: [
-          'https://via.placeholder.com/400/4CAF50/FFFFFF?text=Housekeeper'
+          'https://res.cloudinary.com/daqvdhmw8/image/upload/v1765500371/service_component_image_xuvtxo.png'
         ],
         type: SERVICE_TYPE_FIXED,
         status: 1,
@@ -250,7 +250,7 @@ class _FavouriteServiceScreenState extends State<FavouriteServiceScreen> {
           crossAxisCount: 2,
           crossAxisSpacing: 14,
           mainAxisSpacing: 14,
-          childAspectRatio: 0.7,
+          childAspectRatio: 0.69,
         ),
         itemCount: dummyServices.length,
         physics: const AlwaysScrollableScrollPhysics(),
