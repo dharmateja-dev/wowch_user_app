@@ -14,6 +14,7 @@ import 'package:nb_utils/nb_utils.dart';
 import '../../component/base_scaffold_widget.dart';
 import '../../component/cached_image_widget.dart';
 import '../../component/empty_error_state_widget.dart';
+import 'user_chat_screen.dart';
 
 // Set this to true to show dummy data for UI testing
 const bool USE_DUMMY_DATA = true;
@@ -239,8 +240,12 @@ class _DummyUserItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        // Navigate to chat screen if needed
-        // UserChatScreen(receiverUser: userData).launch(context, pageRouteAnimation: PageRouteAnimation.Fade, duration: 300.milliseconds);
+        // Navigate to chat screen with dummy user data
+        UserChatScreen(receiverUser: userData).launch(
+          context,
+          pageRouteAnimation: PageRouteAnimation.Fade,
+          duration: 300.milliseconds,
+        );
       },
       child: Container(
         padding: const EdgeInsets.all(16),

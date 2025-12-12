@@ -31,7 +31,6 @@ import 'package:booking_system_flutter/screens/booking/shimmer/booking_detail_sh
 import 'package:booking_system_flutter/screens/booking/track_location.dart';
 import 'package:booking_system_flutter/screens/payment/payment_screen.dart';
 import 'package:booking_system_flutter/screens/review/components/review_widget.dart';
-import 'package:booking_system_flutter/screens/review/rating_view_all_screen.dart';
 import 'package:booking_system_flutter/screens/service/service_detail_screen.dart';
 import 'package:booking_system_flutter/screens/shop/shop_detail_screen.dart';
 import 'package:booking_system_flutter/utils/booking_calculations_logic.dart';
@@ -184,20 +183,26 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
         id: 1,
         firstName: "John",
         lastName: "Smith",
+        displayName: "John Smith", // Required for BookingDetailProviderWidget
         email: "john.smith@example.com",
         contactNumber: "+1234567890",
-        profileImage: "",
+        profileImage:
+            "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200",
         address: "456 Provider Street, Business District",
         isVerifyProvider: 1,
+        providersServiceRating: 4.5, // Required for star rating display
       ),
       handymanData: [
         UserData(
           id: 2,
           firstName: "Mike",
           lastName: "Johnson",
+          displayName: "Mike Johnson", // Required for display
           email: "mike.johnson@example.com",
           contactNumber: "+0987654321",
-          profileImage: "",
+          profileImage:
+              "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200",
+          handymanRating: 4.2, // Required for star rating display
         ),
       ],
       customer: UserData(
@@ -287,106 +292,44 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
   Widget _completeMessage({required BookingDetailResponse snap}) {
     if (snap.bookingDetail!.status == BookingStatusKeys.complete &&
         snap.customerReview == null)
-      return Container(
-        padding: const EdgeInsets.all(14),
-        width: context.width(),
-        decoration: BoxDecoration(
-          color: payment_message_status.withValues(alpha: 0.2),
-          border: Border.all(color: gold, width: 0.5),
-        ),
-        child: Row(
-          children: [
-            Container(
-              height: 50,
-              width: 50,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(40),
-                color: gold,
-              ),
-              child: Center(
-                child: Image.asset(
-                  ic_star1,
-                  height: 35,
-                  width: 35,
-                ),
-              ),
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "You Haven't Rated Yet",
+            style: boldTextStyle(size: 16),
+          ),
+          12.height,
+          SizedBox(
+            width: double.infinity,
+            child: AppButton(
+              text: 'Rate Now',
+              textStyle: boldTextStyle(color: Colors.white),
+              color: context.primaryColor,
+              padding: EdgeInsets.symmetric(vertical: 12),
+              onTap: () {
+                showInDialog(
+                  context,
+                  contentPadding: EdgeInsets.zero,
+                  builder: (p0) {
+                    return AddReviewDialog(
+                      serviceId: snap.bookingDetail!.serviceId.validate(),
+                      bookingId: snap.bookingDetail!.id.validate(),
+                    );
+                  },
+                ).then((value) {
+                  if (value) {
+                    init();
+                    setState(() {});
+                  }
+                }).catchError((e) {
+                  log(e.toString());
+                });
+              },
             ),
-            16.width,
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Text(language.rateYourExperience, style: boldTextStyle()),
-                    const Spacer(),
-                    GestureDetector(
-                      onTap: () {
-                        showInDialog(
-                          context,
-                          contentPadding: EdgeInsets.zero,
-                          builder: (p0) {
-                            return AddReviewDialog(
-                              serviceId:
-                                  snap.bookingDetail!.serviceId.validate(),
-                              bookingId: snap.bookingDetail!.id.validate(),
-                            );
-                          },
-                        ).then((value) {
-                          if (value) {
-                            init();
-                            setState(() {});
-                          }
-                        }).catchError((e) {
-                          log(e.toString());
-                        });
-                      },
-                      child: Text(
-                        language.btnRate,
-                        style: TextStyle(
-                          color: primaryColor,
-                          decoration: TextDecoration.underline,
-                          decorationColor: primaryColor,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                8.height,
-                Text(
-                  language.weValueYourFeedback,
-                  style: boldTextStyle(color: textSecondaryColor, size: 12),
-                ),
-              ],
-            ).expand(),
-          ],
-        ),
-      );
-
-    return const SizedBox();
-  }
-
-  Widget _pendingMessage({required BookingDetailResponse snap}) {
-    if (snap.bookingDetail!.status == BookingStatusKeys.pending)
-      return Container(
-        padding: const EdgeInsets.only(top: 14, left: 14, bottom: 14),
-        color: cancellationsBgColor,
-        width: context.width(),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            if (snap.bookingDetail!.status ==
-                    BookingStatusKeys.waitingAdvancedPayment &&
-                (snap.service != null && snap.service!.isAdvancePayment) &&
-                (snap.bookingDetail!.paymentStatus == null ||
-                    snap.bookingDetail!.paymentStatus != PAYMENT_STATUS_PAID))
-              Text(language.advancePaymentMessage,
-                  style: boldTextStyle(color: redColor, size: 12))
-            else
-              Text(language.lblWaitingForProviderApproval,
-                  style: boldTextStyle(color: redColor, size: 12)),
-          ],
-        ),
+          ),
+          24.height,
+        ],
       );
 
     return const SizedBox();
@@ -1837,7 +1780,10 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
   Widget _cancelButton(BookingDetailResponse bookingResponse) => AppButton(
         text: language.lblCancelBooking,
         textColor: Colors.white,
-        color: primaryColor,
+        color: cancelled,
+        shapeBorder: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
         onTap: () => _handleCancelClick(
           status: bookingResponse,
           isDurationMode: checkTimeDifference(
@@ -1850,7 +1796,10 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
   Widget _startButton(BookingDetailResponse bookingResponse) => AppButton(
         text: language.lblStart,
         textColor: Colors.white,
-        color: Colors.green,
+        color: primaryColor,
+        shapeBorder: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
         onTap: () => _handleStartClick(status: bookingResponse),
       );
 
@@ -1861,17 +1810,23 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
               text: language.lblHold,
               textColor: Colors.white,
               color: hold,
+              shapeBorder: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
               onTap: () => _handleHoldClick(status: bookingResponse),
             ).expand(),
-          if (!(bookingResponse.service?.isOnlineService ?? true)) 16.width,
+          if (!(bookingResponse.service?.isOnlineService ?? true)) 12.width,
           AppButton(
             text: language.done,
             textColor: Colors.white,
             color: primaryColor,
+            shapeBorder: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
             onTap: () => _handleDoneClick(status: bookingResponse),
           ).expand(),
         ],
-      ).paddingOnly(bottom: 16);
+      );
 
   Widget _resumeAndCancelButtons(BookingDetailResponse bookingResponse) => Row(
         children: [
@@ -1879,13 +1834,19 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
             text: language.lblResume,
             textColor: Colors.white,
             color: primaryColor,
+            shapeBorder: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
             onTap: () => _handleResumeClick(status: bookingResponse),
           ).expand(),
-          16.width,
+          12.width,
           AppButton(
             text: language.lblCancel,
             textColor: Colors.white,
             color: cancelled,
+            shapeBorder: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
             onTap: () => _handleCancelClick(
               status: bookingResponse,
               isDurationMode: checkTimeDifference(
@@ -1895,14 +1856,25 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
             ),
           ).expand(),
         ],
-      ).paddingOnly(bottom: 16);
+      );
 
   Widget _waitingResponseMessage() => Container(
         width: context.width(),
         padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(color: context.cardColor),
-        child: Text(language.lblWaitingForResponse, style: boldTextStyle())
-            .center(),
+        decoration: BoxDecoration(
+          color: pendingApprovalColor.withValues(alpha: 0.15),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.access_time_rounded,
+                color: pendingApprovalColor, size: 20),
+            8.width,
+            Text(language.lblWaitingForResponse,
+                style: boldTextStyle(color: pendingApprovalColor)),
+          ],
+        ),
       );
 
   Widget _payNowOrAdvanceButton(
@@ -1913,7 +1885,10 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
             ? language.lblPayNow
             : language.payAdvance,
         textColor: Colors.white,
-        color: Colors.green,
+        color: completed,
+        shapeBorder: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
         onTap: () =>
             PaymentScreen(bookings: bookingResponse, isForAdvancePayment: true)
                 .launch(context),
@@ -1922,7 +1897,10 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
   Widget _payNowButton(BookingDetailResponse bookingResponse) => AppButton(
         text: language.lblPayNow,
         textColor: Colors.white,
-        color: Colors.green,
+        color: completed,
+        shapeBorder: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
         onTap: () =>
             PaymentScreen(bookings: bookingResponse, isForAdvancePayment: false)
                 .launch(context),
@@ -1933,6 +1911,9 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
         text: language.requestInvoice,
         textColor: Colors.white,
         color: context.primaryColor,
+        shapeBorder: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
         onTap: () async {
           bool? res = await showInDialog(
             context,
@@ -1955,7 +1936,10 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
   Widget _invoiceSentMessage() => Container(
         width: context.width(),
         padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(color: context.cardColor),
+        decoration: BoxDecoration(
+          color: completed.withValues(alpha: 0.15),
+          borderRadius: BorderRadius.circular(12),
+        ),
         child: Text(language.sentInvoiceText,
                 style: boldTextStyle(), textAlign: TextAlign.center)
             .center(),
@@ -1973,8 +1957,9 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
               physics: const AlwaysScrollableScrollPhysics(),
               listAnimationType: ListAnimationType.FadeIn,
               children: [
+                /// Reason message for cancelled/rejected/failed bookings (red banner)
                 _buildReasonWidget(snap: snap.data!),
-                _pendingMessage(snap: snap.data!),
+                //_pendingMessage(snap: snap.data!),
                 _completeMessage(snap: snap.data!),
                 Row(
                   children: [
@@ -2040,14 +2025,18 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
                       /// About Provider Card
                       providerWidget(res: snap.data!),
 
-                      /// About Handyman Card
-                      // handymanWidget(
-                      //   handymanList: snap.data!.handymanData.validate(),
-                      //   res: snap.data!,
-                      //   serviceDetail: snap.data!.service!,
-                      //   bookingDetail: snap.data!.bookingDetail!,
-                      // ),
-                      24.height,
+                      /// About Handyman Card (for Hold status)
+                      if (snap.data!.bookingDetail!.status ==
+                              BookingStatusKeys.hold &&
+                          snap.data!.handymanData.validate().isNotEmpty)
+                        handymanWidget(
+                          handymanList: snap.data!.handymanData.validate(),
+                          res: snap.data!,
+                          serviceDetail: snap.data!.service!,
+                          bookingDetail: snap.data!.bookingDetail!,
+                        ),
+
+                      16.height,
 
                       /// Booking Description
                       if (snap.data!.bookingDetail!.description
@@ -2057,7 +2046,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Booking Description',
+                              language.lblBookingDescription,
                               style: boldTextStyle(size: 16),
                             ),
                             8.height,
@@ -2099,7 +2088,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
                           },
                         ),
 
-                      /// Price Details
+                      /// Payment Details (Price breakdown)
                       PriceCommonWidget(
                         bookingDetail: snap.data!.bookingDetail!,
                         serviceDetail: snap.data!.service!,
@@ -2117,10 +2106,8 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
                               .data!.bookingDetail!.extraCharges
                               .validate()),
 
-                      /// Payment Detail Card
-                      if (snap.data!.service!.type.validate() !=
-                          SERVICE_TYPE_FREE)
-                        paymentDetailCard(snap.data!.bookingDetail!),
+                      /// "You Haven't Rated Yet" section with Rate Now button
+                      _completeMessage(snap: snap.data!),
 
                       /// Customer Review widget
                       customerReviewWidget(
@@ -2132,13 +2119,41 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
                 ),
               ],
             ).expand(),
-            SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    child: _action(bookingResponse: snap.data!))
-                .paddingSymmetric(horizontal: 16.0, vertical: 12.0)
+            // Bottom action buttons with styled container
+            _buildBottomActionContainer(snap.data!),
           ],
         ),
       ],
+    );
+  }
+
+  /// Builds a styled container for the bottom action buttons
+  Widget _buildBottomActionContainer(BookingDetailResponse bookingResponse) {
+    Widget actionWidget = _action(bookingResponse: bookingResponse);
+
+    // Don't show container if no actions
+    if (actionWidget is Offstage) {
+      return const SizedBox.shrink();
+    }
+
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      decoration: BoxDecoration(
+        color: context.scaffoldBackgroundColor,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.1),
+            blurRadius: 10,
+            offset: Offset(0, -2),
+          ),
+        ],
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(16),
+          topRight: Radius.circular(16),
+        ),
+      ),
+      padding: EdgeInsets.fromLTRB(16, 16, 16, 16),
+      child: actionWidget,
     );
   }
 

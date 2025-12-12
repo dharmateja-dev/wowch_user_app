@@ -41,12 +41,12 @@ class PriceCommonWidget extends StatelessWidget {
       children: [
         24.height,
         Text(
-          language.paymentDetail,
+          language.priceDetail,
           style: boldTextStyle(),
         ),
         16.height,
         Container(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(12),
           width: context.width(),
           decoration: BoxDecoration(
             color: Color(0xFFE8F3EC),
@@ -154,19 +154,19 @@ class PriceCommonWidget extends StatelessWidget {
                 ),
 
               // Total Amount row
-              //16.height,
               Column(
                 children: [
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
                         language.totalAmount,
-                        style: primaryTextStyle(size: 14),
-                      ),
+                        style: primaryTextStyle(size: 12),
+                      ).expand(),
                       PriceWidget(
-                        size: 16,
+                        currencySymbol: '₹',
+                        size: 12,
                         price: bookingDetail.totalAmount.validate(),
+                        color: primaryColor,
                         isBoldText: true,
                       ),
                     ],
@@ -199,91 +199,87 @@ class PriceCommonWidget extends StatelessWidget {
     Color? priceColor,
     bool isDiscount = false,
   }) {
-    return Padding(
-      padding: EdgeInsets.only(bottom: 16),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Flexible(
-                child: Text(
-                  label,
-                  style: primaryTextStyle(),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Flexible(
+              child: Text(
+                label,
+                style: primaryTextStyle(size: 12),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
               ),
-              16.width,
-              PriceWidget(
-                currencySymbol: '₹',
-                price: price,
-                color: priceColor ?? textPrimaryColorGlobal,
-                isBoldText: false,
-                isDiscountedPrice: isDiscount,
-              ),
-            ],
-          ),
-          Divider(
-            color: context.dividerColor,
-            thickness: 1,
-            height: 2,
-          ),
-        ],
-      ),
+            ),
+            16.width,
+            PriceWidget(
+              currencySymbol: '₹',
+              size: 12,
+              price: price,
+              color: priceColor ?? textPrimaryColorGlobal,
+              isBoldText: true,
+              isDiscountedPrice: isDiscount,
+            ),
+          ],
+        ),
+        Divider(
+          height: 26,
+          color: context.dividerColor,
+          thickness: 0.5,
+        ),
+      ],
     );
   }
 
   Widget _buildTaxRow(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(bottom: 16),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  Text(
-                    language.lblTax,
-                    style: primaryTextStyle(size: 14),
+    return Column(
+      children: [
+        Row(
+          children: [
+            Row(
+              children: [
+                Text(
+                  language.lblTax,
+                  style: primaryTextStyle(size: 12),
+                ),
+                8.width,
+                GestureDetector(
+                  onTap: () {
+                    showModalBottomSheet(
+                      context: context,
+                      builder: (_) {
+                        return AppliedTaxListBottomSheet(
+                          taxes: bookingDetail.taxes.validate(),
+                          subTotal: bookingDetail.finalSubTotal.validate(),
+                        );
+                      },
+                    );
+                  },
+                  child: Icon(
+                    Icons.info_outline_rounded,
+                    size: 20,
+                    color: context.primaryColor,
                   ),
-                  8.width,
-                  GestureDetector(
-                    onTap: () {
-                      showModalBottomSheet(
-                        context: context,
-                        builder: (_) {
-                          return AppliedTaxListBottomSheet(
-                            taxes: bookingDetail.taxes.validate(),
-                            subTotal: bookingDetail.finalSubTotal.validate(),
-                          );
-                        },
-                      );
-                    },
-                    child: Icon(
-                      Icons.info_outline,
-                      size: 18,
-                      color: Colors.grey[500],
-                    ),
-                  ),
-                ],
-              ),
-              PriceWidget(
-                currencySymbol: '₹',
-                price: bookingDetail.finalTotalTax.validate(),
-                color: textPrimaryColorGlobal,
-                isBoldText: false,
-              ),
-            ],
-          ),
-          Divider(
-            color: context.dividerColor,
-            thickness: 1,
-            height: 2,
-          ),
-        ],
-      ),
+                ),
+              ],
+            ).expand(),
+            16.width,
+            PriceWidget(
+              currencySymbol: '₹',
+              size: 12,
+              price: bookingDetail.finalTotalTax.validate(),
+              color: Colors.red,
+              isBoldText: true,
+            ),
+          ],
+        ),
+        Divider(
+          height: 26,
+          color: context.dividerColor,
+          thickness: 0.5,
+        ),
+      ],
     );
   }
 

@@ -23,7 +23,8 @@ class CategoryDashboardComponent3 extends StatelessWidget {
           categoryName: categoryData.name.validate(),
           isFromCategory: true,
         ).launch(context).then((value) {
-          setStatusBarColor(Colors.transparent, statusBarIconBrightness: Brightness.dark);
+          setStatusBarColor(Colors.transparent,
+              statusBarIconBrightness: Brightness.dark);
         });
       },
       child: SizedBox(
@@ -47,10 +48,15 @@ class CategoryDashboardComponent3 extends StatelessWidget {
                           height: CATEGORY_ICON_SIZE,
                           width: CATEGORY_ICON_SIZE,
                           colorFilter: ColorFilter.mode(
-                            appStore.isDarkMode ? Colors.white : categoryData.color.validate(value: '000').toColor(),
+                            appStore.isDarkMode
+                                ? Colors.white
+                                : categoryData.color
+                                    .validate(value: '000')
+                                    .toColor(),
                             BlendMode.srcIn,
                           ),
-                          placeholderBuilder: (context) => const PlaceHolderWidget(
+                          placeholderBuilder: (context) =>
+                              const PlaceHolderWidget(
                             height: CATEGORY_ICON_SIZE,
                             width: CATEGORY_ICON_SIZE,
                             color: transparentColor,
@@ -71,18 +77,19 @@ class CategoryDashboardComponent3 extends StatelessWidget {
                     padding: const EdgeInsets.all(14),
                     width: width ?? context.width() / 4 - 8,
                     decoration: BoxDecoration(
-                      color: appStore.isDarkMode ? Colors.white24 : context.cardColor,
+                      color: Color(0xFFE8F3EC),
                       shape: BoxShape.rectangle,
                       borderRadius: radius(8),
                     ),
                     child: Column(
                       children: [
                         CachedImageWidget(
-                          url: categoryData.categoryImage.validate(),
-                          fit: BoxFit.cover,
+                          url: categoryData.categoryImage.validate().isNotEmpty
+                              ? categoryData.categoryImage.validate()
+                              : getDemoCategoryImage(categoryData.name),
+                          fit: BoxFit.contain,
                           width: 40,
                           height: 40,
-                          circle: true,
                           placeHolderImage: '',
                         ),
                         16.height,

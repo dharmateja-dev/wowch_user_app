@@ -2419,4 +2419,7 @@ class LanguageFr extends BaseLanguage {
 
   @override
   String get termsAndPrivacy => 'Conditions et Politique de confidentialité';
+
+  @override
+  String get lblBookingDescription => 'Description de la réservation';
 }

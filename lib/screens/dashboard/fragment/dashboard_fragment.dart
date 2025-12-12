@@ -5,7 +5,6 @@ import 'package:booking_system_flutter/screens/dashboard/component/category_comp
 import 'package:booking_system_flutter/screens/dashboard/component/featured_service_list_component.dart';
 import 'package:booking_system_flutter/screens/dashboard/component/service_list_component.dart';
 import 'package:booking_system_flutter/screens/dashboard/component/dashboard_header_component.dart';
-import 'package:booking_system_flutter/screens/dashboard/component/dashboard_search_bar_component.dart';
 import 'package:booking_system_flutter/screens/dashboard/shimmer/dashboard_shimmer.dart';
 import 'package:booking_system_flutter/utils/colors.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
@@ -115,6 +114,7 @@ class _DashboardFragmentState extends State<DashboardFragment> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: primaryColor,
       body: Stack(
         children: [
           Observer(
@@ -129,64 +129,11 @@ class _DashboardFragmentState extends State<DashboardFragment> {
                     log('Error loading dashboard, using dummy data: $error');
                     final dummyData = DummyDataHelper.getDummyDashboardData();
                     cachedDashboardResponse = dummyData;
-                    return AnimatedScrollView(
-                      physics: const AlwaysScrollableScrollPhysics(),
-                      listAnimationType: ListAnimationType.FadeIn,
-                      fadeInConfiguration:
-                          FadeInConfiguration(duration: 2.seconds),
-                      onSwipeRefresh: () async {
-                        setValue(LAST_APP_CONFIGURATION_SYNCED_TIME, 0);
-                        await init();
-                        return await 2.seconds.delay;
-                      },
-                      children: [
-                        DashboardHeaderComponent(
-                            featuredList:
-                                dummyData.featuredServices.validate()),
-                        16.height,
-                        CategoryComponent(
-                            categoryList: dummyData.category.validate()),
-                        16.height,
-                        FeaturedServiceListComponent(
-                            serviceList: dummyData.featuredServices.validate()),
-                        ServiceListComponent(
-                            serviceList: dummyData.service.validate()),
-                        16.height,
-                        if (appConfigurationStore.jobRequestStatus)
-                          const NewJobRequestComponent(),
-                      ],
-                    );
+                    return _buildDashboardContent(dummyData);
                   },
                   loadingWidget: DashboardShimmer(),
                   onSuccess: (snap) {
-                    return AnimatedScrollView(
-                      physics: const AlwaysScrollableScrollPhysics(),
-                      listAnimationType: ListAnimationType.FadeIn,
-                      fadeInConfiguration:
-                          FadeInConfiguration(duration: 2.seconds),
-                      onSwipeRefresh: () async {
-                        setValue(LAST_APP_CONFIGURATION_SYNCED_TIME, 0);
-                        await init();
-
-                        return await 2.seconds.delay;
-                      },
-                      children: [
-                        DashboardHeaderComponent(
-                          featuredList: snap.featuredServices.validate(),
-                        ),
-                        16.height,
-                        CategoryComponent(
-                            categoryList: snap.category.validate()),
-                        16.height,
-                        FeaturedServiceListComponent(
-                            serviceList: snap.featuredServices.validate()),
-                        ServiceListComponent(
-                            serviceList: snap.service.validate()),
-                        16.height,
-                        if (appConfigurationStore.jobRequestStatus)
-                          const NewJobRequestComponent(),
-                      ],
-                    );
+                    return _buildDashboardContent(snap);
                   },
                 ),
               );
@@ -200,6 +147,56 @@ class _DashboardFragmentState extends State<DashboardFragment> {
                   ? LoaderWidget().center()
                   : const SizedBox();
             },
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDashboardContent(DashboardResponse snap) {
+    return SingleChildScrollView(
+      physics: const AlwaysScrollableScrollPhysics(),
+      child: Stack(
+        children: [
+          // Green background behind curved content
+          Container(
+            height: 240,
+            width: double.infinity,
+            color: primaryColor,
+          ),
+          // Main content column
+          Column(
+            children: [
+              // Header with green background
+              DashboardHeaderComponent(
+                featuredList: snap.featuredServices.validate(),
+              ),
+              // White curved container for content
+              Container(
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: context.scaffoldBackgroundColor,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(16),
+                    topRight: Radius.circular(16),
+                  ),
+                ),
+                child: Column(
+                  children: [
+                    16.height,
+                    CategoryComponent(categoryList: snap.category.validate()),
+                    16.height,
+                    FeaturedServiceListComponent(
+                        serviceList: snap.featuredServices.validate()),
+                    ServiceListComponent(serviceList: snap.service.validate()),
+                    16.height,
+                    if (appConfigurationStore.jobRequestStatus)
+                      const NewJobRequestComponent(),
+                    100.height, // Extra padding for bottom nav
+                  ],
+                ),
+              ),
+            ],
           ),
         ],
       ),

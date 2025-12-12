@@ -2425,4 +2425,7 @@ class LanguageDe extends BaseLanguage {
   @override
   String get termsAndPrivacy =>
       'Nutzungsbedingungen und Datenschutzrichtlinie zu';
+
+  @override
+  String get lblBookingDescription => 'Buchungsbeschreibung';
 }

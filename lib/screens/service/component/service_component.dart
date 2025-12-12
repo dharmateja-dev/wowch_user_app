@@ -140,7 +140,12 @@ class ServiceComponentState extends State<ServiceComponent> {
                                       .isNotEmpty
                               ? widget.serviceData.serviceAttachments!.first
                                   .validate()
-                              : widget.serviceData.firstServiceImage.validate(),
+                              : widget.serviceData.firstServiceImage
+                                      .validate()
+                                      .isNotEmpty
+                                  ? widget.serviceData.firstServiceImage
+                                      .validate()
+                                  : DEMO_SERVICE_IMAGE_URL,
                           fit: BoxFit.cover,
                           height: 180,
                           width: widget.width ?? context.width(),

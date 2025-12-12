@@ -10,6 +10,7 @@ import 'package:nb_utils/nb_utils.dart';
 import '../../../component/loader_widget.dart';
 import '../../../model/dashboard_model.dart';
 import '../../../network/rest_apis.dart';
+import '../../../utils/colors.dart';
 import '../../../utils/constant.dart';
 import '../../dashboard/component/category_component.dart';
 import 'component/booking_confirmed_component_1.dart';
@@ -41,7 +42,10 @@ class _DashboardFragment1State extends State<DashboardFragment1> {
   Future<void> init({bool showLoader = true}) async {
     appStore.setLoading(showLoader);
     try {
-      future = userDashboard(isCurrentLocation: appStore.isCurrentLocation, lat: getDoubleAsync(LATITUDE), long: getDoubleAsync(LONGITUDE));
+      future = userDashboard(
+          isCurrentLocation: appStore.isCurrentLocation,
+          lat: getDoubleAsync(LATITUDE),
+          long: getDoubleAsync(LONGITUDE));
     } catch (e) {
       // If API call fails, use dummy data
       log('API call failed, using dummy data: $e');
@@ -79,6 +83,7 @@ class _DashboardFragment1State extends State<DashboardFragment1> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: primaryColor,
       body: Stack(
         children: [
           SnapHelperWidget<DashboardResponse>(
@@ -90,87 +95,89 @@ class _DashboardFragment1State extends State<DashboardFragment1> {
               final dummyData = DummyDataHelper.getDummyDashboardData();
               cachedDashboardResponse = dummyData;
               return Observer(builder: (context) {
-                return AnimatedScrollView(
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  listAnimationType: ListAnimationType.FadeIn,
-                  fadeInConfiguration: FadeInConfiguration(duration: 2.seconds),
-                  onSwipeRefresh: () async {
-                    setValue(LAST_APP_CONFIGURATION_SYNCED_TIME, 0);
-                    await init();
-                    return await 2.seconds.delay;
-                  },
-                  children: [
-                    SliderDashboardComponent1(
-                      sliderList: dummyData.slider.validate(),
-                      featuredList: dummyData.featuredServices.validate(),
-                      callback: () async {
-                        appStore.setLoading(true);
-                        init();
-                        setState(() {});
-                      },
-                    ),
-                    BookingConfirmedComponent1(upcomingConfirmedBooking: dummyData.upcomingData),
-                    16.height,
-                    CategoryComponent(categoryList: dummyData.category.validate(), isNewDashboard: true),
-                    if (dummyData.promotionalBanner.validate().isNotEmpty && appConfigurationStore.isPromotionalBanner)
-                      PromotionalBannerSliderComponent(
-                        promotionalBannerList: dummyData.promotionalBanner.validate(),
-                      ).paddingTop(16),
-                    16.height,
-                    ServiceListDashboardComponent1(serviceList: dummyData.service.validate()),
-                    16.height,
-                    FeatureServicesDashboardComponent1(serviceList: dummyData.featuredServices.validate()),
-                    HorizontalShopListComponent(shopList: dummyData.shops.take(5).toList()),
-                    2.height,
-                    if (appConfigurationStore.jobRequestStatus) const NewJobRequestDashboardComponent1()
-                  ],
-                );
+                return _buildDashboardContent(dummyData);
               });
             },
             loadingWidget: DashboardShimmer1(),
             onSuccess: (snap) {
               return Observer(builder: (context) {
-                return AnimatedScrollView(
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  listAnimationType: ListAnimationType.FadeIn,
-                  fadeInConfiguration: FadeInConfiguration(duration: 2.seconds),
-                  onSwipeRefresh: () async {
-                    setValue(LAST_APP_CONFIGURATION_SYNCED_TIME, 0);
-                    await init();
-
-                    return await 2.seconds.delay;
-                  },
-                  children: [
-                    SliderDashboardComponent1(
-                      sliderList: snap.slider.validate(),
-                      featuredList: snap.featuredServices.validate(),
-                      callback: () async {
-                        appStore.setLoading(true);
-
-                        init();
-                        setState(() {});
-                      },
-                    ),
-                    BookingConfirmedComponent1(upcomingConfirmedBooking: snap.upcomingData),
-                    16.height,
-                    CategoryComponent(categoryList: snap.category.validate(), isNewDashboard: true),
-                    if (snap.promotionalBanner.validate().isNotEmpty && appConfigurationStore.isPromotionalBanner)
-                      PromotionalBannerSliderComponent(
-                        promotionalBannerList: snap.promotionalBanner.validate(),
-                      ).paddingTop(16),
-                    16.height,
-                    ServiceListDashboardComponent1(serviceList: snap.service.validate()),
-                    16.height,
-                    FeatureServicesDashboardComponent1(serviceList: snap.featuredServices.validate()),
-                    HorizontalShopListComponent(shopList: snap.shops.take(5).toList()),
-                    2.height,
-                    if (appConfigurationStore.jobRequestStatus) const NewJobRequestDashboardComponent1()
-                  ],
-                );
+                return _buildDashboardContent(snap);
               });
             },
           ),
-          Observer(builder: (context) => LoaderWidget().visible(appStore.isLoading)),
+          Observer(
+              builder: (context) => LoaderWidget().visible(appStore.isLoading)),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDashboardContent(DashboardResponse snap) {
+    return SingleChildScrollView(
+      physics: const AlwaysScrollableScrollPhysics(),
+      child: Stack(
+        children: [
+          // Green background that extends behind the curved content
+          Container(
+            height: 200,
+            width: double.infinity,
+            color: primaryColor,
+          ),
+          // Main content column
+          Column(
+            children: [
+              // Header section with green background
+              SliderDashboardComponent1(
+                sliderList: snap.slider.validate(),
+                featuredList: snap.featuredServices.validate(),
+                callback: () async {
+                  appStore.setLoading(true);
+                  init();
+                  setState(() {});
+                },
+              ),
+              // White curved container for content
+              Container(
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: context.scaffoldBackgroundColor,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(24),
+                    topRight: Radius.circular(24),
+                  ),
+                ),
+                child: Column(
+                  children: [
+                    20.height,
+                    BookingConfirmedComponent1(
+                        upcomingConfirmedBooking: snap.upcomingData),
+                    16.height,
+                    CategoryComponent(
+                        categoryList: snap.category.validate(),
+                        isNewDashboard: true),
+                    if (snap.promotionalBanner.validate().isNotEmpty &&
+                        appConfigurationStore.isPromotionalBanner)
+                      PromotionalBannerSliderComponent(
+                        promotionalBannerList:
+                            snap.promotionalBanner.validate(),
+                      ).paddingTop(16),
+                    16.height,
+                    ServiceListDashboardComponent1(
+                        serviceList: snap.service.validate()),
+                    16.height,
+                    FeatureServicesDashboardComponent1(
+                        serviceList: snap.featuredServices.validate()),
+                    HorizontalShopListComponent(
+                        shopList: snap.shops.take(5).toList()),
+                    2.height,
+                    if (appConfigurationStore.jobRequestStatus)
+                      const NewJobRequestDashboardComponent1(),
+                    100.height, // Extra padding at bottom for navigation bar
+                  ],
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     );

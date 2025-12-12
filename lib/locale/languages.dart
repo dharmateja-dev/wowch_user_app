@@ -1529,4 +1529,6 @@ abstract class BaseLanguage {
   String get iAgreeToYour;
 
   String get termsAndPrivacy;
+
+  String get lblBookingDescription;
 }

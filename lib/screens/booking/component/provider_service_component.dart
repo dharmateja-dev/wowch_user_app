@@ -9,6 +9,7 @@ import '../../../model/package_data_model.dart';
 import '../../../model/service_data_model.dart';
 import '../../../utils/colors.dart';
 import '../../../utils/common.dart';
+import '../../../utils/constant.dart';
 import '../../../utils/images.dart';
 import '../../service/service_detail_screen.dart';
 
@@ -30,7 +31,8 @@ class ProviderServiceComponent extends StatefulWidget {
   });
 
   @override
-  _ProviderServiceComponentState createState() => _ProviderServiceComponentState();
+  _ProviderServiceComponentState createState() =>
+      _ProviderServiceComponentState();
 }
 
 class _ProviderServiceComponentState extends State<ProviderServiceComponent> {
@@ -54,7 +56,12 @@ class _ProviderServiceComponentState extends State<ProviderServiceComponent> {
     return GestureDetector(
       onTap: () {
         hideKeyboard(context);
-        ServiceDetailScreen(serviceId: widget.isFavouriteService ? widget.serviceData!.serviceId.validate().toInt() : widget.serviceData!.id.validate()).launch(context).then((value) {
+        ServiceDetailScreen(
+                serviceId: widget.isFavouriteService
+                    ? widget.serviceData!.serviceId.validate().toInt()
+                    : widget.serviceData!.id.validate())
+            .launch(context)
+            .then((value) {
           setStatusBarColor(context.primaryColor);
         });
       },
@@ -77,10 +84,10 @@ class _ProviderServiceComponentState extends State<ProviderServiceComponent> {
               url: widget.isFavouriteService
                   ? widget.serviceData!.serviceAttachments.validate().isNotEmpty
                       ? widget.serviceData!.serviceAttachments!.first.validate()
-                      : ''
+                      : DEMO_SERVICE_IMAGE_URL
                   : widget.serviceData!.attachments.validate().isNotEmpty
                       ? widget.serviceData!.attachments!.first.validate()
-                      : '',
+                      : DEMO_SERVICE_IMAGE_URL,
               fit: BoxFit.cover,
               height: 85,
               radius: defaultRadius,
@@ -95,10 +102,13 @@ class _ProviderServiceComponentState extends State<ProviderServiceComponent> {
                     children: [
                       Container(
                         decoration: BoxDecoration(
-                          color: appStore.isDarkMode ? Colors.black : lightPrimaryColor,
+                          color: appStore.isDarkMode
+                              ? Colors.black
+                              : lightPrimaryColor,
                           borderRadius: BorderRadius.circular(20),
                         ),
-                        padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 12, vertical: 4),
                         child: Text(
                           widget.serviceData!.categoryName.validate(),
                           maxLines: 1,
@@ -114,9 +124,16 @@ class _ProviderServiceComponentState extends State<ProviderServiceComponent> {
                       TextIcon(
                         suffix: Row(
                           children: [
-                            Image.asset(ic_star_fill, height: 12, color: getRatingBarColor(widget.serviceData!.totalRating.validate().toInt())),
+                            Image.asset(ic_star_fill,
+                                height: 12,
+                                color: getRatingBarColor(widget
+                                    .serviceData!.totalRating
+                                    .validate()
+                                    .toInt())),
                             4.width,
-                            Text("${widget.serviceData!.totalRating.validate().toStringAsFixed(1)}", style: boldTextStyle()),
+                            Text(
+                                "${widget.serviceData!.totalRating.validate().toStringAsFixed(1)}",
+                                style: boldTextStyle()),
                           ],
                         ),
                       ),
@@ -151,7 +168,10 @@ class _ProviderServiceComponentState extends State<ProviderServiceComponent> {
                           "${widget.serviceData!.discount.validate()}% off", //Todo translate
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
-                          style: TextStyle(color: defaultActivityStatus, fontWeight: FontWeight.bold, fontSize: 12),
+                          style: TextStyle(
+                              color: defaultActivityStatus,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 12),
                         ).expand(),
                     ],
                   )
@@ -162,14 +182,21 @@ class _ProviderServiceComponentState extends State<ProviderServiceComponent> {
             if (widget.isFavouriteService)
               Container(
                 margin: EdgeInsets.only(right: 8),
-                decoration: boxDecorationWithShadow(boxShape: BoxShape.circle, backgroundColor: context.cardColor),
-                child: widget.serviceData!.isFavourite == 0 ? ic_fill_heart.iconImage(color: favouriteColor, size: 18) : ic_heart.iconImage(color: unFavouriteColor, size: 18),
+                decoration: boxDecorationWithShadow(
+                    boxShape: BoxShape.circle,
+                    backgroundColor: context.cardColor),
+                child: widget.serviceData!.isFavourite == 0
+                    ? ic_fill_heart.iconImage(color: favouriteColor, size: 18)
+                    : ic_heart.iconImage(color: unFavouriteColor, size: 18),
               ).onTap(() async {
                 if (widget.serviceData!.isFavourite == 0) {
                   widget.serviceData!.isFavourite = 1;
                   setState(() {});
 
-                  await removeToWishList(serviceId: widget.serviceData!.serviceId.validate().toInt()).then((value) {
+                  await removeToWishList(
+                          serviceId:
+                              widget.serviceData!.serviceId.validate().toInt())
+                      .then((value) {
                     if (!value) {
                       widget.serviceData!.isFavourite = 0;
                       setState(() {});
@@ -179,7 +206,10 @@ class _ProviderServiceComponentState extends State<ProviderServiceComponent> {
                   widget.serviceData!.isFavourite = 0;
                   setState(() {});
 
-                  await addToWishList(serviceId: widget.serviceData!.serviceId.validate().toInt()).then((value) {
+                  await addToWishList(
+                          serviceId:
+                              widget.serviceData!.serviceId.validate().toInt())
+                      .then((value) {
                     if (!value) {
                       widget.serviceData!.isFavourite = 1;
                       setState(() {});

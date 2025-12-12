@@ -128,11 +128,11 @@ class _BookingItemComponentState extends State<BookingItemComponent> {
               .validate()
               .first
               .validate()
-          : "";
+          : DEMO_SERVICE_IMAGE_URL;
     } else {
       return widget.bookingData.serviceAttachments.validate().isNotEmpty
           ? widget.bookingData.serviceAttachments!.first.validate()
-          : '';
+          : DEMO_SERVICE_IMAGE_URL;
     }
   }
 

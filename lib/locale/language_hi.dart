@@ -2396,4 +2396,7 @@ class LanguageHi extends BaseLanguage {
 
   @override
   String get termsAndPrivacy => 'शर्तों और गोपनीयता नीति से सहमत हूं';
+
+  @override
+  String get lblBookingDescription => 'बुकिंग विवरण';
 }

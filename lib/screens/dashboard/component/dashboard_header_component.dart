@@ -21,16 +21,12 @@ class DashboardHeaderComponent extends StatelessWidget {
       width: context.width(),
       padding: EdgeInsets.only(
         top: context.statusBarHeight + 8,
-        bottom: 16,
+        bottom: 18, // Extra padding for curved corners effect
         left: 16,
         right: 16,
       ),
       decoration: BoxDecoration(
         color: primaryColor, // Dark green background
-        borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(0),
-          bottomRight: Radius.circular(0),
-        ),
       ),
       child: Column(
         children: [

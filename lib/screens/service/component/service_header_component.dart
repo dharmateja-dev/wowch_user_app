@@ -4,6 +4,7 @@ import 'package:booking_system_flutter/main.dart';
 import 'package:booking_system_flutter/model/service_data_model.dart';
 import 'package:booking_system_flutter/utils/colors.dart';
 import 'package:booking_system_flutter/utils/common.dart';
+import 'package:booking_system_flutter/utils/constant.dart';
 import 'package:booking_system_flutter/utils/images.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -35,7 +36,7 @@ class ServiceHeaderComponent extends StatelessWidget {
         CachedImageWidget(
           url: serviceData.attachments.validate().isNotEmpty
               ? serviceData.attachments!.first.validate()
-              : '',
+              : DEMO_SERVICE_IMAGE_URL,
           height: imageSize ?? 80,
           width: imageSize ?? 80,
           fit: BoxFit.cover,
@@ -57,7 +58,8 @@ class ServiceHeaderComponent extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
-                  if (showBadge && (badgeText != null || badgeText?.isEmpty != true))
+                  if (showBadge &&
+                      (badgeText != null || badgeText?.isEmpty != true))
                     Text(
                       badgeText ?? language.speciallyAbled,
                       style: boldTextStyle(
@@ -140,4 +142,3 @@ class ServiceHeaderComponent extends StatelessWidget {
     ).paddingAll(padding?.left ?? 16);
   }
 }
-

@@ -17,33 +17,6 @@ class CategoryWidget extends StatelessWidget {
 
   CategoryWidget({required this.categoryData, this.width, this.isFromCategory});
 
-  /// Get Material Icon from icon name string
-  IconData? _getIconFromName(String? iconName) {
-    if (iconName == null || iconName.isEmpty) return null;
-
-    // Map icon names to Material Icons
-    final iconMap = {
-      'home': Icons.home,
-      'restaurant': Icons.restaurant,
-      'person': Icons.person,
-      'celebration': Icons.celebration,
-      'cleaning_services': Icons.cleaning_services,
-      'plumbing': Icons.plumbing,
-      'electrical_services': Icons.electrical_services,
-      'format_paint': Icons.format_paint,
-      'carpenter': Icons.carpenter,
-      'yard': Icons.yard,
-      'ac_unit': Icons.ac_unit,
-      'build': Icons.build,
-      'bug_report': Icons.bug_report,
-      'local_shipping': Icons.local_shipping,
-      'local_laundry_service': Icons.local_laundry_service,
-      'spa': Icons.spa,
-    };
-
-    return iconMap[iconName.toLowerCase()];
-  }
-
   /// Check if categoryImage is an icon name (not a URL)
   bool _isIconName(String? image) {
     if (image == null || image.isEmpty) return false;
@@ -56,75 +29,50 @@ class CategoryWidget extends StatelessWidget {
   }
 
   Widget buildDefaultComponent(BuildContext context) {
-    final iconData = _isIconName(categoryData.categoryImage)
-        ? _getIconFromName(categoryData.categoryImage)
-        : null;
+    // Get demo image URL based on category name if no valid image exists
+    final String imageUrl = categoryData.categoryImage.validate().isEmpty ||
+            _isIconName(categoryData.categoryImage)
+        ? getDemoCategoryImage(categoryData.name)
+        : categoryData.categoryImage.validate();
 
     return SizedBox(
       width: width ?? context.width() / 4 - 16,
       child: Column(
         children: [
-          // Display Material Icon if icon name is provided
-          iconData != null
-              ? Container(
-                  width: CATEGORY_ICON_SIZE,
-                  height: CATEGORY_ICON_SIZE,
-                  padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    color: Color(0xFFE8F3EC), // Light green background
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Icon(
-                    iconData,
-                    size: 20,
-                    color:
-                        categoryData.color.validate(value: '#95E1D3').toColor(),
-                  ),
-                )
-              : categoryData.categoryImage.validate().endsWith('.svg')
-                  ? Container(
-                      width: CATEGORY_ICON_SIZE,
-                      height: CATEGORY_ICON_SIZE,
-                      padding: const EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                          color: Color(0xFFE8F3EC),
-                          borderRadius: BorderRadius.circular(8)),
-                      child: SvgPicture.network(
-                        categoryData.categoryImage.validate(),
-                        height: CATEGORY_ICON_SIZE,
-                        width: CATEGORY_ICON_SIZE,
-                        colorFilter: ColorFilter.mode(
-                          appStore.isDarkMode
-                              ? Colors.white
-                              : categoryData.color
-                                  .validate(value: '000')
-                                  .toColor(),
-                          BlendMode.srcIn,
-                        ),
-                        placeholderBuilder: (context) =>
-                            const PlaceHolderWidget(
-                          height: CATEGORY_ICON_SIZE,
-                          width: CATEGORY_ICON_SIZE,
-                          color: transparentColor,
-                        ),
-                      ).paddingAll(10),
-                    )
-                  : Container(
-                      padding: const EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                          color: appStore.isDarkMode
-                              ? Colors.white24
-                              : context.cardColor,
-                          shape: BoxShape.circle),
-                      child: CachedImageWidget(
-                        url: categoryData.categoryImage.validate(),
-                        fit: BoxFit.cover,
-                        width: 30,
-                        height: 30,
-                        circle: true,
-                        placeHolderImage: '',
-                      ),
+          // Display demo category image from URL
+          Container(
+            width: CATEGORY_ICON_SIZE,
+            height: CATEGORY_ICON_SIZE,
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: Color(0xFFE8F3EC), // Light green background
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: categoryData.categoryImage.validate().endsWith('.svg')
+                ? SvgPicture.network(
+                    categoryData.categoryImage.validate(),
+                    height: CATEGORY_ICON_SIZE - 16,
+                    width: CATEGORY_ICON_SIZE - 16,
+                    colorFilter: ColorFilter.mode(
+                      appStore.isDarkMode
+                          ? Colors.white
+                          : categoryData.color.validate(value: '000').toColor(),
+                      BlendMode.srcIn,
                     ),
+                    placeholderBuilder: (context) => const PlaceHolderWidget(
+                      height: CATEGORY_ICON_SIZE - 16,
+                      width: CATEGORY_ICON_SIZE - 16,
+                      color: transparentColor,
+                    ),
+                  )
+                : CachedImageWidget(
+                    url: imageUrl,
+                    fit: BoxFit.contain,
+                    width: CATEGORY_ICON_SIZE - 16,
+                    height: CATEGORY_ICON_SIZE - 16,
+                    placeHolderImage: '',
+                  ),
+          ),
           8.height,
           Marquee(
             directionMarguee: DirectionMarguee.oneDirection,

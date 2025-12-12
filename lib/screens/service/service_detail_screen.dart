@@ -324,7 +324,9 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen>
         Text(language.lblAboutProvider,
             style: boldTextStyle(size: LABEL_TEXT_SIZE)),
         16.height,
-        BookingDetailProviderWidget(providerData: data).onTap(() async {
+        BookingDetailProviderWidget(
+                providerData: data, showContactButtons: false)
+            .onTap(() async {
           await ProviderInfoScreen(providerId: data.id).launch(context);
           setStatusBarColor(Colors.transparent);
         }),
@@ -478,7 +480,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen>
           CachedImageWidget(
             url: data.attachments.validate().isNotEmpty
                 ? data.attachments!.first.validate()
-                : '',
+                : DEMO_SERVICE_IMAGE_URL,
             height: 50,
             width: 50,
             fit: BoxFit.cover,

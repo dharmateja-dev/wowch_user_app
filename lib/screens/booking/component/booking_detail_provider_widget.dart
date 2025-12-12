@@ -16,12 +16,14 @@ class BookingDetailProviderWidget extends StatefulWidget {
   final bool canCustomerContact;
   final bool providerIsHandyman;
   final BookingData? bookingDetail;
+  final bool showContactButtons;
 
   BookingDetailProviderWidget(
       {required this.providerData,
       this.canCustomerContact = false,
       this.providerIsHandyman = false,
-      this.bookingDetail});
+      this.bookingDetail,
+      this.showContactButtons = true});
 
   @override
   BookingDetailProviderWidgetState createState() =>
@@ -139,112 +141,123 @@ class BookingDetailProviderWidgetState
               ),
             ],
           ),
-          16.height,
-          // Action buttons row
-          Row(
-            children: [
-              // Call button
-              AppButton(
-                padding: EdgeInsets.zero,
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Icons.call_outlined,
-                        size: 18, color: context.iconColor),
-                    8.width,
-                    Text(language.lblCall, style: boldTextStyle(size: 14)),
-                  ],
-                ),
-                color: Colors.white,
-                elevation: 0,
-                shapeBorder: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                  side: BorderSide(color: context.primaryColor),
-                ),
-                onTap: () {
-                  if (widget.providerData.contactNumber.validate().isNotEmpty) {
-                    launchCall(widget.providerData.contactNumber.validate());
-                  }
-                },
-              ).expand(),
-              12.width,
-              // Chat button
-              AppButton(
-                padding: EdgeInsets.zero,
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Icons.chat_bubble_outline,
-                        size: 18, color: context.iconColor),
-                    8.width,
-                    Text(language.lblChat, style: boldTextStyle(size: 14)),
-                  ],
-                ),
-                color: Colors.white,
-                elevation: 0,
-                shapeBorder: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                  side: BorderSide(color: context.primaryColor),
-                ),
-                onTap: () async {
-                  toast(language.pleaseWaitWhileWeLoadChatDetails);
-                  UserData? user = await userService.getUserNull(
-                      email: widget.providerData.email.validate());
-                  if (user != null) {
-                    Fluttertoast.cancel();
-                    if (widget.bookingDetail != null) {
-                      isChattingAllow = widget.bookingDetail!.status ==
-                              BookingStatusKeys.complete ||
-                          widget.bookingDetail!.status ==
-                              BookingStatusKeys.cancelled;
-                    }
-                    UserChatScreen(
-                            receiverUser: user,
-                            isChattingAllow: isChattingAllow)
-                        .launch(context);
-                  } else {
-                    Fluttertoast.cancel();
-                    toast(
-                        "${widget.providerData.firstName} ${language.isNotAvailableForChat}");
-                  }
-                },
-              ).expand(),
-              12.width,
-              // WhatsApp button
-              AppButton(
-                padding: EdgeInsets.zero,
-                child: CachedImageWidget(
-                  url: ic_whatsapp,
-                  height: 20,
-                  width: 20,
-                ),
-                color: Colors.white,
-                elevation: 0,
-                shapeBorder: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                  side: BorderSide(color: context.primaryColor),
-                ),
-                onTap: () async {
-                  String phoneNumber = "";
-                  if (widget.providerData.contactNumber
-                      .validate()
-                      .contains('+')) {
-                    phoneNumber =
-                        "${widget.providerData.contactNumber.validate().replaceAll('-', '')}";
-                  } else {
-                    phoneNumber =
-                        "+${widget.providerData.contactNumber.validate().replaceAll('-', '')}";
-                  }
-                  launchUrl(
-                      Uri.parse(
-                          '${getSocialMediaLink(LinkProvider.WHATSAPP)}$phoneNumber'),
-                      mode: LaunchMode.externalApplication);
-                },
-              ).expand(),
-            ],
+          8.height,
+          Divider(
+            color: lightGray,
+            thickness: 2,
+            height: 6,
           ),
+          // Action buttons row - only show when showContactButtons is true
+
+          if (widget.showContactButtons) ...[
+            16.height,
+            Row(
+              children: [
+                // Call button
+                AppButton(
+                  padding: EdgeInsets.zero,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.call_outlined,
+                          size: 18, color: context.iconColor),
+                      8.width,
+                      Text(language.lblCall, style: boldTextStyle(size: 14)),
+                    ],
+                  ),
+                  color: Colors.white,
+                  elevation: 0,
+                  shapeBorder: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    side: BorderSide(color: context.primaryColor),
+                  ),
+                  onTap: () {
+                    if (widget.providerData.contactNumber
+                        .validate()
+                        .isNotEmpty) {
+                      launchCall(widget.providerData.contactNumber.validate());
+                    }
+                  },
+                ).expand(),
+                12.width,
+                // Chat button
+                AppButton(
+                  padding: EdgeInsets.zero,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.chat_bubble_outline,
+                          size: 18, color: context.iconColor),
+                      8.width,
+                      Text(language.lblChat, style: boldTextStyle(size: 14)),
+                    ],
+                  ),
+                  color: Colors.white,
+                  elevation: 0,
+                  shapeBorder: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    side: BorderSide(color: context.primaryColor),
+                  ),
+                  onTap: () async {
+                    toast(language.pleaseWaitWhileWeLoadChatDetails);
+                    UserData? user = await userService.getUserNull(
+                        email: widget.providerData.email.validate());
+                    if (user != null) {
+                      Fluttertoast.cancel();
+                      if (widget.bookingDetail != null) {
+                        isChattingAllow = widget.bookingDetail!.status ==
+                                BookingStatusKeys.complete ||
+                            widget.bookingDetail!.status ==
+                                BookingStatusKeys.cancelled;
+                      }
+                      UserChatScreen(
+                              receiverUser: user,
+                              isChattingAllow: isChattingAllow)
+                          .launch(context);
+                    } else {
+                      Fluttertoast.cancel();
+                      toast(
+                          "${widget.providerData.firstName} ${language.isNotAvailableForChat}");
+                    }
+                  },
+                ).expand(),
+                12.width,
+                // WhatsApp button
+                AppButton(
+                  padding: EdgeInsets.zero,
+                  child: CachedImageWidget(
+                    url: ic_whatsapp,
+                    height: 20,
+                    width: 20,
+                  ),
+                  color: Colors.white,
+                  elevation: 0,
+                  shapeBorder: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    side: BorderSide(color: context.primaryColor),
+                  ),
+                  onTap: () async {
+                    String phoneNumber = "";
+                    if (widget.providerData.contactNumber
+                        .validate()
+                        .contains('+')) {
+                      phoneNumber =
+                          "${widget.providerData.contactNumber.validate().replaceAll('-', '')}";
+                    } else {
+                      phoneNumber =
+                          "+${widget.providerData.contactNumber.validate().replaceAll('-', '')}";
+                    }
+                    launchUrl(
+                        Uri.parse(
+                            '${getSocialMediaLink(LinkProvider.WHATSAPP)}$phoneNumber'),
+                        mode: LaunchMode.externalApplication);
+                  },
+                ).expand(),
+              ],
+            ),
+          ],
         ],
       ),
     );

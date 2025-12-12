@@ -17,6 +17,50 @@ const PER_PAGE_ITEM = 20;
 const PER_PAGE_CATEGORY_ITEM = 50;
 const LABEL_TEXT_SIZE = 14;
 const double SETTING_ICON_SIZE = 18;
+
+// Demo/Dummy Image URLs for testing purposes
+const DEMO_SERVICE_IMAGE_URL =
+    'https://res.cloudinary.com/daqvdhmw8/image/upload/v1765500371/service_component_image_xuvtxo.png';
+
+// Demo Category Image URLs for testing purposes
+const Map<String, String> DEMO_CATEGORY_IMAGES = {
+  'household': 'https://cdn-icons-png.flaticon.com/512/3343/3343638.png',
+  'cooking': 'https://cdn-icons-png.flaticon.com/512/3075/3075977.png',
+  'caretaker': 'https://cdn-icons-png.flaticon.com/512/4140/4140037.png',
+  'special_occasion': 'https://cdn-icons-png.flaticon.com/512/3135/3135768.png',
+  'cleaning': 'https://cdn-icons-png.flaticon.com/512/2873/2873054.png',
+  'plumbing': 'https://cdn-icons-png.flaticon.com/512/4635/4635163.png',
+  'electrical': 'https://cdn-icons-png.flaticon.com/512/4514/4514846.png',
+  'painting': 'https://cdn-icons-png.flaticon.com/512/1048/1048944.png',
+  'carpentry': 'https://cdn-icons-png.flaticon.com/512/2384/2384586.png',
+  'gardening': 'https://cdn-icons-png.flaticon.com/512/628/628283.png',
+  'ac_repair': 'https://cdn-icons-png.flaticon.com/512/4130/4130065.png',
+  'appliance': 'https://cdn-icons-png.flaticon.com/512/2933/2933823.png',
+  'pest_control': 'https://cdn-icons-png.flaticon.com/512/1706/1706777.png',
+  'moving': 'https://cdn-icons-png.flaticon.com/512/3028/3028046.png',
+  'laundry': 'https://cdn-icons-png.flaticon.com/512/3163/3163680.png',
+  'beauty': 'https://cdn-icons-png.flaticon.com/512/3163/3163186.png',
+  'default': 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png',
+};
+
+// Helper function to get demo category image
+String getDemoCategoryImage(String? categoryName) {
+  if (categoryName == null || categoryName.isEmpty) {
+    return DEMO_CATEGORY_IMAGES['default']!;
+  }
+
+  final lowerName = categoryName.toLowerCase();
+
+  // Match category names to images
+  for (final key in DEMO_CATEGORY_IMAGES.keys) {
+    if (lowerName.contains(key) || key.contains(lowerName)) {
+      return DEMO_CATEGORY_IMAGES[key]!;
+    }
+  }
+
+  return DEMO_CATEGORY_IMAGES['default']!;
+}
+
 const double CATEGORY_ICON_SIZE = 70;
 const double SUBCATEGORY_ICON_SIZE = 45;
 const APP_BAR_TEXT_SIZE = 20;

@@ -98,14 +98,20 @@ class _ShopDetailScreenState extends State<ShopDetailScreen> {
                   8.height,
                   Text(shop.name, style: boldTextStyle(size: 18)),
                   8.height,
-                  if ((shop.email.validate().isNotEmpty) || (shop.contactNumber.validate().isNotEmpty)) ...[
+                  if ((shop.email.validate().isNotEmpty) ||
+                      (shop.contactNumber.validate().isNotEmpty)) ...[
                     if (shop.email.validate().isNotEmpty) ...[
                       TextIcon(
                         spacing: 10,
                         onTap: () {
                           launchMail("${shop.email.validate()}");
                         },
-                        prefix: Image.asset(ic_message, width: 16, height: 16, color: appStore.isDarkMode ? Colors.white : context.primaryColor),
+                        prefix: Image.asset(ic_message,
+                            width: 16,
+                            height: 16,
+                            color: appStore.isDarkMode
+                                ? Colors.white
+                                : context.primaryColor),
                         text: shop.email.validate(),
                         textStyle: secondaryTextStyle(size: 14),
                         expandedText: true,
@@ -118,7 +124,12 @@ class _ShopDetailScreenState extends State<ShopDetailScreen> {
                         onTap: () {
                           launchCall("${shop.contactNumber.validate()}");
                         },
-                        prefix: Image.asset(ic_calling, width: 16, height: 16, color: appStore.isDarkMode ? Colors.white : context.primaryColor),
+                        prefix: Image.asset(ic_calling,
+                            width: 16,
+                            height: 16,
+                            color: appStore.isDarkMode
+                                ? Colors.white
+                                : context.primaryColor),
                         text: shop.contactNumber.validate(),
                         textStyle: secondaryTextStyle(size: 14),
                         expandedText: true,
@@ -136,28 +147,40 @@ class _ShopDetailScreenState extends State<ShopDetailScreen> {
                             ic_location,
                             width: 18,
                             height: 18,
-                            color: appStore.isDarkMode ? Colors.white : context.primaryColor,
+                            color: appStore.isDarkMode
+                                ? Colors.white
+                                : context.primaryColor,
                           ),
                           10.width,
                           Marquee(
-                            child: Text("${shop.address}, ${shop.cityName}, ${shop.stateName}, ${shop.countryName}", style: secondaryTextStyle(size: 14)),
+                            child: Text(
+                                "${shop.address}, ${shop.cityName}, ${shop.stateName}, ${shop.countryName}",
+                                style: secondaryTextStyle(size: 14)),
                           ).flexible(),
                         ],
                       ),
                     ),
                     6.height,
                   ],
-                  if (shop.shopStartTime.isNotEmpty &&  shop.shopEndTime.isNotEmpty) ...[
+                  if (shop.shopStartTime.isNotEmpty &&
+                      shop.shopEndTime.isNotEmpty) ...[
                     TextIcon(
                       spacing: 10,
                       onTap: () {
                         if (shop.latitude != 0 && shop.longitude != 0) {
-                          launchMapFromLatLng(latitude: shop.latitude, longitude: shop.longitude);
+                          launchMapFromLatLng(
+                              latitude: shop.latitude,
+                              longitude: shop.longitude);
                         } else {
                           launchMap(shop.address);
                         }
                       },
-                      prefix: Image.asset(ic_clock, width: 16, height: 16, color: appStore.isDarkMode ? Colors.white : context.primaryColor),
+                      prefix: Image.asset(ic_clock,
+                          width: 16,
+                          height: 16,
+                          color: appStore.isDarkMode
+                              ? Colors.white
+                              : context.primaryColor),
                       text: "${shop.shopStartTime} - ${shop.shopEndTime}",
                       textStyle: secondaryTextStyle(size: 14),
                       expandedText: true,
@@ -172,7 +195,8 @@ class _ShopDetailScreenState extends State<ShopDetailScreen> {
                   displayName: shopResponse.shopDetail!.providerName,
                   profileImage: shopResponse.shopDetail!.providerImage,
                   id: shopResponse.shopDetail!.providerId,
-                  providersServiceRating: shopResponse.shopDetail!.providerServiceRating,
+                  providersServiceRating:
+                      shopResponse.shopDetail!.providerServiceRating,
                 ),
               ),
 
@@ -232,7 +256,8 @@ class _ShopDetailScreenState extends State<ShopDetailScreen> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(language.lblAboutProvider, style: boldTextStyle(size: LABEL_TEXT_SIZE)),
+            Text(language.lblAboutProvider,
+                style: boldTextStyle(size: LABEL_TEXT_SIZE)),
             TextButton(
               onPressed: () {
                 ProviderInfoScreen(providerId: data.id).launch(context);
@@ -241,7 +266,9 @@ class _ShopDetailScreenState extends State<ShopDetailScreen> {
             )
           ],
         ),
-        BookingDetailProviderWidget(providerData: data).onTap(() async {
+        BookingDetailProviderWidget(
+                providerData: data, showContactButtons: false)
+            .onTap(() async {
           await ProviderInfoScreen(providerId: data.id).launch(context);
           setStatusBarColor(Colors.transparent);
         }),

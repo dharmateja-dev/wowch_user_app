@@ -2362,4 +2362,7 @@ class LanguageAr extends BaseLanguage {
 
   @override
   String get termsAndPrivacy => 'الشروط وسياسة الخصوصية';
+
+  @override
+  String get lblBookingDescription => 'وصف الحجز';
 }

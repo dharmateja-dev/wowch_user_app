@@ -7,6 +7,7 @@ import '../../../main.dart';
 import '../../../model/service_data_model.dart';
 import '../../../utils/colors.dart';
 import '../../../utils/common.dart';
+import '../../../utils/constant.dart';
 import '../../../utils/images.dart';
 import '../service_detail_screen.dart';
 
@@ -44,7 +45,9 @@ class _ServiceComponentState extends State<RelatedServiceComponent> {
       onTap: () {
         hideKeyboard(context);
         ServiceDetailScreen(
-          serviceId: widget.isFavouriteService ? widget.serviceData.serviceId.validate().toInt() : widget.serviceData.id.validate(),
+          serviceId: widget.isFavouriteService
+              ? widget.serviceData.serviceId.validate().toInt()
+              : widget.serviceData.id.validate(),
         ).launch(context).then((value) {
           setStatusBarColor(context.primaryColor);
           widget.onUpdate?.call();
@@ -54,7 +57,9 @@ class _ServiceComponentState extends State<RelatedServiceComponent> {
         decoration: boxDecorationWithRoundedCorners(
           borderRadius: radius(),
           backgroundColor: context.cardColor,
-          border: appStore.isDarkMode ? Border.all(color: context.dividerColor) : null,
+          border: appStore.isDarkMode
+              ? Border.all(color: context.dividerColor)
+              : null,
         ),
         padding: const EdgeInsets.all(12),
         child: Row(
@@ -64,10 +69,10 @@ class _ServiceComponentState extends State<RelatedServiceComponent> {
               url: widget.isFavouriteService
                   ? widget.serviceData.serviceAttachments.validate().isNotEmpty
                       ? widget.serviceData.serviceAttachments!.first.validate()
-                      : ''
+                      : DEMO_SERVICE_IMAGE_URL
                   : widget.serviceData.attachments.validate().isNotEmpty
                       ? widget.serviceData.attachments!.first.validate()
-                      : '',
+                      : DEMO_SERVICE_IMAGE_URL,
               fit: BoxFit.cover,
               height: 90,
               width: 90,
@@ -85,10 +90,13 @@ class _ServiceComponentState extends State<RelatedServiceComponent> {
                     children: [
                       Container(
                         decoration: BoxDecoration(
-                          color: appStore.isDarkMode ? Colors.black : lightPrimaryColor,
+                          color: appStore.isDarkMode
+                              ? Colors.black
+                              : lightPrimaryColor,
                           borderRadius: radius(20),
                         ),
-                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 12, vertical: 4),
                         child: Text(
                           widget.serviceData.categoryName.validate(),
                           maxLines: 1,
@@ -104,9 +112,16 @@ class _ServiceComponentState extends State<RelatedServiceComponent> {
                       TextIcon(
                         suffix: Row(
                           children: [
-                            Image.asset(ic_star_fill, height: 12, color: getRatingBarColor(widget.serviceData.totalRating.validate().toInt())),
+                            Image.asset(ic_star_fill,
+                                height: 12,
+                                color: getRatingBarColor(widget
+                                    .serviceData.totalRating
+                                    .validate()
+                                    .toInt())),
                             4.width,
-                            Text("${widget.serviceData.totalRating.validate().toStringAsFixed(1)}", style: boldTextStyle()),
+                            Text(
+                                "${widget.serviceData.totalRating.validate().toStringAsFixed(1)}",
+                                style: boldTextStyle()),
                           ],
                         ),
                       ),
@@ -141,7 +156,10 @@ class _ServiceComponentState extends State<RelatedServiceComponent> {
                           "${widget.serviceData.discount.validate()}% off", //Todo translate
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
-                          style: const TextStyle(color: defaultActivityStatus, fontWeight: FontWeight.bold, fontSize: 12),
+                          style: const TextStyle(
+                              color: defaultActivityStatus,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 12),
                         ).expand(),
                     ],
                   )

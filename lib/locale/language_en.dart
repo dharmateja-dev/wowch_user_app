@@ -2386,4 +2386,7 @@ class LanguageEn extends BaseLanguage {
 
   @override
   String get termsAndPrivacy => 'Terms and Privacy Policy';
+
+  @override
+  String get lblBookingDescription => 'Booking Description';
 }
