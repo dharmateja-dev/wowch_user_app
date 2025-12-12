@@ -2371,4 +2371,21 @@ class LanguageAr extends BaseLanguage {
 
   @override
   String get lblBookingDescription => 'وصف الحجز';
+
+  // Booking confirmation banner
+  @override
+  String get lblYourBookingIsConfirmed => 'تم تأكيد حجزك.';
+
+  @override
+  String get lblRemoveItem => 'إزالة العنصر؟';
+
+  @override
+  String get lblRemoveItemConfirmation =>
+      'هل أنت متأكد أنك تريد إزالة هذا العنصر من سلتك؟';
+
+  @override
+  String get lblSure => 'نعم';
+
+  @override
+  String get lblNoThanks => 'لا، شكراً';
 }

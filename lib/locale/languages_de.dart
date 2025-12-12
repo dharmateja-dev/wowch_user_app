@@ -2434,4 +2434,21 @@ class LanguageDe extends BaseLanguage {
 
   @override
   String get lblBookingDescription => 'Buchungsbeschreibung';
+
+  // Booking confirmation banner
+  @override
+  String get lblYourBookingIsConfirmed => 'Ihre Buchung ist bestätigt.';
+
+  @override
+  String get lblRemoveItem => 'Artikel entfernen?';
+
+  @override
+  String get lblRemoveItemConfirmation =>
+      'Möchten Sie diesen Artikel wirklich aus Ihrem Warenkorb entfernen?';
+
+  @override
+  String get lblSure => 'Ja';
+
+  @override
+  String get lblNoThanks => 'Nein, danke';
 }

@@ -1535,4 +1535,15 @@ abstract class BaseLanguage {
   String get termsAndPrivacy;
 
   String get lblBookingDescription;
+
+  // Booking confirmation banner
+  String get lblYourBookingIsConfirmed;
+
+  String get lblRemoveItem;
+
+  String get lblRemoveItemConfirmation;
+
+  String get lblSure;
+
+  String get lblNoThanks;
 }

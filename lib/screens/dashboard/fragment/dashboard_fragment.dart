@@ -5,6 +5,7 @@ import 'package:booking_system_flutter/screens/dashboard/component/category_comp
 import 'package:booking_system_flutter/screens/dashboard/component/featured_service_list_component.dart';
 import 'package:booking_system_flutter/screens/dashboard/component/service_list_component.dart';
 import 'package:booking_system_flutter/screens/dashboard/component/dashboard_header_component.dart';
+import 'package:booking_system_flutter/screens/dashboard/component/booking_confirmation_banner.dart';
 import 'package:booking_system_flutter/screens/dashboard/shimmer/dashboard_shimmer.dart';
 import 'package:booking_system_flutter/utils/colors.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
@@ -26,6 +27,9 @@ class _DashboardFragmentState extends State<DashboardFragment> {
   static const bool USE_DUMMY_DATA = true;
 
   Future<DashboardResponse>? future;
+
+  // Flag to show/hide booking confirmation banner
+  bool showBookingBanner = true;
 
   @override
   void initState() {
@@ -184,6 +188,21 @@ class _DashboardFragmentState extends State<DashboardFragment> {
                 child: Column(
                   children: [
                     16.height,
+                    // Booking Confirmation Banner - shows above categories
+                    if (showBookingBanner)
+                      BookingConfirmationBanner(
+                        serviceName: 'Filter Replacement',
+                        bookingDateTime: DateTime(2024, 6, 4, 11, 0),
+                        onClose: () {
+                          setState(() {
+                            showBookingBanner = false;
+                          });
+                        },
+                        onTap: () {
+                          // Navigate to booking details when tapped
+                          // You can add navigation logic here
+                        },
+                      ),
                     CategoryComponent(categoryList: snap.category.validate()),
                     16.height,
                     FeaturedServiceListComponent(

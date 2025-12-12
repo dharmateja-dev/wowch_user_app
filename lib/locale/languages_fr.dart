@@ -2428,4 +2428,21 @@ class LanguageFr extends BaseLanguage {
 
   @override
   String get lblBookingDescription => 'Description de la réservation';
+
+  // Booking confirmation banner
+  @override
+  String get lblYourBookingIsConfirmed => 'Votre réservation est confirmée.';
+
+  @override
+  String get lblRemoveItem => 'Supprimer cet article?';
+
+  @override
+  String get lblRemoveItemConfirmation =>
+      'Êtes-vous sûr de vouloir supprimer cet article de votre panier?';
+
+  @override
+  String get lblSure => 'Oui';
+
+  @override
+  String get lblNoThanks => 'Non, merci';
 }

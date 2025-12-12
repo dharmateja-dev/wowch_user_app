@@ -2405,4 +2405,21 @@ class LanguageHi extends BaseLanguage {
 
   @override
   String get lblBookingDescription => 'बुकिंग विवरण';
+
+  // Booking confirmation banner
+  @override
+  String get lblYourBookingIsConfirmed => 'आपकी बुकिंग की पुष्टि हो गई है।';
+
+  @override
+  String get lblRemoveItem => 'आइटम हटाएं?';
+
+  @override
+  String get lblRemoveItemConfirmation =>
+      'क्या आप इस आइटम को अपनी कार्ट से हटाना चाहते हैं?';
+
+  @override
+  String get lblSure => 'हां';
+
+  @override
+  String get lblNoThanks => 'नहीं, धन्यवाद';
 }

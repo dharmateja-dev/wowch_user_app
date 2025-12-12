@@ -2395,4 +2395,21 @@ class LanguageEn extends BaseLanguage {
 
   @override
   String get lblBookingDescription => 'Booking Description';
+
+  // Booking confirmation banner
+  @override
+  String get lblYourBookingIsConfirmed => 'Your booking is confirmed.';
+
+  @override
+  String get lblRemoveItem => 'Remove item?';
+
+  @override
+  String get lblRemoveItemConfirmation =>
+      'Are you sure want to remove this item from your cart?';
+
+  @override
+  String get lblSure => 'Sure';
+
+  @override
+  String get lblNoThanks => 'No, thanks';
 }
