@@ -1,6 +1,7 @@
 import 'package:booking_system_flutter/component/loader_widget.dart';
 import 'package:booking_system_flutter/main.dart';
 import 'package:booking_system_flutter/model/booking_data_model.dart';
+import 'package:booking_system_flutter/model/service_detail_response.dart';
 import 'package:booking_system_flutter/network/rest_apis.dart';
 import 'package:booking_system_flutter/screens/booking/booking_detail_screen.dart';
 import 'package:booking_system_flutter/screens/booking/component/booking_item_component.dart';
@@ -138,13 +139,16 @@ class _BookingFragmentState extends State<BookingFragment> {
           });
 
           // Scroll to top if there are results
-          if (bookings.isNotEmpty && scrollController.hasClients) {
-            scrollController.animateTo(
-              0,
-              duration: 300.milliseconds,
-              curve: Curves.easeOutQuart,
-            );
-          }
+          // Use a post-frame callback to ensure the list is built before scrolling
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            if (mounted && scrollController.hasClients) {
+              scrollController.animateTo(
+                0,
+                duration: 300.milliseconds,
+                curve: Curves.easeOutQuart,
+              );
+            }
+          });
         },
       ),
     );
@@ -185,7 +189,7 @@ class _BookingFragmentState extends State<BookingFragment> {
         ],
         handyman: [],
       ),
-      // Accepted Booking
+      // Accepted Booking (with coupon)
       BookingData(
         id: 12346,
         serviceName: "AC Repair & Service",
@@ -206,6 +210,24 @@ class _BookingFragmentState extends State<BookingFragment> {
         totalAmount: 880,
         discount: 0,
         quantity: 1,
+        couponData: CouponData(
+          id: 1,
+          code: "QW3D4RTY",
+          discount: 100,
+          discountType: COUPON_TYPE_FIXED,
+          expireDate: DateTime.now().add(Duration(days: 30)).toIso8601String(),
+          status: 1,
+          isApplied: true,
+        ),
+        taxes: [
+          TaxData(
+            id: 1,
+            title: "GST",
+            type: "percent",
+            value: 10,
+            totalCalculatedValue: 80.0,
+          ),
+        ],
         serviceAttachments: [
           "https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=400"
         ],
@@ -453,6 +475,24 @@ class _BookingFragmentState extends State<BookingFragment> {
         totalAmount: 16500,
         discount: 0,
         quantity: 1,
+        couponData: CouponData(
+          id: 2,
+          code: "QW3D4RTY",
+          discount: 1500,
+          discountType: COUPON_TYPE_FIXED,
+          expireDate: DateTime.now().add(Duration(days: 30)).toIso8601String(),
+          status: 1,
+          isApplied: true,
+        ),
+        taxes: [
+          TaxData(
+            id: 1,
+            title: "GST",
+            type: "percent",
+            value: 10,
+            totalCalculatedValue: 1500.0,
+          ),
+        ],
         serviceAttachments: [
           "https://images.unsplash.com/photo-1484154218962-a197022b5858?w=400"
         ],
@@ -470,7 +510,7 @@ class _BookingFragmentState extends State<BookingFragment> {
   void dispose() {
     filterStore.clearFilters();
     LiveStream().dispose(LIVESTREAM_UPDATE_BOOKING_LIST);
-    //scrollController.dispose();
+    scrollController.dispose(); // Properly dispose the controller
     super.dispose();
   }
 
@@ -486,9 +526,9 @@ class _BookingFragmentState extends State<BookingFragment> {
         elevation: 3.0,
         color: context.primaryColor,
         actions: [
-          Observer(
-            builder: (_) {
-              // Use local filter count for the badge
+          // Use local filter count for the badge (no Observer needed - using local state)
+          Builder(
+            builder: (context) {
               int filterCount = selectedStatusFilters.length;
               return Stack(
                 children: [
@@ -552,7 +592,7 @@ class _BookingFragmentState extends State<BookingFragment> {
                       bottom: 60, top: 16, right: 16, left: 16),
                   itemCount: list.length,
                   shrinkWrap: true,
-                  disposeScrollController: true,
+                  disposeScrollController: false, // Don't auto-dispose, we'll manage it manually
                   listAnimationType: ListAnimationType.FadeIn,
                   fadeInConfiguration: FadeInConfiguration(duration: 2.seconds),
                   slideConfiguration: SlideConfiguration(verticalOffset: 400),

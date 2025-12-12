@@ -164,6 +164,9 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
         );
 
     // Build service data from booking data
+    // Enable advance payment if booking status is waitingAdvancedPayment
+    final isWaitingForAdvancePayment =
+        bookingData.status == BookingStatusKeys.waitingAdvancedPayment;
     final serviceData = ServiceData(
       id: bookingData.serviceId ?? 101,
       name: bookingData.serviceName ?? "Home Cleaning Service",
@@ -181,6 +184,12 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
             "https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=400"
           ],
       isFeatured: 1,
+      // Enable advance payment for waiting status
+      isEnableAdvancePayment: isWaitingForAdvancePayment ? 1 : 0,
+      advancePaymentPercentage: isWaitingForAdvancePayment ? 50 : null,
+      advancePaymentAmount: isWaitingForAdvancePayment
+          ? (bookingData.totalAmount ?? 0) * 0.5
+          : null,
     );
 
     // Build provider data
@@ -287,6 +296,57 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
                 ((bookingData.totalAmount ?? 600) * 0.1).toDouble(),
           ),
         ];
+
+    // Calculate payment breakdown
+    final basePrice = bookingData.amount ?? 600;
+    final discountPercent = bookingData.discount ?? 0;
+    final discountAmount = (basePrice * discountPercent / 100);
+    final priceAfterDiscount = basePrice - discountAmount;
+
+    // Calculate coupon discount if coupon exists
+    CouponData? couponData = bookingData.couponData;
+    num couponDiscountAmount = 0;
+
+    // If booking has a coupon code but no couponData, create one
+    if (couponData == null && bookingData.couponData == null) {
+      // Check if we should add a coupon (for some bookings)
+      // For example, add coupon for bookings with certain IDs or statuses
+      if (bookingData.id != null && bookingData.id! % 2 == 0) {
+        couponData = CouponData(
+          id: 1,
+          code: "QW3D4RTY",
+          discount: 100,
+          discountType: COUPON_TYPE_FIXED,
+          expireDate: DateTime.now().add(Duration(days: 30)).toIso8601String(),
+          status: 1,
+          isApplied: true,
+        );
+        couponDiscountAmount = couponData.discount ?? 0;
+      }
+    } else if (couponData != null) {
+      // Calculate coupon discount
+      if (couponData.discountType == COUPON_TYPE_FIXED) {
+        couponDiscountAmount = couponData.discount ?? 0;
+      } else if (couponData.discountType == COUPON_TYPE_PERCENT) {
+        couponDiscountAmount =
+            (priceAfterDiscount * (couponData.discount ?? 0) / 100);
+      }
+    }
+
+    final subtotal = priceAfterDiscount - couponDiscountAmount;
+    final totalTax =
+        taxes.fold<num>(0, (sum, tax) => sum + (tax.totalCalculatedValue ?? 0));
+    final finalTotal = subtotal + totalTax;
+
+    // Update booking data with calculated payment fields
+    bookingData.finalTotalServicePrice = basePrice;
+    bookingData.finalSubTotal = subtotal;
+    bookingData.finalDiscountAmount = discountAmount;
+    bookingData.finalCouponDiscountAmount = couponDiscountAmount;
+    bookingData.finalTotalTax = totalTax;
+    bookingData.totalAmount = finalTotal;
+    bookingData.couponData = couponData;
+    bookingData.taxes = taxes;
 
     // Create BookingDetailResponse with all the data
     final response = BookingDetailResponse(
@@ -1844,6 +1904,10 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
 
       case BookingStatusKeys.pendingApproval:
         return _waitingResponseMessage();
+
+      case BookingStatusKeys.waitingAdvancedPayment:
+        // Show Pay Advances button for waiting status
+        return _payNowOrAdvanceButton(bookingResponse, detail);
 
       case BookingStatusKeys.complete:
         if ((detail.type != SERVICE_TYPE_FREE ||
