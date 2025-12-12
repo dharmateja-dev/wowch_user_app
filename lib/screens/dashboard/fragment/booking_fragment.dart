@@ -566,8 +566,10 @@ class _BookingFragmentState extends State<BookingFragment> {
 
                     return GestureDetector(
                       onTap: () {
-                        BookingDetailScreen(bookingId: data.id.validate())
-                            .launch(context);
+                        BookingDetailScreen(
+                          bookingId: data.id.validate(),
+                          bookingData: data, // Pass the booking data to detail screen
+                        ).launch(context);
                       },
                       child: BookingItemComponent(bookingData: data),
                     );

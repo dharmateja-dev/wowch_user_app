@@ -59,8 +59,9 @@ import 'component/cancellations_booking_charge_dialog.dart';
 
 class BookingDetailScreen extends StatefulWidget {
   final int bookingId;
+  final BookingData? bookingData; // Optional booking data from fragment
 
-  BookingDetailScreen({required this.bookingId});
+  BookingDetailScreen({required this.bookingId, this.bookingData});
 
   @override
   _BookingDetailScreenState createState() => _BookingDetailScreenState();
@@ -96,6 +97,16 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
 
     // Use dummy data for UI testing
     if (_useDummyData) {
+      // Initialize booking status from passed data
+      if (widget.bookingData != null) {
+        bookingStatus = widget.bookingData!.status ?? "";
+        if (bookingStatus == BookingStatusKeys.onGoing) {
+          refreshProviderLocation();
+          startLocationUpdates();
+        } else {
+          stopLocationUpdates();
+        }
+      }
       future = _getDummyBookingDetail();
     } else {
       future = getBookingDetail(
@@ -117,94 +128,172 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
     if (isLoading) setState(() {});
   }
 
-  // Generate dummy booking detail for UI testing
+  // Generate dummy booking detail for UI testing using passed booking data
   Future<BookingDetailResponse> _getDummyBookingDetail() async {
     // Simulate API delay
     await Future.delayed(Duration(milliseconds: 500));
 
-    final now = DateTime.now();
-    final bookingDate = now.add(Duration(days: 1));
+    // Use passed booking data if available, otherwise create default
+    final bookingData = widget.bookingData ??
+        BookingData(
+          id: widget.bookingId,
+          serviceName: "Home Cleaning Service",
+          serviceId: 101,
+          customerId: appStore.userId,
+          customerName: appStore.userFullName,
+          providerId: 1,
+          providerName: "John's Cleaning Co.",
+          providerImage: "",
+          status: BookingStatusKeys.pending,
+          statusLabel: "Pending",
+          date: DateFormat(BOOKING_SAVE_FORMAT)
+              .format(DateTime.now().add(Duration(days: 1))),
+          bookingSlot: "10:00:00",
+          address: "123 Main Street, City Center, State 12345",
+          description: "Deep cleaning required for 3BHK apartment",
+          type: SERVICE_TYPE_FIXED,
+          amount: 1500,
+          totalAmount: 1650,
+          discount: 10,
+          quantity: 1,
+          paymentStatus: null,
+          paymentMethod: null,
+          bookingType: BOOKING_TYPE_SERVICE,
+          totalReview: 45,
+          totalRating: 4.5,
+        );
 
-    return BookingDetailResponse(
-      bookingDetail: BookingData(
-        id: widget.bookingId,
-        serviceName: "Home Cleaning Service",
-        serviceId: 101,
-        customerId: appStore.userId,
-        customerName: appStore.userFullName,
-        providerId: 1,
-        providerName: "John's Cleaning Co.",
-        providerImage: "",
-        status:
-            BookingStatusKeys.pending, // Can change to test different states
-        statusLabel: "Pending",
-        date: DateFormat(BOOKING_SAVE_FORMAT).format(bookingDate),
-        bookingSlot: "10:00:00",
-        address: "123 Main Street, City Center, State 12345",
-        description: "Deep cleaning required for 3BHK apartment",
-        type: SERVICE_TYPE_FIXED,
-        amount: 1500,
-        totalAmount: 1650,
-        discount: 10,
-        quantity: 1,
-        paymentStatus: null,
-        paymentMethod: null,
-        bookingType: BOOKING_TYPE_SERVICE,
-        totalReview: 45,
-        totalRating: 4.5,
-        taxes: [
+    // Build service data from booking data
+    final serviceData = ServiceData(
+      id: bookingData.serviceId ?? 101,
+      name: bookingData.serviceName ?? "Home Cleaning Service",
+      description:
+          "From among the many styles of interior design, the rustic style is one that emphasises inspiration from nature, coupled with earthy, incomplete, rough and uneven beauty.",
+      price: bookingData.amount ?? 1500,
+      type: bookingData.type ?? SERVICE_TYPE_FIXED,
+      status: 1,
+      discount: bookingData.discount ?? 0,
+      categoryId: 1,
+      categoryName: "Cleaning",
+      providerId: bookingData.providerId ?? 1,
+      attachments: bookingData.serviceAttachments ??
+          [
+            "https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=400"
+          ],
+      isFeatured: 1,
+    );
+
+    // Build provider data
+    final providerNameParts = bookingData.providerName?.split(' ') ?? [];
+    final providerData = UserData(
+      id: bookingData.providerId ?? 1,
+      firstName:
+          providerNameParts.isNotEmpty ? providerNameParts.first : "Jorge",
+      lastName: providerNameParts.length > 1 ? providerNameParts.last : "Perez",
+      displayName: bookingData.providerName ?? "Jorge Perez",
+      email: "provider@example.com",
+      contactNumber: "+1234567890",
+      profileImage: bookingData.providerImage ?? "",
+      address: bookingData.address ?? "Provider Address",
+      isVerifyProvider: bookingData.providerIsVerified ?? 1,
+      providersServiceRating: bookingData.totalRating?.toDouble() ?? 5.0,
+    );
+
+    // Build handyman data if available
+    List<UserData> handymanList = [];
+    if (bookingData.handyman != null && bookingData.handyman!.isNotEmpty) {
+      handymanList = bookingData.handyman!.map((h) {
+        // Use handyman UserData if available, otherwise create from handymanId
+        if (h.handyman != null) {
+          return h.handyman!;
+        } else {
+          return UserData(
+            id: h.handymanId ?? 2,
+            firstName: "Mike",
+            lastName: "Johnson",
+            displayName: "Mike Johnson",
+            email: "handyman@example.com",
+            contactNumber: "+0987654321",
+            profileImage: "",
+            handymanRating: 4.2,
+          );
+        }
+      }).toList();
+    }
+
+    // Build booking activity
+    final now = DateTime.now();
+    final bookingActivity = [
+      BookingActivity(
+        id: 1,
+        bookingId: bookingData.id ?? widget.bookingId,
+        activityType: "created",
+        activityMessage: "Booking created",
+        datetime:
+            bookingData.date ?? DateFormat(BOOKING_SAVE_FORMAT).format(now),
+        activityData:
+            '{"status": "${bookingData.status}", "label": "${bookingData.statusLabel}"}',
+      ),
+    ];
+
+    // Build rating data (always show 3 reviews for consistency with UI)
+    final ratingData = [
+      RatingData(
+        id: 1,
+        serviceId: bookingData.serviceId ?? 101,
+        customerId: 5,
+        customerName: "Jorge Perez",
+        profileImage: "",
+        rating: 5.0,
+        review:
+            "Incredible selection and quality in contemporary style clothing my new go to for fashion...",
+        createdAt: "2025-09-29T10:30:00.000Z",
+      ),
+      if (bookingData.totalReview != null && (bookingData.totalReview ?? 0) > 1)
+        RatingData(
+          id: 2,
+          serviceId: bookingData.serviceId ?? 101,
+          customerId: 6,
+          customerName: "Maria Garcia",
+          profileImage: "",
+          rating: 4.5,
+          review:
+              "Very professional service. The team was punctual and did an excellent job.",
+          createdAt: "2025-09-25T14:00:00.000Z",
+        ),
+      if (bookingData.totalReview != null && (bookingData.totalReview ?? 0) > 2)
+        RatingData(
+          id: 3,
+          serviceId: bookingData.serviceId ?? 101,
+          customerId: 7,
+          customerName: "John Doe",
+          profileImage: "",
+          rating: 5.0,
+          review:
+              "Excellent service quality and timely delivery. Highly recommended!",
+          createdAt: "2025-09-20T08:00:00.000Z",
+        ),
+    ];
+
+    // Build taxes if available
+    final taxes = bookingData.taxes ??
+        [
           TaxData(
             id: 1,
             title: "GST",
             type: "percent",
             value: 10,
-            totalCalculatedValue: 150,
+            totalCalculatedValue:
+                ((bookingData.totalAmount ?? 600) * 0.1).toDouble(),
           ),
-        ],
-      ),
-      service: ServiceData(
-        id: 101,
-        name: "Home Cleaning Service",
-        description:
-            "Professional home cleaning service with eco-friendly products",
-        price: 1500,
-        type: SERVICE_TYPE_FIXED,
-        status: 1,
-        discount: 10,
-        categoryId: 1,
-        categoryName: "Cleaning",
-        providerId: 1,
-        attachments: [
-          "https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=400"
-        ],
-        isFeatured: 1,
-      ),
-      providerData: UserData(
-        id: 1,
-        firstName: "John",
-        lastName: "Smith",
-        displayName: "John Smith", // Required for BookingDetailProviderWidget
-        email: "john.smith@example.com",
-        contactNumber: "+1234567890",
-        profileImage:
-            "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200",
-        address: "456 Provider Street, Business District",
-        isVerifyProvider: 1,
-        providersServiceRating: 4.5, // Required for star rating display
-      ),
-      handymanData: [
-        UserData(
-          id: 2,
-          firstName: "Mike",
-          lastName: "Johnson",
-          displayName: "Mike Johnson", // Required for display
-          email: "mike.johnson@example.com",
-          contactNumber: "+0987654321",
-          profileImage:
-              "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200",
-          handymanRating: 4.2, // Required for star rating display
-        ),
-      ],
+        ];
+
+    // Create BookingDetailResponse with all the data
+    final response = BookingDetailResponse(
+      bookingDetail: bookingData,
+      service: serviceData,
+      providerData: providerData,
+      handymanData: handymanList,
       customer: UserData(
         id: appStore.userId,
         firstName: appStore.userFirstName,
@@ -212,55 +301,23 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
         email: appStore.userEmail,
         contactNumber: appStore.userContactNumber,
       ),
-      bookingActivity: [
-        BookingActivity(
-          id: 1,
-          bookingId: widget.bookingId,
-          activityType: "created",
-          activityMessage: "Booking created",
-          datetime: DateFormat(BOOKING_SAVE_FORMAT).format(now),
-          activityData: '{"status": "pending", "label": "Pending"}',
-        ),
-      ],
-      ratingData: [
-        RatingData(
-          id: 1,
-          serviceId: 101,
-          customerId: 5,
-          customerName: "Jorge Perez",
-          profileImage: "",
-          rating: 5.0,
-          review:
-              "Incredible selection and quality in contemporary style clothing my new go to for fashion forward pieces that make a statement.",
-          createdAt: "2025-09-29T10:30:00.000Z",
-        ),
-        RatingData(
-          id: 2,
-          serviceId: 101,
-          customerId: 6,
-          customerName: "Maria Garcia",
-          profileImage: "",
-          rating: 4.5,
-          review:
-              "Very professional service. The team was punctual and did an excellent job. Highly recommended for anyone looking for quality work.",
-          createdAt: "2025-09-25T14:00:00.000Z",
-        ),
-      ],
+      bookingActivity: bookingActivity,
+      ratingData: ratingData,
       customerReview: null,
-      taxes: [
-        TaxData(
-          id: 1,
-          title: "GST",
-          type: "percent",
-          value: 10,
-          totalCalculatedValue: 150,
-        ),
-      ],
+      taxes: taxes,
       serviceProof: [],
-      couponData: null,
+      couponData: bookingData.couponData,
       postRequestDetail: null,
-      shop: null,
+      shop: bookingData.shopInfo,
     );
+
+    // Update booking status after response is created
+    bookingStatus = bookingData.status ?? "";
+    if (bookingStatus == BookingStatusKeys.onGoing) {
+      // Location updates will be handled in initState/init
+    }
+
+    return response;
   }
 
   //region Widgets
@@ -286,8 +343,36 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
           ],
         ),
       );
+    else if (snap.bookingDetail!.status == BookingStatusKeys.pending) {
+      return Container(
+        padding: const EdgeInsets.all(14),
+        width: context.width(),
+        color: Color(0xFFF8D7DA), // Light red background
+        child: Text(
+          "Waiting for Provider Approval",
+          style: boldTextStyle(color: Color(0xFFDC3545), size: 14), // Red text
+        ),
+      );
+    }
     return const SizedBox();
   }
+
+  /// ---------------- REUSABLE BUTTONS ----------------
+  Widget _cancelButton(BookingDetailResponse bookingResponse) => AppButton(
+        text: language.lblCancelBooking,
+        textColor: Colors.white,
+        color: primaryColor,
+        shapeBorder: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
+        onTap: () => _handleCancelClick(
+          status: bookingResponse,
+          isDurationMode: checkTimeDifference(
+            inputDateTime:
+                DateTime.parse(bookingResponse.bookingDetail!.date.validate()),
+          ),
+        ),
+      );
 
   Widget _completeMessage({required BookingDetailResponse snap}) {
     if (snap.bookingDetail!.status == BookingStatusKeys.complete &&
@@ -614,6 +699,9 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
           providerData: res.providerData!,
           canCustomerContact: canCustomerContact,
           providerIsHandyman: providerIsHandyman,
+          // Show contact buttons for Accepted/Waiting status (not Pending)
+          showContactButtons:
+              res.bookingDetail!.status != BookingStatusKeys.pending,
         ).onTap(
           () {
             ProviderInfoScreen(
@@ -1777,21 +1865,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
   }
 
   /// ---------------- REUSABLE BUTTONS ----------------
-  Widget _cancelButton(BookingDetailResponse bookingResponse) => AppButton(
-        text: language.lblCancelBooking,
-        textColor: Colors.white,
-        color: cancelled,
-        shapeBorder: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
-        onTap: () => _handleCancelClick(
-          status: bookingResponse,
-          isDurationMode: checkTimeDifference(
-            inputDateTime:
-                DateTime.parse(bookingResponse.bookingDetail!.date.validate()),
-          ),
-        ),
-      );
+  // Note: _cancelButton was removed to avoid duplication
 
   Widget _startButton(BookingDetailResponse bookingResponse) => AppButton(
         text: language.lblStart,
@@ -1885,7 +1959,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
             ? language.lblPayNow
             : language.payAdvance,
         textColor: Colors.white,
-        color: completed,
+        color: primaryColor, // Dark green
         shapeBorder: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
         ),
@@ -1897,7 +1971,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
   Widget _payNowButton(BookingDetailResponse bookingResponse) => AppButton(
         text: language.lblPayNow,
         textColor: Colors.white,
-        color: completed,
+        color: primaryColor, // Dark green
         shapeBorder: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
         ),
