@@ -43,6 +43,39 @@ const Map<String, String> DEMO_CATEGORY_IMAGES = {
   'default': 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png',
 };
 
+// Demo Subcategory Images for Household
+const Map<String, String> DEMO_SUBCATEGORY_IMAGES = {
+  'view_all': 'https://cdn-icons-png.flaticon.com/512/1048/1048947.png',
+  'washing_utensils': 'https://cdn-icons-png.flaticon.com/512/3075/3075977.png',
+  'washing_clothes': 'https://cdn-icons-png.flaticon.com/512/3163/3163680.png',
+  'washing_tiles': 'https://cdn-icons-png.flaticon.com/512/3343/3343638.png',
+  'bathroom_cleaning':
+      'https://cdn-icons-png.flaticon.com/512/3343/3343641.png',
+  'kitchen_cleaning': 'https://cdn-icons-png.flaticon.com/512/2073/2073054.png',
+  'car_washing': 'https://cdn-icons-png.flaticon.com/512/3028/3028046.png',
+  'floor_cleaning': 'https://cdn-icons-png.flaticon.com/512/2873/2873054.png',
+  'window_cleaning': 'https://cdn-icons-png.flaticon.com/512/2296/2296034.png',
+  'dusting': 'https://cdn-icons-png.flaticon.com/512/3343/3343659.png',
+  'default': 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png',
+};
+
+// Helper function to get demo subcategory image
+String getDemoSubcategoryImage(String? subcategoryName) {
+  if (subcategoryName == null || subcategoryName.isEmpty) {
+    return DEMO_SUBCATEGORY_IMAGES['default']!;
+  }
+
+  final lowerName = subcategoryName.toLowerCase().replaceAll(' ', '_');
+
+  for (final key in DEMO_SUBCATEGORY_IMAGES.keys) {
+    if (lowerName.contains(key) || key.contains(lowerName)) {
+      return DEMO_SUBCATEGORY_IMAGES[key]!;
+    }
+  }
+
+  return DEMO_SUBCATEGORY_IMAGES['default']!;
+}
+
 // Helper function to get demo category image
 String getDemoCategoryImage(String? categoryName) {
   if (categoryName == null || categoryName.isEmpty) {

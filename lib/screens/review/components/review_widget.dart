@@ -103,7 +103,10 @@ class ReviewWidget extends StatelessWidget {
                         style: primaryTextStyle(
                           color: textSecondaryColorGlobal,
                         ),
-                        trimLength: 100,
+                        trimLines: 3,
+                        trimMode: TrimMode.Line,
+                        trimCollapsedText: ' Read more',
+                        trimExpandedText: ' Read less',
                         colorClickableText: context.primaryColor,
                       ),
                     ],

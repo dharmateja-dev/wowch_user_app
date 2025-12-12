@@ -277,6 +277,9 @@ class LanguageFr extends BaseLanguage {
   String get btnRate => "Noter maintenant";
 
   @override
+  String get btnRateNow => "Noter maintenant";
+
+  @override
   String get btnSubmit => "Soumettre";
 
   @override
@@ -474,6 +477,9 @@ class LanguageFr extends BaseLanguage {
 
   @override
   String get lblNotRatedYet => "Vous n'avez pas encore été évalué";
+
+  @override
+  String get lblYouHaventRatedYet => "Vous n'avez pas encore été évalué";
 
   @override
   String get lblDeleteReview => "Supprimer l'examen";

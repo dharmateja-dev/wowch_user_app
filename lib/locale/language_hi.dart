@@ -260,6 +260,9 @@ class LanguageHi extends BaseLanguage {
   String get btnRate => "अब रेट करें";
 
   @override
+  String get btnRateNow => "अब रेट करें";
+
+  @override
   String get btnSubmit => "प्रस्तुत करना";
 
   @override
@@ -456,6 +459,9 @@ class LanguageHi extends BaseLanguage {
 
   @override
   String get lblNotRatedYet => "आपने अभी तक रेट नहीं किया है";
+
+  @override
+  String get lblYouHaventRatedYet => "आपने अभी तक रेट नहीं किया है";
 
   @override
   String get lblDeleteReview => "समीक्षा हटाएं";

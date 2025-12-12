@@ -53,17 +53,45 @@ extension strEtx on String {
   Color get getBookingActivityStatusColor {
     switch (this.validate().replaceAll(' ', '_').toLowerCase()) {
       case ADD_BOOKING:
-        return add_booking;
+        return add_booking; // Red
       case ASSIGNED_BOOKING:
         return assigned_booking;
       case TRANSFER_BOOKING:
         return transfer_booking;
       case UPDATE_BOOKING_STATUS:
-        return update_booking_status;
+        return update_booking_status; // Dark green
       case CANCEL_BOOKING:
         return cancel_booking;
       case PAYMENT_MESSAGE_STATUS:
-        return payment_message_status;
+        return payment_message_status; // Yellow
+      case 'pending_approval':
+      case 'pending approval':
+        return update_booking_status; // Dark green for pending approval
+      case 'created':
+        return add_booking; // Red for created/add booking
+      case 'accepted':
+        return update_booking_status; // Dark green
+      case 'ongoing':
+      case 'on_going':
+        return assigned_booking; // Orange
+      case 'started':
+      case 'in_progress':
+        return assigned_booking; // Orange
+      case 'held':
+      case 'hold':
+        return payment_message_status; // Yellow
+      case 'completed':
+        return update_booking_status; // Dark green
+      case 'cancelled':
+      case 'cancel':
+        return cancel_booking; // Red
+      case 'rejected':
+        return cancel_booking; // Red
+      case 'failed':
+        return cancel_booking; // Red
+      case 'waiting_payment':
+      case 'waiting payment':
+        return payment_message_status; // Yellow
 
       default:
         return defaultActivityStatus;

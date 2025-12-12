@@ -278,6 +278,9 @@ class LanguageDe extends BaseLanguage {
   String get btnRate => "Jetzt bewerten";
 
   @override
+  String get btnRateNow => "Jetzt bewerten";
+
+  @override
   String get btnSubmit => "einreichen";
 
   @override
@@ -475,6 +478,9 @@ class LanguageDe extends BaseLanguage {
 
   @override
   String get lblNotRatedYet => "Sie haben noch nicht bewertet";
+
+  @override
+  String get lblYouHaventRatedYet => "Sie haben noch nicht bewertet";
 
   @override
   String get lblDeleteReview => "Überprüfung löschen";

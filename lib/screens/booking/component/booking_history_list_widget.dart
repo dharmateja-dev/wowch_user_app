@@ -1,5 +1,6 @@
 import 'package:booking_system_flutter/model/booking_detail_model.dart';
 import 'package:booking_system_flutter/utils/common.dart';
+import 'package:booking_system_flutter/utils/constant.dart';
 import 'package:booking_system_flutter/utils/dashed_rect.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,51 @@ class BookingHistoryListWidget extends StatelessWidget {
   final BookingActivity data;
   final int index;
   final int length;
+
+  String _getActivityTypeLabel(String activityType) {
+    final normalized = activityType.toLowerCase().replaceAll(' ', '_');
+    switch (normalized) {
+      case ADD_BOOKING:
+        return 'Add Booking';
+      case PAYMENT_MESSAGE_STATUS:
+        return 'Payment Message Status';
+      case UPDATE_BOOKING_STATUS:
+        // Check activityData for status label
+        try {
+          final activityData = data.activityData;
+          if (activityData != null && activityData.contains('"label"')) {
+            // Try to extract label from JSON
+            final match = RegExp(r'"label":\s*"([^"]+)"').firstMatch(activityData);
+            if (match != null) {
+              return match.group(1) ?? 'Update Booking';
+            }
+          }
+        } catch (e) {
+          // Fallback to default
+        }
+        return 'Update Booking';
+      case CANCEL_BOOKING:
+        // Check activityData for status label
+        try {
+          final activityData = data.activityData;
+          if (activityData != null && activityData.contains('"label"')) {
+            final match = RegExp(r'"label":\s*"([^"]+)"').firstMatch(activityData);
+            if (match != null) {
+              return match.group(1) ?? 'Cancel Booking';
+            }
+          }
+        } catch (e) {
+          // Fallback to default
+        }
+        return 'Cancel Booking';
+      case ASSIGNED_BOOKING:
+        return 'Assigned Booking';
+      case TRANSFER_BOOKING:
+        return 'Transfer Booking';
+      default:
+        return activityType.replaceAll('_', ' ').capitalizeFirstLetter();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,13 +115,9 @@ class BookingHistoryListWidget extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            TextIcon(
-              expandedText: true,
-              edgeInsets: const EdgeInsets.only(right: 4, left: 4, bottom: 4),
-              text: data.activityType
-                  .validate()
-                  .replaceAll('_', ' ')
-                  .capitalizeFirstLetter(),
+            Text(
+              _getActivityTypeLabel(data.activityType.validate()),
+              style: boldTextStyle(size: 14),
             ),
             Text(
               data.activityMessage.validate().replaceAll('_', ' '),

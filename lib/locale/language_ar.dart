@@ -277,6 +277,9 @@ class LanguageAr extends BaseLanguage {
   String btnRate = "قيم الآن";
 
   @override
+  String get btnRateNow => "قيم الآن";
+
+  @override
   String btnSubmit = "ارسال";
 
   @override
@@ -471,6 +474,9 @@ class LanguageAr extends BaseLanguage {
 
   @override
   String get lblNotRatedYet => "لم تقيم بعد";
+
+  @override
+  String get lblYouHaventRatedYet => "لم تقيم بعد";
 
   @override
   String get lblDeleteReview => "حذف التقييم";

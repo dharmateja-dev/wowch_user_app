@@ -41,7 +41,7 @@ class PriceCommonWidget extends StatelessWidget {
       children: [
         24.height,
         Text(
-          language.priceDetail,
+          language.paymentDetail,
           style: boldTextStyle(),
         ),
         16.height,

@@ -275,6 +275,9 @@ class LanguageEn extends BaseLanguage {
   String get btnRate => "Rate Now ";
 
   @override
+  String get btnRateNow => "Rate Now";
+
+  @override
   String get btnSubmit => "Submit";
 
   @override
@@ -470,6 +473,9 @@ class LanguageEn extends BaseLanguage {
 
   @override
   String get lblNotRatedYet => "You haven't rated yet";
+
+  @override
+  String get lblYouHaventRatedYet => "You Haven't Rated Yet";
 
   @override
   String get lblDeleteReview => "Delete Review";

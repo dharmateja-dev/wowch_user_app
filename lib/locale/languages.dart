@@ -184,6 +184,8 @@ abstract class BaseLanguage {
 
   String get btnRate;
 
+  String get btnRateNow;
+
   String get btnSubmit;
 
   String get walkThrough1;
@@ -311,6 +313,8 @@ abstract class BaseLanguage {
   String get lblAboutProvider;
 
   String get lblNotRatedYet;
+
+  String get lblYouHaventRatedYet;
 
   String get lblDeleteReview;
 

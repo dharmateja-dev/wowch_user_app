@@ -10,6 +10,7 @@ import 'package:booking_system_flutter/generated/assets.dart';
 import 'package:booking_system_flutter/main.dart';
 import 'package:booking_system_flutter/model/booking_data_model.dart';
 import 'package:booking_system_flutter/model/booking_detail_model.dart';
+import 'package:booking_system_flutter/model/booking_list_model.dart';
 import 'package:booking_system_flutter/model/extra_charges_model.dart';
 import 'package:booking_system_flutter/model/package_data_model.dart';
 import 'package:booking_system_flutter/model/service_data_model.dart';
@@ -128,6 +129,312 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
     if (isLoading) setState(() {});
   }
 
+  /// Generate status-specific dummy data for bookings
+  Map<String, dynamic> _generateStatusSpecificData(String status) {
+    final now = DateTime.now();
+    final baseDate = DateFormat(BOOKING_SAVE_FORMAT).format(now);
+    final futureDate =
+        DateFormat(BOOKING_SAVE_FORMAT).format(now.add(Duration(days: 1)));
+    final pastDate =
+        DateFormat(BOOKING_SAVE_FORMAT).format(now.subtract(Duration(days: 1)));
+
+    // Create handyman for statuses that need it
+    final handymanData = status == BookingStatusKeys.accept ||
+            status == BookingStatusKeys.onGoing ||
+            status == BookingStatusKeys.inProgress ||
+            status == BookingStatusKeys.hold ||
+            status == BookingStatusKeys.complete
+        ? [
+            Handyman(
+              id: 1,
+              handymanId: 2,
+              bookingId: widget.bookingId,
+              handyman: UserData(
+                id: 2,
+                firstName: "Mike",
+                lastName: "Johnson",
+                displayName: "Mike Johnson",
+                email: "handyman@example.com",
+                contactNumber: "+0987654321",
+                profileImage: "",
+                handymanRating: 4.2,
+              ),
+            ),
+          ]
+        : null;
+
+    // Create booking activity timeline based on status
+    List<BookingActivity> activities = [
+      BookingActivity(
+        id: 1,
+        bookingId: widget.bookingId,
+        activityType: ADD_BOOKING,
+        activityMessage:
+            "Pedro norris has booked your service. Please confirm the booking on your dashboard",
+        datetime: status == BookingStatusKeys.pending ||
+                status == BookingStatusKeys.accept ||
+                status == BookingStatusKeys.pendingApproval
+            ? futureDate
+            : pastDate,
+        activityData: '{"status": "created", "label": "Add Booking"}',
+      ),
+      BookingActivity(
+        id: 2,
+        bookingId: widget.bookingId,
+        activityType: PAYMENT_MESSAGE_STATUS,
+        activityMessage:
+            "Pedro norris has booked your service. Please confirm the booking on your dashboard",
+        datetime: status == BookingStatusKeys.pending ||
+                status == BookingStatusKeys.accept ||
+                status == BookingStatusKeys.pendingApproval
+            ? futureDate
+            : pastDate,
+        activityData:
+            '{"status": "payment", "label": "Payment Message Status"}',
+      ),
+    ];
+
+    // Add status-specific activities
+    switch (status) {
+      case BookingStatusKeys.accept:
+        activities.add(BookingActivity(
+          id: 3,
+          bookingId: widget.bookingId,
+          activityType: UPDATE_BOOKING_STATUS,
+          activityMessage:
+              "Pedro norris has booked your service. Please confirm the booking on your dashboard",
+          datetime: futureDate,
+          activityData: '{"status": "accept", "label": "Accepted"}',
+        ));
+        break;
+      case BookingStatusKeys.onGoing:
+        activities.addAll([
+          BookingActivity(
+            id: 3,
+            bookingId: widget.bookingId,
+            activityType: UPDATE_BOOKING_STATUS,
+            activityMessage:
+                "Pedro norris has booked your service. Please confirm the booking on your dashboard",
+            datetime: baseDate,
+            activityData: '{"status": "accept", "label": "Accepted"}',
+          ),
+          BookingActivity(
+            id: 4,
+            bookingId: widget.bookingId,
+            activityType: UPDATE_BOOKING_STATUS,
+            activityMessage:
+                "Pedro norris has booked your service. Please confirm the booking on your dashboard",
+            datetime: baseDate,
+            activityData: '{"status": "on_going", "label": "On Going"}',
+          ),
+        ]);
+        break;
+      case BookingStatusKeys.inProgress:
+        activities.addAll([
+          BookingActivity(
+            id: 3,
+            bookingId: widget.bookingId,
+            activityType: UPDATE_BOOKING_STATUS,
+            activityMessage:
+                "Pedro norris has booked your service. Please confirm the booking on your dashboard",
+            datetime: baseDate,
+            activityData: '{"status": "accept", "label": "Accepted"}',
+          ),
+          BookingActivity(
+            id: 4,
+            bookingId: widget.bookingId,
+            activityType: UPDATE_BOOKING_STATUS,
+            activityMessage:
+                "Pedro norris has booked your service. Please confirm the booking on your dashboard",
+            datetime: baseDate,
+            activityData: '{"status": "in_progress", "label": "In Progress"}',
+          ),
+        ]);
+        break;
+      case BookingStatusKeys.hold:
+        activities.addAll([
+          BookingActivity(
+            id: 3,
+            bookingId: widget.bookingId,
+            activityType: UPDATE_BOOKING_STATUS,
+            activityMessage:
+                "Pedro norris has booked your service. Please confirm the booking on your dashboard",
+            datetime: baseDate,
+            activityData: '{"status": "accept", "label": "Accepted"}',
+          ),
+          BookingActivity(
+            id: 4,
+            bookingId: widget.bookingId,
+            activityType: UPDATE_BOOKING_STATUS,
+            activityMessage:
+                "Pedro norris has booked your service. Please confirm the booking on your dashboard",
+            datetime: baseDate,
+            activityData: '{"status": "in_progress", "label": "In Progress"}',
+          ),
+          BookingActivity(
+            id: 5,
+            bookingId: widget.bookingId,
+            activityType: UPDATE_BOOKING_STATUS,
+            activityMessage:
+                "Pedro norris has booked your service. Please confirm the booking on your dashboard",
+            datetime: baseDate,
+            activityData: '{"status": "hold", "label": "Hold"}',
+          ),
+        ]);
+        break;
+      case BookingStatusKeys.complete:
+        activities.addAll([
+          BookingActivity(
+            id: 3,
+            bookingId: widget.bookingId,
+            activityType: UPDATE_BOOKING_STATUS,
+            activityMessage:
+                "Pedro norris has booked your service. Please confirm the booking on your dashboard",
+            datetime: pastDate,
+            activityData: '{"status": "accept", "label": "Accepted"}',
+          ),
+          BookingActivity(
+            id: 4,
+            bookingId: widget.bookingId,
+            activityType: UPDATE_BOOKING_STATUS,
+            activityMessage:
+                "Pedro norris has booked your service. Please confirm the booking on your dashboard",
+            datetime: pastDate,
+            activityData: '{"status": "in_progress", "label": "In Progress"}',
+          ),
+          BookingActivity(
+            id: 5,
+            bookingId: widget.bookingId,
+            activityType: UPDATE_BOOKING_STATUS,
+            activityMessage:
+                "Pedro norris has booked your service. Please confirm the booking on your dashboard",
+            datetime: pastDate,
+            activityData: '{"status": "completed", "label": "Completed"}',
+          ),
+        ]);
+        break;
+      case BookingStatusKeys.cancelled:
+        activities.add(BookingActivity(
+          id: 3,
+          bookingId: widget.bookingId,
+          activityType: CANCEL_BOOKING,
+          activityMessage:
+              "Pedro norris has booked your service. Please confirm the booking on your dashboard",
+          datetime: pastDate,
+          activityData: '{"status": "cancelled", "label": "Cancelled"}',
+        ));
+        break;
+      case BookingStatusKeys.rejected:
+        activities.add(BookingActivity(
+          id: 3,
+          bookingId: widget.bookingId,
+          activityType: CANCEL_BOOKING,
+          activityMessage:
+              "Pedro norris has booked your service. Please confirm the booking on your dashboard",
+          datetime: pastDate,
+          activityData: '{"status": "rejected", "label": "Rejected"}',
+        ));
+        break;
+      case BookingStatusKeys.failed:
+        activities.add(BookingActivity(
+          id: 3,
+          bookingId: widget.bookingId,
+          activityType: CANCEL_BOOKING,
+          activityMessage:
+              "Pedro norris has booked your service. Please confirm the booking on your dashboard",
+          datetime: pastDate,
+          activityData: '{"status": "failed", "label": "Failed"}',
+        ));
+        break;
+      case BookingStatusKeys.pendingApproval:
+        activities.add(BookingActivity(
+          id: 3,
+          bookingId: widget.bookingId,
+          activityType: UPDATE_BOOKING_STATUS,
+          activityMessage:
+              "Pedro norris has booked your service. Please confirm the booking on your dashboard",
+          datetime: futureDate,
+          activityData:
+              '{"status": "pending_approval", "label": "Pending Approval"}',
+        ));
+        break;
+      case BookingStatusKeys.waitingAdvancedPayment:
+        activities.addAll([
+          BookingActivity(
+            id: 3,
+            bookingId: widget.bookingId,
+            activityType: UPDATE_BOOKING_STATUS,
+            activityMessage:
+                "Pedro norris has booked your service. Please confirm the booking on your dashboard",
+            datetime: futureDate,
+            activityData: '{"status": "accept", "label": "Accepted"}',
+          ),
+          BookingActivity(
+            id: 4,
+            bookingId: widget.bookingId,
+            activityType: PAYMENT_MESSAGE_STATUS,
+            activityMessage:
+                "Pedro norris has booked your service. Please confirm the booking on your dashboard",
+            datetime: futureDate,
+            activityData:
+                '{"status": "waiting", "label": "Waiting for Advanced Payment"}',
+          ),
+        ]);
+        break;
+    }
+
+    // Set payment status based on booking status
+    String? paymentStatus;
+    String? paymentMethod;
+    int? paymentId;
+
+    if (status == BookingStatusKeys.complete) {
+      paymentStatus = SERVICE_PAYMENT_STATUS_PAID;
+      paymentMethod = PAYMENT_METHOD_COD;
+      paymentId = 12345;
+    } else if (status == BookingStatusKeys.waitingAdvancedPayment) {
+      paymentStatus = SERVICE_PAYMENT_STATUS_ADVANCE_PAID;
+      paymentMethod = PAYMENT_METHOD_STRIPE;
+    }
+
+    // Set booking date based on status
+    String bookingDate;
+    if (status == BookingStatusKeys.pending ||
+        status == BookingStatusKeys.accept ||
+        status == BookingStatusKeys.pendingApproval ||
+        status == BookingStatusKeys.waitingAdvancedPayment) {
+      bookingDate = futureDate;
+    } else {
+      bookingDate = baseDate;
+    }
+
+    // Create customer review for completed bookings
+    RatingData? customerReview;
+    if (status == BookingStatusKeys.complete && widget.bookingId % 3 != 0) {
+      customerReview = RatingData(
+        id: 100,
+        serviceId: 101,
+        customerId: appStore.userId,
+        customerName: appStore.userFullName,
+        profileImage: appStore.userProfileImage,
+        rating: 5.0,
+        review:
+            "I will be happy to give my review. The service was excellent and the handyman was very professional and courteous.",
+        createdAt: pastDate,
+      );
+    }
+
+    return {
+      'handyman': handymanData,
+      'activities': activities,
+      'paymentStatus': paymentStatus,
+      'paymentMethod': paymentMethod,
+      'paymentId': paymentId,
+      'bookingDate': bookingDate,
+      'customerReview': customerReview,
+    };
+  }
+
   // Generate dummy booking detail for UI testing using passed booking data
   Future<BookingDetailResponse> _getDummyBookingDetail() async {
     // Simulate API delay
@@ -162,6 +469,10 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
           totalReview: 45,
           totalRating: 4.5,
         );
+
+    // Get status-specific data
+    final statusData = _generateStatusSpecificData(
+        bookingData.status ?? BookingStatusKeys.pending);
 
     // Build service data from booking data
     // Enable advance payment if booking status is waitingAdvancedPayment
@@ -208,6 +519,18 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
       providersServiceRating: bookingData.totalRating?.toDouble() ?? 5.0,
     );
 
+    // Update booking data with status-specific data
+    final currentStatus = bookingData.status ?? BookingStatusKeys.pending;
+    bookingData.date = statusData['bookingDate'] as String;
+    bookingData.status = currentStatus;
+    bookingData.statusLabel = currentStatus.toBookingStatus();
+    bookingData.paymentStatus = statusData['paymentStatus'] as String?;
+    bookingData.paymentMethod = statusData['paymentMethod'] as String?;
+    bookingData.paymentId = statusData['paymentId'] as int?;
+    if (statusData['handyman'] != null) {
+      bookingData.handyman = statusData['handyman'] as List<Handyman>?;
+    }
+
     // Build handyman data if available
     List<UserData> handymanList = [];
     if (bookingData.handyman != null && bookingData.handyman!.isNotEmpty) {
@@ -230,20 +553,8 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
       }).toList();
     }
 
-    // Build booking activity
-    final now = DateTime.now();
-    final bookingActivity = [
-      BookingActivity(
-        id: 1,
-        bookingId: bookingData.id ?? widget.bookingId,
-        activityType: "created",
-        activityMessage: "Booking created",
-        datetime:
-            bookingData.date ?? DateFormat(BOOKING_SAVE_FORMAT).format(now),
-        activityData:
-            '{"status": "${bookingData.status}", "label": "${bookingData.statusLabel}"}',
-      ),
-    ];
+    // Use status-specific booking activities
+    final bookingActivity = statusData['activities'] as List<BookingActivity>;
 
     // Build rating data (always show 3 reviews for consistency with UI)
     final ratingData = [
@@ -363,7 +674,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
       ),
       bookingActivity: bookingActivity,
       ratingData: ratingData,
-      customerReview: null,
+      customerReview: statusData['customerReview'] as RatingData?,
       taxes: taxes,
       serviceProof: [],
       couponData: bookingData.couponData,
@@ -441,14 +752,14 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "You Haven't Rated Yet",
+            language.lblYouHaventRatedYet,
             style: boldTextStyle(size: 16),
           ),
           12.height,
           SizedBox(
             width: double.infinity,
             child: AppButton(
-              text: 'Rate Now',
+              text: language.btnRateNow,
               textStyle: boldTextStyle(color: Colors.white),
               color: context.primaryColor,
               padding: EdgeInsets.symmetric(vertical: 12),
@@ -1184,7 +1495,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        12.height,
+        16.height,
         Text(
           handymanList.isEmpty
               ? language.providerLocation
@@ -1193,11 +1504,11 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
                   : language.providerLocation,
           style: boldTextStyle(),
         ),
-        4.height,
+        8.height,
         Row(
           children: [
             Text("${language.lastUpdatedAt} ",
-                style: secondaryTextStyle(size: 10)),
+                style: primaryTextStyle(size: 10)),
             Text(
               "${DateTime.parse(providerLocation?.data.datetime.toString() ?? DateTime.now().toString()).timeAgo}",
               style: primaryTextStyle(size: 10),
@@ -1263,6 +1574,9 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
         Row(
           children: [
             AppButton(
+              shapeBorder: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
               onTap: () {
                 TrackLocation(
                   bookingId: widget.bookingId,
@@ -1271,7 +1585,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
               },
               padding: const EdgeInsets.only(top: 0, left: 8, right: 8),
               height: 42,
-              color: const Color(0xFF39A81D),
+              color: context.primaryColor,
               textColor: white,
               text: language.track,
             ).expand(),
@@ -1281,12 +1595,11 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
               height: 42,
               padding: const EdgeInsets.all(12),
               decoration: boxDecorationDefault(
-                color: Colors.white,
-                borderRadius: const BorderRadius.all(Radius.circular(6)),
+                borderRadius: const BorderRadius.all(Radius.circular(8)),
               ),
-              child: const CachedImageWidget(
+              child: CachedImageWidget(
                 url: ic_refresh,
-                color: textSecondaryColor,
+                color: context.iconColor,
                 height: 42,
               ),
             ).onTap(() {
@@ -1300,12 +1613,12 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
               decoration: boxDecorationDefault(
                 color: Colors.white,
                 borderRadius: const BorderRadius.all(
-                  Radius.circular(6),
+                  Radius.circular(8),
                 ),
               ),
-              child: const CachedImageWidget(
+              child: CachedImageWidget(
                 url: ic_share,
-                color: textSecondaryColor,
+                color: context.iconColor,
                 height: 22,
               ),
             ).onTap(
@@ -1316,14 +1629,14 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
           ],
         ),
         16.height,
-        Text(
-          handymanList.isEmpty
-              ? language.providerReached
-              : res.providerData!.id != handymanList.first.id
-                  ? language.handymanReached
-                  : language.providerReached,
-          style: secondaryTextStyle(),
-        ),
+        //Text(
+        //   handymanList.isEmpty
+        //       ? language.providerReached
+        //       : res.providerData!.id != handymanList.first.id
+        //           ? language.handymanReached
+        //           : language.providerReached,
+        //   style: secondaryTextStyle(),
+        // ),
       ],
     );
   }
@@ -1844,6 +2157,8 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
             : Offstage();
 
       case BookingStatusKeys.onGoing:
+        return _startButton(bookingResponse);
+
       case BookingStatusKeys.inProgress:
         return _holdAndDoneButtons(bookingResponse);
 
@@ -1892,9 +2207,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
         return _cancelButton(bookingResponse);
 
       case BookingStatusKeys.onGoing:
-        return bookingResponse.handymanData.validate().isNotEmpty
-            ? _startButton(bookingResponse)
-            : Offstage();
+        return _startButton(bookingResponse);
 
       case BookingStatusKeys.inProgress:
         return _holdAndDoneButtons(bookingResponse);
@@ -1936,7 +2249,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
         textColor: Colors.white,
         color: primaryColor,
         shapeBorder: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8),
         ),
         onTap: () => _handleStartClick(status: bookingResponse),
       );
@@ -1946,10 +2259,11 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
           if (!(bookingResponse.service?.isOnlineService ?? true))
             AppButton(
               text: language.lblHold,
-              textColor: Colors.white,
-              color: hold,
+              textColor: textPrimaryColor,
+              color: Color(0xFFE8F3EC),
               shapeBorder: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
+                side: BorderSide(color: context.primaryColor),
+                borderRadius: BorderRadius.circular(8),
               ),
               onTap: () => _handleHoldClick(status: bookingResponse),
             ).expand(),
@@ -1959,7 +2273,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
             textColor: Colors.white,
             color: primaryColor,
             shapeBorder: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(8),
             ),
             onTap: () => _handleDoneClick(status: bookingResponse),
           ).expand(),
@@ -1969,21 +2283,12 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
   Widget _resumeAndCancelButtons(BookingDetailResponse bookingResponse) => Row(
         children: [
           AppButton(
-            text: language.lblResume,
-            textColor: Colors.white,
-            color: primaryColor,
-            shapeBorder: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
-            onTap: () => _handleResumeClick(status: bookingResponse),
-          ).expand(),
-          12.width,
-          AppButton(
             text: language.lblCancel,
-            textColor: Colors.white,
-            color: cancelled,
+            textColor: textPrimaryColor,
+            color: Color(0xFFE8F3EC),
             shapeBorder: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
+              side: BorderSide(color: context.primaryColor),
+              borderRadius: BorderRadius.circular(8),
             ),
             onTap: () => _handleCancelClick(
               status: bookingResponse,
@@ -1993,26 +2298,29 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
               ),
             ),
           ).expand(),
+          12.width,
+          AppButton(
+            text: language.lblResume,
+            textColor: Colors.white,
+            color: primaryColor,
+            shapeBorder: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+            onTap: () => _handleResumeClick(status: bookingResponse),
+          ).expand(),
         ],
       );
 
   Widget _waitingResponseMessage() => Container(
         width: context.width(),
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(12),
+        alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: pendingApprovalColor.withValues(alpha: 0.15),
-          borderRadius: BorderRadius.circular(12),
+          color: Color(0xFFE8F3EC),
+          border: Border.all(color: context.primaryColor),
+          borderRadius: BorderRadius.circular(8),
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.access_time_rounded,
-                color: pendingApprovalColor, size: 20),
-            8.width,
-            Text(language.lblWaitingForResponse,
-                style: boldTextStyle(color: pendingApprovalColor)),
-          ],
-        ),
+        child: Text(language.lblWaitingForResponse, style: boldTextStyle()),
       );
 
   Widget _payNowOrAdvanceButton(
@@ -2025,7 +2333,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
         textColor: Colors.white,
         color: primaryColor, // Dark green
         shapeBorder: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8),
         ),
         onTap: () =>
             PaymentScreen(bookings: bookingResponse, isForAdvancePayment: true)
@@ -2037,7 +2345,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
         textColor: Colors.white,
         color: primaryColor, // Dark green
         shapeBorder: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8),
         ),
         onTap: () =>
             PaymentScreen(bookings: bookingResponse, isForAdvancePayment: false)
@@ -2050,7 +2358,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
         textColor: Colors.white,
         color: context.primaryColor,
         shapeBorder: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8),
         ),
         onTap: () async {
           bool? res = await showInDialog(
@@ -2076,7 +2384,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
           color: completed.withValues(alpha: 0.15),
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8),
         ),
         child: Text(language.sentInvoiceText,
                 style: boldTextStyle(), textAlign: TextAlign.center)
@@ -2098,7 +2406,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
                 /// Reason message for cancelled/rejected/failed bookings (red banner)
                 _buildReasonWidget(snap: snap.data!),
                 //_pendingMessage(snap: snap.data!),
-                _completeMessage(snap: snap.data!),
+                //_completeMessage(snap: snap.data!),
                 Row(
                   children: [
                     Text(
@@ -2237,12 +2545,14 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
                                 ? snap.data!.bookingDetail!.bookingPackage
                                 : null,
                       ),
+                      8.height,
 
                       /// Extra charges
                       extraChargesWidget(
                           extraChargesList: snap
                               .data!.bookingDetail!.extraCharges
                               .validate()),
+                      16.height,
 
                       /// "You Haven't Rated Yet" section with Rate Now button
                       _completeMessage(snap: snap.data!),
@@ -2276,20 +2586,6 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
 
     return Container(
       width: MediaQuery.of(context).size.width,
-      decoration: BoxDecoration(
-        color: context.scaffoldBackgroundColor,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.1),
-            blurRadius: 10,
-            offset: Offset(0, -2),
-          ),
-        ],
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(16),
-          topRight: Radius.circular(16),
-        ),
-      ),
       padding: EdgeInsets.fromLTRB(16, 16, 16, 16),
       child: actionWidget,
     );
@@ -2338,9 +2634,13 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
         .any((element) => element.status.getBoolInt() == false);
     showConfirmDialogCustom(
       context,
+      height: 80,
+      width: 290,
       negativeText: language.lblNo,
       dialogType: DialogType.CONFIRMATION,
       primaryColor: context.primaryColor,
+      customCenterWidget:
+          ic_warning.iconImage(size: 70, color: context.primaryColor),
       title: isAnyServiceAddonUnCompleted
           ? language.confirmation
           : language.lblEndServicesMsg,
@@ -2472,10 +2772,14 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
   void _handleResumeClick({required BookingDetailResponse status}) {
     showConfirmDialogCustom(
       context,
+      height: 80,
+      width: 290,
       dialogType: DialogType.CONFIRMATION,
       primaryColor: context.primaryColor,
       negativeText: language.lblNo,
       positiveText: language.lblYes,
+      customCenterWidget:
+          ic_warning.iconImage(size: 70, color: context.primaryColor),
       title: language.lblConFirmResumeService,
       onAccept: (c) async {
         Map request = {
