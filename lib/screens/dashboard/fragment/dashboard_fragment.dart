@@ -209,8 +209,7 @@ class _DashboardFragmentState extends State<DashboardFragment> {
                         serviceList: snap.featuredServices.validate()),
                     ServiceListComponent(serviceList: snap.service.validate()),
                     16.height,
-                    if (appConfigurationStore.jobRequestStatus)
-                      const NewJobRequestComponent(),
+                    const NewJobRequestComponent(),
                     100.height, // Extra padding for bottom nav
                   ],
                 ),
