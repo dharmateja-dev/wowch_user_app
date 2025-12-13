@@ -66,7 +66,10 @@ class _SplashScreenState extends State<SplashScreen> {
               MediaQuery.of(context).platformBrightness == Brightness.dark);
         }
 
-        if (appStore.isLoggedIn) {
+        if (getBoolAsync(IS_FIRST_TIME, defaultValue: true)) {
+          WalkThroughScreen().launch(context,
+              isNewTask: true, pageRouteAnimation: PageRouteAnimation.Fade);
+        } else if (appStore.isLoggedIn) {
           DashboardScreen().launch(context,
               isNewTask: true, pageRouteAnimation: PageRouteAnimation.Fade);
         } else {
