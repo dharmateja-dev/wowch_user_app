@@ -4,6 +4,7 @@ import 'package:booking_system_flutter/main.dart';
 import 'package:booking_system_flutter/screens/auth/sign_up_screen.dart';
 import 'package:booking_system_flutter/utils/colors.dart';
 import 'package:booking_system_flutter/utils/common.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:country_picker/country_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -335,7 +336,7 @@ class _OTPLoginScreenState extends State<OTPLoginScreen> {
                   focus: _mobileNumberFocus,
                   errorThisFieldRequired: language.requiredText,
                   decoration: inputDecoration(context,
-                      fillColor: Colors.transparent,
+                      fillColor: context.fillColor,
                       hintText: "${language.hintContactNumberTxt}",
                       counter: false,
                       borderRadius: 8,
@@ -363,7 +364,7 @@ class _OTPLoginScreenState extends State<OTPLoginScreen> {
                                   Icon(
                                     Icons.arrow_drop_down,
                                     size: 18,
-                                    color: context.iconColor,
+                                    color: context.icon,
                                   ),
                                 ],
                               ),
@@ -411,7 +412,7 @@ class _OTPLoginScreenState extends State<OTPLoginScreen> {
           elevation: 0,
           backgroundColor: context.scaffoldBackgroundColor,
           leading: Navigator.of(context).canPop()
-              ? BackWidget(iconColor: context.iconColor)
+              ? BackWidget(iconColor: context.icon)
               : null,
           scrolledUnderElevation: 0,
           systemOverlayStyle: SystemUiOverlayStyle(

@@ -1,8 +1,8 @@
 import 'package:booking_system_flutter/component/back_widget.dart';
 import 'package:booking_system_flutter/component/shimmer_widget.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
-
 
 class ServiceDetailShimmer extends StatelessWidget {
   @override
@@ -17,13 +17,18 @@ class ServiceDetailShimmer extends StatelessWidget {
             width: context.width(),
             child: Stack(
               children: [
-                SizedBox(height: 400, width: context.width(), child: ShimmerWidget()),
+                SizedBox(
+                    height: 400,
+                    width: context.width(),
+                    child: ShimmerWidget()),
                 Positioned(
                   top: context.statusBarHeight + 8,
                   left: 16,
                   child: Container(
-                    child: BackWidget(iconColor: context.iconColor),
-                    decoration: BoxDecoration(shape: BoxShape.circle, color: context.cardColor.withValues(alpha: 0.7)),
+                    child: BackWidget(iconColor: context.icon),
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: context.cardColor.withValues(alpha: 0.7)),
                   ),
                 ),
               ],
@@ -55,9 +60,11 @@ class ServiceDetailShimmer extends StatelessWidget {
                 12.height,
                 Row(
                   children: [
-                    ShimmerWidget(height: 28, width: 100).cornerRadiusWithClipRRect(20),
+                    ShimmerWidget(height: 28, width: 100)
+                        .cornerRadiusWithClipRRect(20),
                     12.width,
-                    ShimmerWidget(height: 28, width: 120).cornerRadiusWithClipRRect(20),
+                    ShimmerWidget(height: 28, width: 120)
+                        .cornerRadiusWithClipRRect(20),
                   ],
                 ),
               ],
@@ -74,7 +81,8 @@ class ServiceDetailShimmer extends StatelessWidget {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                ShimmerWidget(height: 50, width: 50).cornerRadiusWithClipRRect(25),
+                ShimmerWidget(height: 50, width: 50)
+                    .cornerRadiusWithClipRRect(25),
                 12.width,
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -83,11 +91,13 @@ class ServiceDetailShimmer extends StatelessWidget {
                     8.height,
                     Row(
                       children: [
-                        ShimmerWidget(height: 12, width: 12).cornerRadiusWithClipRRect(6),
+                        ShimmerWidget(height: 12, width: 12)
+                            .cornerRadiusWithClipRRect(6),
                         4.width,
                         ShimmerWidget(height: 12, width: 40),
                         6.width,
-                        ShimmerWidget(height: 16, width: 16).cornerRadiusWithClipRRect(8),
+                        ShimmerWidget(height: 16, width: 16)
+                            .cornerRadiusWithClipRRect(8),
                       ],
                     ),
                   ],

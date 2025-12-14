@@ -3,6 +3,7 @@ import 'package:booking_system_flutter/component/price_widget.dart';
 import 'package:booking_system_flutter/model/get_my_post_job_list_response.dart';
 import 'package:booking_system_flutter/screens/jobRequest/my_post_detail_screen.dart';
 import 'package:booking_system_flutter/utils/common.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -163,8 +164,7 @@ class _MyPostRequestItemComponentState
                       style: boldTextStyle(size: 14),
                     ),
                     IconButton(
-                      icon: ic_delete.iconImage(
-                          size: 18, color: context.iconColor),
+                      icon: ic_delete.iconImage(size: 18, color: context.icon),
                       visualDensity: VisualDensity.compact,
                       onPressed: () {
                         showConfirmDialogCustom(

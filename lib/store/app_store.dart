@@ -1,6 +1,7 @@
 import 'package:booking_system_flutter/locale/app_localizations.dart';
 import 'package:booking_system_flutter/main.dart';
 import 'package:booking_system_flutter/utils/colors.dart';
+import 'package:booking_system_flutter/utils/theme_colors.dart';
 import 'package:booking_system_flutter/utils/configs.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +30,8 @@ abstract class _AppStore with Store {
   bool isCurrentLocation = getBoolAsync(IS_CURRENT_LOCATION);
 
   @observable
-  String selectedLanguageCode = getStringAsync(SELECTED_LANGUAGE_CODE, defaultValue: DEFAULT_LANGUAGE);
+  String selectedLanguageCode =
+      getStringAsync(SELECTED_LANGUAGE_CODE, defaultValue: DEFAULT_LANGUAGE);
 
   @observable
   String userProfileImage = getStringAsync(PROFILE_IMAGE);
@@ -98,7 +100,8 @@ abstract class _AppStore with Store {
   num userWalletAmount = 0.0;
 
   @observable
-  bool isSubscribedForPushNotification = getBoolAsync(IS_SUBSCRIBED_FOR_PUSH_NOTIFICATION, defaultValue: true);
+  bool isSubscribedForPushNotification =
+      getBoolAsync(IS_SUBSCRIBED_FOR_PUSH_NOTIFICATION, defaultValue: true);
 
   @observable
   bool isSpeechActivated = false;
@@ -110,7 +113,8 @@ abstract class _AppStore with Store {
   LanguageDataModel selectedLanguage = languageList().first;
 
   @observable
-  bool isHelpDeskFirstTime = getBoolAsync(IS_HELP_DESK_FIRST_TIME, defaultValue: true);
+  bool isHelpDeskFirstTime =
+      getBoolAsync(IS_HELP_DESK_FIRST_TIME, defaultValue: true);
 
   @action
   void setExpansionDynamicHeight(double val) {
@@ -289,26 +293,26 @@ abstract class _AppStore with Store {
     isDarkMode = val;
 
     if (isDarkMode) {
-      textPrimaryColorGlobal = Colors.white;
-      textSecondaryColorGlobal = textSecondaryColor;
-      defaultLoaderBgColorGlobal = scaffoldSecondaryDark;
-      appButtonBackgroundColorGlobal = appButtonColorDark;
-      shadowColorGlobal = Colors.white12;
-      SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-        systemNavigationBarColor: scaffoldColorDark,
-        systemNavigationBarDividerColor: Colors.transparent,
-        systemNavigationBarIconBrightness: Brightness.dark,
-      ));
-    } else {
-      textPrimaryColorGlobal = textPrimaryColor;
-      textSecondaryColorGlobal = textSecondaryColor;
-      defaultLoaderBgColorGlobal = Colors.white;
-      appButtonBackgroundColorGlobal = Colors.white;
-      shadowColorGlobal = Colors.black12;
-      SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-        systemNavigationBarColor: Colors.white,
+      textPrimaryColorGlobal = DarkThemeColors.pureWhite;
+      textSecondaryColorGlobal = DarkThemeColors.softGray;
+      defaultLoaderBgColorGlobal = DarkThemeColors.charcoal;
+      appButtonBackgroundColorGlobal = DarkThemeColors.softCharcoal;
+      shadowColorGlobal = DarkThemeColors.shadowLight;
+      SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+        systemNavigationBarColor: DarkThemeColors.richBlack,
         systemNavigationBarDividerColor: Colors.transparent,
         systemNavigationBarIconBrightness: Brightness.light,
+      ));
+    } else {
+      textPrimaryColorGlobal = LightThemeColors.deepBlack;
+      textSecondaryColorGlobal = LightThemeColors.softGrey;
+      defaultLoaderBgColorGlobal = LightThemeColors.pureWhite;
+      appButtonBackgroundColorGlobal = LightThemeColors.pureWhite;
+      shadowColorGlobal = LightThemeColors.shadowLight;
+      SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+        systemNavigationBarColor: LightThemeColors.mediumGray,
+        systemNavigationBarDividerColor: Colors.transparent,
+        systemNavigationBarIconBrightness: Brightness.dark,
       ));
     }
   }
@@ -320,7 +324,8 @@ abstract class _AppStore with Store {
 
     await setValue(SELECTED_LANGUAGE_CODE, selectedLanguageCode);
 
-    language = await const AppLocalizations().load(Locale(selectedLanguageCode));
+    language =
+        await const AppLocalizations().load(Locale(selectedLanguageCode));
 
     errorMessage = language.pleaseTryAgain;
     errorSomethingWentWrong = language.somethingWentWrong;

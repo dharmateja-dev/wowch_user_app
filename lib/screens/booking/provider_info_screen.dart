@@ -19,6 +19,7 @@ import '../../component/empty_error_state_widget.dart';
 import '../../utils/colors.dart';
 import '../../utils/common.dart';
 import '../../utils/constant.dart';
+import '../../utils/context_extensions.dart';
 import '../service/view_all_service_screen.dart';
 import '../service/service_detail_screen.dart';
 
@@ -340,7 +341,7 @@ class ProviderInfoScreenState extends State<ProviderInfoScreen> {
                     ),
                     child: Icon(
                       isFavorite ? Icons.favorite : Icons.favorite_border,
-                      color: isFavorite ? Colors.red : context.iconColor,
+                      color: isFavorite ? Colors.red : context.icon,
                       size: 20,
                     ),
                   ),
@@ -620,7 +621,7 @@ class ProviderInfoScreenState extends State<ProviderInfoScreen> {
         // Email row
         Row(
           children: [
-            ic_message.iconImage(size: 20, color: context.iconColor),
+            ic_message.iconImage(size: 20, color: context.icon),
             12.width,
             Expanded(
               child: Text(
@@ -636,7 +637,7 @@ class ProviderInfoScreenState extends State<ProviderInfoScreen> {
         // Phone row
         Row(
           children: [
-            ic_calling.iconImage(size: 18, color: context.iconColor),
+            ic_calling.iconImage(size: 18, color: context.icon),
             12.width,
             Expanded(
               child: Text(

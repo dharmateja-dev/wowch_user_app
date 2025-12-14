@@ -12,6 +12,7 @@ import 'package:booking_system_flutter/screens/shop/shop_list_screen.dart';
 import 'package:booking_system_flutter/utils/colors.dart';
 import 'package:booking_system_flutter/utils/common.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/images.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
 import 'package:flutter/material.dart';
@@ -351,7 +352,7 @@ class _BookServiceScreenState extends State<BookServiceScreen> {
                   widget.data.serviceDetail!.bookingDescription = s;
                 },
                 suffix: Icon(Icons.mode_edit_outline_outlined,
-                    size: 18, color: context.iconColor),
+                    size: 18, color: context.icon),
                 decoration: inputDecoration(
                   context,
                   hintText: language.writeHere,
@@ -659,7 +660,7 @@ class _BookServiceScreenState extends State<BookServiceScreen> {
                             value: itemCount,
                             isExpanded: true,
                             icon: ic_down_arrow.iconImage(
-                                size: 16, color: context.iconColor),
+                                size: 16, color: context.icon),
                             style: boldTextStyle(size: 14),
                             dropdownColor: context.cardColor,
                             items: List.generate(10, (index) {
@@ -1173,7 +1174,7 @@ class _BookServiceScreenState extends State<BookServiceScreen> {
                     ),
                     IconButton(
                       icon: ic_edit_square.iconImage(
-                          size: 18, color: context.iconColor),
+                          size: 18, color: context.icon),
                       visualDensity: VisualDensity.compact,
                       onPressed: () async {
                         handleDateTimePick();
@@ -1343,7 +1344,7 @@ class _BookServiceScreenState extends State<BookServiceScreen> {
                       TextIcon(
                         spacing: 10,
                         prefix: Image.asset(ic_clock,
-                            width: 12, height: 12, color: context.iconColor),
+                            width: 12, height: 12, color: context.icon),
                         text: selectedShop!.shopStartTime
                                     .validate()
                                     .isNotEmpty &&

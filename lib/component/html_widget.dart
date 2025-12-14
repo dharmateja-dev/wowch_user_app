@@ -1,5 +1,6 @@
 import 'package:booking_system_flutter/component/back_widget.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -31,7 +32,7 @@ class HtmlWidget extends StatelessWidget {
           style: {
             "body": Style(
               fontSize: FontSize(16.0),
-              color: context.iconColor,
+              color: context.icon,
             ),
             "p": Style(backgroundColor: Colors.transparent),
           },

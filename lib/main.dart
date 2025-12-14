@@ -138,6 +138,11 @@ void main() async {
     appStore.setDarkMode(false);
   } else if (themeModeIndex == THEME_MODE_DARK) {
     appStore.setDarkMode(true);
+  } else {
+    // THEME_MODE_SYSTEM: Set isDarkMode based on current platform brightness
+    final brightness =
+        WidgetsBinding.instance.platformDispatcher.platformBrightness;
+    appStore.setDarkMode(brightness == Brightness.dark);
   }
 
   defaultToastBackgroundColor =
@@ -152,15 +157,48 @@ class MyApp extends StatefulWidget {
   _MyAppState createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
   }
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
+  }
+
+  @override
+  void didChangePlatformBrightness() {
+    // Called when system theme changes
+    int themeModeIndex =
+        getIntAsync(THEME_MODE_INDEX, defaultValue: THEME_MODE_SYSTEM);
+    if (themeModeIndex == THEME_MODE_SYSTEM) {
+      final brightness =
+          WidgetsBinding.instance.platformDispatcher.platformBrightness;
+      appStore.setDarkMode(brightness == Brightness.dark);
+
+      // Update toast colors
+      defaultToastBackgroundColor =
+          appStore.isDarkMode ? Colors.white : Colors.black;
+      defaultToastTextColor = appStore.isDarkMode ? Colors.black : Colors.white;
+    }
+  }
+
+  /// Returns the appropriate ThemeMode based on user preference
+  ThemeMode _getThemeMode() {
+    int themeModeIndex =
+        getIntAsync(THEME_MODE_INDEX, defaultValue: THEME_MODE_SYSTEM);
+    if (themeModeIndex == THEME_MODE_LIGHT) {
+      return ThemeMode.light;
+    } else if (themeModeIndex == THEME_MODE_DARK) {
+      return ThemeMode.dark;
+    } else {
+      // THEME_MODE_SYSTEM - Let Flutter handle it automatically
+      return ThemeMode.system;
+    }
   }
 
   @override
@@ -179,8 +217,7 @@ class _MyAppState extends State<MyApp> {
                 home: SplashScreen(),
                 theme: AppTheme.lightTheme(color: snap.data),
                 darkTheme: AppTheme.darkTheme(color: snap.data),
-                themeMode:
-                    appStore.isDarkMode ? ThemeMode.dark : ThemeMode.light,
+                themeMode: _getThemeMode(),
                 title: APP_NAME,
                 supportedLocales: LanguageDataModel.languageLocales(),
                 localizationsDelegates: [

@@ -1,5 +1,6 @@
 import 'package:booking_system_flutter/component/base_scaffold_widget.dart';
 import 'package:booking_system_flutter/store/filter_store.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -281,9 +282,8 @@ class _ViewAllServiceScreenState extends State<ViewAllServiceScreen> {
                       ? Icon(
                           Icons.grid_view_rounded,
                           size: 28,
-                          color: isSelected
-                              ? context.primaryColor
-                              : context.iconColor,
+                          color:
+                              isSelected ? context.primaryColor : context.icon,
                         )
                       : ClipRRect(
                           borderRadius: BorderRadius.circular(8),

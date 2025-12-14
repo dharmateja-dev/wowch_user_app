@@ -38,6 +38,7 @@ import 'package:booking_system_flutter/utils/booking_calculations_logic.dart';
 import 'package:booking_system_flutter/utils/colors.dart';
 import 'package:booking_system_flutter/utils/common.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/extensions/num_extenstions.dart';
 import 'package:booking_system_flutter/utils/images.dart';
 import 'package:booking_system_flutter/utils/model_keys.dart';
@@ -1608,7 +1609,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
               ),
               child: CachedImageWidget(
                 url: ic_refresh,
-                color: context.iconColor,
+                color: context.icon,
                 height: 42,
               ),
             ).onTap(() {
@@ -1627,7 +1628,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
               ),
               child: CachedImageWidget(
                 url: ic_share,
-                color: context.iconColor,
+                color: context.icon,
                 height: 22,
               ),
             ).onTap(
@@ -1997,7 +1998,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
                         TextIcon(
                           spacing: 10,
                           prefix: Image.asset(ic_clock,
-                              width: 12, height: 12, color: context.iconColor),
+                              width: 12, height: 12, color: context.icon),
                           text: shop.shopStartTime.validate().isNotEmpty &&
                                   shop.shopEndTime.isNotEmpty
                               ? '${shop.shopStartTime} - ${shop.shopEndTime}'

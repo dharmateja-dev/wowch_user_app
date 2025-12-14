@@ -9,6 +9,7 @@ import 'package:booking_system_flutter/network/rest_apis.dart';
 import 'package:booking_system_flutter/screens/auth/sign_in_screen.dart';
 import 'package:booking_system_flutter/services/location_service.dart';
 import 'package:booking_system_flutter/utils/colors.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/images.dart';
 import 'package:booking_system_flutter/utils/permissions.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
@@ -47,8 +48,17 @@ bool get isLoginTypeApple => appStore.loginType == LOGIN_TYPE_APPLE;
 
 bool get isLoginTypeOTP => appStore.loginType == LOGIN_TYPE_OTP;
 
-ThemeMode get appThemeMode =>
-    appStore.isDarkMode ? ThemeMode.dark : ThemeMode.light;
+ThemeMode get appThemeMode {
+  int themeModeIndex =
+      getIntAsync(THEME_MODE_INDEX, defaultValue: THEME_MODE_SYSTEM);
+  if (themeModeIndex == THEME_MODE_LIGHT) {
+    return ThemeMode.light;
+  } else if (themeModeIndex == THEME_MODE_DARK) {
+    return ThemeMode.dark;
+  } else {
+    return ThemeMode.system;
+  }
+}
 
 bool get isRTL => RTL_LanguageS.contains(appStore.selectedLanguageCode);
 
@@ -184,17 +194,17 @@ InputDecoration inputDecoration(
   return InputDecoration(
     contentPadding: EdgeInsets.only(left: 12, bottom: 8, top: 8, right: 10),
     labelText: labelText,
-    labelStyle: secondaryTextStyle(),
+    labelStyle: primaryTextStyle(),
     hintText: hintText,
     hintStyle: secondaryTextStyle(size: 14),
     alignLabelWithHint: true,
     counterText: counter == false ? "" : counterText,
     prefixIcon: prefixIcon,
-    suffixIconColor: context.iconColor,
+    suffixIconColor: context.icon,
     prefix: prefix,
     enabledBorder: OutlineInputBorder(
       borderRadius: radius(borderRadius ?? defaultRadius),
-      borderSide: BorderSide(color: grey300Color, width: 1.0),
+      borderSide: BorderSide(color: context.divider, width: 1.0),
     ),
     focusedErrorBorder: OutlineInputBorder(
       borderRadius: radius(borderRadius ?? defaultRadius),
@@ -207,11 +217,11 @@ InputDecoration inputDecoration(
     errorMaxLines: 2,
     border: OutlineInputBorder(
       borderRadius: radius(borderRadius ?? defaultRadius),
-      borderSide: BorderSide(color: grey300Color, width: 1.0),
+      borderSide: BorderSide(color: context.divider, width: 1.0),
     ),
     disabledBorder: OutlineInputBorder(
       borderRadius: radius(borderRadius ?? defaultRadius),
-      borderSide: BorderSide(color: grey300Color, width: 1.0),
+      borderSide: BorderSide(color: context.divider, width: 1.0),
     ),
     errorStyle: primaryTextStyle(color: Colors.red, size: 11),
     focusedBorder: OutlineInputBorder(
@@ -219,7 +229,7 @@ InputDecoration inputDecoration(
       borderSide: BorderSide(color: primaryColor, width: 1.0),
     ),
     filled: true,
-    fillColor: fillColor ?? context.cardColor,
+    fillColor: fillColor ?? context.fillColor,
   );
 }
 
@@ -601,7 +611,7 @@ void doIfLoggedIn(BuildContext context, VoidCallback callback) {
 }
 
 Widget trailing(BuildContext context) {
-  return ic_arrow_right.iconImage(color: context.iconColor, size: 16);
+  return ic_arrow_right.iconImage(color: context.icon, size: 16);
 }
 
 void showNewUpdateDialog(BuildContext context,
@@ -823,7 +833,7 @@ class MultiLanguageWidget extends StatelessWidget {
                           ? primaryColor
                           : context.scaffoldBackgroundColor,
                       elevation: 0,
-                      side: BorderSide(width: 1, color: context.iconColor),
+                      side: BorderSide(width: 1, color: context.icon),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(4)),
                       padding:

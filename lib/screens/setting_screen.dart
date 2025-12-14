@@ -4,6 +4,7 @@ import 'package:booking_system_flutter/main.dart';
 import 'package:booking_system_flutter/screens/language_screen.dart';
 import 'package:booking_system_flutter/utils/common.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/firebase_messaging_utils.dart';
 import 'package:booking_system_flutter/utils/images.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
@@ -32,7 +33,7 @@ class _SettingScreenState extends State<SettingScreen> {
           if (isLoginTypeUser)
             SettingItemWidget(
               leading: ic_lock.iconImage(
-                  size: SETTING_ICON_SIZE, color: context.iconColor),
+                  size: SETTING_ICON_SIZE, color: context.icon),
               title: language.changePassword,
               trailing: trailing(context),
               titleTextStyle: boldTextStyle(),
@@ -44,7 +45,7 @@ class _SettingScreenState extends State<SettingScreen> {
             ),
           SettingItemWidget(
             leading: ic_language
-                .iconImage(size: 17, color: context.iconColor)
+                .iconImage(size: 17, color: context.icon)
                 .paddingOnly(left: 2),
             title: language.language,
             trailing: trailing(context),
@@ -56,7 +57,7 @@ class _SettingScreenState extends State<SettingScreen> {
             },
           ),
           SettingItemWidget(
-            leading: ic_dark_mode.iconImage(size: 22, color: context.iconColor),
+            leading: ic_dark_mode.iconImage(size: 22, color: context.icon),
             title: language.appTheme,
             paddingAfterLeading: 12,
             trailing: trailing(context),
@@ -71,7 +72,7 @@ class _SettingScreenState extends State<SettingScreen> {
           ),
           SettingItemWidget(
             leading: ic_slider_status.iconImage(
-                size: SETTING_ICON_SIZE, color: context.iconColor),
+                size: SETTING_ICON_SIZE, color: context.icon),
             title: language.lblAutoSliderStatus,
             titleTextStyle: boldTextStyle(),
             trailing: Transform.scale(
@@ -87,7 +88,7 @@ class _SettingScreenState extends State<SettingScreen> {
           ),
           SettingItemWidget(
             leading: ic_check_update.iconImage(
-                size: SETTING_ICON_SIZE, color: context.iconColor),
+                size: SETTING_ICON_SIZE, color: context.icon),
             title: language.lblOptionalUpdateNotify,
             titleTextStyle: boldTextStyle(),
             trailing: Transform.scale(
@@ -121,7 +122,7 @@ class _SettingScreenState extends State<SettingScreen> {
           if (appStore.isLoggedIn)
             SettingItemWidget(
               leading: ic_notification.iconImage(
-                  size: SETTING_ICON_SIZE, color: context.iconColor),
+                  size: SETTING_ICON_SIZE, color: context.icon),
               title: language.pushNotification,
               titleTextStyle: boldTextStyle(),
               trailing: Transform.scale(
@@ -154,7 +155,7 @@ class _SettingScreenState extends State<SettingScreen> {
           //     if (data) {
           //       return SettingItemWidget(
           //         leading: ic_android_12.iconImage(
-          //             size: SETTING_ICON_SIZE, color: context.iconColor),
+          //             size: SETTING_ICON_SIZE, color: context.icon),
           //         title: language.lblMaterialTheme,
           //         titleTextStyle: boldTextStyle(),
           //         trailing: Transform.scale(

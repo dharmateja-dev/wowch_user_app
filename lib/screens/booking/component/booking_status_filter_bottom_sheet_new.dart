@@ -1,3 +1,4 @@
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -155,7 +156,7 @@ class _BookingStatusFilterBottomSheetNewState
                 IconButton(
                   icon: Icon(
                     Icons.close,
-                    color: context.iconColor,
+                    color: context.icon,
                     size: 24,
                   ),
                   onPressed: () => finish(context),

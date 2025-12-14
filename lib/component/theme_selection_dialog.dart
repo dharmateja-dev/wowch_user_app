@@ -1,6 +1,7 @@
 import 'package:booking_system_flutter/main.dart';
 import 'package:booking_system_flutter/utils/colors.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -75,7 +76,7 @@ class ThemeSelectionDaiLogState extends State<ThemeSelectionDaiLog> {
                     ),
                     child: Icon(
                       Icons.close,
-                      color: context.iconColor,
+                      color: context.icon,
                       size: 20,
                     ),
                   ),

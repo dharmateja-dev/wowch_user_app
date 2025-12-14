@@ -15,6 +15,7 @@ import 'package:booking_system_flutter/network/rest_apis.dart';
 import 'package:booking_system_flutter/utils/colors.dart';
 import 'package:booking_system_flutter/utils/common.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/model_keys.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -424,8 +425,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                     SettingItemWidget(
                       title: language.lblGallery,
                       titleTextStyle: primaryTextStyle(),
-                      leading:
-                          Icon(LineIcons.image_1, color: context.iconColor),
+                      leading: Icon(LineIcons.image_1, color: context.icon),
                       onTap: () {
                         finish(context, GalleryFileTypes.GALLERY);
                       },
@@ -433,7 +433,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                     SettingItemWidget(
                       title: language.camera,
                       titleTextStyle: primaryTextStyle(),
-                      leading: Icon(LineIcons.camera, color: context.iconColor),
+                      leading: Icon(LineIcons.camera, color: context.icon),
                       onTap: () {
                         finish(context, GalleryFileTypes.CAMERA);
                       },
@@ -571,7 +571,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                     enabled: !isLoginTypeApple,
                     decoration: inputDecoration(
                       context,
-                      fillColor: Colors.transparent,
+                      fillColor: context.fillColor,
                       borderRadius: 8,
                       hintText: language.hintFirstNameTxt,
                     ),
@@ -589,7 +589,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                     enabled: !isLoginTypeApple,
                     decoration: inputDecoration(
                       context,
-                      fillColor: Colors.transparent,
+                      fillColor: context.fillColor,
                       borderRadius: 8,
                       hintText: language.hintLastNameTxt,
                     ),
@@ -607,7 +607,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                     nextFocus: emailFocus,
                     decoration: inputDecoration(
                       context,
-                      fillColor: Colors.transparent,
+                      fillColor: context.fillColor,
                       borderRadius: 8,
                       //hintText: language.hintUserNameTxt,
                     ),
@@ -624,7 +624,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                     errorThisFieldRequired: language.requiredText,
                     decoration: inputDecoration(
                       context,
-                      fillColor: Colors.transparent,
+                      fillColor: context.fillColor,
                       borderRadius: 8,
                       hintText: language.hintEmailTxt,
                     ),
@@ -701,7 +701,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                     enabled: !isLoginTypeOTP,
                     errorThisFieldRequired: language.requiredText,
                     decoration: inputDecoration(context,
-                        fillColor: Colors.transparent,
+                        fillColor: context.fillColor,
                         hintText: "${language.hintPhoneNumberTxt}",
                         counter: false,
                         borderRadius: 8,
@@ -728,7 +728,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                                     Icon(
                                       Icons.arrow_drop_down,
                                       size: 18,
-                                      color: context.iconColor,
+                                      color: context.icon,
                                     ),
                                   ],
                                 ),
@@ -738,7 +738,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                         )),
                     maxLength: 15,
                     // suffix: ic_calling
-                    //     .iconImage(size: 10, color: context.iconColor)
+                    //     .iconImage(size: 10, color: context.icon)
                     //     .paddingAll(14),
                   ),
                   16.height,
@@ -751,7 +751,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                     errorThisFieldRequired: language.requiredText,
                     nextFocus: stateFocus,
                     decoration: inputDecoration(context,
-                        fillColor: Colors.transparent,
+                        fillColor: context.fillColor,
                         hintText: language.lblCountry,
                         borderRadius: 8),
                   ),
@@ -765,7 +765,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                     errorThisFieldRequired: language.requiredText,
                     nextFocus: cityFocus,
                     decoration: inputDecoration(context,
-                        fillColor: Colors.transparent,
+                        fillColor: context.fillColor,
                         hintText: language.lblState,
                         borderRadius: 8),
                   ),
@@ -778,7 +778,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                     focus: cityFocus,
                     errorThisFieldRequired: language.requiredText,
                     decoration: inputDecoration(context,
-                        fillColor: Colors.transparent,
+                        fillColor: context.fillColor,
                         hintText: language.lblCity,
                         borderRadius: 8),
                   ),
@@ -790,7 +790,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                     textFieldType: TextFieldType.MULTILINE,
                     maxLines: 3,
                     decoration: inputDecoration(context,
-                        fillColor: Colors.transparent,
+                        fillColor: context.fillColor,
                         hintText: language.hintApartment,
                         borderRadius: 8),
                     isValidationRequired: false,

@@ -1,5 +1,6 @@
 import 'package:booking_system_flutter/main.dart';
 import 'package:booking_system_flutter/utils/colors.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -69,8 +70,7 @@ class BookingConfirmationBanner extends StatelessWidget {
                       color: white,
                       shape: BoxShape.circle,
                     ),
-                    child:
-                        Icon(Icons.close, size: 16, color: context.iconColor),
+                    child: Icon(Icons.close, size: 16, color: context.icon),
                   ),
                 ),
               ],
@@ -89,7 +89,7 @@ class BookingConfirmationBanner extends StatelessWidget {
                   ),
                   child: Icon(
                     Icons.mail_outline_rounded,
-                    color: context.iconColor,
+                    color: context.icon,
                     size: 20,
                   ),
                 ),

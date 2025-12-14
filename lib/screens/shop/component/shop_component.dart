@@ -8,6 +8,7 @@ import 'package:booking_system_flutter/screens/service/service_detail_screen.dar
 import 'package:booking_system_flutter/screens/service/view_all_service_screen.dart';
 import 'package:booking_system_flutter/screens/shop/shop_detail_screen.dart';
 import 'package:booking_system_flutter/utils/colors.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/images.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
 import 'package:flutter/material.dart';
@@ -101,11 +102,12 @@ class ShopComponent extends StatelessWidget {
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        ic_location.iconImage(size: 14, color: context.iconColor),
+                        ic_location.iconImage(size: 14, color: context.icon),
                         4.width,
                         Expanded(
                           child: SizedBox(
-                            height: 20, // required for Marquee to know its height
+                            height:
+                                20, // required for Marquee to know its height
                             child: Marquee(
                               child: Text(
                                 "${shop.buildFullAddress()}",
@@ -118,9 +120,12 @@ class ShopComponent extends StatelessWidget {
                     ),
                     TextIcon(
                       edgeInsets: EdgeInsets.zero,
-                      text: shop.shopStartTime.validate().isNotEmpty && shop.shopEndTime.isNotEmpty ? '${shop.shopStartTime} - ${shop.shopEndTime}' : '---',
+                      text: shop.shopStartTime.validate().isNotEmpty &&
+                              shop.shopEndTime.isNotEmpty
+                          ? '${shop.shopStartTime} - ${shop.shopEndTime}'
+                          : '---',
                       expandedText: true,
-                      prefix: ic_clock.iconImage(size: 14, color: context.iconColor),
+                      prefix: ic_clock.iconImage(size: 14, color: context.icon),
                       textStyle: secondaryTextStyle(),
                       spacing: 4,
                     ),
@@ -154,10 +159,12 @@ class ShopComponent extends StatelessWidget {
                       ServiceData service = shop.services[index];
                       return InkWell(
                         onTap: () {
-                          ServiceDetailScreen(serviceId: service.id.validate()).launch(context);
+                          ServiceDetailScreen(serviceId: service.id.validate())
+                              .launch(context);
                         },
                         child: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 8, vertical: 6),
                           decoration: BoxDecoration(
                             color: primaryColor.withValues(alpha: 0.08),
                             borderRadius: radius(16),

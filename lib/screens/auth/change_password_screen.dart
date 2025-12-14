@@ -6,6 +6,7 @@ import 'package:booking_system_flutter/screens/dashboard/dashboard_screen.dart';
 import 'package:booking_system_flutter/utils/colors.dart';
 import 'package:booking_system_flutter/utils/common.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/model_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -96,7 +97,7 @@ class ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 suffixPasswordInvisibleWidget: const SizedBox.shrink(),
                 decoration: inputDecoration(
                   context,
-                  fillColor: Colors.transparent,
+                  fillColor: context.fillColor,
                   hintText: language.hintOldPasswordTxt,
                   borderRadius: 8,
                 ),
@@ -123,7 +124,7 @@ class ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 suffixPasswordInvisibleWidget: const SizedBox.shrink(),
                 decoration: inputDecoration(
                   context,
-                  fillColor: Colors.transparent,
+                  fillColor: context.fillColor,
                   hintText: language.hintNewPasswordTxt,
                   borderRadius: 8,
                 ),
@@ -167,7 +168,7 @@ class ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 },
                 decoration: inputDecoration(
                   context,
-                  fillColor: Colors.transparent,
+                  fillColor: context.fillColor,
                   hintText: language.hintReenterPasswordTxt,
                   borderRadius: 8,
                 ),

@@ -7,6 +7,7 @@ import 'package:booking_system_flutter/utils/colors.dart';
 import 'package:booking_system_flutter/utils/common.dart';
 import 'package:booking_system_flutter/utils/configs.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/images.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
 import 'package:country_picker/country_picker.dart';
@@ -288,7 +289,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               hintText: language.hintFirstNameTxt,
               borderRadius: 8),
           suffix: ic_profile2
-              .iconImage(size: 10, color: context.iconColor)
+              .iconImage(size: 10, color: context.icon)
               .paddingAll(14),
         ),
         16.height,
@@ -305,7 +306,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               hintText: language.hintLastNameTxt,
               borderRadius: 8),
           suffix: ic_profile2
-              .iconImage(size: 10, color: context.iconColor)
+              .iconImage(size: 10, color: context.icon)
               .paddingAll(14),
         ),
         16.height,
@@ -323,7 +324,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               hintText: language.hintUserNameTxt,
               borderRadius: 8),
           suffix: ic_profile2
-              .iconImage(size: 10, color: context.iconColor)
+              .iconImage(size: 10, color: context.icon)
               .paddingAll(14),
         ),
         16.height,
@@ -340,7 +341,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               hintText: language.hintEmailTxt,
               borderRadius: 8),
           suffix: ic_message
-              .iconImage(size: 10, color: context.iconColor)
+              .iconImage(size: 10, color: context.icon)
               .paddingAll(14),
         ),
         16.height,
@@ -381,7 +382,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           Icon(
                             Icons.arrow_drop_down,
                             size: 18,
-                            color: context.iconColor,
+                            color: context.icon,
                           ),
                         ],
                       ),
@@ -391,7 +392,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               )),
           maxLength: 15,
           suffix: ic_calling
-              .iconImage(size: 10, color: context.iconColor)
+              .iconImage(size: 10, color: context.icon)
               .paddingAll(14),
         ),
         8.height,
@@ -420,14 +421,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 readOnly:
                     widget.isOTPLogin.validate() ? widget.isOTPLogin : false,
                 suffixPasswordVisibleWidget: ic_show
-                    .iconImage(size: 10, color: context.iconColor)
+                    .iconImage(size: 10, color: context.icon)
                     .paddingAll(14),
                 suffixPasswordInvisibleWidget: ic_hide
-                    .iconImage(size: 10, color: context.iconColor)
+                    .iconImage(size: 10, color: context.icon)
                     .paddingAll(14),
                 errorThisFieldRequired: language.requiredText,
                 decoration: inputDecoration(context,
-                    fillColor: Colors.transparent,
+                    fillColor: context.fillColor,
                     hintText: language.hintPasswordTxt,
                     borderRadius: 8),
                 isValidationRequired: true,
@@ -554,7 +555,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       color: Theme.of(context).scaffoldBackgroundColor,
                       shape: BoxShape.circle,
                     ),
-                    child: BackWidget(iconColor: context.iconColor))
+                    child: BackWidget(iconColor: context.icon))
                 : null,
             backgroundColor: transparentColor,
             scrolledUnderElevation: 0,

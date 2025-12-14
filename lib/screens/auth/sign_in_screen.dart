@@ -10,6 +10,7 @@ import 'package:booking_system_flutter/utils/colors.dart';
 import 'package:booking_system_flutter/utils/common.dart';
 import 'package:booking_system_flutter/utils/configs.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/images.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -251,6 +252,7 @@ class _SignInScreenState extends State<SignInScreen> {
 //endregion
 
 //region Widgets
+//completed
   Widget _buildTopWidget() {
     return Container(
       child: Column(
@@ -413,7 +415,7 @@ class _SignInScreenState extends State<SignInScreen> {
             color: context.scaffoldBackgroundColor,
             border: Border.all(color: grey300Color, width: 2.0),
           ),
-          child: Icon(Icons.apple, size: 20, color: context.iconColor),
+          child: Icon(Icons.apple, size: 20, color: context.icon),
         ),
       ),
     );
@@ -499,24 +501,18 @@ class _SignInScreenState extends State<SignInScreen> {
     return GestureDetector(
       onTap: () => hideKeyboard(context),
       child: Scaffold(
+        backgroundColor: context.scaffold,
         extendBodyBehindAppBar: true,
         appBar: AppBar(
           elevation: 0,
           backgroundColor: Colors.transparent,
           leading: Navigator.of(context).canPop()
-              ? Container(
-                  margin: const EdgeInsets.only(left: 6),
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).scaffoldBackgroundColor,
-                    shape: BoxShape.circle,
-                  ),
-                  child: BackWidget(iconColor: context.iconColor))
+              ? BackWidget(iconColor: context.icon)
               : null,
           scrolledUnderElevation: 0,
           systemOverlayStyle: SystemUiOverlayStyle(
-              statusBarIconBrightness:
-                  appStore.isDarkMode ? Brightness.light : Brightness.dark,
-              statusBarColor: context.scaffoldBackgroundColor),
+              statusBarIconBrightness: context.statusBarBrightness,
+              statusBarColor: context.scaffold),
         ),
         body: Body(
           child: Form(
@@ -545,11 +541,11 @@ class _SignInScreenState extends State<SignInScreen> {
                             nextFocus: passwordFocus,
                             errorThisFieldRequired: language.requiredText,
                             decoration: inputDecoration(context,
-                                fillColor: Colors.transparent,
+                                fillColor: context.fillColor,
                                 hintText: language.hintEmailTxt,
                                 borderRadius: 8),
                             suffix: ic_message
-                                .iconImage(size: 10, color: context.iconColor)
+                                .iconImage(size: 10, color: context.icon)
                                 .paddingAll(14),
                             autoFillHints: [AutofillHints.email],
                           ),
@@ -563,13 +559,13 @@ class _SignInScreenState extends State<SignInScreen> {
                             focus: passwordFocus,
                             obscureText: true,
                             suffixPasswordVisibleWidget: ic_show
-                                .iconImage(size: 10, color: context.iconColor)
+                                .iconImage(size: 10, color: context.icon)
                                 .paddingAll(14),
                             suffixPasswordInvisibleWidget: ic_hide
-                                .iconImage(size: 10, color: context.iconColor)
+                                .iconImage(size: 10, color: context.icon)
                                 .paddingAll(14),
                             decoration: inputDecoration(context,
-                                fillColor: Colors.transparent,
+                                fillColor: context.fillColor,
                                 hintText: language.hintPasswordTxt,
                                 borderRadius: 8),
                             autoFillHints: [AutofillHints.password],

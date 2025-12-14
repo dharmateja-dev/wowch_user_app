@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -126,18 +127,23 @@ class _CustomImagePickerState extends State<CustomImagePicker> {
               alignment: Alignment.center,
               height: widget.height,
               width: widget.weight,
-              decoration: boxDecorationWithShadow(blurRadius: 0, backgroundColor: context.cardColor, borderRadius: radius()),
+              decoration: boxDecorationWithShadow(
+                  blurRadius: 0,
+                  backgroundColor: context.cardColor,
+                  borderRadius: radius()),
               child: Column(
                 children: [
                   ic_no_photo.iconImage(size: widget.iconSize ?? 46),
                   8.height,
-                  Text(language.chooseImage, style: secondaryTextStyle(size: widget.textSize)),
+                  Text(language.chooseImage,
+                      style: secondaryTextStyle(size: widget.textSize)),
                 ],
               ),
             ),
           ),
         ),
         16.height,
+
         /// Uncomment when multiple images upload and set condition
         // Text('Note: You can upload images with \'jpg\', \'png\', \'jpeg\' extensions & you can select multiple images', style: secondaryTextStyle(size: 10)),
         Text(language.noteYouCanUpload, style: secondaryTextStyle(size: 10)),
@@ -165,7 +171,8 @@ class _CustomImagePickerState extends State<CustomImagePicker> {
                     width: widget.imageSize ?? 80,
                     fit: BoxFit.cover,
                     errorBuilder: (context, error, stackTrace) {
-                      return const PlaceHolderWidget(height: 80, alignment: Alignment.center);
+                      return const PlaceHolderWidget(
+                          height: 80, alignment: Alignment.center);
                     },
                   ).cornerRadiusWithClipRRect(defaultRadius),
                 Positioned(
@@ -175,7 +182,8 @@ class _CustomImagePickerState extends State<CustomImagePicker> {
                     onPressed: () {
                       widget.onRemoveClick!.call(imageFiles[index].path);
                     },
-                    icon: const Icon(Icons.dangerous_outlined, color: Colors.red),
+                    icon:
+                        const Icon(Icons.dangerous_outlined, color: Colors.red),
                   ),
                 )
               ],
@@ -202,7 +210,7 @@ class FilePickerDialog extends StatelessWidget {
           SettingItemWidget(
             title: language.removeImage,
             titleTextStyle: primaryTextStyle(),
-            leading: Icon(Icons.close, color: context.iconColor),
+            leading: Icon(Icons.close, color: context.icon),
             onTap: () {
               finish(context, GalleryFileTypes.CANCEL);
             },
@@ -210,7 +218,7 @@ class FilePickerDialog extends StatelessWidget {
           SettingItemWidget(
             title: language.camera,
             titleTextStyle: primaryTextStyle(),
-            leading: Icon(LineIcons.camera, color: context.iconColor),
+            leading: Icon(LineIcons.camera, color: context.icon),
             onTap: () {
               finish(context, GalleryFileTypes.CAMERA);
             },
@@ -218,7 +226,7 @@ class FilePickerDialog extends StatelessWidget {
           SettingItemWidget(
             title: language.lblGallery,
             titleTextStyle: primaryTextStyle(),
-            leading: Icon(LineIcons.image_1, color: context.iconColor),
+            leading: Icon(LineIcons.image_1, color: context.icon),
             onTap: () {
               finish(context, GalleryFileTypes.GALLERY);
             },

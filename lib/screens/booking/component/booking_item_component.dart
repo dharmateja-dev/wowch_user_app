@@ -11,6 +11,7 @@ import 'package:booking_system_flutter/utils/model_keys.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 
 import '../../../model/service_detail_response.dart';
 import '../../../network/rest_apis.dart';
@@ -35,7 +36,7 @@ class _BookingItemComponentState extends State<BookingItemComponent> {
         style: const ButtonStyle(
           tapTargetSize: MaterialTapTargetSize.shrinkWrap,
         ),
-        icon: ic_edit_square.iconImage(size: 16, color: context.iconColor),
+        icon: ic_edit_square.iconImage(size: 16, color: context.icon),
         visualDensity: VisualDensity.compact,
         onPressed: () async {
           ServiceDetailResponse res = await getServiceDetails(
