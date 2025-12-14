@@ -236,7 +236,7 @@ class DarkThemeColors {
   static const Color bottomNavBackground = darkCharcoal;
   static const Color bottomSheetBackground = softCharcoal; // #2A2A2A
   static const Color dialogBackground =
-      Color(0xFF203325); // Dialog box background
+      Color(0xFF202325); // Dialog box background
   static const Color appButtonBackground = Color(0xFF282828);
   static const Color textPrimary = pureWhite;
   static const Color textSecondary = softWhite;

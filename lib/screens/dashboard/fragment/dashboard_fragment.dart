@@ -180,7 +180,7 @@ class _DashboardFragmentState extends State<DashboardFragment> {
               Container(
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  color: context.scaffoldBackgroundColor,
+                  color: context.scaffold,
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(16),
                     topRight: Radius.circular(16),
@@ -188,7 +188,7 @@ class _DashboardFragmentState extends State<DashboardFragment> {
                 ),
                 child: Column(
                   children: [
-                    16.height,
+                    14.height,
                     // Booking Confirmation Banner - shows above categories
                     if (showBookingBanner)
                       BookingConfirmationBanner(

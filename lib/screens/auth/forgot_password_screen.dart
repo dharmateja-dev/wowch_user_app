@@ -64,27 +64,23 @@ class ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              padding: EdgeInsets.all(16),
-              width: context.width(),
-              decoration: boxDecorationDefault(
-                borderRadius:
-                    radiusOnly(topRight: defaultRadius, topLeft: defaultRadius),
-              ),
-              child:
-                  Text(language.forgotPassword, style: boldTextStyle(size: 24))
-                      .center(),
-            ),
+            16.height,
+            Text(language.forgotPassword, style: boldTextStyle(size: 22))
+                .center(),
             Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text("${language.hintEmailAddressTxt}",
-                    style: boldTextStyle(size: 14)),
+                    style: primaryTextStyle(
+                      size: 14,
+                    )),
                 6.height,
                 Text(language.lblForgotPwdSubtitle,
-                    style: secondaryTextStyle(
-                        size: 12, weight: FontWeight.w500, color: grey)),
+                    style: primaryTextStyle(
+                      size: 12,
+                      weight: FontWeight.w400,
+                    )),
                 24.height,
                 Observer(
                   builder: (_) => AppTextField(
@@ -102,7 +98,7 @@ class ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 AppButton(
                   text: language.confirm,
                   color: context.primary,
-                  textColor: context.scaffoldBackgroundColor,
+                  textColor: context.onPrimary,
                   width: context.width() - context.navigationBarHeight,
                   onTap: () {
                     forgotPwd();

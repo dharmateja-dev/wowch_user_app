@@ -71,6 +71,7 @@ class ChangePasswordScreenState extends State<ChangePasswordScreen> {
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
+      scaffoldBackgroundColor: context.scaffold,
       leading: BackWidget(
         iconColor: context.onPrimary,
         onPressed: () {

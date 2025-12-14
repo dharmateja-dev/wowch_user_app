@@ -174,6 +174,11 @@ extension ColorSchemeExtension on BuildContext {
   /// Search text color (typed text) - Dark in both themes: #1E1E1E
   Color get searchTextColor => const Color(0xFF1E1E1E);
 
+  /// Search hint text color - Light: #6C7072, Dark: #B2C7BF
+  Color get searchHintTextColor => isDarkMode
+      ? DarkThemeColors.liteGreenContainerText
+      : LightThemeColors.softGrey;
+
   // ══════════════════════════════════════════════════════════════════════════
   // CONTAINER COLORS
   // ══════════════════════════════════════════════════════════════════════════

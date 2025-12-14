@@ -309,6 +309,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   context,
                   contentPadding: EdgeInsets.zero,
                   dialogAnimation: DialogAnimation.SLIDE_TOP_BOTTOM,
+                  backgroundColor: context.dialogBackgroundColor,
                   builder: (_) => ForgotPasswordScreen(),
                 );
               },

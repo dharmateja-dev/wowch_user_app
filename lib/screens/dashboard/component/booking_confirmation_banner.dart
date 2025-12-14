@@ -1,6 +1,7 @@
 import 'package:booking_system_flutter/main.dart';
 import 'package:booking_system_flutter/utils/colors.dart';
 import 'package:booking_system_flutter/utils/context_extensions.dart';
+import 'package:booking_system_flutter/utils/theme_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -29,7 +30,7 @@ class BookingConfirmationBanner extends StatelessWidget {
         margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         padding: EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: Color(0xFF93C0AB), // Light green background
+          color: context.primaryContainer, // Light green background
           borderRadius: BorderRadius.circular(8),
         ),
         child: Column(
@@ -45,16 +46,17 @@ class BookingConfirmationBanner extends StatelessWidget {
                       width: 3,
                       height: 16,
                       decoration: BoxDecoration(
-                        color: white,
+                        color: context.onPrimary,
                         borderRadius: BorderRadius.circular(2),
                       ),
                     ),
                     8.width,
                     Text(
                       language.lblYourBookingIsConfirmed,
-                      style: primaryTextStyle(
+                      style: boldTextStyle(
                         size: 13,
-                        weight: FontWeight.bold,
+                        color: DarkThemeColors
+                            .onPrimaryContainer, // #121212 always
                       ),
                     ),
                   ],
@@ -67,7 +69,7 @@ class BookingConfirmationBanner extends StatelessWidget {
                   child: Container(
                     padding: EdgeInsets.all(2),
                     decoration: BoxDecoration(
-                      color: white,
+                      color: context.onPrimary,
                       shape: BoxShape.circle,
                     ),
                     child: Icon(

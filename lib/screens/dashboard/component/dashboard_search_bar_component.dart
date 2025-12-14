@@ -3,6 +3,7 @@ import 'package:booking_system_flutter/model/service_data_model.dart';
 import 'package:booking_system_flutter/screens/service/search_service_screen.dart';
 import 'package:booking_system_flutter/utils/colors.dart';
 import 'package:booking_system_flutter/utils/common.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/images.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
 import 'package:flutter/material.dart';
@@ -18,15 +19,8 @@ class DashboardSearchBarComponent extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       decoration: BoxDecoration(
-        color: context.scaffoldBackgroundColor,
+        color: context.inputFillColorSecondary,
         borderRadius: BorderRadius.circular(8),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
-            blurRadius: 4,
-            offset: Offset(0, 2),
-          ),
-        ],
       ),
       child: Row(
         children: [
@@ -35,8 +29,8 @@ class DashboardSearchBarComponent extends StatelessWidget {
           Expanded(
             child: Text(
               language.search, // localized placeholder "Search"
-              style: secondaryTextStyle(
-                color: appTextSecondaryColor,
+              style: primaryTextStyle(
+                color: context.searchHintTextColor,
                 size: 14,
               ),
             ),
@@ -47,7 +41,9 @@ class DashboardSearchBarComponent extends StatelessWidget {
               locationWiseService(context, () {});
             },
             child: ic_active_location.iconImage(
-                size: 20, context: context, color: primaryColor),
+              size: 20,
+              context: context,
+            ),
           ),
         ],
       ),

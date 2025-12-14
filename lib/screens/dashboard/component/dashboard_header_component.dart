@@ -44,7 +44,7 @@ class DashboardHeaderComponent extends StatelessWidget {
                         children: [
                           ic_location.iconImage(
                             size: 20,
-                            color: Colors.white,
+                            color: context.onPrimary,
                             context: context,
                           ),
                           8.width,
@@ -55,7 +55,7 @@ class DashboardHeaderComponent extends StatelessWidget {
                                 Text(
                                   "Amar Harmony",
                                   style: boldTextStyle(
-                                    color: Colors.white,
+                                    color: context.onPrimary,
                                     size: 14,
                                   ),
                                   maxLines: 1,
@@ -67,10 +67,11 @@ class DashboardHeaderComponent extends StatelessWidget {
                                       ? getStringAsync(CURRENT_ADDRESS)
                                       : language.lblLocationOff,
                                   style: secondaryTextStyle(
-                                    color: Colors.white.withValues(alpha: 0.9),
+                                    color: context.onPrimary
+                                        .withValues(alpha: 0.9),
                                     size: 11,
                                   ),
-                                  maxLines: 1,
+                                  maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
                                 ),
                               ],
@@ -89,7 +90,7 @@ class DashboardHeaderComponent extends StatelessWidget {
                   width: 30,
                   height: 30,
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: context.onPrimary,
                     shape: BoxShape.circle,
                   ),
                   child: Stack(
@@ -114,7 +115,7 @@ class DashboardHeaderComponent extends StatelessWidget {
                                         appStore.unreadCount.toString(),
                                         style: primaryTextStyle(
                                           size: 10,
-                                          color: Colors.white,
+                                          color: context.onPrimary,
                                         ),
                                       ),
                                     ),
