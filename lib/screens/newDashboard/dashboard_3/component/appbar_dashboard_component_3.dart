@@ -17,7 +17,8 @@ class AppbarDashboardComponent3 extends StatefulWidget {
   AppbarDashboardComponent3({required this.featuredList, this.callback});
 
   @override
-  State<AppbarDashboardComponent3> createState() => _AppbarDashboardComponent3State();
+  State<AppbarDashboardComponent3> createState() =>
+      _AppbarDashboardComponent3State();
 }
 
 class _AppbarDashboardComponent3State extends State<AppbarDashboardComponent3> {
@@ -50,21 +51,27 @@ class _AppbarDashboardComponent3State extends State<AppbarDashboardComponent3> {
               overflow: TextOverflow.ellipsis,
               style: boldTextStyle(),
             ),
-            appStore.isLoggedIn ? const Offstage() : Image.asset(ic_hi, height: 20, fit: BoxFit.cover),
+            appStore.isLoggedIn
+                ? const Offstage()
+                : Image.asset(ic_hi, height: 20, fit: BoxFit.cover),
           ],
         ).expand(),
         16.width,
         Container(
-          padding: EdgeInsets.symmetric(horizontal: 12, vertical: appStore.unreadCount > 0 ? 10 : 8),
+          padding: EdgeInsets.symmetric(
+              horizontal: 12, vertical: appStore.unreadCount > 0 ? 10 : 8),
           decoration: boxDecorationDefault(
             color: context.cardColor,
             borderRadius: radius(28),
           ),
           child: Row(
             children: [
-              ic_search.iconImage(size: 18).onTap(() {
-                SearchServiceScreen(featuredList: widget.featuredList).launch(context).then((value) {
-                  setStatusBarColor(Colors.transparent, statusBarIconBrightness: Brightness.dark);
+              ic_search.iconImage(size: 18, context: context).onTap(() {
+                SearchServiceScreen(featuredList: widget.featuredList)
+                    .launch(context)
+                    .then((value) {
+                  setStatusBarColor(Colors.transparent,
+                      statusBarIconBrightness: Brightness.dark);
                 });
               }),
               if (appStore.isLoggedIn)
@@ -72,24 +79,30 @@ class _AppbarDashboardComponent3State extends State<AppbarDashboardComponent3> {
                   child: Stack(
                     clipBehavior: Clip.none,
                     children: [
-                      ic_notification.iconImage(size: 18).center(),
-                      Observer(builder: (context) {
-                        if (appStore.unreadCount.validate() > 0)
-                          return Positioned(
-                            top: -2,
-                            right: 2,
-                            child: Container(
-                              padding: const EdgeInsets.all(3),
-                              decoration: boxDecorationDefault(color: Colors.red, shape: BoxShape.circle),
-                            ),
-                          );
-                        return const Offstage();
-                      },),
+                      ic_notification
+                          .iconImage(size: 18, context: context)
+                          .center(),
+                      Observer(
+                        builder: (context) {
+                          if (appStore.unreadCount.validate() > 0)
+                            return Positioned(
+                              top: -2,
+                              right: 2,
+                              child: Container(
+                                padding: const EdgeInsets.all(3),
+                                decoration: boxDecorationDefault(
+                                    color: Colors.red, shape: BoxShape.circle),
+                              ),
+                            );
+                          return const Offstage();
+                        },
+                      ),
                     ],
                   ),
                 ).paddingLeft(12).onTap(() {
                   NotificationScreen().launch(context).then((value) {
-                    setStatusBarColor(Colors.transparent, statusBarIconBrightness: Brightness.dark);
+                    setStatusBarColor(Colors.transparent,
+                        statusBarIconBrightness: Brightness.dark);
                   });
                 }),
             ],

@@ -533,7 +533,8 @@ class _BookingFragmentState extends State<BookingFragment> {
               return Stack(
                 children: [
                   IconButton(
-                    icon: ic_filter.iconImage(color: white, size: 20),
+                    icon: ic_filter.iconImage(
+                        size: 20, context: context, color: Colors.white),
                     onPressed: _showFilterBottomSheet,
                   ),
                   if (filterCount > 0)

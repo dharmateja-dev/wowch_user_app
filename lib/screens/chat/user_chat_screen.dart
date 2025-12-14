@@ -11,7 +11,6 @@ import 'package:booking_system_flutter/services/notification_services.dart';
 import 'package:booking_system_flutter/utils/colors.dart';
 import 'package:booking_system_flutter/utils/common.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
-import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_pagination/firebase_pagination.dart';
@@ -165,7 +164,10 @@ class _UserChatScreenState extends State<UserChatScreen>
         ).expand(),
         8.width,
         IconButton(
-          icon: ic_send_message.iconImage(size: 32, color: context.icon),
+          icon: ic_send_message.iconImage(
+            context: context,
+            size: 32,
+          ),
           onPressed: () {
             sendMessages();
           },

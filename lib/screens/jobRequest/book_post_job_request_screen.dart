@@ -265,7 +265,7 @@ class _BookPostJobRequestScreenState extends State<BookPostJobRequestScreen> {
                         onTap: () {
                           selectDateAndTime(context);
                         },
-                        decoration: inputDecoration(context, prefixIcon: ic_calendar.iconImage(size: 10).paddingAll(14)).copyWith(
+                        decoration: inputDecoration(context, prefixIcon: ic_calendar.iconImage(size: 10, context: context).paddingAll(14)).copyWith(
                           fillColor: context.cardColor,
                           filled: true,
                           hintText: language.chooseDateAndTime,
@@ -288,7 +288,7 @@ class _BookPostJobRequestScreenState extends State<BookPostJobRequestScreen> {
                             mainAxisSize: MainAxisSize.min,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              ic_location.iconImage(size: 22).paddingOnly(top: 8),
+                              ic_location.iconImage(size: 22, context:context).paddingOnly(top: 8),
                             ],
                           ),
                         ).copyWith(

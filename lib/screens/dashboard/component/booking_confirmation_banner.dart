@@ -70,7 +70,10 @@ class BookingConfirmationBanner extends StatelessWidget {
                       color: white,
                       shape: BoxShape.circle,
                     ),
-                    child: Icon(Icons.close, size: 16, color: context.icon),
+                    child: Icon(
+                      Icons.close,
+                      size: 16,
+                    ),
                   ),
                 ),
               ],

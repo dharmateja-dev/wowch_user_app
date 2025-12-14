@@ -1,10 +1,8 @@
 import 'dart:async';
 
-import 'package:booking_system_flutter/component/cached_image_widget.dart';
 import 'package:booking_system_flutter/main.dart';
 import 'package:booking_system_flutter/model/dashboard_model.dart';
 import 'package:booking_system_flutter/screens/notification/notification_screen.dart';
-import 'package:booking_system_flutter/screens/service/service_detail_screen.dart';
 import 'package:booking_system_flutter/utils/colors.dart';
 import 'package:booking_system_flutter/utils/configs.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
@@ -86,7 +84,8 @@ class _SliderLocationComponentState extends State<SliderLocationComponent> {
                   clipBehavior: Clip.none,
                   children: [
                     ic_notification
-                        .iconImage(size: 24, color: primaryColor)
+                        .iconImage(
+                            size: 24, color: primaryColor, context: context)
                         .center(),
                     Observer(
                       builder: (context) {
@@ -153,10 +152,7 @@ class _SliderLocationComponentState extends State<SliderLocationComponent> {
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            ic_location.iconImage(
-                                color: appStore.isDarkMode
-                                    ? Colors.white
-                                    : Colors.black),
+                            ic_location.iconImage(context: context),
                             8.width,
                             Expanded(
                               child: Text(
@@ -171,6 +167,7 @@ class _SliderLocationComponentState extends State<SliderLocationComponent> {
                             8.width,
                             ic_active_location.iconImage(
                                 size: 24,
+                                context: context,
                                 color: appStore.isCurrentLocation
                                     ? primaryColor
                                     : grey),
@@ -195,7 +192,8 @@ class _SliderLocationComponentState extends State<SliderLocationComponent> {
                 child: Container(
                   padding: const EdgeInsets.all(16),
                   decoration: commonDecoration,
-                  child: ic_search.iconImage(color: primaryColor),
+                  child: ic_search.iconImage(
+                      color: primaryColor, context: context),
                 ),
               ),
             ],

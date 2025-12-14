@@ -223,9 +223,13 @@ class ServiceComponentState extends State<ServiceComponent> {
                                   backgroundColor: Colors.white),
                               child: widget.serviceData.isFavourite == 1
                                   ? ic_fill_heart.iconImage(
-                                      color: favouriteColor, size: 16)
+                                      color: favouriteColor,
+                                      size: 16,
+                                      context: context)
                                   : ic_heart.iconImage(
-                                      color: unFavouriteColor, size: 16),
+                                      color: unFavouriteColor,
+                                      size: 16,
+                                      context: context),
                             ).onTap(() async {
                               if (widget.serviceData.isFavourite != 0) {
                                 widget.serviceData.isFavourite = 1;

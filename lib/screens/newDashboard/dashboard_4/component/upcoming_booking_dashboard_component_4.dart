@@ -130,7 +130,8 @@ class _UpComingBookingDashboardComponent4State
                                   children: [
                                     Row(
                                       children: [
-                                        ic_calendar.iconImage(size: 14),
+                                        ic_calendar.iconImage(
+                                            size: 14, context: context),
                                         4.width,
                                         Text(
                                           formatDate(widget
@@ -146,7 +147,8 @@ class _UpComingBookingDashboardComponent4State
                                     8.width,
                                     Row(
                                       children: [
-                                        ic_clock.iconImage(size: 14),
+                                        ic_clock.iconImage(
+                                            size: 14, context: context),
                                         4.width,
                                         Text(
                                           formatDate(
@@ -168,7 +170,7 @@ class _UpComingBookingDashboardComponent4State
                                 height: 22,
                                 width: 22,
                                 child: IconButton(
-                                  icon: ic_close.iconImage(),
+                                  icon: ic_close.iconImage(context: context),
                                   visualDensity: VisualDensity.compact,
                                   padding: EdgeInsets.zero,
                                   onPressed: () async {

@@ -16,7 +16,6 @@ import 'package:booking_system_flutter/utils/colors.dart';
 import 'package:booking_system_flutter/utils/common.dart';
 import 'package:booking_system_flutter/utils/configs.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
-import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/extensions/num_extenstions.dart';
 import 'package:booking_system_flutter/utils/images.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
@@ -86,8 +85,7 @@ class ProfileFragmentState extends State<ProfileFragment> {
         showBack: false,
         actions: [
           IconButton(
-            icon: ic_setting.iconImage(
-                color: context.scaffoldBackgroundColor, size: 20),
+            icon: ic_setting.iconImage(size: 20, context: context),
             onPressed: () async {
               SettingScreen().launch(context);
             },
@@ -161,7 +159,7 @@ class ProfileFragmentState extends State<ProfileFragment> {
                               ),
                               // Edit Icon
                               ic_edit_square
-                                  .iconImage(size: 20, color: context.icon)
+                                  .iconImage(size: 20, context: context)
                                   .paddingOnly(right: 8),
                             ],
                           ).onTap(() {
@@ -194,7 +192,7 @@ class ProfileFragmentState extends State<ProfileFragment> {
                                       const BorderRadiusDirectional.vertical(
                                           bottom: Radius.circular(0))),
                               leading: ic_wallet_cartoon.iconImage(
-                                  color: context.icon, size: SETTING_ICON_SIZE),
+                                  size: SETTING_ICON_SIZE, context: context),
                               title: language.walletBalance,
                               titleTextStyle: boldTextStyle(),
                               trailing: Observer(
@@ -223,7 +221,7 @@ class ProfileFragmentState extends State<ProfileFragment> {
                                       const BorderRadiusDirectional.vertical(
                                           bottom: Radius.circular(0))),
                               leading: ic_wallet_history.iconImage(
-                                  color: context.icon, size: SETTING_ICON_SIZE),
+                                  size: SETTING_ICON_SIZE, context: context),
                               title: language.walletHistory,
                               titleTextStyle: boldTextStyle(),
                               trailing: trailing(context),
@@ -242,8 +240,7 @@ class ProfileFragmentState extends State<ProfileFragment> {
                           //             const BorderRadiusDirectional.vertical(
                           //                 bottom: Radius.circular(0))),
                           //     leading: ic_card.iconImage(
-                          //         color: context.icon,
-                          //         size: SETTING_ICON_SIZE),
+                          //         size: SETTING_ICON_SIZE, context: context),
                           //     title: language.lblBankDetails,
                           //     titleTextStyle: boldTextStyle(),
                           //     trailing: trailing(context),
@@ -260,7 +257,7 @@ class ProfileFragmentState extends State<ProfileFragment> {
                                     const BorderRadiusDirectional.vertical(
                                         bottom: Radius.circular(0))),
                             leading: ic_heart.iconImage(
-                                color: context.icon, size: SETTING_ICON_SIZE),
+                                size: SETTING_ICON_SIZE, context: context),
                             title: language.lblFavorite,
                             titleTextStyle: boldTextStyle(),
                             trailing: trailing(context),
@@ -278,7 +275,7 @@ class ProfileFragmentState extends State<ProfileFragment> {
                                     const BorderRadiusDirectional.vertical(
                                         bottom: Radius.circular(0))),
                             leading: ic_profile2.iconImage(
-                                size: SETTING_ICON_SIZE, color: context.icon),
+                                size: SETTING_ICON_SIZE, context: context),
                             title: language.favouriteProvider,
                             titleTextStyle: boldTextStyle(),
                             trailing: trailing(context),
@@ -291,7 +288,7 @@ class ProfileFragmentState extends State<ProfileFragment> {
                           // TODO: Uncomment this when shop favorite feature is enabled
                           // SettingItemWidget(
                           //   decoration: boxDecorationDefault(color: context.cardColor,borderRadius: BorderRadiusDirectional.vertical(bottom: Radius.circular(0))),
-                          //   leading: Icon(Icons.store_outlined, size: SETTING_ICON_SIZE, color: context.icon),
+                          //   leading: Icon(Icons.store_outlined, size: SETTING_ICON_SIZE, ),
                           //   title: language.lblFavoriteShops,
                           //   titleTextStyle: boldTextStyle(size: 14),
                           //   trailing: trailing,
@@ -312,7 +309,7 @@ class ProfileFragmentState extends State<ProfileFragment> {
                                     const BorderRadiusDirectional.vertical(
                                         bottom: Radius.circular(0))),
                             leading: ic_document.iconImage(
-                                color: context.icon, size: SETTING_ICON_SIZE),
+                                size: SETTING_ICON_SIZE, context: context),
                             title: language.blogs,
                             titleTextStyle: boldTextStyle(),
                             trailing: trailing(context),
@@ -330,7 +327,7 @@ class ProfileFragmentState extends State<ProfileFragment> {
                                     const BorderRadiusDirectional.vertical(
                                         bottom: Radius.circular(0))),
                             leading: ic_star.iconImage(
-                                color: context.icon, size: SETTING_ICON_SIZE),
+                                size: SETTING_ICON_SIZE, context: context),
                             title: language.rateUs,
                             titleTextStyle: boldTextStyle(),
                             trailing: trailing(context),
@@ -373,7 +370,7 @@ class ProfileFragmentState extends State<ProfileFragment> {
                                       const BorderRadiusDirectional.vertical(
                                           bottom: Radius.circular(0))),
                               leading: ic_my_review.iconImage(
-                                  color: context.icon, size: SETTING_ICON_SIZE),
+                                  size: SETTING_ICON_SIZE, context: context),
                               title: language.myReviews,
                               titleTextStyle: boldTextStyle(),
                               trailing: trailing(context),
@@ -419,7 +416,7 @@ class ProfileFragmentState extends State<ProfileFragment> {
                                 const BorderRadiusDirectional.vertical(
                                     bottom: Radius.circular(0))),
                         leading: ic_about_us.iconImage(
-                            color: context.icon, size: SETTING_ICON_SIZE),
+                            size: SETTING_ICON_SIZE, context: context),
                         trailing: trailing(context),
                         title: language.lblAboutApp,
                         titleTextStyle: boldTextStyle(),
@@ -435,7 +432,7 @@ class ProfileFragmentState extends State<ProfileFragment> {
                                 const BorderRadiusDirectional.vertical(
                                     bottom: Radius.circular(0))),
                         leading: ic_shield_done.iconImage(
-                            color: context.icon, size: SETTING_ICON_SIZE),
+                            size: SETTING_ICON_SIZE, context: context),
                         trailing: trailing(context),
                         title: language.privacyPolicy,
                         titleTextStyle: boldTextStyle(),
@@ -452,7 +449,7 @@ class ProfileFragmentState extends State<ProfileFragment> {
                                 const BorderRadiusDirectional.vertical(
                                     bottom: Radius.circular(0))),
                         leading: ic_document.iconImage(
-                            color: context.icon, size: SETTING_ICON_SIZE),
+                            size: SETTING_ICON_SIZE, context: context),
                         trailing: trailing(context),
                         title: language.termsCondition,
                         titleTextStyle: boldTextStyle(),
@@ -469,7 +466,7 @@ class ProfileFragmentState extends State<ProfileFragment> {
                                 const BorderRadiusDirectional.vertical(
                                     bottom: Radius.circular(0))),
                         leading: ic_refund.iconImage(
-                            color: context.icon, size: SETTING_ICON_SIZE),
+                            size: SETTING_ICON_SIZE, context: context),
                         trailing: trailing(context),
                         title: language.refundPolicy,
                         titleTextStyle: boldTextStyle(),
@@ -487,7 +484,7 @@ class ProfileFragmentState extends State<ProfileFragment> {
                                 const BorderRadiusDirectional.vertical(
                                     bottom: Radius.circular(0))),
                         leading: ic_helpAndSupport.iconImage(
-                            color: context.icon, size: SETTING_ICON_SIZE),
+                            size: SETTING_ICON_SIZE, context: context),
                         trailing: trailing(context),
                         title: language.helpSupport,
                         titleTextStyle: boldTextStyle(),
@@ -512,7 +509,7 @@ class ProfileFragmentState extends State<ProfileFragment> {
                       //           const BorderRadiusDirectional.vertical(
                       //               bottom: Radius.circular(0))),
                       //   leading: ic_help_desk.iconImage(
-                      //       color: context.icon, size: SETTING_ICON_SIZE),
+                      //       , size: SETTING_ICON_SIZE),
                       //   title: language.helpDesk,
                       //   titleTextStyle: boldTextStyle(),
                       //   trailing: trailing(context),
@@ -538,7 +535,7 @@ class ProfileFragmentState extends State<ProfileFragment> {
                                       const BorderRadiusDirectional.vertical(
                                           bottom: Radius.circular(16))),
                           leading: ic_calling.iconImage(
-                              color: context.icon, size: SETTING_ICON_SIZE),
+                              size: SETTING_ICON_SIZE, context: context),
                           trailing: trailing(context),
                           title: language.lblHelplineNumber,
                           titleTextStyle: boldTextStyle(),
@@ -558,8 +555,10 @@ class ProfileFragmentState extends State<ProfileFragment> {
                                     const BorderRadiusDirectional.vertical(
                                         bottom: Radius.circular(16)))
                             : boxDecorationDefault(color: context.cardColor),
-                        leading: Icon(MaterialCommunityIcons.logout,
-                            color: context.icon, size: SETTING_ICON_SIZE),
+                        leading: Icon(
+                          MaterialCommunityIcons.logout,
+                          size: SETTING_ICON_SIZE,
+                        ),
                         trailing: trailing(context),
                         title: language.signIn,
                         titleTextStyle: boldTextStyle(),
@@ -575,7 +574,7 @@ class ProfileFragmentState extends State<ProfileFragment> {
                                 const BorderRadiusDirectional.vertical(
                                     bottom: Radius.circular(16))),
                         leading: ic_delete_account.iconImage(
-                            color: context.icon, size: SETTING_ICON_SIZE),
+                            size: SETTING_ICON_SIZE, context: context),
                         paddingBeforeTrailing: 4,
                         trailing: trailing(context),
                         title: language.lblDeleteAccount,

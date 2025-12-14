@@ -185,7 +185,7 @@ class _EditBookingServiceDialogState extends State<EditBookingServiceDialog> {
                       },
                       decoration: inputDecoration(context,
                               prefixIcon: ic_calendar
-                                  .iconImage(size: 10)
+                                  .iconImage(size: 10, context: context)
                                   .paddingAll(14))
                           .copyWith(
                         fillColor: context.cardColor,

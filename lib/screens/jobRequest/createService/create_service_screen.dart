@@ -213,8 +213,8 @@ class _CreateServiceScreenState extends State<CreateServiceScreen> {
           primaryColor: primaryColor,
           positiveTextColor: white,
           negativeTextColor: context.primaryColor,
-          customCenterWidget:
-              ic_warning.iconImage(size: 70, color: context.primaryColor),
+          customCenterWidget: ic_warning.iconImage(
+              size: 70, color: context.primaryColor, context: context),
           height: 80,
           width: 290,
           shape: dialogShape(8),
@@ -453,7 +453,9 @@ class _CreateServiceScreenState extends State<CreateServiceScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             ic_gallery_add.iconImage(
-                                size: 50, color: primaryColor),
+                                context: context,
+                                size: 50,
+                                color: primaryColor),
                             8.height,
                             Text(language.lblChooseImage,
                                 style: primaryTextStyle(
@@ -503,7 +505,9 @@ class _CreateServiceScreenState extends State<CreateServiceScreen> {
                                     negativeTextColor: context.primaryColor,
                                     title: language.lblDeleteImageConfirmation,
                                     customCenterWidget: ic_warning.iconImage(
-                                        size: 70, color: context.primaryColor),
+                                        context: context,
+                                        size: 70,
+                                        color: context.primaryColor),
                                     primaryColor: context.primaryColor,
                                     onAccept: (p0) {
                                       if (attachmentsArray.any((element) =>
@@ -536,7 +540,9 @@ class _CreateServiceScreenState extends State<CreateServiceScreen> {
                                     negativeTextColor: context.primaryColor,
                                     title: language.lblDeleteImageConfirmation,
                                     customCenterWidget: ic_warning.iconImage(
-                                        size: 70, color: context.primaryColor),
+                                        context: context,
+                                        size: 70,
+                                        color: context.primaryColor),
                                     primaryColor: context.primaryColor,
                                     onAccept: (p0) {
                                       imageFiles.removeWhere((element) =>

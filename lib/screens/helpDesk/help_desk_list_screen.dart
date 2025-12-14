@@ -50,9 +50,15 @@ class _HelpDeskListScreenState extends State<HelpDeskListScreen> {
 
   void init() async {
     helpDeskStatus = [
-      HelpDeskStatusModel(status: HelpDeskStatus.all, name: language.lblAll.capitalizeFirstLetter()),
-      HelpDeskStatusModel(status: HelpDeskStatus.open, name: language.open.capitalizeFirstLetter()),
-      HelpDeskStatusModel(status: HelpDeskStatus.closed, name: language.closed.capitalizeFirstLetter()),
+      HelpDeskStatusModel(
+          status: HelpDeskStatus.all,
+          name: language.lblAll.capitalizeFirstLetter()),
+      HelpDeskStatusModel(
+          status: HelpDeskStatus.open,
+          name: language.open.capitalizeFirstLetter()),
+      HelpDeskStatusModel(
+          status: HelpDeskStatus.closed,
+          name: language.closed.capitalizeFirstLetter()),
     ];
 
     if (helpDeskStatus.isNotEmpty) {
@@ -116,7 +122,11 @@ class _HelpDeskListScreenState extends State<HelpDeskListScreen> {
                           FilterChip(
                             shape: RoundedRectangleBorder(
                               borderRadius: radius(18),
-                              side: BorderSide(color: selectedTab.status == filterStatus.status ? primaryColor : Colors.transparent),
+                              side: BorderSide(
+                                  color:
+                                      selectedTab.status == filterStatus.status
+                                          ? primaryColor
+                                          : Colors.transparent),
                             ),
                             padding: const EdgeInsets.symmetric(horizontal: 10),
                             label: Text(
@@ -131,7 +141,10 @@ class _HelpDeskListScreenState extends State<HelpDeskListScreen> {
                               ),
                             ),
                             selected: false,
-                            backgroundColor: selectedTab.status == filterStatus.status ? lightPrimaryColor : context.cardColor,
+                            backgroundColor:
+                                selectedTab.status == filterStatus.status
+                                    ? lightPrimaryColor
+                                    : context.cardColor,
                             onSelected: (bool selected) {
                               selectedTab = helpDeskStatus[index];
                               page = 1;
@@ -155,26 +168,36 @@ class _HelpDeskListScreenState extends State<HelpDeskListScreen> {
                     physics: const AlwaysScrollableScrollPhysics(),
                     padding: const EdgeInsets.all(16),
                     listAnimationType: ListAnimationType.FadeIn,
-                    fadeInConfiguration: FadeInConfiguration(duration: 2.seconds),
+                    fadeInConfiguration:
+                        FadeInConfiguration(duration: 2.seconds),
                     itemCount: helpDeskList.length,
                     emptyWidget: appStore.isLoading
                         ? const Offstage()
                         : NoDataWidget(
-                            title: '${language.lblNo} ${selectedTab.name} ${language.queryYet}',
+                            title:
+                                '${language.lblNo} ${selectedTab.name} ${language.queryYet}',
                             titleTextStyle: boldTextStyle(),
                             subTitle: selectedTab.status == HelpDeskStatus.open
                                 ? language.toSubmitYourProblems
                                 : '${language.noRecordsFoundFor} ${selectedTab.name.toLowerCase()} ${language.queries}',
-                            imageWidget: selectedTab.status == HelpDeskStatus.open ? ic_help_desk_outline.iconImage(size: 60) : const EmptyStateWidget(),
-                            retryText: selectedTab.status == HelpDeskStatus.open ? language.add : null,
+                            imageWidget:
+                                selectedTab.status == HelpDeskStatus.open
+                                    ? ic_help_desk_outline.iconImage(
+                                        size: 60, context: context)
+                                    : const EmptyStateWidget(),
+                            retryText: selectedTab.status == HelpDeskStatus.open
+                                ? language.add
+                                : null,
                             onRetry: selectedTab.status == HelpDeskStatus.open
                                 ? () {
-                                    if (selectedTab.status == HelpDeskStatus.open) {
+                                    if (selectedTab.status ==
+                                        HelpDeskStatus.open) {
                                       AddHelpDeskScreen(callback: (p0) {
                                         selectedTab = helpDeskStatus.first;
                                         page = 1;
                                         appStore.setLoading(true);
-                                        getHelpDeskListAPI(status: selectedTab.name);
+                                        getHelpDeskListAPI(
+                                            status: selectedTab.name);
 
                                         setState(() {});
                                       }).launch(context);
@@ -202,7 +225,8 @@ class _HelpDeskListScreenState extends State<HelpDeskListScreen> {
                     },
                     disposeScrollController: true,
                     itemBuilder: (BuildContext context, index) {
-                      return HelpDeskItemComponent(helpDeskData: helpDeskList[index]);
+                      return HelpDeskItemComponent(
+                          helpDeskData: helpDeskList[index]);
                     },
                   );
                 },

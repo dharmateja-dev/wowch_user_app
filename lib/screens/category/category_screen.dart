@@ -227,8 +227,12 @@ class _CategoryScreenState extends State<CategoryScreen> {
           decoration: InputDecoration(
             hintText:
                 "${language.lblSearchFor} ${dummyCategories[selectedCategoryIndex].name}",
-            prefixIcon: ic_search.iconImage(size: 16).paddingAll(14),
-            suffixIcon: ic_filter.iconImage(size: 16).paddingAll(14).onTap(
+            prefixIcon:
+                ic_search.iconImage(size: 16, context: context).paddingAll(14),
+            suffixIcon: ic_filter
+                .iconImage(size: 16, context: context)
+                .paddingAll(14)
+                .onTap(
               () {
                 FilterScreen(
                   isFromProvider: true,

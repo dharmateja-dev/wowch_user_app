@@ -229,7 +229,7 @@ class _WithdrawRequestState extends State<WithdrawRequest> {
                       language.egCentralNationalBank,
                       style: secondaryTextStyle(size: 12),
                     ),
-                    icon: ic_down_arrow.iconImage(size: 16),
+                    icon: ic_down_arrow.iconImage(size: 16, context: context),
                     dropdownColor: context.cardColor,
                     items: bankHistoryList.map((BankHistory e) {
                       return DropdownMenuItem<BankHistory>(

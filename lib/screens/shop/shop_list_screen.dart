@@ -79,8 +79,12 @@ class _ShopListScreenState extends State<ShopListScreen> {
       search: searchCont.text.validate(),
       perPage: 10,
       shopList: shops,
-      providerIds: widget.providerId > 0 ? widget.providerId.toString() : filterStore.providerId.join(","),
-      serviceIds: widget.serviceId > 0 ? widget.serviceId.toString() : filterStore.serviceId.join(","),
+      providerIds: widget.providerId > 0
+          ? widget.providerId.toString()
+          : filterStore.providerId.join(","),
+      serviceIds: widget.serviceId > 0
+          ? widget.serviceId.toString()
+          : filterStore.serviceId.join(","),
       lastPageCallBack: (b) {
         isLastPage = b;
       },
@@ -140,7 +144,9 @@ class _ShopListScreenState extends State<ShopListScreen> {
                     hintText: "Search Here...",
 
                     ///todo:
-                    prefixIcon: ic_search.iconImage(size: 10).paddingAll(14),
+                    prefixIcon: ic_search
+                        .iconImage(size: 10, context: context)
+                        .paddingAll(14),
                     hintStyle: secondaryTextStyle(),
                   ),
                 ).expand(),
@@ -148,7 +154,8 @@ class _ShopListScreenState extends State<ShopListScreen> {
                 if (widget.isShopChange == true)
                   Container(
                     padding: EdgeInsets.all(10),
-                    decoration: boxDecorationDefault(color: context.primaryColor),
+                    decoration:
+                        boxDecorationDefault(color: context.primaryColor),
                     child: CachedImageWidget(
                       url: ic_filter,
                       height: 26,
@@ -210,9 +217,11 @@ class _ShopListScreenState extends State<ShopListScreen> {
                       return AnimatedWrap(
                         spacing: 16.0,
                         runSpacing: 16.0,
-                        scaleConfiguration: ScaleConfiguration(duration: 400.milliseconds, delay: 50.milliseconds),
+                        scaleConfiguration: ScaleConfiguration(
+                            duration: 400.milliseconds, delay: 50.milliseconds),
                         listAnimationType: ListAnimationType.FadeIn,
-                        fadeInConfiguration: FadeInConfiguration(duration: 2.seconds),
+                        fadeInConfiguration:
+                            FadeInConfiguration(duration: 2.seconds),
                         alignment: WrapAlignment.start,
                         itemCount: shops.length,
                         itemBuilder: (context, index) {
@@ -229,7 +238,8 @@ class _ShopListScreenState extends State<ShopListScreen> {
                                   selectedShop = shop;
                                 });
                               } else {
-                                ShopDetailScreen(shopId: shop.id).launch(context);
+                                ShopDetailScreen(shopId: shop.id)
+                                    .launch(context);
                               }
                             },
                           );
@@ -258,15 +268,18 @@ class _ShopListScreenState extends State<ShopListScreen> {
               },
             ),
           ),
-        Observer(builder: (context) => LoaderWidget().visible(appStore.isLoading))
+        Observer(
+            builder: (context) => LoaderWidget().visible(appStore.isLoading))
       ],
     );
   }
 
   String getScreenTitle() {
     if (widget.selectedShop != null) return language.lblSelectShop;
-    if (widget.providerName.isNotEmpty) return language.lblProvidersShops(widget.providerName);
-    if (widget.serviceName.isNotEmpty) return language.lblShopsOffer(widget.serviceName);
+    if (widget.providerName.isNotEmpty)
+      return language.lblProvidersShops(widget.providerName);
+    if (widget.serviceName.isNotEmpty)
+      return language.lblShopsOffer(widget.serviceName);
     return language.lblAllShop;
   }
 

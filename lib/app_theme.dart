@@ -1,5 +1,4 @@
 import 'package:booking_system_flutter/utils/theme_colors.dart';
-import 'package:booking_system_flutter/utils/app_shadows.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -136,7 +135,6 @@ class AppTheme {
       // Enhanced Input Decoration Theme
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: LightThemeColors.pureWhite,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
           borderSide: BorderSide(color: LightThemeColors.primaryBorder),
@@ -153,9 +151,6 @@ class AppTheme {
           borderRadius: BorderRadius.circular(8),
           borderSide: BorderSide(color: LightThemeColors.errorRed),
         ),
-        contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-        hintStyle:
-            primaryTextStyle(color: LightThemeColors.mutedText, size: 14),
       ),
 
       // Enhanced ExpansionTile Theme
@@ -265,7 +260,7 @@ class AppTheme {
         tertiary: DarkThemeColors.softCharcoal,
         error: DarkThemeColors.errorRed,
         onError: DarkThemeColors.pureWhite,
-        outline: DarkThemeColors.darkBorder,
+        outline: DarkThemeColors.primaryBorder,
         outlineVariant: DarkThemeColors.lightBorder,
         shadow: DarkThemeColors.shadowLight,
       ),

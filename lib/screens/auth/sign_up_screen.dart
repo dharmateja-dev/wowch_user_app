@@ -289,7 +289,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               hintText: language.hintFirstNameTxt,
               borderRadius: 8),
           suffix: ic_profile2
-              .iconImage(size: 10, color: context.icon)
+              .iconImage(size: 10, color: context.icon, context: context)
               .paddingAll(14),
         ),
         16.height,
@@ -305,9 +305,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
               fillColor: Colors.transparent,
               hintText: language.hintLastNameTxt,
               borderRadius: 8),
-          suffix: ic_profile2
-              .iconImage(size: 10, color: context.icon)
-              .paddingAll(14),
+          suffix:
+              ic_profile2.iconImage(size: 10, context: context).paddingAll(14),
         ),
         16.height,
         Text(language.lblUserName, style: boldTextStyle(size: 14)),
@@ -323,9 +322,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
               fillColor: Colors.transparent,
               hintText: language.hintUserNameTxt,
               borderRadius: 8),
-          suffix: ic_profile2
-              .iconImage(size: 10, color: context.icon)
-              .paddingAll(14),
+          suffix:
+              ic_profile2.iconImage(size: 10, context: context).paddingAll(14),
         ),
         16.height,
         Text(language.lblEmail, style: boldTextStyle(size: 14)),
@@ -340,9 +338,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
               fillColor: Colors.transparent,
               hintText: language.hintEmailTxt,
               borderRadius: 8),
-          suffix: ic_message
-              .iconImage(size: 10, color: context.icon)
-              .paddingAll(14),
+          suffix:
+              ic_message.iconImage(size: 10, context: context).paddingAll(14),
         ),
         16.height,
         Text(language.lblContactNumber, style: boldTextStyle(size: 14)),
@@ -391,9 +388,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 },
               )),
           maxLength: 15,
-          suffix: ic_calling
-              .iconImage(size: 10, color: context.icon)
-              .paddingAll(14),
+          suffix:
+              ic_calling.iconImage(size: 10, context: context).paddingAll(14),
         ),
         8.height,
         Align(
@@ -421,10 +417,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 readOnly:
                     widget.isOTPLogin.validate() ? widget.isOTPLogin : false,
                 suffixPasswordVisibleWidget: ic_show
-                    .iconImage(size: 10, color: context.icon)
+                    .iconImage(size: 10, context: context)
                     .paddingAll(14),
                 suffixPasswordInvisibleWidget: ic_hide
-                    .iconImage(size: 10, color: context.icon)
+                    .iconImage(size: 10, context: context)
                     .paddingAll(14),
                 errorThisFieldRequired: language.requiredText,
                 decoration: inputDecoration(context,

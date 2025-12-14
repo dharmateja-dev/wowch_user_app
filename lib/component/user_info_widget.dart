@@ -65,7 +65,8 @@ class _UserInfoWidgetState extends State<UserInfoWidget> {
       widget.data.isFavourite = 0;
       setState(() {});
 
-      await removeProviderToWishList(providerId: widget.data.id.validate()).then((value) {
+      await removeProviderToWishList(providerId: widget.data.id.validate())
+          .then((value) {
         if (!value) {
           widget.data.isFavourite = 1;
           setState(() {});
@@ -76,7 +77,8 @@ class _UserInfoWidgetState extends State<UserInfoWidget> {
       widget.data.isFavourite = 1;
       setState(() {});
 
-      await addProviderToWishList(providerId: widget.data.id.validate()).then((value) {
+      await addProviderToWishList(providerId: widget.data.id.validate())
+          .then((value) {
         if (!value) {
           widget.data.isFavourite = 0;
           setState(() {});
@@ -127,13 +129,22 @@ class _UserInfoWidgetState extends State<UserInfoWidget> {
                         ],
                       ),
                       child: Center(
-                        child: widget.data.isFavourite == 1 ? ic_fill_heart.iconImage(color: favouriteColor, size: 20) : ic_heart.iconImage(color: unFavouriteColor, size: 20),
+                        child: widget.data.isFavourite == 1
+                            ? ic_fill_heart.iconImage(
+                                color: favouriteColor,
+                                size: 20,
+                                context: context)
+                            : ic_heart.iconImage(
+                                color: unFavouriteColor,
+                                size: 20,
+                                context: context),
                       ),
                     ).onTap(() async {
                       if (appStore.isLoggedIn) {
                         onTapFavouriteProvider();
                       } else {
-                        bool? res = await push(SignInScreen(returnExpected: true));
+                        bool? res =
+                            await push(SignInScreen(returnExpected: true));
 
                         if (res ?? false) {
                           onTapFavouriteProvider();
@@ -145,16 +156,22 @@ class _UserInfoWidgetState extends State<UserInfoWidget> {
                   left: 16,
                   top: 15,
                   child: Container(
-                    decoration: BoxDecoration(color: context.cardColor, borderRadius: const BorderRadius.all(Radius.circular(20))),
-                    padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
+                    decoration: BoxDecoration(
+                        color: context.cardColor,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(20))),
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        ic_star_fill.iconImage(color: ratingBarColor, size: 11),
+                        ic_star_fill.iconImage(
+                            color: ratingBarColor, size: 11, context: context),
                         4.width,
                         Text(
                           "${widget.forProvider ? widget.data.providersServiceRating.validate().toStringAsPrecision(2) : widget.data.handymanRating.validate().toStringAsFixed(1)}",
-                          style: primaryTextStyle(size: 12, weight: FontWeight.bold),
+                          style: primaryTextStyle(
+                              size: 12, weight: FontWeight.bold),
                         ),
                       ],
                     ),
@@ -163,11 +180,14 @@ class _UserInfoWidgetState extends State<UserInfoWidget> {
                 Positioned(
                   bottom: 16,
                   child: Container(
-                    decoration: BoxDecoration(color: context.cardColor, borderRadius: radius(20)),
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    decoration: BoxDecoration(
+                        color: context.cardColor, borderRadius: radius(20)),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                     margin: const EdgeInsets.symmetric(horizontal: 16),
                     child: Text(
-                      language.bookingCompleted(widget.data.totalCompletedBooking.validate()),
+                      language.bookingCompleted(
+                          widget.data.totalCompletedBooking.validate()),
                       style: secondaryTextStyle(),
                     ),
                   ),
@@ -191,23 +211,29 @@ class _UserInfoWidgetState extends State<UserInfoWidget> {
                     style: primaryTextStyle(size: 16, weight: FontWeight.bold),
                   ).flexible(),
                   4.width,
-                  Image.asset(ic_verified, height: 16, color: Colors.green).visible(widget.data.isVerifyProvider == 1),
+                  Image.asset(ic_verified, height: 16, color: Colors.green)
+                      .visible(widget.data.isVerifyProvider == 1),
                 ],
               ).expand(),
               12.width,
               Text(
                 widget.data.designation.validate(),
                 textAlign: TextAlign.center,
-                style: secondaryTextStyle(color: primaryColor, weight: FontWeight.bold),
+                style: secondaryTextStyle(
+                    color: primaryColor, weight: FontWeight.bold),
               )
             ],
           ).paddingSymmetric(horizontal: 16),
           8.height,
           RichTextWidget(
             list: [
-              TextSpan(text: language.lblMemberSince, style: primaryTextStyle(size: 12)),
+              TextSpan(
+                  text: language.lblMemberSince,
+                  style: primaryTextStyle(size: 12)),
               const TextSpan(text: ' '),
-              TextSpan(text: formatDate(widget.data.createdAt.validate()), style: primaryTextStyle(size: 12)),
+              TextSpan(
+                  text: formatDate(widget.data.createdAt.validate()),
+                  style: primaryTextStyle(size: 12)),
             ],
           ).paddingSymmetric(horizontal: 16),
           if (widget.data.description.validate().isNotEmpty) ...[
@@ -224,7 +250,8 @@ class _UserInfoWidgetState extends State<UserInfoWidget> {
           ],
           if (widget.data.whyChooseMeObj.reason.isNotEmpty) ...[
             32.height,
-            Text(language.reason, style: boldTextStyle(size: 16)).paddingSymmetric(horizontal: 16),
+            Text(language.reason, style: boldTextStyle(size: 16))
+                .paddingSymmetric(horizontal: 16),
             4.height,
             if (widget.data.whyChooseMeObj.reason.validate().isNotEmpty)
               AnimatedListView(
@@ -237,7 +264,8 @@ class _UserInfoWidgetState extends State<UserInfoWidget> {
                   String reason = widget.data.whyChooseMeObj.reason[index];
 
                   return TextIcon(
-                    prefix: Icon(Icons.check_circle_outline, size: 16, color: primaryColor),
+                    prefix: Icon(Icons.check_circle_outline,
+                        size: 16, color: primaryColor),
                     text: reason.validate(),
                     textStyle: secondaryTextStyle(),
                     useMarquee: true,

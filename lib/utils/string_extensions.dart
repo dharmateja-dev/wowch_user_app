@@ -1,5 +1,6 @@
 import 'package:booking_system_flutter/main.dart';
 import 'package:booking_system_flutter/utils/colors.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/images.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -7,13 +8,17 @@ import 'package:nb_utils/nb_utils.dart';
 import 'constant.dart';
 
 extension strEtx on String {
-  Widget iconImage({double? size, Color? color, BoxFit? fit}) {
+  Widget iconImage(
+      {double? size,
+      Color? color,
+      BoxFit? fit,
+      required BuildContext context}) {
     return Image.asset(
       this,
       height: size ?? 24,
       width: size ?? 24,
       fit: fit ?? BoxFit.cover,
-      color: color ?? (appStore.isDarkMode ? Colors.white : appTextSecondaryColor),
+      color: color ?? context.icon,
       errorBuilder: (context, error, stackTrace) {
         return Image.asset(ic_no_photo, height: size ?? 24, width: size ?? 24);
       },

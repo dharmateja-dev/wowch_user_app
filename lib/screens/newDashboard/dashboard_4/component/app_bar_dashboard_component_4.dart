@@ -148,10 +148,7 @@ class _AppBarDashboardComponent4State extends State<AppBarDashboardComponent4> {
                           color: context.cardColor, borderRadius: radius(36)),
                       child: Row(
                         children: [
-                          ic_location.iconImage(
-                              color: appStore.isDarkMode
-                                  ? Colors.white
-                                  : Colors.black),
+                          ic_location.iconImage(context: context),
                           8.width,
                           Marquee(
                             child: Text(
@@ -164,8 +161,10 @@ class _AppBarDashboardComponent4State extends State<AppBarDashboardComponent4> {
                             ),
                           ).expand(),
                           8.width,
-                          Icon(Icons.keyboard_arrow_down,
-                              size: 24, color: context.icon),
+                          Icon(
+                            Icons.keyboard_arrow_down,
+                            size: 24,
+                          ),
                         ],
                       ),
                     ),
@@ -179,7 +178,8 @@ class _AppBarDashboardComponent4State extends State<AppBarDashboardComponent4> {
                   child: Stack(
                     clipBehavior: Clip.none,
                     children: [
-                      ic_notification.iconImage(color: Colors.white, size: 22),
+                      ic_notification.iconImage(
+                          color: Colors.white, size: 22, context: context),
                       Observer(
                         builder: (context) {
                           return Positioned(
@@ -234,7 +234,7 @@ class _AppBarDashboardComponent4State extends State<AppBarDashboardComponent4> {
                   context,
                   hintText: language.eGCleaningPlumberPest,
                   prefixIcon: ic_search
-                      .iconImage(size: 10, color: context.icon)
+                      .iconImage(size: 10, context: context)
                       .paddingAll(14),
                 ),
                 suffix: IconButton(
@@ -244,7 +244,6 @@ class _AppBarDashboardComponent4State extends State<AppBarDashboardComponent4> {
                           Icons.mic_none_outlined,
                           color: context.icon,
                         ),
-                  color: context.icon,
                   onPressed: () async {
                     if (appStore.isSpeechActivated) {
                       stopListening();

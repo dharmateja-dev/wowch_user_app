@@ -1997,8 +1997,11 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
                           shop.shopEndTime.isNotEmpty) ...[
                         TextIcon(
                           spacing: 10,
-                          prefix: Image.asset(ic_clock,
-                              width: 12, height: 12, color: context.icon),
+                          prefix: Image.asset(
+                            ic_clock,
+                            width: 12,
+                            height: 12,
+                          ),
                           text: shop.shopStartTime.validate().isNotEmpty &&
                                   shop.shopEndTime.isNotEmpty
                               ? '${shop.shopStartTime} - ${shop.shopEndTime}'
@@ -2649,8 +2652,8 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
       negativeText: language.lblNo,
       dialogType: DialogType.CONFIRMATION,
       primaryColor: context.primaryColor,
-      customCenterWidget:
-          ic_warning.iconImage(size: 70, color: context.primaryColor),
+      customCenterWidget: ic_warning.iconImage(
+          size: 70, color: context.primary, context: context),
       title: isAnyServiceAddonUnCompleted
           ? language.confirmation
           : language.lblEndServicesMsg,
@@ -2788,8 +2791,8 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
       primaryColor: context.primaryColor,
       negativeText: language.lblNo,
       positiveText: language.lblYes,
-      customCenterWidget:
-          ic_warning.iconImage(size: 70, color: context.primaryColor),
+      customCenterWidget: ic_warning.iconImage(
+          size: 70, color: context.primary, context: context),
       title: language.lblConFirmResumeService,
       onAccept: (c) async {
         Map request = {

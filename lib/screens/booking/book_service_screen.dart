@@ -12,11 +12,9 @@ import 'package:booking_system_flutter/screens/shop/shop_list_screen.dart';
 import 'package:booking_system_flutter/utils/colors.dart';
 import 'package:booking_system_flutter/utils/common.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
-import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/images.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -351,8 +349,10 @@ class _BookServiceScreenState extends State<BookServiceScreen> {
                 onChanged: (s) {
                   widget.data.serviceDetail!.bookingDescription = s;
                 },
-                suffix: Icon(Icons.mode_edit_outline_outlined,
-                    size: 18, color: context.icon),
+                suffix: Icon(
+                  Icons.mode_edit_outline_outlined,
+                  size: 18,
+                ),
                 decoration: inputDecoration(
                   context,
                   hintText: language.writeHere,
@@ -508,7 +508,9 @@ class _BookServiceScreenState extends State<BookServiceScreen> {
                   alignment: Alignment.topLeft,
                   widthFactor: 1.0,
                   heightFactor: 2.0,
-                  child: ic_location.iconImage(size: 18).paddingAll(14),
+                  child: ic_location
+                      .iconImage(context: context, size: 18)
+                      .paddingAll(14),
                 )).copyWith(
               enabledBorder: OutlineInputBorder(borderSide: BorderSide.none),
               disabledBorder: OutlineInputBorder(borderSide: BorderSide.none),
@@ -660,7 +662,9 @@ class _BookServiceScreenState extends State<BookServiceScreen> {
                             value: itemCount,
                             isExpanded: true,
                             icon: ic_down_arrow.iconImage(
-                                size: 16, color: context.icon),
+                              context: context,
+                              size: 16,
+                            ),
                             style: boldTextStyle(size: 14),
                             dropdownColor: context.cardColor,
                             items: List.generate(10, (index) {
@@ -1135,7 +1139,7 @@ class _BookServiceScreenState extends State<BookServiceScreen> {
                       Text(language.chooseDateTime,
                           style: secondaryTextStyle()),
                       Spacer(),
-                      ic_calendar.iconImage(size: 18),
+                      ic_calendar.iconImage(size: 18, context: context),
                     ],
                   ),
                 ),
@@ -1174,7 +1178,9 @@ class _BookServiceScreenState extends State<BookServiceScreen> {
                     ),
                     IconButton(
                       icon: ic_edit_square.iconImage(
-                          size: 18, color: context.icon),
+                        context: context,
+                        size: 18,
+                      ),
                       visualDensity: VisualDensity.compact,
                       onPressed: () async {
                         handleDateTimePick();
@@ -1343,8 +1349,11 @@ class _BookServiceScreenState extends State<BookServiceScreen> {
                       // if (selectedShop!.shopStartTime, selectedShop!.shopEndTime).isNotEmpty) ...[
                       TextIcon(
                         spacing: 10,
-                        prefix: Image.asset(ic_clock,
-                            width: 12, height: 12, color: context.icon),
+                        prefix: Image.asset(
+                          ic_clock,
+                          width: 12,
+                          height: 12,
+                        ),
                         text: selectedShop!.shopStartTime
                                     .validate()
                                     .isNotEmpty &&

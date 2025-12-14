@@ -22,10 +22,12 @@ class ServiceDetailHeaderComponent extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<ServiceDetailHeaderComponent> createState() => _ServiceDetailHeaderComponentState();
+  State<ServiceDetailHeaderComponent> createState() =>
+      _ServiceDetailHeaderComponentState();
 }
 
-class _ServiceDetailHeaderComponentState extends State<ServiceDetailHeaderComponent> {
+class _ServiceDetailHeaderComponentState
+    extends State<ServiceDetailHeaderComponent> {
   PageController _pageController = PageController();
   int _currentPage = 0;
   Timer? _autoSliderTimer;
@@ -37,10 +39,12 @@ class _ServiceDetailHeaderComponentState extends State<ServiceDetailHeaderCompon
   }
 
   void _startAutoSlider() {
-    _autoSliderTimer = Timer.periodic(const Duration(seconds: 4), (Timer timer) {
+    _autoSliderTimer =
+        Timer.periodic(const Duration(seconds: 4), (Timer timer) {
       if (mounted && widget.serviceDetail.attachments.validate().isNotEmpty) {
         if (_pageController.hasClients) {
-          _currentPage = (_currentPage + 1) % widget.serviceDetail.attachments!.length;
+          _currentPage =
+              (_currentPage + 1) % widget.serviceDetail.attachments!.length;
           _pageController.animateToPage(
             _currentPage,
             duration: const Duration(milliseconds: 300),
@@ -56,7 +60,8 @@ class _ServiceDetailHeaderComponentState extends State<ServiceDetailHeaderCompon
       widget.serviceDetail.isFavourite = 0;
       setState(() {});
 
-      await removeToWishList(serviceId: widget.serviceDetail.id.validate()).then((value) {
+      await removeToWishList(serviceId: widget.serviceDetail.id.validate())
+          .then((value) {
         if (!value) {
           widget.serviceDetail.isFavourite = 1;
           setState(() {});
@@ -66,7 +71,8 @@ class _ServiceDetailHeaderComponentState extends State<ServiceDetailHeaderCompon
       widget.serviceDetail.isFavourite = 1;
       setState(() {});
 
-      await addToWishList(serviceId: widget.serviceDetail.id.validate()).then((value) {
+      await addToWishList(serviceId: widget.serviceDetail.id.validate())
+          .then((value) {
         if (!value) {
           widget.serviceDetail.isFavourite = 0;
           setState(() {});
@@ -95,7 +101,8 @@ class _ServiceDetailHeaderComponentState extends State<ServiceDetailHeaderCompon
         children: [
           if (attachments.isNotEmpty)
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
               child: SizedBox(
                 height: 250,
                 width: context.width(),
@@ -136,7 +143,7 @@ class _ServiceDetailHeaderComponentState extends State<ServiceDetailHeaderCompon
                     color: context.cardColor,
                     borderRadius: const BorderRadius.all(Radius.circular(15)),
                   ),
-                  padding: const EdgeInsets.symmetric( horizontal: 10),
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -162,19 +169,27 @@ class _ServiceDetailHeaderComponentState extends State<ServiceDetailHeaderCompon
                 boxShape: BoxShape.circle,
                 backgroundColor: context.cardColor,
               ),
-              child: widget.serviceDetail.isFavourite == 1 ? ic_fill_heart.iconImage(color: favouriteColor, size: 24) : ic_heart.iconImage(color: unFavouriteColor, size: 24),
+              child: widget.serviceDetail.isFavourite == 1
+                  ? ic_fill_heart.iconImage(
+                      color: favouriteColor, size: 24, context: context)
+                  : ic_heart.iconImage(
+                      color: unFavouriteColor, size: 24, context: context),
             ).onTap(() async {
               if (appStore.isLoggedIn) {
                 onTapFavourite();
               } else {
                 push(const SignInScreen(returnExpected: true)).then((value) {
-                  setStatusBarColor(transparentColor, delayInMilliSeconds: 1000);
+                  setStatusBarColor(transparentColor,
+                      delayInMilliSeconds: 1000);
                   if (value) {
                     onTapFavourite();
                   }
                 });
               }
-            }, highlightColor: Colors.transparent, splashColor: Colors.transparent, hoverColor: Colors.transparent),
+            },
+                highlightColor: Colors.transparent,
+                splashColor: Colors.transparent,
+                hoverColor: Colors.transparent),
           ),
         ],
       ),

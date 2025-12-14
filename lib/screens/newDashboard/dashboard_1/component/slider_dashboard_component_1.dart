@@ -128,7 +128,8 @@ class _SliderDashboardComponent1State extends State<SliderDashboardComponent1> {
                   clipBehavior: Clip.none,
                   children: [
                     ic_notification
-                        .iconImage(size: 24, color: primaryColor)
+                        .iconImage(
+                            size: 24, color: primaryColor, context: context)
                         .center(),
                     Observer(builder: (context) {
                       return Positioned(

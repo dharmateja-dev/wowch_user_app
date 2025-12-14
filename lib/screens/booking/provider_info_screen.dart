@@ -621,7 +621,7 @@ class ProviderInfoScreenState extends State<ProviderInfoScreen> {
         // Email row
         Row(
           children: [
-            ic_message.iconImage(size: 20, color: context.icon),
+            ic_message.iconImage(size: 20, context: context),
             12.width,
             Expanded(
               child: Text(
@@ -637,7 +637,7 @@ class ProviderInfoScreenState extends State<ProviderInfoScreen> {
         // Phone row
         Row(
           children: [
-            ic_calling.iconImage(size: 18, color: context.icon),
+            ic_calling.iconImage(size: 18, context: context),
             12.width,
             Expanded(
               child: Text(

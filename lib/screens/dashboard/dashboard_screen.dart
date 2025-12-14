@@ -200,9 +200,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   label: language.home,
                 ),
                 NavigationDestination(
-                  icon: ic_ticket.iconImage(color: appTextSecondaryColor),
+                  icon: ic_ticket.iconImage(color: appTextSecondaryColor, context: context),
                   selectedIcon:
-                      ic_ticket.iconImage(color: context.primaryColor),
+                      ic_ticket.iconImage(color: context.primaryColor, context: context),
                   label: language.booking,
                 ),
                 NavigationDestination(

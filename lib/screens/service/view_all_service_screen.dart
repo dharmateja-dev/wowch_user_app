@@ -401,8 +401,12 @@ class _ViewAllServiceScreenState extends State<ViewAllServiceScreen> {
           controller: searchCont,
           decoration: InputDecoration(
             hintText: "${language.lblSearchFor} $setSearchString",
-            prefixIcon: ic_search.iconImage(size: 16).paddingAll(14),
-            suffixIcon: ic_filter.iconImage(size: 16).paddingAll(14).onTap(
+            prefixIcon:
+                ic_search.iconImage(size: 16, context: context).paddingAll(14),
+            suffixIcon: ic_filter
+                .iconImage(size: 16, context: context)
+                .paddingAll(14)
+                .onTap(
               () {
                 hideKeyboard(context);
                 FilterScreen(

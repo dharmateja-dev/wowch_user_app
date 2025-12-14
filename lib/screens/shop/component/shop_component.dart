@@ -8,7 +8,6 @@ import 'package:booking_system_flutter/screens/service/service_detail_screen.dar
 import 'package:booking_system_flutter/screens/service/view_all_service_screen.dart';
 import 'package:booking_system_flutter/screens/shop/shop_detail_screen.dart';
 import 'package:booking_system_flutter/utils/colors.dart';
-import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/images.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
 import 'package:flutter/material.dart';
@@ -102,7 +101,7 @@ class ShopComponent extends StatelessWidget {
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        ic_location.iconImage(size: 14, color: context.icon),
+                        ic_location.iconImage(size: 14, context: context),
                         4.width,
                         Expanded(
                           child: SizedBox(
@@ -125,7 +124,10 @@ class ShopComponent extends StatelessWidget {
                           ? '${shop.shopStartTime} - ${shop.shopEndTime}'
                           : '---',
                       expandedText: true,
-                      prefix: ic_clock.iconImage(size: 14, color: context.icon),
+                      prefix: ic_clock.iconImage(
+                        context: context,
+                        size: 14,
+                      ),
                       textStyle: secondaryTextStyle(),
                       spacing: 4,
                     ),

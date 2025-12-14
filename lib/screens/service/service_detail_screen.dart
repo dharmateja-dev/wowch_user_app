@@ -643,8 +643,10 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen>
                 backgroundColor: context.cardColor,
               ),
               child: snap.data!.serviceDetail!.isFavourite == 1
-                  ? ic_fill_heart.iconImage(color: favouriteColor, size: 24)
-                  : ic_heart.iconImage(color: unFavouriteColor, size: 24),
+                  ? ic_fill_heart.iconImage(
+                      color: favouriteColor, size: 24, context: context)
+                  : ic_heart.iconImage(
+                      color: unFavouriteColor, size: 24, context: context),
             ).onTap(() async {
               if (appStore.isLoggedIn) {
                 await _onTapFavourite(snap.data!.serviceDetail!);

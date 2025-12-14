@@ -148,8 +148,10 @@ class _FavouriteProviderComponentState
               decoration: boxDecorationWithShadow(
                   boxShape: BoxShape.circle, backgroundColor: Colors.white),
               child: widget.data!.isFavourite == 1
-                  ? ic_fill_heart.iconImage(color: favouriteColor, size: 16)
-                  : ic_heart.iconImage(color: unFavouriteColor, size: 16),
+                  ? ic_fill_heart.iconImage(
+                      color: favouriteColor, size: 16, context: context)
+                  : ic_heart.iconImage(
+                      context: context, color: unFavouriteColor, size: 16),
             ).onTap(() async {
               if (widget.data!.isFavourite == 1) {
                 widget.data!.isFavourite = 0;

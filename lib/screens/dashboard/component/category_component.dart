@@ -4,7 +4,6 @@ import 'package:booking_system_flutter/model/category_model.dart';
 import 'package:booking_system_flutter/screens/category/category_screen.dart';
 import 'package:booking_system_flutter/screens/dashboard/component/category_widget.dart';
 import 'package:booking_system_flutter/screens/service/view_all_service_screen.dart';
-import 'package:booking_system_flutter/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 

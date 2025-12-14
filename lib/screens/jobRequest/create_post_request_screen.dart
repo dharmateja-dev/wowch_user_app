@@ -7,7 +7,6 @@ import 'package:booking_system_flutter/network/rest_apis.dart';
 import 'package:booking_system_flutter/screens/jobRequest/createService/create_service_screen.dart';
 import 'package:booking_system_flutter/utils/common.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
-import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/images.dart';
 import 'package:booking_system_flutter/utils/model_keys.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
@@ -347,7 +346,7 @@ class _CreatePostRequestScreenState extends State<CreatePostRequestScreen> {
                                   //8.height,
                                   IconButton(
                                     icon: ic_delete.iconImage(
-                                        size: 18, color: context.icon),
+                                        size: 18, context: context),
                                     visualDensity: VisualDensity.compact,
                                     onPressed: () {
                                       showConfirmDialogCustom(

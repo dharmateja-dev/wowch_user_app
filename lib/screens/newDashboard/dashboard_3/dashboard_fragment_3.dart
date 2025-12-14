@@ -115,10 +115,7 @@ class _DashboardFragment3State extends State<DashboardFragment3> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 ic_location.iconImage(
-                                    color: appStore.isDarkMode
-                                        ? Colors.white
-                                        : Colors.black,
-                                    size: 24),
+                                    context: context, size: 24),
                                 8.width,
                                 Text(
                                   appStore.isCurrentLocation
@@ -212,10 +209,7 @@ class _DashboardFragment3State extends State<DashboardFragment3> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 ic_location.iconImage(
-                                    color: appStore.isDarkMode
-                                        ? Colors.white
-                                        : Colors.black,
-                                    size: 24),
+                                    context: context, size: 24),
                                 8.width,
                                 Text(
                                   appStore.isCurrentLocation

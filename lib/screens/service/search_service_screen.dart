@@ -20,7 +20,8 @@ class SearchServiceScreen extends StatefulWidget {
   final List<ServiceData>? featuredList;
   final String search;
 
-  SearchServiceScreen({Key? key, this.featuredList, this.search = ""}) : super(key: key);
+  SearchServiceScreen({Key? key, this.featuredList, this.search = ""})
+      : super(key: key);
 
   @override
   State<SearchServiceScreen> createState() => _SearchServiceScreenState();
@@ -75,7 +76,12 @@ class _SearchServiceScreenState extends State<SearchServiceScreen> {
   }
 
   bool get isFilterApplied {
-    return filterStore.providerId.isNotEmpty || filterStore.handymanId.isNotEmpty || filterStore.ratingId.isNotEmpty || filterStore.categoryId.isNotEmpty || filterStore.isPriceMax.isNotEmpty || filterStore.isPriceMin.isNotEmpty;
+    return filterStore.providerId.isNotEmpty ||
+        filterStore.handymanId.isNotEmpty ||
+        filterStore.ratingId.isNotEmpty ||
+        filterStore.categoryId.isNotEmpty ||
+        filterStore.isPriceMax.isNotEmpty ||
+        filterStore.isPriceMin.isNotEmpty;
   }
 
   bool get showRecommended {
@@ -135,14 +141,17 @@ class _SearchServiceScreenState extends State<SearchServiceScreen> {
                       },
                       decoration: inputDecoration(context).copyWith(
                         hintText: "${language.lblSearchFor} $setSearchString",
-                        prefixIcon: ic_search.iconImage(size: 10).paddingAll(14),
+                        prefixIcon: ic_search
+                            .iconImage(size: 10, context: context)
+                            .paddingAll(14),
                         hintStyle: secondaryTextStyle(),
                       ),
                     ).expand(),
                     16.width,
                     Container(
                       padding: const EdgeInsets.all(10),
-                      decoration: boxDecorationDefault(color: context.primaryColor),
+                      decoration:
+                          boxDecorationDefault(color: context.primaryColor),
                       child: const CachedImageWidget(
                         url: ic_filter,
                         height: 26,
@@ -152,7 +161,9 @@ class _SearchServiceScreenState extends State<SearchServiceScreen> {
                     ).onTap(() {
                       hideKeyboard(context);
 
-                      FilterScreen(isFromProvider: true, isFromCategory: false).launch(context).then((value) {
+                      FilterScreen(isFromProvider: true, isFromCategory: false)
+                          .launch(context)
+                          .then((value) {
                         if (value != null) {
                           page = 1;
                           appStore.setLoading(true);
@@ -166,7 +177,8 @@ class _SearchServiceScreenState extends State<SearchServiceScreen> {
                 ),
               ),
               AnimatedScrollView(
-                keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+                keyboardDismissBehavior:
+                    ScrollViewKeyboardDismissBehavior.onDrag,
                 onSwipeRefresh: () {
                   page = 1;
 
@@ -198,20 +210,34 @@ class _SearchServiceScreenState extends State<SearchServiceScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   16.height,
-                                  Text(language.recommendedForYou, style: boldTextStyle(size: LABEL_TEXT_SIZE)).paddingSymmetric(horizontal: 16),
+                                  Text(language.recommendedForYou,
+                                          style: boldTextStyle(
+                                              size: LABEL_TEXT_SIZE))
+                                      .paddingSymmetric(horizontal: 16),
                                   AnimatedListView(
-                                    itemCount: widget.featuredList.validate().length,
+                                    itemCount:
+                                        widget.featuredList.validate().length,
                                     listAnimationType: ListAnimationType.FadeIn,
-                                    fadeInConfiguration: FadeInConfiguration(duration: 2.seconds),
-                                    physics: const NeverScrollableScrollPhysics(),
+                                    fadeInConfiguration: FadeInConfiguration(
+                                        duration: 2.seconds),
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
                                     shrinkWrap: true,
                                     emptyWidget: NoDataWidget(
                                       title: language.lblNoServicesFound,
-                                      subTitle: (searchCont.text.isNotEmpty || filterStore.providerId.isNotEmpty || filterStore.categoryId.isNotEmpty) ? language.noDataFoundInFilter : null,
+                                      subTitle: (searchCont.text.isNotEmpty ||
+                                              filterStore
+                                                  .providerId.isNotEmpty ||
+                                              filterStore.categoryId.isNotEmpty)
+                                          ? language.noDataFoundInFilter
+                                          : null,
                                       imageWidget: const EmptyStateWidget(),
                                     ),
                                     itemBuilder: (_, index) {
-                                      return ProviderServiceComponent(serviceData: widget.featuredList.validate()[index]).paddingAll(8);
+                                      return ProviderServiceComponent(
+                                              serviceData: widget.featuredList
+                                                  .validate()[index])
+                                          .paddingAll(8);
                                     },
                                   ).paddingAll(8),
                                 ],
@@ -225,7 +251,9 @@ class _SearchServiceScreenState extends State<SearchServiceScreen> {
                         )
                       : SnapHelperWidget(
                           future: futureService,
-                          loadingWidget: appStore.isLoading ? const Offstage() : LoaderWidget(),
+                          loadingWidget: appStore.isLoading
+                              ? const Offstage()
+                              : LoaderWidget(),
                           errorBuilder: (p0) {
                             return NoDataWidget(
                               title: p0,
@@ -248,16 +276,23 @@ class _SearchServiceScreenState extends State<SearchServiceScreen> {
                                 AnimatedListView(
                                   itemCount: serviceList.length,
                                   listAnimationType: ListAnimationType.FadeIn,
-                                  fadeInConfiguration: FadeInConfiguration(duration: 2.seconds),
+                                  fadeInConfiguration:
+                                      FadeInConfiguration(duration: 2.seconds),
                                   physics: const NeverScrollableScrollPhysics(),
                                   shrinkWrap: true,
                                   emptyWidget: NoDataWidget(
                                     title: language.lblNoServicesFound,
-                                    subTitle: (searchCont.text.isNotEmpty || filterStore.providerId.isNotEmpty || filterStore.categoryId.isNotEmpty) ? language.noDataFoundInFilter : null,
+                                    subTitle: (searchCont.text.isNotEmpty ||
+                                            filterStore.providerId.isNotEmpty ||
+                                            filterStore.categoryId.isNotEmpty)
+                                        ? language.noDataFoundInFilter
+                                        : null,
                                     imageWidget: const EmptyStateWidget(),
                                   ),
                                   itemBuilder: (_, index) {
-                                    return ProviderServiceComponent(serviceData: serviceList[index]).paddingAll(8);
+                                    return ProviderServiceComponent(
+                                            serviceData: serviceList[index])
+                                        .paddingAll(8);
                                   },
                                 ).paddingAll(8),
                               ],

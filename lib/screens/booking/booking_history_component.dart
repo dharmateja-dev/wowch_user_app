@@ -5,8 +5,6 @@ import 'package:booking_system_flutter/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-import '../../utils/constant.dart';
-
 class BookingHistoryComponent extends StatefulWidget {
   final List<BookingActivity> data;
   final ScrollController scrollController;

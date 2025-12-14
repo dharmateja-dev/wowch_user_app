@@ -266,8 +266,8 @@ class _CustomerRatingScreenState extends State<CustomerRatingScreen> {
                                   // Edit icon - simple dark grey icon
                                   ic_edit_square
                                       .iconImage(
+                                    context: context,
                                     size: 18,
-                                    color: textPrimaryColorGlobal,
                                   )
                                       .onTap(() async {
                                     Map<String, dynamic>? dialogData =
@@ -322,8 +322,8 @@ class _CustomerRatingScreenState extends State<CustomerRatingScreen> {
                                   // Delete icon - simple dark grey icon
                                   ic_delete
                                       .iconImage(
+                                    context: context,
                                     size: 18,
-                                    color: textPrimaryColorGlobal,
                                   )
                                       .onTap(() {
                                     showConfirmDialogCustom(

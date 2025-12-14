@@ -196,15 +196,16 @@ InputDecoration inputDecoration(
     labelText: labelText,
     labelStyle: primaryTextStyle(),
     hintText: hintText,
-    hintStyle: secondaryTextStyle(size: 14),
+    hintStyle: secondaryTextStyle(size: 14, color: context.hintColor),
     alignLabelWithHint: true,
     counterText: counter == false ? "" : counterText,
     prefixIcon: prefixIcon,
+    prefixIconColor: context.icon,
     suffixIconColor: context.icon,
     prefix: prefix,
     enabledBorder: OutlineInputBorder(
       borderRadius: radius(borderRadius ?? defaultRadius),
-      borderSide: BorderSide(color: context.divider, width: 1.0),
+      borderSide: BorderSide(color: context.inputBorderColor, width: 1.0),
     ),
     focusedErrorBorder: OutlineInputBorder(
       borderRadius: radius(borderRadius ?? defaultRadius),
@@ -217,11 +218,11 @@ InputDecoration inputDecoration(
     errorMaxLines: 2,
     border: OutlineInputBorder(
       borderRadius: radius(borderRadius ?? defaultRadius),
-      borderSide: BorderSide(color: context.divider, width: 1.0),
+      borderSide: BorderSide(color: context.inputBorderColor, width: 1.0),
     ),
     disabledBorder: OutlineInputBorder(
       borderRadius: radius(borderRadius ?? defaultRadius),
-      borderSide: BorderSide(color: context.divider, width: 1.0),
+      borderSide: BorderSide(color: context.inputBorderColor, width: 1.0),
     ),
     errorStyle: primaryTextStyle(color: Colors.red, size: 11),
     focusedBorder: OutlineInputBorder(
@@ -611,7 +612,7 @@ void doIfLoggedIn(BuildContext context, VoidCallback callback) {
 }
 
 Widget trailing(BuildContext context) {
-  return ic_arrow_right.iconImage(color: context.icon, size: 16);
+  return ic_arrow_right.iconImage(context: context, size: 16);
 }
 
 void showNewUpdateDialog(BuildContext context,
@@ -833,7 +834,9 @@ class MultiLanguageWidget extends StatelessWidget {
                           ? primaryColor
                           : context.scaffoldBackgroundColor,
                       elevation: 0,
-                      side: BorderSide(width: 1, color: context.icon),
+                      side: BorderSide(
+                        width: 1,
+                      ),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(4)),
                       padding:

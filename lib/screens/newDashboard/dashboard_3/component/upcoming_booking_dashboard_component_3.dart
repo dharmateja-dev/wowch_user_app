@@ -2,7 +2,6 @@ import 'package:booking_system_flutter/component/cached_image_widget.dart';
 import 'package:booking_system_flutter/main.dart';
 import 'package:booking_system_flutter/model/booking_detail_model.dart';
 import 'package:booking_system_flutter/utils/common.dart';
-import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/images.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
 import 'package:flutter/material.dart';
@@ -195,7 +194,7 @@ class _UpcomingBookingDashboardComponent3State
                                 Row(
                                   children: [
                                     ic_calendar.iconImage(
-                                        color: context.icon, size: 16),
+                                        size: 16, context: context),
                                     8.width,
                                     Text(
                                       '${language.bookingStatus}: ',
@@ -207,7 +206,9 @@ class _UpcomingBookingDashboardComponent3State
                                 Row(
                                   children: [
                                     ic_un_fill_wallet.iconImage(
-                                        color: context.icon, size: 16),
+                                      size: 16,
+                                      context: context,
+                                    ),
                                     8.width,
                                     Text(
                                       '${language.paymentStatus}: ',

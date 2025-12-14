@@ -90,7 +90,7 @@ class LightThemeColors {
 
 class DarkThemeColors {
   // ——— Rich Black Shades (Perfect for OLED screens) ———
-  static const Color richBlack = Color(0xFF000000); // Deepest black
+  static const Color richBlack = Color(0xFF121212); // Deepest black
   static const Color charcoal = Color(0xFF121212); // Material Design dark
   static const Color darkCharcoal = Color(0xFF1A1A1A); // Card background
   static const Color mediumCharcoal = Color(0xFF1E1E1E); // Surface background
@@ -99,9 +99,10 @@ class DarkThemeColors {
   static const Color warmCharcoal = Color(0xFF2E2E2E); // Container background
 
   // ——— Text Colors with Better Contrast ———
-  static const Color pureWhite = Color(0xFFFFFFFF); // Primary text
+  static const Color pureWhite = Color(0xFFE8F5F0); // Primary text
   static const Color softWhite = Color(0xFFF5F5F5); // Secondary text
   static const Color lightGray = Color(0xFFE8E8E8); // Surface text
+
   static const Color softGray = Color(0xFFD0D0D0); // Container text
   static const Color mutedGray = Color(0xFFB8B8B8); // Variant text
   static const Color subtleGray = Color(0xFF9E9E9E); // Disabled text
@@ -111,6 +112,7 @@ class DarkThemeColors {
   static const Color mediumBorder = Color(0xFF3A3A3A); // Secondary borders
   static const Color lightBorder = Color(0xFF2A2A2A); // Subtle borders
   static const Color dividerColor = Color(0xFF2E2E2E); // Dividers
+  static const Color primaryBorder = Color(0xFFB2C7BF); // Dividers
 
   // ——— Accent Colors for Dark Theme ———
   // MERGED: Kept original Green as primary

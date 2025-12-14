@@ -186,8 +186,10 @@ class _ProviderServiceComponentState extends State<ProviderServiceComponent> {
                     boxShape: BoxShape.circle,
                     backgroundColor: context.cardColor),
                 child: widget.serviceData!.isFavourite == 0
-                    ? ic_fill_heart.iconImage(color: favouriteColor, size: 18)
-                    : ic_heart.iconImage(color: unFavouriteColor, size: 18),
+                    ? ic_fill_heart.iconImage(
+                        color: favouriteColor, size: 18, context: context)
+                    : ic_heart.iconImage(
+                        color: unFavouriteColor, size: 18, context: context),
               ).onTap(() async {
                 if (widget.serviceData!.isFavourite == 0) {
                   widget.serviceData!.isFavourite = 1;

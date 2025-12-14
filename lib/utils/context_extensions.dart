@@ -55,6 +55,9 @@ extension ColorSchemeExtension on BuildContext {
   /// Access standard divider color
   Color get divider => appTheme.dividerColor;
 
+  /// Input border color: Primary border in light, Dark border in dark
+  Color get inputBorderColor => outline;
+
   /// Standard icon color: Black in light, White in dark
   Color get icon => appTheme.iconTheme.color ?? onSurface;
 
@@ -85,4 +88,10 @@ extension ColorSchemeExtension on BuildContext {
   Color get fillColor => appTheme.brightness == Brightness.dark
       ? const Color(0xFF101d1c)
       : Colors.transparent;
+
+  /// Hint text color for input fields
+  /// Light theme: muted gray, Dark theme: greenish gray
+  Color get hintColor => appTheme.brightness == Brightness.dark
+      ? const Color(0xFF6E7D78)
+      : const Color(0xFF9E9E9E);
 }

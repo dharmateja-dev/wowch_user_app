@@ -30,7 +30,7 @@ class DashboardSearchBarComponent extends StatelessWidget {
       ),
       child: Row(
         children: [
-          ic_search.iconImage(size: 20, color: appTextSecondaryColor),
+          ic_search.iconImage(size: 20, context: context),
           12.width,
           Expanded(
             child: Text(
@@ -46,7 +46,8 @@ class DashboardSearchBarComponent extends StatelessWidget {
             onTap: () {
               locationWiseService(context, () {});
             },
-            child: ic_active_location.iconImage(size: 20, color: primaryColor),
+            child: ic_active_location.iconImage(
+                size: 20, context: context, color: primaryColor),
           ),
         ],
       ),

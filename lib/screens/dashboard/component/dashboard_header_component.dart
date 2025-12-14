@@ -2,7 +2,6 @@ import 'package:booking_system_flutter/main.dart';
 import 'package:booking_system_flutter/model/service_data_model.dart';
 import 'package:booking_system_flutter/screens/dashboard/component/dashboard_search_bar_component.dart';
 import 'package:booking_system_flutter/screens/notification/notification_screen.dart';
-import 'package:booking_system_flutter/screens/setting_screen.dart';
 import 'package:booking_system_flutter/utils/colors.dart';
 import 'package:booking_system_flutter/utils/common.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
@@ -46,6 +45,7 @@ class DashboardHeaderComponent extends StatelessWidget {
                           ic_location.iconImage(
                             size: 20,
                             color: Colors.white,
+                            context: context,
                           ),
                           8.width,
                           Expanded(
@@ -96,7 +96,8 @@ class DashboardHeaderComponent extends StatelessWidget {
                     clipBehavior: Clip.none,
                     children: [
                       ic_notification
-                          .iconImage(size: 20, color: primaryColor)
+                          .iconImage(
+                              size: 20, color: primaryColor, context: context)
                           .center(),
                       Observer(
                         builder: (context) {

@@ -130,7 +130,8 @@ class _CustomAppbarDashboardComponent2State
                     children: [
                       Row(
                         children: [
-                          ic_location.iconImage(color: Colors.white, size: 22),
+                          ic_location.iconImage(
+                              color: Colors.white, size: 22, context: context),
                           8.width,
                           Text(
                             appStore.isCurrentLocation
@@ -183,8 +184,7 @@ class _CustomAppbarDashboardComponent2State
                       child: Stack(
                         clipBehavior: Clip.none,
                         children: [
-                          ic_notification.iconImage(
-                              size: 24, color: Colors.white),
+                          ic_notification.iconImage(size: 24, context: context),
                           Observer(
                             builder: (context) {
                               return Positioned(
@@ -235,17 +235,19 @@ class _CustomAppbarDashboardComponent2State
                     context,
                     hintText: language.eGCleaningPlumberPest,
                     prefixIcon: ic_search
-                        .iconImage(size: 10, color: context.icon)
+                        .iconImage(size: 10, context: context)
                         .paddingAll(14),
                   ),
                   suffix: IconButton(
                     icon: appStore.isSpeechActivated
-                        ? Icon(Icons.stop, color: context.icon)
+                        ? Icon(
+                            Icons.stop,
+                            color: context.icon,
+                          )
                         : Icon(
                             Icons.mic_none_outlined,
                             color: context.icon,
                           ),
-                    color: context.icon,
                     onPressed: () async {
                       if (appStore.isSpeechActivated) {
                         stopListening();

@@ -113,7 +113,10 @@ class _BookingConfirmedComponent1State
                                 height: 22,
                                 width: 22,
                                 child: IconButton(
-                                  icon: ic_close.iconImage(size: 22),
+                                  icon: ic_close.iconImage(
+                                    size: 22,
+                                    context: context,
+                                  ),
                                   visualDensity: VisualDensity.compact,
                                   padding: EdgeInsets.zero,
                                   onPressed: () async {
@@ -130,7 +133,9 @@ class _BookingConfirmedComponent1State
                             children: [
                               Row(
                                 children: [
-                                  ic_calendar.iconImage(size: 14),
+                                      
+                                      
+                                  ic_calendar.iconImage(size: 14, context: context),
                                   4.width,
                                   Text(
                                     formatDate(widget
@@ -146,7 +151,7 @@ class _BookingConfirmedComponent1State
                               8.width,
                               Row(
                                 children: [
-                                  ic_clock.iconImage(size: 14),
+                                  ic_clock.iconImage(size: 14, context: context),
                                   4.width,
                                   Text(
                                     formatDate(

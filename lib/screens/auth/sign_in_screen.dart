@@ -291,8 +291,8 @@ class _SignInScreenState extends State<SignInScreen> {
                     setState(() {});
                   },
                   activeColor: context.primaryColor,
-                  checkColor: Colors.white,
-                  side: BorderSide(color: primaryColor, width: 2.0),
+                  checkColor: context.onPrimary,
+                  side: BorderSide(color: context.primary, width: 2.0),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(2),
                   ),
@@ -315,7 +315,7 @@ class _SignInScreenState extends State<SignInScreen> {
               child: Text(
                 language.forgotPassword,
                 style: boldTextStyle(
-                  color: primaryColor,
+                  color: context.secondary,
                 ),
                 textAlign: TextAlign.right,
               ),
@@ -415,7 +415,10 @@ class _SignInScreenState extends State<SignInScreen> {
             color: context.scaffoldBackgroundColor,
             border: Border.all(color: grey300Color, width: 2.0),
           ),
-          child: Icon(Icons.apple, size: 20, color: context.icon),
+          child: Icon(
+            Icons.apple,
+            size: 20,
+          ),
         ),
       ),
     );
@@ -545,7 +548,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                 hintText: language.hintEmailTxt,
                                 borderRadius: 8),
                             suffix: ic_message
-                                .iconImage(size: 10, color: context.icon)
+                                .iconImage(size: 10, context: context)
                                 .paddingAll(14),
                             autoFillHints: [AutofillHints.email],
                           ),
@@ -559,10 +562,10 @@ class _SignInScreenState extends State<SignInScreen> {
                             focus: passwordFocus,
                             obscureText: true,
                             suffixPasswordVisibleWidget: ic_show
-                                .iconImage(size: 10, color: context.icon)
+                                .iconImage(size: 10, context: context)
                                 .paddingAll(14),
                             suffixPasswordInvisibleWidget: ic_hide
-                                .iconImage(size: 10, color: context.icon)
+                                .iconImage(size: 10, context: context)
                                 .paddingAll(14),
                             decoration: inputDecoration(context,
                                 fillColor: context.fillColor,

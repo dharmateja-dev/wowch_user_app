@@ -2,7 +2,6 @@ import 'package:booking_system_flutter/component/cached_image_widget.dart';
 import 'package:booking_system_flutter/main.dart';
 import 'package:booking_system_flutter/model/user_data_model.dart';
 import 'package:booking_system_flutter/utils/common.dart';
-import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/images.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -161,7 +160,10 @@ class BookingDetailProviderWidgetState
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.call_outlined, size: 18, color: context.icon),
+                      Icon(
+                        Icons.call_outlined,
+                        size: 18,
+                      ),
                       8.width,
                       Text(language.lblCall, style: boldTextStyle(size: 14)),
                     ],
@@ -188,8 +190,10 @@ class BookingDetailProviderWidgetState
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.chat_bubble_outline,
-                          size: 18, color: context.icon),
+                      Icon(
+                        Icons.chat_bubble_outline,
+                        size: 18,
+                      ),
                       8.width,
                       Text(language.lblChat, style: boldTextStyle(size: 14)),
                     ],

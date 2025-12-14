@@ -1,6 +1,5 @@
 import 'package:booking_system_flutter/locale/app_localizations.dart';
 import 'package:booking_system_flutter/main.dart';
-import 'package:booking_system_flutter/utils/colors.dart';
 import 'package:booking_system_flutter/utils/theme_colors.dart';
 import 'package:booking_system_flutter/utils/configs.dart';
 import 'package:booking_system_flutter/utils/constant.dart';

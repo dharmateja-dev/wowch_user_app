@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -133,7 +132,8 @@ class _CustomImagePickerState extends State<CustomImagePicker> {
                   borderRadius: radius()),
               child: Column(
                 children: [
-                  ic_no_photo.iconImage(size: widget.iconSize ?? 46),
+                  ic_no_photo.iconImage(
+                      size: widget.iconSize ?? 46, context: context),
                   8.height,
                   Text(language.chooseImage,
                       style: secondaryTextStyle(size: widget.textSize)),
@@ -210,7 +210,9 @@ class FilePickerDialog extends StatelessWidget {
           SettingItemWidget(
             title: language.removeImage,
             titleTextStyle: primaryTextStyle(),
-            leading: Icon(Icons.close, color: context.icon),
+            leading: Icon(
+              Icons.close,
+            ),
             onTap: () {
               finish(context, GalleryFileTypes.CANCEL);
             },
@@ -218,7 +220,9 @@ class FilePickerDialog extends StatelessWidget {
           SettingItemWidget(
             title: language.camera,
             titleTextStyle: primaryTextStyle(),
-            leading: Icon(LineIcons.camera, color: context.icon),
+            leading: Icon(
+              LineIcons.camera,
+            ),
             onTap: () {
               finish(context, GalleryFileTypes.CAMERA);
             },
@@ -226,7 +230,9 @@ class FilePickerDialog extends StatelessWidget {
           SettingItemWidget(
             title: language.lblGallery,
             titleTextStyle: primaryTextStyle(),
-            leading: Icon(LineIcons.image_1, color: context.icon),
+            leading: Icon(
+              LineIcons.image_1,
+            ),
             onTap: () {
               finish(context, GalleryFileTypes.GALLERY);
             },
