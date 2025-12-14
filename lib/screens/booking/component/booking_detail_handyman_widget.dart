@@ -8,6 +8,7 @@ import 'package:booking_system_flutter/model/user_data_model.dart';
 import 'package:booking_system_flutter/screens/chat/user_chat_screen.dart';
 import 'package:booking_system_flutter/utils/colors.dart';
 import 'package:booking_system_flutter/utils/common.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/images.dart';
 import 'package:booking_system_flutter/utils/model_keys.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
@@ -149,7 +150,7 @@ class BookingDetailHandymanWidgetState
                     ],
                   ).fit(),
                   width: context.width(),
-                  color: primaryColor,
+                  color: context.primary,
                   elevation: 0,
                   onTap: () {
                     launchCall(widget.handymanData.contactNumber.validate());

@@ -1,4 +1,5 @@
 import 'package:booking_system_flutter/screens/newDashboard/dashboard_3/component/service_dashboard_component_3.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -6,7 +7,6 @@ import '../../../../component/empty_error_state_widget.dart';
 import '../../../../component/view_all_label_component.dart';
 import '../../../../main.dart';
 import '../../../../model/service_data_model.dart';
-import '../../../../utils/colors.dart';
 import '../../../service/view_all_service_screen.dart';
 
 class ServiceListDashboardComponent3 extends StatelessWidget {
@@ -14,7 +14,10 @@ class ServiceListDashboardComponent3 extends StatelessWidget {
   final String serviceListTitle;
   final bool isFeatured;
 
-  ServiceListDashboardComponent3({required this.serviceList, this.serviceListTitle = '', this.isFeatured = false});
+  ServiceListDashboardComponent3(
+      {required this.serviceList,
+      this.serviceListTitle = '',
+      this.isFeatured = false});
 
   @override
   Widget build(BuildContext context) {
@@ -26,10 +29,13 @@ class ServiceListDashboardComponent3 extends StatelessWidget {
         ViewAllLabel(
           label: serviceListTitle,
           list: serviceList,
-          trailingTextStyle: boldTextStyle(color: primaryColor, size: 12),
+          trailingTextStyle: boldTextStyle(color: context.primary, size: 12),
           onTap: () {
-            ViewAllServiceScreen(isFeatured: isFeatured ? '1' : '').launch(context).then((value) {
-              setStatusBarColor(Colors.transparent, statusBarIconBrightness: Brightness.dark);
+            ViewAllServiceScreen(isFeatured: isFeatured ? '1' : '')
+                .launch(context)
+                .then((value) {
+              setStatusBarColor(Colors.transparent,
+                  statusBarIconBrightness: Brightness.dark);
             });
           },
         ).paddingSymmetric(horizontal: 16),
@@ -37,7 +43,8 @@ class ServiceListDashboardComponent3 extends StatelessWidget {
           HorizontalList(
             itemCount: serviceList.length,
             spacing: 16,
-            padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16, top: 8),
+            padding:
+                const EdgeInsets.only(left: 16, right: 16, bottom: 16, top: 8),
             itemBuilder: (context, index) {
               return ServiceDashboardComponent3(
                 serviceData: serviceList[index],

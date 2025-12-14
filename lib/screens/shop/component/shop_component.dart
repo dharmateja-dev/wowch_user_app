@@ -8,6 +8,7 @@ import 'package:booking_system_flutter/screens/service/service_detail_screen.dar
 import 'package:booking_system_flutter/screens/service/view_all_service_screen.dart';
 import 'package:booking_system_flutter/screens/shop/shop_detail_screen.dart';
 import 'package:booking_system_flutter/utils/colors.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/images.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,7 @@ class ShopComponent extends StatelessWidget {
   final bool isSelected;
   final double? width;
   final VoidCallback? onTap;
+  final BuildContext context;
 
   const ShopComponent({
     Key? key,
@@ -29,6 +31,7 @@ class ShopComponent extends StatelessWidget {
     this.isSelected = false,
     this.width,
     this.onTap,
+    required this.context,
   }) : super(key: key);
 
   Widget _buildFallbackImage() {
@@ -38,7 +41,7 @@ class ShopComponent extends StatelessWidget {
         Assets.iconsIcDefaultShop,
         height: 14,
         width: 14,
-        color: primaryColor,
+        color: context.primary,
       ),
     );
   }

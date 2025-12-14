@@ -12,6 +12,7 @@ import 'package:booking_system_flutter/screens/shop/shop_list_screen.dart';
 import 'package:booking_system_flutter/utils/colors.dart';
 import 'package:booking_system_flutter/utils/common.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/images.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
 import 'package:flutter/material.dart';
@@ -526,7 +527,7 @@ class _BookServiceScreenState extends State<BookServiceScreen> {
           children: [
             GestureDetector(
               child: Text(language.lblChooseFromMap,
-                  style: boldTextStyle(color: primaryColor, size: 12)),
+                  style: boldTextStyle(color: context.primary, size: 12)),
               onTap: () {
                 _handleSetLocationClick();
               },
@@ -534,7 +535,7 @@ class _BookServiceScreenState extends State<BookServiceScreen> {
             GestureDetector(
               onTap: _handleCurrentLocationClick,
               child: Text(language.lblUseCurrentLocation,
-                  style: boldTextStyle(color: primaryColor, size: 12),
+                  style: boldTextStyle(color: context.primary, size: 12),
                   textAlign: TextAlign.right),
             ).flexible(),
           ],
@@ -599,7 +600,7 @@ class _BookServiceScreenState extends State<BookServiceScreen> {
                     ),
                     Text(
                       language.speciallyAbled,
-                      style: boldTextStyle(color: primaryColor, size: 12),
+                      style: boldTextStyle(color: context.primary, size: 12),
                     ),
                   ],
                 ),
@@ -614,7 +615,7 @@ class _BookServiceScreenState extends State<BookServiceScreen> {
                     Text(
                       convertToHourMinute(
                           widget.data.serviceDetail!.duration.validate()),
-                      style: boldTextStyle(color: primaryColor, size: 14),
+                      style: boldTextStyle(color: context.primary, size: 14),
                     ),
                   ],
                 ),
@@ -865,7 +866,7 @@ class _BookServiceScreenState extends State<BookServiceScreen> {
                                 Text(
                                   " (${appliedCouponData!.code})",
                                   style: boldTextStyle(
-                                      color: primaryColor, size: 12),
+                                      color: context.primary, size: 12),
                                 ).onTap(() {
                                   applyCoupon(
                                       isApplied: appliedCouponData!.code
@@ -1025,7 +1026,7 @@ class _BookServiceScreenState extends State<BookServiceScreen> {
                             .expand(),
                         PriceWidget(
                           price: bookingAmountModel.finalGrandTotalAmount,
-                          color: primaryColor,
+                          color: context.primary,
                           currencySymbol: "₹",
                           isBoldText: true,
                           size: 12,
@@ -1060,7 +1061,7 @@ class _BookServiceScreenState extends State<BookServiceScreen> {
                           ).expand(),
                           PriceWidget(
                               price: advancePaymentAmount,
-                              color: primaryColor,
+                              color: context.primary,
                               currencySymbol: "₹",
                               isBoldText: true,
                               size: 12),
@@ -1251,7 +1252,7 @@ class _BookServiceScreenState extends State<BookServiceScreen> {
         Assets.iconsIcDefaultShop,
         height: 14,
         width: 14,
-        color: primaryColor,
+        color: context.primary,
       ),
     );
   }

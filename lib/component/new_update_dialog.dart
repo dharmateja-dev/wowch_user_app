@@ -1,9 +1,9 @@
 import 'dart:io';
 
 import 'package:booking_system_flutter/main.dart';
-import 'package:booking_system_flutter/utils/colors.dart';
 import 'package:booking_system_flutter/utils/common.dart';
 import 'package:booking_system_flutter/utils/configs.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/images.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -41,10 +41,11 @@ class NewUpdateDialog extends StatelessWidget {
                 children: [
                   AppButton(
                     text: canClose ? language.later : language.closeApp,
-                    textStyle: boldTextStyle(color: primaryColor, size: 14),
+                    textStyle:
+                        boldTextStyle(color: context.onPrimary, size: 14),
                     shapeBorder: RoundedRectangleBorder(
                         borderRadius: radius(),
-                        side: BorderSide(color: primaryColor)),
+                        side: BorderSide(color: context.primary)),
                     elevation: 0,
                     onTap: () async {
                       if (canClose) {
@@ -59,7 +60,7 @@ class NewUpdateDialog extends StatelessWidget {
                     text: language.lblUpdate,
                     textStyle: boldTextStyle(color: Colors.white),
                     shapeBorder: RoundedRectangleBorder(borderRadius: radius()),
-                    color: primaryColor,
+                    color: context.primary,
                     elevation: 0,
                     onTap: () async {
                       getPackageName().then((value) async {

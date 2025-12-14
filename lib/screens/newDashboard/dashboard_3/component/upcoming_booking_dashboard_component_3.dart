@@ -2,6 +2,7 @@ import 'package:booking_system_flutter/component/cached_image_widget.dart';
 import 'package:booking_system_flutter/main.dart';
 import 'package:booking_system_flutter/model/booking_detail_model.dart';
 import 'package:booking_system_flutter/utils/common.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/images.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
 import 'package:flutter/material.dart';
@@ -287,7 +288,7 @@ class _UpcomingBookingDashboardComponent3State
                               _handleCancelClick(
                                   bookingData: widget.upcomingBookingData!);
                             },
-                            color: primaryColor,
+                            color: context.primary,
                             textColor: Colors.white,
                             text: language.lblCancel,
                           ).paddingAll(16)
@@ -315,7 +316,7 @@ class _UpcomingBookingDashboardComponent3State
                 decoration: BoxDecoration(
                   shape: BoxShape.rectangle,
                   borderRadius: BorderRadius.circular(6),
-                  color: primaryColor,
+                  color: context.primary,
                 ),
                 child: const Icon(Icons.close, color: white, size: 12),
               ).onTap(() async {

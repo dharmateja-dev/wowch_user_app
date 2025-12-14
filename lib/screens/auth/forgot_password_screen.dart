@@ -1,5 +1,4 @@
 import 'package:booking_system_flutter/network/rest_apis.dart';
-import 'package:booking_system_flutter/utils/colors.dart';
 import 'package:booking_system_flutter/utils/common.dart';
 import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/model_keys.dart';
@@ -102,7 +101,7 @@ class ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 32.height,
                 AppButton(
                   text: language.confirm,
-                  color: primaryColor,
+                  color: context.primary,
                   textColor: context.scaffoldBackgroundColor,
                   width: context.width() - context.navigationBarHeight,
                   onTap: () {

@@ -3,6 +3,7 @@
 import 'package:booking_system_flutter/component/back_widget.dart';
 import 'package:booking_system_flutter/main.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/extensions/num_extenstions.dart';
 import 'package:booking_system_flutter/utils/images.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
@@ -253,7 +254,7 @@ class _WithdrawRequestState extends State<WithdrawRequest> {
                   AppButton(
                     text: language.withdraw,
                     height: 40,
-                    color: primaryColor,
+                    color: context.primary,
                     textStyle: boldTextStyle(color: white),
                     width: context.width() - context.navigationBarHeight,
                     onTap: () {

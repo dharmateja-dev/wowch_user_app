@@ -1,4 +1,5 @@
 import 'package:booking_system_flutter/screens/newDashboard/dashboard_2/component/service_dashboard_component_2.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -6,7 +7,6 @@ import '../../../../component/empty_error_state_widget.dart';
 import '../../../../component/view_all_label_component.dart';
 import '../../../../main.dart';
 import '../../../../model/service_data_model.dart';
-import '../../../../utils/colors.dart';
 import '../../../service/view_all_service_screen.dart';
 
 class ServiceListDashboardComponent2 extends StatelessWidget {
@@ -14,7 +14,10 @@ class ServiceListDashboardComponent2 extends StatelessWidget {
   final String serviceListTitle;
   final bool isFeatured;
 
-  ServiceListDashboardComponent2({required this.serviceList, this.serviceListTitle = '', this.isFeatured = false});
+  ServiceListDashboardComponent2(
+      {required this.serviceList,
+      this.serviceListTitle = '',
+      this.isFeatured = false});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +30,7 @@ class ServiceListDashboardComponent2 extends StatelessWidget {
             ? null
             : appStore.isDarkMode
                 ? context.cardColor
-                : context.primaryColor.withValues(alpha:0.1),
+                : context.primaryColor.withValues(alpha: 0.1),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -36,18 +39,23 @@ class ServiceListDashboardComponent2 extends StatelessWidget {
           ViewAllLabel(
             label: serviceListTitle,
             list: serviceList,
-            trailingTextStyle: boldTextStyle(color: primaryColor, size: 12),
+            trailingTextStyle: boldTextStyle(color: context.primary, size: 12),
             onTap: () {
-              ViewAllServiceScreen(isFeatured: isFeatured ? '1' : '').launch(context);
+              ViewAllServiceScreen(isFeatured: isFeatured ? '1' : '')
+                  .launch(context);
             },
           ).paddingSymmetric(horizontal: 16),
           if (serviceList.isNotEmpty)
             HorizontalList(
               itemCount: serviceList.length,
               spacing: 16,
-              padding: const EdgeInsets.only(left: 16, right: 16, bottom: 26, top: 8),
+              padding: const EdgeInsets.only(
+                  left: 16, right: 16, bottom: 26, top: 8),
               itemBuilder: (context, index) {
-                return ServiceDashboardComponent2(serviceData: serviceList[index], width: 280, isBorderEnabled: true);
+                return ServiceDashboardComponent2(
+                    serviceData: serviceList[index],
+                    width: 280,
+                    isBorderEnabled: true);
               },
             )
           else

@@ -10,34 +10,38 @@ class LightThemeColors {
   static const Color warmGray = Color(0xFFEEEEEE); // Warm gray container
   static const Color subtleGray = Color(0xFFF2F4F3); // Subtle gray variant
   static const Color coolGray = Color(0xFFE0E0E0); // Cool gray border
-  static const Color mutedGray = Color(0xFF9E9E9E); // Cool gray border
+  static const Color mutedGray = Color(0xFF9E9E9E); // Muted gray
 
   // ——— Text Colors with Enhanced Contrast ———
-  static const Color deepBlack = Color(0xFF1E1E1E); // Primary headings
-  //static const Color richBlack = Color(0xFF2D2D2D); // Secondary text
-  static const Color darkGray = Color(0xFF4F4F4F); // subtitle text
-  static const Color softGrey = Color(0xFF6C7072); //  text
-  static const Color mutedText = Color(0xFF9E9E9E); // hint text
-  //static const Color lightText = Color(0xFF999999); // Placeholder text
+  static const Color deepBlack = Color(0xFF1E1E1E); // Primary text color
+  static const Color darkGray = Color(0xFF4F4F4F); // Secondary text color
+  static const Color softGrey = Color(0xFF6C7072); // Soft text
+  static const Color mutedText = Color(0xFF9E9E9E); // Normal hint text color
+  static const Color secondaryContainerHint =
+      Color(0xFF4F4F4F); // Secondary container hint text
 
   // ——— Border and Divider Colors ———
-  static const Color primaryBorder = Color(0xFFD6D6D6); // Primary borders
-  //static const Color secondaryBorder = Color(0xFFD6D6D6); // Secondary borders - light border
-  //static const Color subtleBorder = Color(0xFFD6D6D6); // Subtle borders
+  static const Color primaryBorder = Color(0xFFD6D6D6); // Input field border
+  static const Color mainBorder = Color(0xFFD6D6D6); // Main border (not input)
+  static const Color greenBorder = Color(0xFF2E6B4F); // Green border color
   static const Color dividerColor = Color(0xFFD6D6D6); // Dividers
-  static const Color dividerDarkGrey = Color(0xFF1E1E1E); // Dividers
-  static const Color dividerLightGrey = Color(0xFF9E9E9E); // Dividers
+  static const Color mainDivider = Color(0xFF1E1E1E); // Main divider in gray
+  static const Color dividerOnSecondaryContainer =
+      Color(0xFF1E1E1E); // Divider on secondary container
 
   // ——— Accent Colors for Light Theme ———
-  // MERGED: Kept original Green as primaryOrange/primaryGreen naming to satisfy new code structure while keeping old branding
   static const Color primaryGreen =
       Color(0xFF2E6B4F); // MAIN BRAND COLOR (Green)
+  static const Color primaryGreenLite = Color(0xFF65AE6A); // Primary color lite
   static const Color primaryGreenLight = Color(0xFF5EAF5E); // Light variant
   static const Color primaryGreenDark = Color(0xFF073807); // Dark variant
 
   static const Color secondaryGreen =
-      Color(0xFF93C0AB); // Secondary brand (Light Greenish)
-  static const Color secondaryGreenLight = Color(0xFFE9F2EF); // Light variant
+      Color(0xFF93C0AB); // Secondary brand (Light Greenish) / Primary container
+  static const Color secondaryGreenLight =
+      Color(0xFFE9F2EF); // Secondary container
+  static const Color liteGreenContainerText =
+      Color(0xFF9E9E9E); // Secondary text for lite green container
 
   static const Color accentBlue = Color(0xFF2196F3); // Info color
   static const Color accentPurple = Color(0xFF9C27B0); // Special accent
@@ -48,6 +52,34 @@ class LightThemeColors {
   static const Color warningOrange = Color(0xFFFF9800); // Warning state
   static const Color errorRed = Color(0xFFE53935); // Error state
   static const Color infoBlue = Color(0xFF2196F3); // Info state
+  static const Color starColor = Color(0xFFFFC107); // Star color
+
+  // ——— Container Colors ———
+  static const Color serviceComponentColor =
+      Color(0xFFF2F4F3); // Service/provider component color
+  static const Color providerInfoDetailsContainer =
+      Color(0xFFF2F4F3); // Provider info details container
+  static const Color iconBackgroundColor =
+      Color(0xFFFFFFFF); // Icon background color
+
+  // ——— Icon Colors ———
+  static const Color iconPrimaryGreen =
+      Color(0xFF2E6B4F); // Icon primary green color
+  static const Color iconOnPrimaryContainer =
+      Color(0xFFFFFFFF); // Icon on primary container
+  static const Color iconOnSecondaryContainer =
+      Color(0xFF1E1E1E); // Icon on secondary container
+  static const Color taxIconColor = Color(0xFF9E9E9E); // Tax icon color
+
+  // ——— Bottom Navigation Colors ———
+  static const Color bottomNavTextInactive =
+      Color(0xFF999999); // Bottom nav text (inactive)
+  static const Color bottomNavIconInactive =
+      Color(0xFF999999); // Bottom nav icon (inactive)
+  static const Color bottomNavTextActive =
+      Color(0xFF2E6B4F); // Bottom nav text (active)
+  static const Color bottomNavIconActive =
+      Color(0xFF2E6B4F); // Bottom nav icon (active)
 
   // ——— Shadow Colors ———
   static Color shadowLight = Colors.grey.withOpacity(0.05);
@@ -62,7 +94,6 @@ class LightThemeColors {
   static Color overlayIntense = Colors.black.withOpacity(0.4);
 
   // ——— LEGACY COMPATIBILITY ALIASES ———
-  // These are required for existing code that uses LightThemeColors.primary, etc.
   static const Color primary = primaryGreen;
   static const Color primaryLight = pureWhite;
   static const Color secondaryPrimary = secondaryGreen;
@@ -76,7 +107,7 @@ class LightThemeColors {
   static const Color textSecondary = darkGray;
   static const Color textBlack = deepBlack;
   static const Color border = primaryBorder;
-  static const Color divider = dividerLightGrey;
+  static const Color divider = mainDivider;
   static const Color icon = deepBlack;
   static const Color iconSecondary = mutedGray;
   static const Color unselectedWidget = deepBlack;
@@ -99,30 +130,42 @@ class DarkThemeColors {
   static const Color warmCharcoal = Color(0xFF2E2E2E); // Container background
 
   // ——— Text Colors with Better Contrast ———
-  static const Color pureWhite = Color(0xFFE8F5F0); // Primary text
-  static const Color softWhite = Color(0xFFF5F5F5); // Secondary text
+  static const Color pureWhite = Color(0xFFE8F5F0); // Primary text color
+  static const Color softWhite = Color(0xFF4F4F4F); // Secondary text color
   static const Color lightGray = Color(0xFFE8E8E8); // Surface text
-
   static const Color softGray = Color(0xFFD0D0D0); // Container text
   static const Color mutedGray = Color(0xFFB8B8B8); // Variant text
   static const Color subtleGray = Color(0xFF9E9E9E); // Disabled text
+  static const Color hintText = Color(0xFF6E7D78); // Normal hint text color
+  static const Color secondaryContainerHint =
+      Color(0xFFB2C78F); // Secondary container hint text
 
   // ——— Border and Divider Colors ———
-  static const Color darkBorder = Color(0xFF4A4A4A); // Primary borders
+  static const Color primaryBorder =
+      Color(0xFFB2C7BF); // Input field border color
+  static const Color mainBorder = Color(0xFFE0E0E0); // Main border (not input)
+  static const Color greenBorder = Color(0xFF93C0AB); // Green border color
+  static const Color darkBorder = Color(0xFF4A4A4A); // Dark borders
   static const Color mediumBorder = Color(0xFF3A3A3A); // Secondary borders
   static const Color lightBorder = Color(0xFF2A2A2A); // Subtle borders
   static const Color dividerColor = Color(0xFF2E2E2E); // Dividers
-  static const Color primaryBorder = Color(0xFFB2C7BF); // Dividers
+  static const Color mainDivider = Color(0xFFE8F5F0); // Main divider in gray
+  static const Color dividerOnSecondaryContainer =
+      Color(0xFF6E7D73); // Divider on secondary container
 
   // ——— Accent Colors for Dark Theme ———
-  // MERGED: Kept original Green as primary
   static const Color primaryOrange = Color(0xFF2E6B4F); // Main brand color
+  static const Color primaryGreenLite = Color(0xFF65AE6A); // Primary color lite
   static const Color primaryGreenLight = Color(0xFF66BB6A); // Light variant
   static const Color primaryGreenDark = Color(0xFF2E7D32); // Dark variant
 
   static const Color secondaryOrange =
       Color(0xFF3A3A3A); // Secondary brand (Dark)
   static const Color secondaryOrangeLight = Color(0xFF4A4A4A); // Light variant
+  static const Color secondaryContainer =
+      Color(0xFF101D1C); // Secondary container
+  static const Color liteGreenContainerText =
+      Color(0xFFB2C7BF); // Secondary text for lite green container
 
   static const Color accentBlue = Color(0xFF2196F3); // Info color
   static const Color accentPurple = Color(0xFF9C27B0); // Special accent
@@ -133,6 +176,38 @@ class DarkThemeColors {
   static const Color warningOrange = Color(0xFFFF9800); // Warning state
   static const Color errorRed = Color(0xFFE53935); // Error state
   static const Color infoBlue = Color(0xFF2196F3); // Info state
+  static const Color starColor = Color(0xFFFFC107); // Star color
+
+  // ——— Container Colors ———
+  static const Color serviceComponentColor =
+      Color(0xFF2A2A2A); // Service/provider component color
+  static const Color providerInfoDetailsContainer =
+      Color(0xFF2A2A2A); // Provider info details container
+  static const Color iconBackgroundColor =
+      Color(0xFFF2F4F3); // Icon background color
+  static const Color primaryContainer =
+      Color(0xFF93C0AB); // Primary container (shaded green)
+  static const Color onPrimaryContainer =
+      Color(0xFF121212); // On primary container
+
+  // ——— Icon Colors ———
+  static const Color iconPrimaryGreen =
+      Color(0xFF2E6B4F); // Icon primary green color
+  static const Color iconOnPrimaryContainer =
+      Color(0xFFFFFFFF); // Icon on primary container
+  static const Color iconOnSecondaryContainer =
+      Color(0xFFE8F5F0); // Icon on secondary container
+  static const Color taxIconColor = Color(0xFF6E7D78); // Tax icon color
+
+  // ——— Bottom Navigation Colors ———
+  static const Color bottomNavTextInactive =
+      Color(0xFF999999); // Bottom nav text (inactive)
+  static const Color bottomNavIconInactive =
+      Color(0xFF999999); // Bottom nav icon (inactive)
+  static const Color bottomNavTextActive =
+      Color(0xFF2E6B4F); // Bottom nav text (active)
+  static const Color bottomNavIconActive =
+      Color(0xFF2E6B4F); // Bottom nav icon (active)
 
   // ——— Rating and Special Colors ———
   static const Color starGold = Color(0xFFFFB300); // Star ratings
@@ -155,22 +230,25 @@ class DarkThemeColors {
   // ——— LEGACY COMPATIBILITY ALIASES ———
   static const Color primary = primaryOrange;
   static const Color primaryLight = Color(0xFF1C1F26);
-  static const Color scaffoldBackground = richBlack; // Using new OLED black
+  static const Color scaffoldBackground = richBlack;
   static const Color scaffoldSecondary = charcoal;
   static const Color cardBackground = darkCharcoal;
   static const Color bottomNavBackground = darkCharcoal;
-  static const Color bottomSheetBackground = darkCharcoal;
-  static const Color dialogBackground = darkCharcoal;
+  static const Color bottomSheetBackground = softCharcoal; // #2A2A2A
+  static const Color dialogBackground =
+      Color(0xFF203325); // Dialog box background
   static const Color appButtonBackground = Color(0xFF282828);
   static const Color textPrimary = pureWhite;
   static const Color textSecondary = softWhite;
   static const Color textWhite = pureWhite;
   static const Color border = darkBorder;
-  static const Color divider = dividerColor;
+  static const Color divider = mainDivider;
   static const Color icon = pureWhite;
-  static const Color iconSecondary = softWhite;
+  static const Color iconSecondary = hintText;
   static const Color unselectedWidget = Colors.white60;
   static const Color shadow = Color(0x1FFFFFFF);
+  static const Color inputFillColor =
+      Color(0xFF101D1C); // Input field fill color
 }
 
 class AppColors {

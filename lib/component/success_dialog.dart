@@ -1,6 +1,6 @@
 import 'package:booking_system_flutter/component/cached_image_widget.dart';
 import 'package:booking_system_flutter/main.dart';
-import 'package:booking_system_flutter/utils/colors.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/images.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
@@ -64,8 +64,8 @@ class SuccessDialog extends StatelessWidget {
                   AppButton(
                     text: language.done,
                     height: 40,
-                    color: primaryColor,
-                    textStyle: boldTextStyle(color: white),
+                    color: context.primary,
+                    textStyle: boldTextStyle(color: context.onPrimary),
                     width: context.width() * 0.4,
                     onTap: () {
                       finish(context, true);
@@ -80,7 +80,7 @@ class SuccessDialog extends StatelessWidget {
               right: 0,
               child: DottedBorder(
                 options: CircularDottedBorderOptions(
-                  color: primaryColor,
+                  color: context.primary,
                   strokeWidth: 2,
                   dashPattern: [8, 9],
                   padding: const EdgeInsets.all(6),
@@ -92,7 +92,7 @@ class SuccessDialog extends StatelessWidget {
                     padding: const EdgeInsets.all(19),
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: primaryColor,
+                      color: context.primary,
                     ),
                     child: const CachedImageWidget(
                       url: ic_right,

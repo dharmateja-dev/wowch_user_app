@@ -1,4 +1,5 @@
 import 'package:booking_system_flutter/screens/newDashboard/dashboard_1/component/service_dashboard_component_1.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -6,7 +7,6 @@ import '../../../../component/empty_error_state_widget.dart';
 import '../../../../component/view_all_label_component.dart';
 import '../../../../main.dart';
 import '../../../../model/service_data_model.dart';
-import '../../../../utils/colors.dart';
 import '../../../service/view_all_service_screen.dart';
 
 class FeatureServicesDashboardComponent1 extends StatelessWidget {
@@ -24,7 +24,7 @@ class FeatureServicesDashboardComponent1 extends StatelessWidget {
         ViewAllLabel(
           label: language.featuredServices,
           list: serviceList,
-          trailingTextStyle: boldTextStyle(color: primaryColor, size: 12),
+          trailingTextStyle: boldTextStyle(color: context.primary, size: 12),
           onTap: () {
             ViewAllServiceScreen(isFeatured: "1").launch(context);
           },

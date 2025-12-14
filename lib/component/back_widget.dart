@@ -18,6 +18,7 @@ class BackWidget extends StatelessWidget {
           },
       icon: ic_arrow_left.iconImage(
         context: context,
+        color: iconColor,
       ),
     );
   }

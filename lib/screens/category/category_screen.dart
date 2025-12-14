@@ -7,6 +7,7 @@ import 'package:booking_system_flutter/model/service_data_model.dart';
 import 'package:booking_system_flutter/screens/service/component/service_component.dart';
 import 'package:booking_system_flutter/utils/colors.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/images.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
 import 'package:flutter/material.dart';
@@ -179,7 +180,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
         language.category,
         textColor: Colors.white,
         textSize: APP_BAR_TEXT_SIZE,
-        color: primaryColor,
+        color: context.primary,
         systemUiOverlayStyle: SystemUiOverlayStyle(
           statusBarIconBrightness:
               appStore.isDarkMode ? Brightness.light : Brightness.light,
@@ -305,7 +306,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                 color: Color(0xFFE8F3EC),
                 borderRadius: BorderRadius.circular(8),
                 border: isSelected
-                    ? Border.all(color: primaryColor, width: 1)
+                    ? Border.all(color: context.primary, width: 1)
                     : Border.all(color: Colors.transparent),
               ),
               child: ClipRRect(

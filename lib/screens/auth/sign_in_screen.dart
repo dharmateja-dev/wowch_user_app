@@ -315,7 +315,7 @@ class _SignInScreenState extends State<SignInScreen> {
               child: Text(
                 language.forgotPassword,
                 style: boldTextStyle(
-                  color: context.secondary,
+                  color: context.primary,
                 ),
                 textAlign: TextAlign.right,
               ),
@@ -325,8 +325,8 @@ class _SignInScreenState extends State<SignInScreen> {
         24.height,
         AppButton(
           text: language.signIn,
-          color: primaryColor,
-          textColor: context.scaffoldBackgroundColor,
+          color: context.primary,
+          textColor: context.onPrimary,
           width: context.width() - context.navigationBarHeight,
           onTap: () {
             _handleLogin();
@@ -346,7 +346,7 @@ class _SignInScreenState extends State<SignInScreen> {
               child: Text(
                 language.signUp,
                 style: boldTextStyle(
-                  color: primaryColor,
+                  color: context.primary,
                 ),
               ),
             ),
@@ -393,8 +393,8 @@ class _SignInScreenState extends State<SignInScreen> {
           height: 50,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: context.scaffoldBackgroundColor,
-            border: Border.all(color: grey300Color, width: 2.0),
+            color: Color(0xffffffff),
+            border: Border.all(color: context.mainBorderColor, width: 2.0),
           ),
           child: Icon(Icons.phone, size: 20, color: primaryColor),
         ),
@@ -412,11 +412,12 @@ class _SignInScreenState extends State<SignInScreen> {
           height: 50,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: context.scaffoldBackgroundColor,
+            color: Color(0xffffffff),
             border: Border.all(color: grey300Color, width: 2.0),
           ),
           child: Icon(
             Icons.apple,
+            color: Color(0xff000000),
             size: 20,
           ),
         ),
@@ -434,7 +435,7 @@ class _SignInScreenState extends State<SignInScreen> {
           height: 50,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: context.scaffoldBackgroundColor,
+            color: Color(0xffffffff),
             border: Border.all(color: grey300Color, width: 2.0),
           ),
           child: CachedNetworkImage(
@@ -548,8 +549,8 @@ class _SignInScreenState extends State<SignInScreen> {
                                 hintText: language.hintEmailTxt,
                                 borderRadius: 8),
                             suffix: ic_message
-                                .iconImage(size: 10, context: context)
-                                .paddingAll(14),
+                                .iconImage(size: 12, context: context)
+                                .paddingAll(12),
                             autoFillHints: [AutofillHints.email],
                           ),
                           16.height,

@@ -16,7 +16,6 @@ import 'package:nb_utils/nb_utils.dart';
 
 import '../../component/base_scaffold_widget.dart';
 import '../../component/empty_error_state_widget.dart';
-import '../../utils/colors.dart';
 import '../../utils/common.dart';
 import '../../utils/constant.dart';
 import '../../utils/context_extensions.dart';
@@ -775,7 +774,7 @@ class ProviderInfoScreenState extends State<ProviderInfoScreen> {
                     padding:
                         const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                     decoration: BoxDecoration(
-                      color: primaryColor,
+                      color: context.primary,
                       borderRadius: BorderRadius.circular(4),
                     ),
                     child: Text(

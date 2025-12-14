@@ -1,4 +1,5 @@
 import 'package:booking_system_flutter/component/price_widget.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -102,7 +103,7 @@ class _ServiceComponentState extends State<RelatedServiceComponent> {
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
-                            color: primaryColor,
+                            color: context.primary,
                             fontWeight: FontWeight.bold,
                             fontSize: 12,
                           ),

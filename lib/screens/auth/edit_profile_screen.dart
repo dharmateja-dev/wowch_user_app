@@ -798,7 +798,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                   40.height,
                   AppButton(
                     text: language.save,
-                    color: primaryColor,
+                    color: context.primary,
                     textColor: white,
                     width: context.width() - context.navigationBarHeight,
                     onTap: () {

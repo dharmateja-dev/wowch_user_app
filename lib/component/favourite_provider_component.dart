@@ -116,7 +116,7 @@ class _FavouriteProviderComponentState
                               boxShape: BoxShape.circle,
                               backgroundColor: primaryColor.withValues(alpha:0.1),
                             ),
-                            child: Image.asset(ic_calling, color: primaryColor, height: 14, width: 14),
+                            child: Image.asset(ic_calling, color: context.primary, height: 14, width: 14),
                           ),
                         ),
                       if (widget.data!.email.validate().isNotEmpty)

@@ -1,4 +1,4 @@
-import 'package:booking_system_flutter/utils/colors.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -8,7 +8,12 @@ class CommonPdfPlaceHolder extends StatelessWidget {
   final double width;
   final double height;
 
-  const CommonPdfPlaceHolder({super.key, this.height = 90, this.width = 80, this.text = "file", this.fileExt = ""});
+  const CommonPdfPlaceHolder(
+      {super.key,
+      this.height = 90,
+      this.width = 80,
+      this.text = "file",
+      this.fileExt = ""});
 
   @override
   Widget build(BuildContext context) {
@@ -30,11 +35,16 @@ class CommonPdfPlaceHolder extends StatelessWidget {
                     : fileExt.isAudio
                         ? Icons.audio_file_outlined
                         : Icons.file_copy_rounded,
-            color: primaryColor,
+            color: context.primary,
             size: 32,
           ),
           15.height,
-          Marquee(child: Text(text == "file" ? "File" : text, overflow: TextOverflow.ellipsis, style: primaryTextStyle(), maxLines: 1, textAlign: TextAlign.center)),
+          Marquee(
+              child: Text(text == "file" ? "File" : text,
+                  overflow: TextOverflow.ellipsis,
+                  style: primaryTextStyle(),
+                  maxLines: 1,
+                  textAlign: TextAlign.center)),
         ],
       ).center(),
     );

@@ -1,9 +1,9 @@
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../../component/view_all_label_component.dart';
 import '../../../../model/category_model.dart';
-import '../../../../utils/colors.dart';
 import '../../../category/category_screen.dart';
 import 'category_dashboard_component_3.dart';
 
@@ -11,7 +11,8 @@ class CategoryListDashboardComponent3 extends StatelessWidget {
   final List<CategoryData> categoryList;
   final String listTiTle;
 
-  CategoryListDashboardComponent3({required this.categoryList, this.listTiTle = ''});
+  CategoryListDashboardComponent3(
+      {required this.categoryList, this.listTiTle = ''});
 
   @override
   Widget build(BuildContext context) {
@@ -24,10 +25,11 @@ class CategoryListDashboardComponent3 extends StatelessWidget {
         ViewAllLabel(
           label: listTiTle,
           list: categoryList,
-          trailingTextStyle: boldTextStyle(color: primaryColor, size: 12),
+          trailingTextStyle: boldTextStyle(color: context.primary, size: 12),
           onTap: () {
             CategoryScreen().launch(context).then((value) {
-              setStatusBarColor(Colors.transparent, statusBarIconBrightness: Brightness.dark);
+              setStatusBarColor(Colors.transparent,
+                  statusBarIconBrightness: Brightness.dark);
             });
           },
         ).paddingSymmetric(horizontal: 16),

@@ -4,6 +4,7 @@ import 'package:booking_system_flutter/main.dart';
 import 'package:booking_system_flutter/utils/colors.dart';
 import 'package:booking_system_flutter/utils/common.dart';
 import 'package:booking_system_flutter/utils/configs.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/images.dart';
 import 'package:booking_system_flutter/utils/theme_colors.dart';
 import 'package:flutter/material.dart';
@@ -81,7 +82,7 @@ class _AboutScreenState extends State<AboutScreen> {
                         ic_calling,
                         height: 24,
                         width: 24,
-                        color: primaryColor,
+                        color: context.primary,
                       ),
                       8.height,
                       Text(
@@ -114,7 +115,7 @@ class _AboutScreenState extends State<AboutScreen> {
                         ic_message,
                         height: 24,
                         width: 24,
-                        color: primaryColor,
+                        color: context.primary,
                       ),
                       8.height,
                       Text(

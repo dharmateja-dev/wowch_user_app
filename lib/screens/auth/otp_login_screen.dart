@@ -56,10 +56,10 @@ class _OTPLoginScreenState extends State<OTPLoginScreen> {
         borderRadius: BorderRadius.circular(0),
         bottomSheetHeight: 600,
         textStyle: primaryTextStyle(),
-        searchTextStyle: primaryTextStyle(),
-        backgroundColor: Colors.grey.shade200,
+        searchTextStyle: primaryTextStyle(color: context.searchTextColor),
+        backgroundColor: context.bottomSheetBackgroundColor,
         inputDecoration: InputDecoration(
-          fillColor: context.scaffoldBackgroundColor,
+          fillColor: context.searchFillColor,
           filled: true,
           border: OutlineInputBorder(
             borderSide: BorderSide(
@@ -77,10 +77,8 @@ class _OTPLoginScreenState extends State<OTPLoginScreen> {
             ),
           ),
           hintText: language.search,
-          hintStyle: primaryTextStyle(size: 14),
-          prefixIcon: const Icon(
-            Icons.search,
-          ),
+          hintStyle: primaryTextStyle(size: 14, color: context.searchHintColor),
+          prefixIcon: Icon(Icons.search, color: context.searchHintColor),
         ),
       ),
 
@@ -307,8 +305,8 @@ class _OTPLoginScreenState extends State<OTPLoginScreen> {
                 submitOtp();
               },
               text: language.confirm,
-              color: primaryColor,
-              textColor: context.scaffoldBackgroundColor,
+              color: context.primary,
+              textColor: context.onPrimary,
               width: context.width(),
             ),
           ],
@@ -383,7 +381,7 @@ class _OTPLoginScreenState extends State<OTPLoginScreen> {
               sendOTP();
             },
             text: language.btnSendOtp,
-            color: primaryColor,
+            color: context.primary,
             textColor: Colors.white,
             width: context.width(),
           ),

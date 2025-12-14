@@ -228,6 +228,7 @@ class _ShopListScreenState extends State<ShopListScreen> {
                           final shop = shops[index];
 
                           return ShopComponent(
+                            context: context,
                             shop: shop,
                             imageSize: 56,
                             isSelected: selectedShop.id == shop.id,

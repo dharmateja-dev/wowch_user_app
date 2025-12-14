@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -129,7 +130,7 @@ class _SliderDashboardComponent1State extends State<SliderDashboardComponent1> {
                   children: [
                     ic_notification
                         .iconImage(
-                            size: 24, color: primaryColor, context: context)
+                            size: 24, color: context.primary, context: context)
                         .center(),
                     Observer(builder: (context) {
                       return Positioned(
@@ -169,12 +170,12 @@ class _SliderDashboardComponent1State extends State<SliderDashboardComponent1> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: primaryColor,
+      color: context.primary,
       child: Column(
         children: [
           // Header section with dark green background
           Container(
-            color: primaryColor,
+            color: context.primary,
             padding: EdgeInsets.only(
               top: context.statusBarHeight + 16,
               left: 16,

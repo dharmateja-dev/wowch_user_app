@@ -1,5 +1,5 @@
 import 'package:booking_system_flutter/main.dart';
-import 'package:booking_system_flutter/utils/colors.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -20,14 +20,20 @@ class _LocationServiceDialogState extends State<LocationServiceDialog> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(appStore.isCurrentLocation ? language.msgForLocationOn : language.msgForLocationOff, style: primaryTextStyle()).paddingAll(16),
+          Text(
+                  appStore.isCurrentLocation
+                      ? language.msgForLocationOn
+                      : language.msgForLocationOff,
+                  style: primaryTextStyle())
+              .paddingAll(16),
           16.height,
           AppButton(
-            text: appStore.isCurrentLocation ? language.turnOff : language.turnOn,
+            text:
+                appStore.isCurrentLocation ? language.turnOff : language.turnOn,
             width: context.width(),
             margin: const EdgeInsets.all(16),
-            color: primaryColor,
-            textColor: Colors.white,
+            color: context.primary,
+            textColor: context.onPrimary,
             onTap: () async {
               finish(context, true);
             },

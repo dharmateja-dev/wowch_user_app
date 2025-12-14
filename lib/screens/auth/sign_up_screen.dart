@@ -3,7 +3,6 @@ import 'package:booking_system_flutter/component/loader_widget.dart';
 import 'package:booking_system_flutter/main.dart';
 import 'package:booking_system_flutter/model/user_data_model.dart';
 import 'package:booking_system_flutter/network/rest_apis.dart';
-import 'package:booking_system_flutter/utils/colors.dart';
 import 'package:booking_system_flutter/utils/common.dart';
 import 'package:booking_system_flutter/utils/configs.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
@@ -155,10 +154,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
         borderRadius: BorderRadius.circular(0),
         bottomSheetHeight: 600,
         textStyle: primaryTextStyle(),
-        searchTextStyle: primaryTextStyle(),
-        backgroundColor: Colors.grey.shade200,
+        searchTextStyle: primaryTextStyle(color: context.searchTextColor),
+        backgroundColor: context.bottomSheetBackgroundColor,
         inputDecoration: InputDecoration(
-          fillColor: context.scaffoldBackgroundColor,
+          fillColor: context.searchFillColor,
           filled: true,
           border: OutlineInputBorder(
             borderSide: BorderSide(
@@ -176,10 +175,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
             ),
           ),
           hintText: language.search,
-          hintStyle: primaryTextStyle(size: 14),
-          prefixIcon: const Icon(
-            Icons.search,
-          ),
+          hintStyle: primaryTextStyle(size: 14, color: context.searchHintColor),
+          prefixIcon: Icon(Icons.search, color: context.searchHintColor),
         ),
       ),
 
@@ -278,6 +275,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         16.height,
         Text(language.lblFirstName, style: boldTextStyle(size: 14)),
         8.height,
+        //First Name
         AppTextField(
           textFieldType: TextFieldType.NAME,
           controller: fNameCont,
@@ -285,16 +283,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
           nextFocus: lNameFocus,
           errorThisFieldRequired: language.requiredText,
           decoration: inputDecoration(context,
-              fillColor: Colors.transparent,
-              hintText: language.hintFirstNameTxt,
-              borderRadius: 8),
-          suffix: ic_profile2
-              .iconImage(size: 10, color: context.icon, context: context)
-              .paddingAll(14),
+              hintText: language.hintFirstNameTxt, borderRadius: 8),
+          suffix: ic_user.iconImage(size: 10, context: context).paddingAll(14),
         ),
         16.height,
         Text(language.lblLastName, style: boldTextStyle(size: 14)),
         8.height,
+        //Last Name
         AppTextField(
           textFieldType: TextFieldType.NAME,
           controller: lNameCont,
@@ -302,11 +297,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
           nextFocus: userNameFocus,
           errorThisFieldRequired: language.requiredText,
           decoration: inputDecoration(context,
-              fillColor: Colors.transparent,
-              hintText: language.hintLastNameTxt,
-              borderRadius: 8),
-          suffix:
-              ic_profile2.iconImage(size: 10, context: context).paddingAll(14),
+              hintText: language.hintLastNameTxt, borderRadius: 8),
+          suffix: ic_user.iconImage(size: 10, context: context).paddingAll(14),
         ),
         16.height,
         Text(language.lblUserName, style: boldTextStyle(size: 14)),
@@ -319,11 +311,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
           readOnly: widget.isOTPLogin.validate() ? widget.isOTPLogin : false,
           errorThisFieldRequired: language.requiredText,
           decoration: inputDecoration(context,
-              fillColor: Colors.transparent,
-              hintText: language.hintUserNameTxt,
-              borderRadius: 8),
-          suffix:
-              ic_profile2.iconImage(size: 10, context: context).paddingAll(14),
+              hintText: language.hintUserNameTxt, borderRadius: 8),
+          suffix: ic_user.iconImage(size: 10, context: context).paddingAll(14),
         ),
         16.height,
         Text(language.lblEmail, style: boldTextStyle(size: 14)),
@@ -335,11 +324,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
           errorThisFieldRequired: language.requiredText,
           nextFocus: mobileFocus,
           decoration: inputDecoration(context,
-              fillColor: Colors.transparent,
-              hintText: language.hintEmailTxt,
-              borderRadius: 8),
+              hintText: language.hintEmailTxt, borderRadius: 8),
           suffix:
-              ic_message.iconImage(size: 10, context: context).paddingAll(14),
+              ic_message.iconImage(size: 12, context: context).paddingAll(12),
         ),
         16.height,
         Text(language.lblContactNumber, style: boldTextStyle(size: 14)),
@@ -352,7 +339,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
           errorThisFieldRequired: language.requiredText,
           nextFocus: passwordFocus,
           decoration: inputDecoration(context,
-              fillColor: Colors.transparent,
               hintText: "${language.hintContactNumberTxt}",
               counter: false,
               borderRadius: 8,
@@ -388,8 +374,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 },
               )),
           maxLength: 15,
-          suffix:
-              ic_calling.iconImage(size: 10, context: context).paddingAll(14),
+          suffix: ic_call.iconImage(size: 10, context: context).paddingAll(12),
         ),
         8.height,
         Align(
@@ -398,7 +383,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             onTap: () => changeCountry(),
             child: Text(
               language.selectCountry,
-              style: primaryTextStyle(size: 13, weight: FontWeight.bold),
+              style: boldTextStyle(size: 13),
             ),
           ),
         ),
@@ -424,9 +409,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     .paddingAll(14),
                 errorThisFieldRequired: language.requiredText,
                 decoration: inputDecoration(context,
-                    fillColor: context.fillColor,
-                    hintText: language.hintPasswordTxt,
-                    borderRadius: 8),
+                    hintText: language.hintPasswordTxt, borderRadius: 8),
                 isValidationRequired: true,
                 validator: (val) {
                   if (val == null || val.isEmpty) {
@@ -445,8 +428,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
         8.height,
         AppButton(
           text: language.signUp,
-          color: primaryColor,
-          textColor: Colors.white,
+          color: context.primary,
+          textColor: context.onPrimary,
           width: context.width() - context.navigationBarHeight,
           onTap: () {
             if (widget.isOTPLogin) {
@@ -470,9 +453,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
             isAcceptedTc = !isAcceptedTc;
             setState(() {});
           },
-          activeColor: context.primaryColor,
+          activeColor: context.primary,
           checkColor: Colors.white,
-          side: BorderSide(color: primaryColor, width: 2.0),
+          side: BorderSide(color: context.primary, width: 2.0),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(2),
           ),
@@ -485,7 +468,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 style: primaryTextStyle(size: 14)),
             TextSpan(
               text: language.lblTermsOfService,
-              style: boldTextStyle(color: primaryColor, size: 14),
+              style: boldTextStyle(color: context.primary, size: 14),
               recognizer: TapGestureRecognizer()
                 ..onTap = () {
                   checkIfLink(context, appConfigurationStore.termConditions,
@@ -495,7 +478,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             TextSpan(text: ' & ', style: primaryTextStyle(size: 14)),
             TextSpan(
               text: language.privacyPolicy,
-              style: boldTextStyle(color: primaryColor, size: 14),
+              style: boldTextStyle(color: context.primary, size: 14),
               recognizer: TapGestureRecognizer()
                 ..onTap = () {
                   checkIfLink(context, appConfigurationStore.privacyPolicy,
@@ -519,7 +502,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 style: primaryTextStyle(size: 14)),
             TextSpan(
               text: language.signIn,
-              style: boldTextStyle(color: primaryColor, size: 14),
+              style: boldTextStyle(color: context.primary, size: 14),
               recognizer: TapGestureRecognizer()
                 ..onTap = () {
                   finish(context);
@@ -541,24 +524,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
       child: SafeArea(
         top: false,
         child: Scaffold(
+          backgroundColor: context.scaffold,
           extendBodyBehindAppBar: true,
           appBar: AppBar(
             elevation: 0,
             leading: Navigator.of(context).canPop()
-                ? Container(
-                    margin: const EdgeInsets.only(left: 6),
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).scaffoldBackgroundColor,
-                      shape: BoxShape.circle,
-                    ),
-                    child: BackWidget(iconColor: context.icon))
+                ? BackWidget(iconColor: context.icon)
                 : null,
             backgroundColor: transparentColor,
             scrolledUnderElevation: 0,
             systemOverlayStyle: SystemUiOverlayStyle(
-                statusBarIconBrightness:
-                    appStore.isDarkMode ? Brightness.light : Brightness.dark,
-                statusBarColor: context.scaffoldBackgroundColor),
+                statusBarIconBrightness: context.statusBarBrightness,
+                statusBarColor: context.scaffold),
           ),
           body: Stack(
             alignment: AlignmentDirectional.center,

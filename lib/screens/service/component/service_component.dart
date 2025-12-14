@@ -10,6 +10,7 @@ import 'package:booking_system_flutter/screens/service/service_detail_screen.dar
 import 'package:booking_system_flutter/utils/colors.dart';
 import 'package:booking_system_flutter/utils/common.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/images.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
 import 'package:flutter/material.dart';
@@ -193,7 +194,7 @@ class ServiceComponentState extends State<ServiceComponent> {
                             right: 4,
                             child: Container(
                               decoration: boxDecorationDefault(
-                                color: primaryColor,
+                                color: context.primary,
                                 borderRadius: radius(20),
                               ),
                               child: Container(
@@ -206,7 +207,7 @@ class ServiceComponentState extends State<ServiceComponent> {
                                 ),
                                 decoration: boxDecorationDefault(
                                   shape: BoxShape.circle,
-                                  color: primaryColor,
+                                  color: context.primary,
                                 ),
                               ),
                             ),

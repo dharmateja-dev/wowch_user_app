@@ -1,8 +1,8 @@
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
 import '../generated/assets.dart';
-import '../utils/colors.dart';
 
 class ChatGPTLoadingWidget extends StatelessWidget {
   const ChatGPTLoadingWidget({
@@ -22,7 +22,7 @@ class ChatGPTLoadingWidget extends StatelessWidget {
         vertical: 5,
       ),
       decoration: BoxDecoration(
-        color: primaryColor,
+        color: context.primary,
         borderRadius: BorderRadius.circular(10),
       ),
       child: Lottie.asset(

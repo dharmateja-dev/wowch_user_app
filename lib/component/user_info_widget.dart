@@ -2,6 +2,7 @@ import 'package:booking_system_flutter/model/user_data_model.dart';
 import 'package:booking_system_flutter/screens/auth/sign_in_screen.dart';
 import 'package:booking_system_flutter/screens/booking/provider_info_screen.dart';
 import 'package:booking_system_flutter/utils/colors.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/images.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
 import 'package:flutter/material.dart';
@@ -220,7 +221,7 @@ class _UserInfoWidgetState extends State<UserInfoWidget> {
                 widget.data.designation.validate(),
                 textAlign: TextAlign.center,
                 style: secondaryTextStyle(
-                    color: primaryColor, weight: FontWeight.bold),
+                    color: context.primary, weight: FontWeight.bold),
               )
             ],
           ).paddingSymmetric(horizontal: 16),

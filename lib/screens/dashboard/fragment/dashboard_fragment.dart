@@ -9,6 +9,7 @@ import 'package:booking_system_flutter/screens/dashboard/component/booking_confi
 import 'package:booking_system_flutter/screens/dashboard/shimmer/dashboard_shimmer.dart';
 import 'package:booking_system_flutter/utils/colors.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/dummy_data_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -166,7 +167,7 @@ class _DashboardFragmentState extends State<DashboardFragment> {
           Container(
             height: 240,
             width: double.infinity,
-            color: primaryColor,
+            color: context.primary,
           ),
           // Main content column
           Column(

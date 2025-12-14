@@ -63,6 +63,7 @@ class HorizontalShopListComponent extends StatelessWidget {
               shop: shopList[index],
               showServices: showServices,
               width: context.width() - 32,
+              context: context,
             );
           },
         ),

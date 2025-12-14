@@ -3,7 +3,6 @@ import 'package:booking_system_flutter/component/base_scaffold_widget.dart';
 import 'package:booking_system_flutter/main.dart';
 import 'package:booking_system_flutter/network/rest_apis.dart';
 import 'package:booking_system_flutter/screens/dashboard/dashboard_screen.dart';
-import 'package:booking_system_flutter/utils/colors.dart';
 import 'package:booking_system_flutter/utils/common.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
 import 'package:booking_system_flutter/utils/context_extensions.dart';
@@ -72,7 +71,12 @@ class ChangePasswordScreenState extends State<ChangePasswordScreen> {
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
-      leading: BackWidget(),
+      leading: BackWidget(
+        iconColor: context.onPrimary,
+        onPressed: () {
+          Navigator.pop(context);
+        },
+      ),
       appBarTitle: language.changePassword,
       child: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
@@ -85,7 +89,7 @@ class ChangePasswordScreenState extends State<ChangePasswordScreen> {
               Text(language.lblChangePwdTitle,
                   style: primaryTextStyle(size: 14)),
               24.height,
-              Text(language.hintOldPasswordTxt, style: boldTextStyle(size: 14)),
+              Text(language.hintOldPasswordTxt, style: boldTextStyle()),
               8.height,
               AppTextField(
                 textFieldType: TextFieldType.PASSWORD,
@@ -97,7 +101,6 @@ class ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 suffixPasswordInvisibleWidget: const SizedBox.shrink(),
                 decoration: inputDecoration(
                   context,
-                  fillColor: context.fillColor,
                   hintText: language.hintOldPasswordTxt,
                   borderRadius: 8,
                 ),
@@ -112,7 +115,7 @@ class ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 },
               ),
               16.height,
-              Text(language.hintNewPasswordTxt, style: boldTextStyle(size: 14)),
+              Text(language.hintNewPasswordTxt, style: boldTextStyle()),
               8.height,
               AppTextField(
                 textFieldType: TextFieldType.PASSWORD,
@@ -124,7 +127,6 @@ class ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 suffixPasswordInvisibleWidget: const SizedBox.shrink(),
                 decoration: inputDecoration(
                   context,
-                  fillColor: context.fillColor,
                   hintText: language.hintNewPasswordTxt,
                   borderRadius: 8,
                 ),
@@ -139,8 +141,7 @@ class ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 },
               ),
               16.height,
-              Text(language.hintReenterPasswordTxt,
-                  style: boldTextStyle(size: 14)),
+              Text(language.hintReenterPasswordTxt, style: boldTextStyle()),
               8.height,
               AppTextField(
                 textFieldType: TextFieldType.PASSWORD,
@@ -168,7 +169,6 @@ class ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 },
                 decoration: inputDecoration(
                   context,
-                  fillColor: context.fillColor,
                   hintText: language.hintReenterPasswordTxt,
                   borderRadius: 8,
                 ),
@@ -176,8 +176,8 @@ class ChangePasswordScreenState extends State<ChangePasswordScreen> {
               24.height,
               AppButton(
                 text: language.confirm,
-                color: primaryColor,
-                textColor: Colors.white,
+                color: context.primary,
+                textColor: context.onPrimary,
                 width: context.width() - context.navigationBarHeight,
                 onTap: () {
                   ifNotTester(() {

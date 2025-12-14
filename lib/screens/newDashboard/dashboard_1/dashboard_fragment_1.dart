@@ -2,6 +2,7 @@ import 'package:booking_system_flutter/main.dart';
 import 'package:booking_system_flutter/screens/dashboard/component/promotional_banner_slider_component.dart';
 import 'package:booking_system_flutter/screens/dashboard/component/horizontal_shop_list_component.dart';
 import 'package:booking_system_flutter/screens/newDashboard/dashboard_1/shimmer/dashboard_shimmer_1.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/dummy_data_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -121,7 +122,7 @@ class _DashboardFragment1State extends State<DashboardFragment1> {
           Container(
             height: 200,
             width: double.infinity,
-            color: primaryColor,
+            color: context.primary,
           ),
           // Main content column
           Column(

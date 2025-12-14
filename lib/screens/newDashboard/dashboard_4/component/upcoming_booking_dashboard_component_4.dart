@@ -2,6 +2,7 @@ import 'package:booking_system_flutter/component/cached_image_widget.dart';
 import 'package:booking_system_flutter/main.dart';
 import 'package:booking_system_flutter/model/booking_data_model.dart';
 import 'package:booking_system_flutter/utils/common.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/images.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +10,6 @@ import 'package:nb_utils/nb_utils.dart';
 
 import '../../../../component/app_common_dialog.dart';
 import '../../../../model/booking_detail_model.dart';
-import '../../../../utils/colors.dart';
 import '../../../../utils/constant.dart';
 import '../../../../utils/model_keys.dart';
 import '../../../booking/booking_detail_screen.dart';
@@ -279,7 +279,7 @@ class _UpComingBookingDashboardComponent4State
                           _handleCancelClick(
                               bookingData: widget.upComingBookingData!);
                         },
-                        color: primaryColor,
+                        color: context.primary,
                         textColor: Colors.white,
                         text: language.lblCancel,
                       ).paddingAll(16)

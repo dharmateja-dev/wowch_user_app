@@ -3,8 +3,8 @@ import 'package:booking_system_flutter/main.dart';
 import 'package:booking_system_flutter/model/user_data_model.dart';
 import 'package:booking_system_flutter/screens/auth/sign_in_screen.dart';
 import 'package:booking_system_flutter/screens/chat/widget/user_item_widget.dart';
-import 'package:booking_system_flutter/utils/colors.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_pagination/firebase_pagination.dart';
 import 'package:flutter/material.dart';
@@ -292,7 +292,7 @@ class _DummyUserItemWidget extends StatelessWidget {
                         width: 18,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
-                          color: primaryColor,
+                          color: context.primary,
                         ),
                         child: Text(
                           '${(index % 5) + 1}',

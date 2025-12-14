@@ -10,6 +10,7 @@ import 'package:booking_system_flutter/network/rest_apis.dart';
 import 'package:booking_system_flutter/screens/shop/shimmer/shop_shimmer.dart';
 import 'package:booking_system_flutter/utils/colors.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -18,7 +19,8 @@ class FilterShopListComponent extends StatefulWidget {
   const FilterShopListComponent({Key? key}) : super(key: key);
 
   @override
-  State<FilterShopListComponent> createState() => _FilterShopListComponentState();
+  State<FilterShopListComponent> createState() =>
+      _FilterShopListComponentState();
 }
 
 class _FilterShopListComponentState extends State<FilterShopListComponent> {
@@ -94,7 +96,8 @@ class _FilterShopListComponentState extends State<FilterShopListComponent> {
               itemCount: list.length,
               listAnimationType: ListAnimationType.FadeIn,
               fadeInConfiguration: FadeInConfiguration(duration: 2.seconds),
-              padding: EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 80),
+              padding:
+                  EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 80),
               onSwipeRefresh: () async {
                 setState(() {
                   page = 1;
@@ -120,7 +123,9 @@ class _FilterShopListComponentState extends State<FilterShopListComponent> {
                   decoration: boxDecorationWithRoundedCorners(
                     borderRadius: radius(),
                     backgroundColor: context.cardColor,
-                    border: appStore.isDarkMode ? Border.all(color: context.dividerColor) : null,
+                    border: appStore.isDarkMode
+                        ? Border.all(color: context.dividerColor)
+                        : null,
                   ),
                   child: Row(
                     children: [
@@ -150,15 +155,17 @@ class _FilterShopListComponentState extends State<FilterShopListComponent> {
                                     Assets.iconsIcDefaultShop,
                                     height: 16,
                                     width: 16,
-                                    color: primaryColor,
+                                    color: context.primary,
                                   ),
                                 ),
                         ),
                       ),
                       16.width,
-                      Text(data.name.validate(), style: boldTextStyle()).expand(),
+                      Text(data.name.validate(), style: boldTextStyle())
+                          .expand(),
                       4.width,
-                      SelectedItemWidget(isSelected: filterStore.shopIds.contains(data.id)),
+                      SelectedItemWidget(
+                          isSelected: filterStore.shopIds.contains(data.id)),
                     ],
                   ),
                 ).onTap(
@@ -187,7 +194,9 @@ class _FilterShopListComponentState extends State<FilterShopListComponent> {
             );
           },
         ),
-        Observer(builder: (_) => LoaderWidget().visible(appStore.isLoading && page != 1)),
+        Observer(
+            builder: (_) =>
+                LoaderWidget().visible(appStore.isLoading && page != 1)),
       ],
     );
   }

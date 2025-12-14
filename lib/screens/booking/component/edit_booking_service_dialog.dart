@@ -212,7 +212,7 @@ class _EditBookingServiceDialogState extends State<EditBookingServiceDialog> {
                   16.width,
                   AppButton(
                     onTap: _handleSubmitClick,
-                    color: primaryColor,
+                    color: context.primary,
                     text: language.confirm,
                   ).expand(),
                 ],

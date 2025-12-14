@@ -12,10 +12,10 @@ import 'package:booking_system_flutter/screens/service/favourite_service_screen.
 import 'package:booking_system_flutter/screens/setting_screen.dart';
 import 'package:booking_system_flutter/screens/static_content_screen.dart';
 import 'package:booking_system_flutter/screens/wallet/user_wallet_balance_screen.dart';
-import 'package:booking_system_flutter/utils/colors.dart';
 import 'package:booking_system_flutter/utils/common.dart';
 import 'package:booking_system_flutter/utils/configs.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/extensions/num_extenstions.dart';
 import 'package:booking_system_flutter/utils/images.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
@@ -199,7 +199,7 @@ class ProfileFragmentState extends State<ProfileFragment> {
                                 builder: (context) => Text(
                                   appStore.userWalletAmount.toPriceFormat(),
                                   style: boldTextStyle(
-                                    color: primaryColor,
+                                    color: context.primary,
                                   ),
                                 ),
                               ),
@@ -674,8 +674,8 @@ class ProfileFragmentState extends State<ProfileFragment> {
                             );
                           },
                           child: Text(language.logout,
-                              style:
-                                  boldTextStyle(color: primaryColor, size: 16)),
+                              style: boldTextStyle(
+                                  color: context.primary, size: 16)),
                         ).center(),
                       //32.height,
                       // SnapHelperWidget<PackageInfoData>(

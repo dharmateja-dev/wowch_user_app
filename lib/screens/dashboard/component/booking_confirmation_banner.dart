@@ -196,7 +196,7 @@ class RemoveConfirmationDialog extends StatelessWidget {
             // Sure button
             AppButton(
               text: language.lblSure,
-              color: primaryColor,
+              color: context.primary,
               textColor: Colors.white,
               width: double.infinity,
               height: 20,

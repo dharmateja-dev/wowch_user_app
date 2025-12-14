@@ -6,6 +6,7 @@ import 'package:booking_system_flutter/screens/notification/notification_screen.
 import 'package:booking_system_flutter/utils/colors.dart';
 import 'package:booking_system_flutter/utils/configs.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/images.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
 import 'package:flutter/material.dart';
@@ -85,7 +86,7 @@ class _SliderLocationComponentState extends State<SliderLocationComponent> {
                   children: [
                     ic_notification
                         .iconImage(
-                            size: 24, color: primaryColor, context: context)
+                            size: 24, color: context.primary, context: context)
                         .center(),
                     Observer(
                       builder: (context) {
@@ -193,7 +194,7 @@ class _SliderLocationComponentState extends State<SliderLocationComponent> {
                   padding: const EdgeInsets.all(16),
                   decoration: commonDecoration,
                   child: ic_search.iconImage(
-                      color: primaryColor, context: context),
+                      color: context.primary, context: context),
                 ),
               ),
             ],

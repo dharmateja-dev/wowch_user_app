@@ -1,3 +1,4 @@
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -133,9 +134,8 @@ class _BookingConfirmedComponent1State
                             children: [
                               Row(
                                 children: [
-                                      
-                                      
-                                  ic_calendar.iconImage(size: 14, context: context),
+                                  ic_calendar.iconImage(
+                                      size: 14, context: context),
                                   4.width,
                                   Text(
                                     formatDate(widget
@@ -151,7 +151,8 @@ class _BookingConfirmedComponent1State
                               8.width,
                               Row(
                                 children: [
-                                  ic_clock.iconImage(size: 14, context: context),
+                                  ic_clock.iconImage(
+                                      size: 14, context: context),
                                   4.width,
                                   Text(
                                     formatDate(
@@ -270,7 +271,7 @@ class _BookingConfirmedComponent1State
                           _handleCancelClick(
                               bookingData: widget.upcomingConfirmedBooking!);
                         },
-                        color: primaryColor,
+                        color: context.primary,
                         textColor: Colors.white,
                         text: language.lblCancel,
                       ).paddingAll(16)

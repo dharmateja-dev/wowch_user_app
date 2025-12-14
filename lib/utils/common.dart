@@ -227,7 +227,7 @@ InputDecoration inputDecoration(
     errorStyle: primaryTextStyle(color: Colors.red, size: 11),
     focusedBorder: OutlineInputBorder(
       borderRadius: radius(borderRadius ?? defaultRadius),
-      borderSide: BorderSide(color: primaryColor, width: 1.0),
+      borderSide: BorderSide(color: context.primary, width: 1.0),
     ),
     filled: true,
     fillColor: fillColor ?? context.fillColor,
@@ -717,7 +717,7 @@ class OptionListWidget extends StatelessWidget {
               child: Text(
                 optionList[index].title,
                 style: secondaryTextStyle(
-                  color: primaryColor,
+                  color: context.primary,
                   size: 12,
                   weight: FontWeight.bold,
                 ),

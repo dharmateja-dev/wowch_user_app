@@ -1,7 +1,7 @@
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-import '../utils/colors.dart';
 import '../utils/common.dart';
 
 /// Custom Language List Widget that shows language names in their native language
@@ -78,9 +78,9 @@ class CustomLanguageListWidgetState extends State<CustomLanguageListWidget> {
               setState(() {});
               widget.onLanguageChange?.call(data);
             },
-            activeColor: context.primaryColor,
+            activeColor: context.primary,
             checkColor: Colors.white,
-            side: BorderSide(color: primaryColor, width: 2.0),
+            side: BorderSide(color: context.primary, width: 2.0),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(2),
             ),

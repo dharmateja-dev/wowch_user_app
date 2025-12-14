@@ -7,11 +7,11 @@ import 'package:booking_system_flutter/model/service_detail_response.dart';
 import 'package:booking_system_flutter/utils/colors.dart';
 import 'package:booking_system_flutter/utils/common.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/model_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-import '../../payment/component/payment_info_component.dart';
 import 'applied_tax_list_bottom_sheet.dart';
 
 class PriceCommonWidget extends StatelessWidget {
@@ -166,7 +166,7 @@ class PriceCommonWidget extends StatelessWidget {
                         currencySymbol: '₹',
                         size: 12,
                         price: bookingDetail.totalAmount.validate(),
-                        color: primaryColor,
+                        color: context.primary,
                         isBoldText: true,
                       ),
                     ],
@@ -283,56 +283,6 @@ class PriceCommonWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildRemainingAmountRow(BuildContext context) {
-    bool isPaid = bookingDetail.status == BookingStatusKeys.complete &&
-        bookingDetail.paymentStatus == SERVICE_PAYMENT_STATUS_PAID;
-
-    return Padding(
-      padding: EdgeInsets.only(bottom: 16),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
-            children: [
-              Text(
-                language.remainingAmount,
-                style: primaryTextStyle(),
-              ),
-              if (!isPaid) ...[
-                8.width,
-                GestureDetector(
-                  onTap: () {
-                    showModalBottomSheet(
-                      context: context,
-                      builder: (_) {
-                        return PaymentInfoComponent(bookingDetail.id!);
-                      },
-                    );
-                  },
-                  child: Icon(
-                    Icons.info_outline,
-                    size: 18,
-                    color: Colors.grey[500],
-                  ),
-                ),
-              ],
-            ],
-          ),
-          isPaid
-              ? Text(
-                  language.paid,
-                  style: boldTextStyle(color: context.primaryColor),
-                )
-              : PriceWidget(
-                  currencySymbol: '₹',
-                  price: getRemainingAmount,
-                  color: primaryColor,
-                  isBoldText: false,
-                ),
-        ],
-      ),
-    );
-  }
 
   num get getAdvancePaymentAmount {
     if (bookingDetail.paidAmount.validate() != 0) {

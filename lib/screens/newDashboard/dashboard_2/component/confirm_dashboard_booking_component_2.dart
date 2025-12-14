@@ -1,3 +1,4 @@
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -7,7 +8,6 @@ import '../../../../component/cached_image_widget.dart';
 import '../../../../main.dart';
 import '../../../../model/booking_data_model.dart';
 import '../../../../model/booking_detail_model.dart';
-import '../../../../utils/colors.dart';
 import '../../../../utils/common.dart';
 import '../../../../utils/constant.dart';
 import '../../../../utils/model_keys.dart';
@@ -227,7 +227,7 @@ class _ConfirmDashboardBookingComponent2State
                                   bookingData:
                                       widget.upcomingConfirmedBooking!);
                             },
-                            color: primaryColor,
+                            color: context.primary,
                             textColor: Colors.white,
                             text: language.lblCancel,
                           ).paddingAll(16)
@@ -255,7 +255,7 @@ class _ConfirmDashboardBookingComponent2State
                 decoration: BoxDecoration(
                   shape: BoxShape.rectangle,
                   borderRadius: BorderRadius.circular(6),
-                  color: primaryColor,
+                  color: context.primary,
                 ),
                 child: const Icon(Icons.close, color: white, size: 12),
               ).onTap(() async {

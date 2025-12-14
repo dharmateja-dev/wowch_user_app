@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:booking_system_flutter/component/back_widget.dart';
 import 'package:booking_system_flutter/component/price_widget.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -12,7 +13,6 @@ import '../../../model/bank_list_response.dart';
 import '../../../model/base_response_model.dart';
 import '../../../model/static_data_model.dart';
 import '../../../network/network_utils.dart';
-import '../../../utils/colors.dart';
 import '../../../utils/common.dart';
 import '../../../utils/constant.dart';
 import '../../../utils/model_keys.dart';
@@ -269,8 +269,8 @@ class _AddBankScreenState extends State<AddBankScreen> {
               right: 16,
               child: AppButton(
                 text: language.btnSave,
-                color: primaryColor,
-                textStyle: boldTextStyle(color: white),
+                color: context.primary,
+                textStyle: boldTextStyle(color: context.onPrimary),
                 width: context.width(),
                 onTap: () {
                   if (formKey.currentState!.validate()) {

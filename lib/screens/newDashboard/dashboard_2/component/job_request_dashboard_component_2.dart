@@ -1,4 +1,4 @@
-import 'package:booking_system_flutter/utils/colors.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -15,7 +15,8 @@ class JobRequestDashboardComponent2 extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       decoration: const BoxDecoration(
         shape: BoxShape.rectangle,
-        image: DecorationImage(image: AssetImage(grid), fit: BoxFit.cover, opacity: 0.3),
+        image: DecorationImage(
+            image: AssetImage(grid), fit: BoxFit.cover, opacity: 0.3),
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
@@ -44,17 +45,20 @@ class JobRequestDashboardComponent2 extends StatelessWidget {
               children: [
                 const Icon(Icons.add, color: Colors.white),
                 4.width,
-                Text(language.newRequest, style: boldTextStyle(color: Colors.white)),
+                Text(language.newRequest,
+                    style: boldTextStyle(color: Colors.white)),
               ],
             ),
-            color: primaryColor,
+            color: context.primary,
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             onTap: () async {
               if (appStore.isLoggedIn) {
                 MyPostRequestListScreen().launch(context);
               } else {
-                setStatusBarColor(Colors.white, statusBarIconBrightness: Brightness.dark);
-                bool? res = await const SignInScreen(isFromDashboard: true).launch(context);
+                setStatusBarColor(Colors.white,
+                    statusBarIconBrightness: Brightness.dark);
+                bool? res = await const SignInScreen(isFromDashboard: true)
+                    .launch(context);
 
                 if (res ?? false) {
                   MyPostRequestListScreen().launch(context);

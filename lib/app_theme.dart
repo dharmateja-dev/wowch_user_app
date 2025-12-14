@@ -51,15 +51,17 @@ class AppTheme {
         secondary: LightThemeColors.secondaryGreen,
         onSecondary: LightThemeColors.deepBlack,
 
-        // ignore: deprecated_member_use
-        primaryContainer: primary,
-        onPrimaryContainer: Color(0xFFDDDDDD),
+        // Primary container for shaded green
+        primaryContainer: LightThemeColors.secondaryGreen, // #93C0AB
+        onPrimaryContainer: LightThemeColors.deepBlack, // #1E1E1E
 
-        // ignore: deprecated_member_use
-        secondaryContainer: Color(0xFFE9F2EF),
-        onSecondaryContainer: LightThemeColors.mutedGray,
+        // Secondary container for complete light shaded green
+        secondaryContainer: LightThemeColors.secondaryGreenLight, // #E9F2EF
+        onSecondaryContainer:
+            LightThemeColors.secondaryContainerHint, // #4F4F4F
 
-        surface: Color(0xFFF2F4F3),
+        // Surface colors - service/provider component color
+        surface: LightThemeColors.serviceComponentColor, // #F2F4F3
         onSurface: LightThemeColors.deepBlack,
 
         inverseSurface: LightThemeColors.lightGray,
@@ -69,12 +71,12 @@ class AppTheme {
         surfaceContainerHigh: LightThemeColors.lightGray,
         surfaceContainer: LightThemeColors.mediumGray,
 
-        onSurfaceVariant: LightThemeColors.softGrey,
+        onSurfaceVariant: LightThemeColors.mutedText, // Hint text #9E9E9E
         tertiary: LightThemeColors.mediumGray,
         error: LightThemeColors.errorRed,
         onError: Colors.white,
-        outline: LightThemeColors.primaryBorder,
-        outlineVariant: LightThemeColors.dividerColor,
+        outline: LightThemeColors.primaryBorder, // Input field border #D6D6D6
+        outlineVariant: LightThemeColors.greenBorder, // Green border #2E6B4F
         shadow: LightThemeColors.shadowLight,
       ),
 
@@ -171,7 +173,7 @@ class AppTheme {
         collapsedTextColor: LightThemeColors.deepBlack,
       ),
 
-      dividerColor: LightThemeColors.dividerLightGrey,
+      dividerColor: LightThemeColors.mainDivider,
 
       // Keeping original legacy theme bits just in case
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(
@@ -236,16 +238,20 @@ class AppTheme {
       colorScheme: ColorScheme.dark(
         primary: primary,
         onPrimary: DarkThemeColors.pureWhite,
-        // ignore: deprecated_member_use
-        primaryContainer: primary.withOpacity(0.1),
-        onPrimaryContainer: DarkThemeColors.pureWhite,
-        primaryFixed: DarkThemeColors.pureWhite,
-        secondary: DarkThemeColors.secondaryOrange,
-        // ignore: deprecated_member_use
-        secondaryContainer: DarkThemeColors.secondaryOrange.withOpacity(0.1),
 
-        surface: DarkThemeColors.mediumCharcoal,
-        onSurface: DarkThemeColors.lightGray,
+        // Primary container for shaded green
+        primaryContainer: DarkThemeColors.primaryContainer, // #93C0AB
+        onPrimaryContainer: DarkThemeColors.onPrimaryContainer, // #121212
+        primaryFixed: DarkThemeColors.pureWhite,
+
+        secondary: DarkThemeColors.secondaryOrange,
+        // Secondary container
+        secondaryContainer: DarkThemeColors.secondaryContainer, // #101D1C
+        onSecondaryContainer: DarkThemeColors.liteGreenContainerText, // #B2C7BF
+
+        // Surface colors - service/provider component color
+        surface: DarkThemeColors.serviceComponentColor, // #2A2A2A
+        onSurface: DarkThemeColors.pureWhite, // #E8F5F0
 
         inverseSurface: DarkThemeColors.mediumCharcoal,
         onInverseSurface: DarkThemeColors.lightGray,
@@ -254,14 +260,14 @@ class AppTheme {
         surfaceContainerHigh: DarkThemeColors.softCharcoal,
         surfaceContainer: DarkThemeColors.lightCharcoal,
 
-        onSurfaceVariant: DarkThemeColors.mutedGray,
+        onSurfaceVariant: DarkThemeColors.hintText, // Hint text #6E7D78
 
         onSecondary: DarkThemeColors.pureWhite,
         tertiary: DarkThemeColors.softCharcoal,
         error: DarkThemeColors.errorRed,
         onError: DarkThemeColors.pureWhite,
-        outline: DarkThemeColors.primaryBorder,
-        outlineVariant: DarkThemeColors.lightBorder,
+        outline: DarkThemeColors.primaryBorder, // Input field border #B2C7BF
+        outlineVariant: DarkThemeColors.greenBorder, // Green border #93C0AB
         shadow: DarkThemeColors.shadowLight,
       ),
 
@@ -364,7 +370,7 @@ class AppTheme {
         collapsedTextColor: DarkThemeColors.lightGray,
       ),
 
-      dividerColor: DarkThemeColors.mutedGray.withOpacity(0.5),
+      dividerColor: DarkThemeColors.mainDivider,
 
       // Legacy bits
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(
