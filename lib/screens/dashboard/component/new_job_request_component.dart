@@ -1,3 +1,4 @@
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -13,7 +14,7 @@ class NewJobRequestComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.all(10),
       decoration: boxDecorationWithRoundedCorners(
         backgroundColor: context.primaryColor,
         borderRadius: radius(defaultRadius),
@@ -22,31 +23,22 @@ class NewJobRequestComponent extends StatelessWidget {
         children: [
           Text(language.jobRequestSubtitle,
                   style:
-                      context.primaryTextStyle(color: Colors.white, size: 20),
+                      context.boldTextStyle(color: context.onPrimary, size: 20),
                   textAlign: TextAlign.center)
               .paddingSymmetric(horizontal: 12, vertical: 12),
           AppButton(
             padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 12),
-            color: Colors.white,
+            color: context.buttonBackgroundAlt,
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(Icons.add,
-                    color: appStore.isDarkMode
-                        ? Colors.white
-                        : context.primaryColor),
+                Icon(Icons.add, color: context.onSurface),
                 4.width,
                 Text(language.newPostJobRequest,
-                    style: context.boldTextStyle(
-                        color: appStore.isDarkMode
-                            ? Colors.white
-                            : context.primaryColor)),
+                    style: context.boldTextStyle(color: context.onSurface)),
               ],
             ),
-            textStyle: context.primaryTextStyle(
-                color: appStore.isDarkMode
-                    ? textPrimaryColorGlobal
-                    : context.primaryColor),
+            textStyle: context.primaryTextStyle(color: context.onSurface),
             onTap: () async {
               if (appStore.isLoggedIn) {
                 MyPostRequestListScreen().launch(context);

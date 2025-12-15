@@ -32,7 +32,11 @@ class ServiceListComponent extends StatelessWidget {
                 spacing: 16,
                 runSpacing: 16,
                 children: List.generate(serviceList.length, (index) {
-                  return ServiceComponent(serviceData: serviceList[index], width: context.width() / 2 - 26);
+                  return ServiceComponent(
+                    serviceData: serviceList[index],
+                    width: context.width() / 2 - 26,
+                    imageHeight: 150,
+                  );
                 }),
               ).paddingSymmetric(horizontal: 16, vertical: 8)
             : Container(

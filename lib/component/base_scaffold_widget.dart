@@ -1,5 +1,6 @@
 import 'package:booking_system_flutter/component/back_widget.dart';
 import 'package:booking_system_flutter/component/loader_widget.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
@@ -37,16 +38,20 @@ class AppScaffold extends StatelessWidget {
               title: Text(
                 appBarTitle.validate(),
                 style: context.boldTextStyle(
-                    size: APP_BAR_TEXT_SIZE,
-                    color: context.scaffoldBackgroundColor),
+                    size: APP_BAR_TEXT_SIZE, color: context.onPrimary),
               ),
               elevation: 0.0,
-              backgroundColor: context.primaryColor,
-              leading: leading ?? (context.canPop ? BackWidget() : null),
+              backgroundColor: context.primary,
+              leading: leading ??
+                  (context.canPop
+                      ? BackWidget(
+                          iconColor: context.onPrimary, 
+                        )
+                      : null),
               actions: actions,
             )
           : null,
-      backgroundColor: scaffoldBackgroundColor,
+      backgroundColor: context.scaffold,
       body: Stack(
         children: [
           AbsorbPointer(

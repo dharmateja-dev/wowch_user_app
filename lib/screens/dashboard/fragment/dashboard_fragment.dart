@@ -204,6 +204,7 @@ class _DashboardFragmentState extends State<DashboardFragment> {
                           // You can add navigation logic here
                         },
                       ),
+                    14.height,
                     CategoryComponent(categoryList: snap.category.validate()),
                     16.height,
                     FeaturedServiceListComponent(
@@ -212,7 +213,7 @@ class _DashboardFragmentState extends State<DashboardFragment> {
                     ServiceListComponent(serviceList: snap.service.validate()),
                     16.height,
                     const NewJobRequestComponent(),
-                    100.height, // Extra padding for bottom nav
+                    50.height, // Extra padding for bottom nav
                   ],
                 ),
               ),

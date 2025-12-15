@@ -7,6 +7,7 @@ import 'package:booking_system_flutter/screens/jobRequest/components/my_post_req
 import 'package:booking_system_flutter/screens/jobRequest/create_post_request_screen.dart';
 import 'package:booking_system_flutter/screens/jobRequest/shimmer/my_post_job_shimmer.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -47,7 +48,7 @@ class _MyPostRequestListScreenState extends State<MyPostRequestListScreen> {
         price: 600,
         jobPrice: 60,
         status: JOB_REQUEST_STATUS_REQUESTED,
-        createdAt: '2025-06-10',
+        createdAt: '2025-06-10 10:30:00',
         service: [
           ServiceData(attachments: [
             'https://images.pexels.com/photos/3985166/pexels-photo-3985166.jpeg?auto=compress&cs=tinysrgb&w=800'
@@ -60,7 +61,7 @@ class _MyPostRequestListScreenState extends State<MyPostRequestListScreen> {
         price: 600,
         jobPrice: 60,
         status: JOB_REQUEST_STATUS_REQUESTED,
-        createdAt: '2025-06-10',
+        createdAt: '2025-06-10 14:00:00',
         service: [
           ServiceData(attachments: [
             'https://images.pexels.com/photos/3985166/pexels-photo-3985166.jpeg?auto=compress&cs=tinysrgb&w=800'
@@ -73,7 +74,7 @@ class _MyPostRequestListScreenState extends State<MyPostRequestListScreen> {
         price: 600,
         jobPrice: 60,
         status: JOB_REQUEST_STATUS_REQUESTED,
-        createdAt: '2025-06-10',
+        createdAt: '2025-06-10 09:15:00',
         service: [
           ServiceData(attachments: [
             'https://images.pexels.com/photos/3985166/pexels-photo-3985166.jpeg?auto=compress&cs=tinysrgb&w=800'
@@ -116,8 +117,7 @@ class _MyPostRequestListScreenState extends State<MyPostRequestListScreen> {
   @override
   void dispose() {
     setStatusBarColor(Colors.transparent,
-        statusBarIconBrightness:
-            appStore.isDarkMode ? Brightness.light : Brightness.dark);
+        statusBarIconBrightness: context.statusBarBrightness);
     super.dispose();
   }
 
@@ -204,7 +204,7 @@ class _MyPostRequestListScreenState extends State<MyPostRequestListScreen> {
       ),
       bottomNavigationBar: AppButton(
         child: Text(language.requestNewJob,
-            style: context.boldTextStyle(color: white)),
+            style: context.boldTextStyle(color: context.onPrimary)),
         color: context.primaryColor,
         width: context.width(),
         onTap: () async {

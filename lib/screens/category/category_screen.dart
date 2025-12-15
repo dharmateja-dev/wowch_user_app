@@ -5,7 +5,6 @@ import 'package:booking_system_flutter/main.dart';
 import 'package:booking_system_flutter/model/category_model.dart';
 import 'package:booking_system_flutter/model/service_data_model.dart';
 import 'package:booking_system_flutter/screens/service/component/service_component.dart';
-import 'package:booking_system_flutter/utils/colors.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
 import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/images.dart';
@@ -175,17 +174,17 @@ class _CategoryScreenState extends State<CategoryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: context.scaffold,
       appBar: appBarWidget(
         center: true,
         backWidget: BackWidget(),
         language.category,
-        textColor: Colors.white,
+        textColor: context.onPrimary,
         textSize: APP_BAR_TEXT_SIZE,
         color: context.primary,
         systemUiOverlayStyle: SystemUiOverlayStyle(
-          statusBarIconBrightness:
-              appStore.isDarkMode ? Brightness.light : Brightness.light,
-          statusBarColor: context.primaryColor,
+          statusBarIconBrightness: context.statusBarBrightness,
+          statusBarColor: context.primary,
         ),
         showBack: Navigator.canPop(context),
       ),
@@ -220,7 +219,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
       child: Container(
         decoration: BoxDecoration(
-          color: Color(0xFFE8F3EC),
+          color: context.secondaryContainer,
           borderRadius: BorderRadius.circular(8),
         ),
         child: AppTextField(
@@ -304,7 +303,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
               width: 55,
               height: 55,
               decoration: BoxDecoration(
-                color: Color(0xFFE8F3EC),
+                color: context.secondaryContainer,
                 borderRadius: BorderRadius.circular(8),
                 border: isSelected
                     ? Border.all(color: context.primary, width: 1)
@@ -327,7 +326,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                 style: context.primaryTextStyle(
                   size: 11,
                   weight: isSelected ? FontWeight.w600 : FontWeight.normal,
-                  color: isSelected ? primaryColor : null,
+                  color: isSelected ? context.primary : null,
                 ),
                 textAlign: TextAlign.center,
                 maxLines: 3,
@@ -366,6 +365,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
           itemCount: dummyServices.length,
           itemBuilder: (context, index) {
             return ServiceComponent(
+              imageHeight: 150,
               serviceData: dummyServices[index],
               isFromViewAllService: true,
             );

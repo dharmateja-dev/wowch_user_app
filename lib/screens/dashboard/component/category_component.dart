@@ -65,7 +65,7 @@ class CategoryComponentState extends State<CategoryComponent> {
                 ),
               );
             },
-          ).paddingSymmetric(horizontal: 12),
+          ).paddingOnly(left: 12),
       ],
     );
   }

@@ -47,6 +47,7 @@ const ic_calendar = 'assets/icons/ic_calendar.png';
 const ic_chat = 'assets/icons/ic_chat.png';
 const ic_edit_square = 'assets/icons/ic_edit_square.png';
 const ic_delete = 'assets/icons/ic_delete.png';
+const ic_trash = 'assets/icons/ic_trash.png';
 const ic_delete_account = 'assets/icons/ic_delete_account.png';
 const ic_notification = 'assets/icons/ic_notification.png';
 const ic_notification_user = 'assets/icons/ic_notification_user.png';

@@ -465,6 +465,7 @@ class _ViewAllServiceScreenState extends State<ViewAllServiceScreen> {
           itemCount: dummyServices.length,
           itemBuilder: (context, index) {
             return ServiceComponent(
+              imageHeight: 150,
               serviceData: dummyServices[index],
               isFromViewAllService: true,
             );

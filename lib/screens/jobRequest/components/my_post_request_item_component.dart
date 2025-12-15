@@ -3,6 +3,7 @@ import 'package:booking_system_flutter/component/price_widget.dart';
 import 'package:booking_system_flutter/model/get_my_post_job_list_response.dart';
 import 'package:booking_system_flutter/screens/jobRequest/my_post_detail_screen.dart';
 import 'package:booking_system_flutter/utils/common.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
 import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
@@ -68,133 +69,137 @@ class _MyPostRequestItemComponentState
       child: Container(
         decoration: boxDecorationWithRoundedCorners(
           borderRadius: radius(defaultRadius),
-          backgroundColor: const Color(0xFFEAF3EE),
+          backgroundColor: context.secondaryContainer,
         ),
         width: context.width(),
         margin: const EdgeInsets.all(8),
         padding: const EdgeInsets.all(8),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            CachedImageWidget(
-              url: (widget.data.service.validate().isNotEmpty &&
-                      widget.data.service
-                          .validate()
-                          .first
-                          .attachments
-                          .validate()
-                          .isNotEmpty)
-                  ? widget.data.service
-                      .validate()
-                      .first
-                      .attachments
-                      .validate()
-                      .first
-                      .validate()
-                  : "",
-              fit: BoxFit.cover,
-              height: 80,
-              width: 80,
-              circle: false,
-            ).cornerRadiusWithClipRRect(defaultRadius),
-            16.width,
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Text(widget.data.title.validate(),
-                            style: context.boldTextStyle(size: 18),
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis)
-                        .expand(),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 8, vertical: 4),
-                      decoration: BoxDecoration(
-                        color: widget.data.status
+        child: IntrinsicHeight(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              CachedImageWidget(
+                url: (widget.data.service.validate().isNotEmpty &&
+                        widget.data.service
                             .validate()
-                            .getJobStatusColor
-                            .withValues(alpha: 0.1),
-                        borderRadius: radius(8),
+                            .first
+                            .attachments
+                            .validate()
+                            .isNotEmpty)
+                    ? widget.data.service
+                        .validate()
+                        .first
+                        .attachments
+                        .validate()
+                        .first
+                        .validate()
+                    : "",
+                fit: BoxFit.cover,
+                height: 80,
+                width: 80,
+                circle: false,
+              ).cornerRadiusWithClipRRect(defaultRadius),
+              16.width,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Text(widget.data.title.validate(),
+                              style: context.boldTextStyle(size: 18),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis)
+                          .expand(),
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8, vertical: 6),
+                        decoration: BoxDecoration(
+                          color:
+                              widget.data.status.validate().getJobStatusColor,
+                          borderRadius: radius(8),
+                        ),
+                        child: Text(
+                          widget.data.status.validate().toPostJobStatus(),
+                          style: context.boldTextStyle(
+                              color: context.statusSuccessText, size: 10),
+                        ),
                       ),
-                      child: Text(
-                        widget.data.status.validate().toPostJobStatus(),
-                        style: context.boldTextStyle(
-                            color:
-                                widget.data.status.validate().getJobStatusColor,
-                            size: 10),
+                    ],
+                  ),
+                  4.height,
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      PriceWidget(
+                        price: widget.data.jobPrice.validate(),
+                        isHourlyService: true,
+                        color: context.onSurface,
+                        isFreeService: false,
+                        size: 14,
                       ),
-                    ),
-                  ],
-                ),
-                4.height,
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    PriceWidget(
-                      price: widget.data.jobPrice.validate(),
-                      isHourlyService: true,
-                      color: textPrimaryColorGlobal,
-                      isFreeService: false,
-                      size: 14,
-                    ),
-                    // 8.width,
-                    // RichText(
-                    //   text: TextSpan(
-                    //     children: [
-                    //       TextSpan(
-                    //         text: '₹${widget.data.jobPrice.validate()}',
-                    //         style: context.secondaryTextStyle(size: 14),
-                    //       ),
-                    //       TextSpan(
-                    //         text: '/hr',
-                    //         style: context.secondaryTextStyle(size: 12),
-                    //       ),
-                    //     ],
-                    //   ),
-                    // ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      formatDate(widget.data.createdAt.validate()),
-                      style: context.boldTextStyle(size: 14),
-                    ),
-                    IconButton(
-                      icon: ic_delete.iconImage(
-                        size: 18,
-                        context: context,
+                      // 8.width,
+                      // RichText(
+                      //   text: TextSpan(
+                      //     children: [
+                      //       TextSpan(
+                      //         text: '₹${widget.data.jobPrice.validate()}',
+                      //         style: context.secondaryTextStyle(size: 14),
+                      //       ),
+                      //       TextSpan(
+                      //         text: '/hr',
+                      //         style: context.secondaryTextStyle(size: 12),
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Text(
+                          widget.data.createdAt.validate().isNotEmpty
+                              ? formatBookingDate(widget.data.createdAt,
+                                  format: 'MMMM d, yyyy')
+                              : '',
+                          style: context.boldTextStyle(
+                              color: context.onSurface, size: 14),
+                        ),
                       ),
-                      visualDensity: VisualDensity.compact,
-                      onPressed: () {
-                        showConfirmDialogCustom(
-                          height: 80,
-                          width: 290,
-                          context,
-                          dialogType: DialogType.DELETE,
-                          title: language.lblDeletePostJob,
-                          customCenterWidget: Image.asset(ic_warning,
-                              height: 70, width: 70, fit: BoxFit.cover),
-                          positiveText: language.lblYes,
-                          negativeText: language.lblNo,
-                          primaryColor: context.primaryColor,
-                          negativeTextColor: context.primaryColor,
-                          onAccept: (p0) {
-                            ifNotTester(() {
-                              deletePost(widget.data.id.validate());
-                            });
-                          },
-                        );
-                      },
-                    ),
-                  ],
-                ),
-              ],
-            ).expand(),
-          ],
+                      IconButton(
+                        icon: ic_trash.iconImage(
+                          size: 18,
+                          context: context,
+                        ),
+                        visualDensity: VisualDensity.compact,
+                        onPressed: () {
+                          showConfirmDialogCustom(
+                            height: 80,
+                            width: 290,
+                            context,
+                            dialogType: DialogType.DELETE,
+                            title: language.lblDeletePostJob,
+                            customCenterWidget: Image.asset(ic_warning,
+                                height: 70, width: 70, fit: BoxFit.cover),
+                            positiveText: language.lblYes,
+                            negativeText: language.lblNo,
+                            primaryColor: context.primary,
+                            negativeTextColor: context.primary,
+                            onAccept: (p0) {
+                              ifNotTester(() {
+                                deletePost(widget.data.id.validate());
+                              });
+                            },
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                ],
+              ).expand(),
+            ],
+          ),
         ),
       ),
     );

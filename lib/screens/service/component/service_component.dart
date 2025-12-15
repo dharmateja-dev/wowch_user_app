@@ -25,6 +25,7 @@ import '../../newDashboard/dashboard_3/component/service_dashboard_component_3.d
 class ServiceComponent extends StatefulWidget {
   final ServiceData serviceData;
   final double? width;
+  final double? imageHeight;
   final bool? isBorderEnabled;
   final VoidCallback? onUpdate;
   final bool isFavouriteService;
@@ -35,6 +36,7 @@ class ServiceComponent extends StatefulWidget {
   ServiceComponent({
     required this.serviceData,
     this.width,
+    this.imageHeight,
     this.isBorderEnabled,
     this.isFavouriteService = false,
     this.onUpdate,
@@ -115,7 +117,7 @@ class ServiceComponentState extends State<ServiceComponent> {
           return Container(
             decoration: boxDecorationWithRoundedCorners(
               borderRadius: radius(),
-              backgroundColor: greyColor.withValues(alpha: 0.2),
+              backgroundColor: context.serviceComponentColor,
               border: widget.isBorderEnabled.validate(value: false)
                   ? appStore.isDarkMode
                       ? Border.all(color: context.dividerColor)
@@ -130,7 +132,7 @@ class ServiceComponentState extends State<ServiceComponent> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: SizedBox(
-                    height: 150,
+                    height: widget.imageHeight ?? 180,
                     width: context.width(),
                     child: Stack(
                       clipBehavior: Clip.none,
@@ -149,7 +151,7 @@ class ServiceComponentState extends State<ServiceComponent> {
                                       .validate()
                                   : DEMO_SERVICE_IMAGE_URL,
                           fit: BoxFit.cover,
-                          height: 180,
+                          height: widget.imageHeight ?? 180,
                           width: widget.width ?? context.width(),
                           circle: false,
                         ).cornerRadiusWithClipRRectOnly(
@@ -157,37 +159,38 @@ class ServiceComponentState extends State<ServiceComponent> {
                             topLeft: defaultRadius.toInt(),
                             bottomRight: defaultRadius.toInt(),
                             bottomLeft: defaultRadius.toInt()),
-
+                        //price
                         Positioned(
-                          top: 10,
-                          left: 10,
+                          top: 8,
+                          left: 8,
                           child: Container(
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 6, vertical: 4),
-                            constraints:
-                                BoxConstraints(maxWidth: context.width() * 0.4),
+                            constraints: BoxConstraints(
+                                maxWidth: context.width() * 0.35),
                             decoration: boxDecorationWithShadow(
                               backgroundColor: context.primaryColor,
-                              borderRadius: radius(24),
-                              border: Border.all(color: Colors.white, width: 1),
+                              borderRadius: radius(16),
+                              border: Border.all(
+                                  color: context.onPrimary, width: 1),
                             ),
                             child: Marquee(
                               directionMarguee: DirectionMarguee.oneDirection,
                               child: PriceWidget(
                                 price: widget.serviceData.price.validate(),
-                                size: 10,
+                                size: 9,
                                 isBoldText: true,
-                                color: Colors.white,
+                                color: context.onPrimary,
                               ),
                             ),
                           ),
                         ),
                         if (widget.serviceData.isOnlineService)
-                          const Positioned(
+                          Positioned(
                             top: 20,
                             right: 12,
                             child: Icon(Icons.circle,
-                                color: Colors.green, size: 12),
+                                color: context.primary, size: 12),
                           ),
                         if (widget.serviceData.isOnShopService)
                           Positioned(
@@ -204,7 +207,7 @@ class ServiceComponentState extends State<ServiceComponent> {
                                 child: Image.asset(
                                   Assets.iconsIcDefaultShop,
                                   height: 12,
-                                  color: Colors.white,
+                                  color: context.onPrimary,
                                 ),
                                 decoration: boxDecorationDefault(
                                   shape: BoxShape.circle,
@@ -225,7 +228,7 @@ class ServiceComponentState extends State<ServiceComponent> {
                                   backgroundColor: Colors.white),
                               child: widget.serviceData.isFavourite == 1
                                   ? ic_fill_heart.iconImage(
-                                      color: favouriteColor,
+                                      color: context.error,
                                       size: 16,
                                       context: context)
                                   : ic_heart.iconImage(
@@ -310,11 +313,11 @@ class ServiceComponentState extends State<ServiceComponent> {
                           ),
                         ),
                         8.width,
-                        Icon(Icons.star, color: Colors.amberAccent, size: 14),
+                        Icon(Icons.star, color: context.starColor, size: 14),
                         4.width,
                         Text(
                           "${widget.serviceData.totalRating.validate().toStringAsFixed(1)}",
-                          style: context.boldTextStyle(size: 12),
+                          style: context.primaryTextStyle(size: 12),
                         ),
                         // DisabledRatingBarWidget(
                         //     rating: widget.serviceData.totalRating.validate(),
@@ -325,7 +328,7 @@ class ServiceComponentState extends State<ServiceComponent> {
                     if (widget.serviceData.duration.validate().isNotEmpty)
                       Text(
                         'Duration (${widget.serviceData.duration.validate()})',
-                        style: context.primaryTextStyle(size: 10),
+                        style: context.primaryTextStyle(size: 12),
                       ).paddingSymmetric(horizontal: 8),
                     8.height,
                     Row(
@@ -333,7 +336,7 @@ class ServiceComponentState extends State<ServiceComponent> {
                         ImageBorder(
                             src: widget.serviceData.providerImage.validate(),
                             height: 25),
-                        4.width,
+                        8.width,
                         if (widget.serviceData.providerName
                             .validate()
                             .isNotEmpty)
@@ -341,10 +344,8 @@ class ServiceComponentState extends State<ServiceComponent> {
                             child: Text(
                               widget.serviceData.providerName.validate(),
                               style: context.boldTextStyle(
-                                  size: 12,
-                                  color: appStore.isDarkMode
-                                      ? Colors.white
-                                      : Colors.black),
+                                size: 12,
+                              ),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             ),

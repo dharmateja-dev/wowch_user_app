@@ -26,16 +26,17 @@ class FeaturedServiceListComponent extends StatelessWidget {
           onTap: () {
             ViewAllServiceScreen(isFeatured: "1").launch(context);
           },
-        ).paddingSymmetric(horizontal: 8),
+        ).paddingSymmetric(horizontal: 12),
         if (serviceList.isNotEmpty)
           HorizontalList(
             itemCount: serviceList.length,
             spacing: 12,
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
             itemBuilder: (context, index) => ServiceComponent(
-                serviceData: serviceList[index],
-                width: 260,
-                isBorderEnabled: true),
+              serviceData: serviceList[index],
+              width: 270,
+              isBorderEnabled: false,
+            ),
           )
         else
           Container(

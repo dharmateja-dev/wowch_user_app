@@ -202,7 +202,7 @@ class RemoveConfirmationDialog extends StatelessWidget {
               language.lblRemoveItemConfirmation,
               style: context.primaryTextStyle(
                 size: 15,
-                color: context.onSurfaceVariant,
+                color: context.subtitleTextColor,
               ),
               textAlign: TextAlign.center,
             ),
@@ -220,13 +220,14 @@ class RemoveConfirmationDialog extends StatelessWidget {
               ),
               onTap: onConfirm,
             ),
-            8.height,
-            // No, thanks button
-            TextButton(
-              onPressed: onCancel,
+            16.height,
+            // No, thanks
+            GestureDetector(
+              onTap: onCancel,
               child: Text(
                 language.lblNoThanks,
-                style: context.boldTextStyle(size: 14, color: context.primary),
+                style:
+                    context.boldTextStyle(size: 14, color: context.cancelText),
               ),
             ),
           ],

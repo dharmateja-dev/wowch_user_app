@@ -6,9 +6,9 @@ import 'package:booking_system_flutter/screens/chat/chat_list_screen.dart';
 import 'package:booking_system_flutter/screens/dashboard/fragment/booking_fragment.dart';
 import 'package:booking_system_flutter/screens/dashboard/fragment/dashboard_fragment.dart';
 import 'package:booking_system_flutter/screens/dashboard/fragment/profile_fragment.dart';
-import 'package:booking_system_flutter/utils/colors.dart';
 import 'package:booking_system_flutter/utils/common.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/images.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
 import 'package:booking_system_flutter/utils/text_styles.dart';
@@ -130,6 +130,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return DoublePressBackWidget(
       message: language.lblBackPressMsg,
       child: Scaffold(
+        backgroundColor: context.scaffold,
         body: AnimatedOpacity(
           opacity: 1,
           duration: const Duration(milliseconds: 500),
@@ -166,60 +167,62 @@ class _DashboardScreenState extends State<DashboardScreen> {
         ),
         bottomNavigationBar: Container(
           decoration: BoxDecoration(
-            color: Colors.white,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withValues(alpha: 0.05),
-                blurRadius: 10,
-                offset: Offset(0, -5),
+            border: Border(
+              top: BorderSide(
+                color: context.primary,
+                width: 1,
               ),
-            ],
+            ),
           ),
           child: NavigationBarTheme(
             data: NavigationBarThemeData(
-              backgroundColor: Colors.white,
+              backgroundColor: Colors.transparent,
               indicatorColor: Colors.transparent,
               labelTextStyle: WidgetStateProperty.resolveWith((states) {
                 if (states.contains(WidgetState.selected)) {
-                  return context.primaryTextStyle(
-                      size: 11, color: context.primaryColor);
+                  return context.boldTextStyle(
+                      size: 12, color: context.bottomNavIconActive);
                 }
                 return context.primaryTextStyle(
-                    size: 11, color: appTextSecondaryColor);
+                    size: 12, color: context.bottomNavIconInactive);
               }),
               surfaceTintColor: Colors.transparent,
               shadowColor: Colors.transparent,
             ),
             child: NavigationBar(
-              height: 70,
+              height: 60,
               selectedIndex: currentIndex,
               destinations: [
                 NavigationDestination(
                   icon: Icon(Icons.home_outlined,
-                      color: appTextSecondaryColor, size: 26),
-                  selectedIcon:
-                      Icon(Icons.home, color: context.primaryColor, size: 26),
+                      color: context.bottomNavIconInactive, size: 26),
+                  selectedIcon: Icon(Icons.home,
+                      color: context.bottomNavIconActive, size: 26),
                   label: language.home,
                 ),
                 NavigationDestination(
                   icon: ic_ticket.iconImage(
-                      color: appTextSecondaryColor, context: context),
+                      color: context.bottomNavIconInactive, context: context),
                   selectedIcon: ic_ticket.iconImage(
-                      color: context.primaryColor, context: context),
+                      color: context.bottomNavIconActive, context: context),
                   label: language.booking,
                 ),
                 NavigationDestination(
                   icon: Icon(Icons.category_outlined,
-                      color: appTextSecondaryColor, size: 26),
+                      color: context.bottomNavIconInactive, size: 26),
                   selectedIcon: Icon(Icons.category,
-                      color: context.primaryColor, size: 26),
+                      color: context.bottomNavIconActive, size: 26),
                   label: language.category,
                 ),
                 NavigationDestination(
-                  icon: Icon(Icons.mail_outline,
-                      color: appTextSecondaryColor, size: 26),
-                  selectedIcon:
-                      Icon(Icons.mail, color: context.primaryColor, size: 26),
+                  icon: ic_message.iconImage(
+                      context: context,
+                      size: 26,
+                      color: context.bottomNavIconInactive),
+                  selectedIcon: ic_message.iconImage(
+                      context: context,
+                      size: 26,
+                      color: context.bottomNavIconActive),
                   label: language.lblChat,
                 ),
                 Observer(
@@ -235,7 +238,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
                                   border: Border.all(
-                                      color: Colors.grey.shade300, width: 1),
+                                      color: context.bottomNavIconInactive,
+                                      width: 1),
                                 ),
                                 child: ClipOval(
                                   child: ImageBorder(
@@ -244,7 +248,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 ),
                               ))
                           : Icon(Icons.person_outline,
-                              color: appTextSecondaryColor, size: 26),
+                              color: context.bottomNavIconInactive, size: 26),
                       selectedIcon: (appStore.isLoggedIn &&
                               appStore.userProfileImage.isNotEmpty)
                           ? IgnorePointer(

@@ -13,6 +13,7 @@ import 'package:booking_system_flutter/network/rest_apis.dart';
 import 'package:booking_system_flutter/utils/colors.dart';
 import 'package:booking_system_flutter/utils/common.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/images.dart';
 import 'package:booking_system_flutter/utils/model_keys.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
@@ -443,12 +444,10 @@ class _CreateServiceScreenState extends State<CreateServiceScreen> {
                       8.height,
                       Container(
                         width: context.width(),
-                        height: 120,
+                        height: 110,
                         decoration: boxDecorationWithRoundedCorners(
-                          backgroundColor: const Color(0xFFEAF3EE),
+                          backgroundColor: context.secondaryContainer,
                           borderRadius: radius(8),
-                          border: Border.all(
-                              color: primaryColor.withValues(alpha: 0.4)),
                         ),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -459,8 +458,7 @@ class _CreateServiceScreenState extends State<CreateServiceScreen> {
                                 color: primaryColor),
                             8.height,
                             Text(language.lblChooseImage,
-                                style: context.primaryTextStyle(
-                                    color: textPrimaryColorGlobal)),
+                                style: context.primaryTextStyle()),
                           ],
                         ).onTap(() async {
                           _showImgPickDialog(context);
@@ -567,7 +565,7 @@ class _CreateServiceScreenState extends State<CreateServiceScreen> {
                       DropdownButtonFormField<CategoryData>(
                         decoration: inputDecoration(context,
                             hintText: language.lblEnterCategory,
-                            fillColor: const Color(0xFFEAF3EE),
+                            fillColor: context.secondaryContainer,
                             borderRadius: 8),
                         hint: Text(language.lblEnterCategory,
                             style: context.secondaryTextStyle()),
@@ -604,7 +602,7 @@ class _CreateServiceScreenState extends State<CreateServiceScreen> {
                         isValidationRequired: checkValidationLanguage(),
                         decoration: inputDecoration(context,
                             hintText: language.lblEnterServiceName,
-                            fillColor: const Color(0xFFEAF3EE),
+                            fillColor: context.secondaryContainer,
                             borderRadius: 8),
                       ),
                       16.height,
@@ -622,7 +620,7 @@ class _CreateServiceScreenState extends State<CreateServiceScreen> {
                         promptFieldInputDecorationChatGPT:
                             inputDecoration(context).copyWith(
                           hintText: language.lblEnterServiceDescription,
-                          fillColor: const Color(0xFFEAF3EE),
+                          fillColor: context.secondaryContainer,
                           filled: true,
                         ),
                         testWithoutKeyChatGPT:
@@ -630,7 +628,7 @@ class _CreateServiceScreenState extends State<CreateServiceScreen> {
                         loaderWidgetForChatGPT: const ChatGPTLoadingWidget(),
                         decoration: inputDecoration(context,
                             hintText: language.lblEnterServiceDescription,
-                            fillColor: const Color(0xFFEAF3EE),
+                            fillColor: context.secondaryContainer,
                             borderRadius: 8),
                         validator: (value) {
                           if (value!.isEmpty) return language.requiredText;

@@ -125,6 +125,18 @@ extension ColorSchemeExtension on BuildContext {
   // ══════════════════════════════════════════════════════════════════════════
 
   // ——— Custom Text Colors ———
+
+  /// Accent text color for emphasis
+  /// Light: primary (#2E6B4F green), Dark: primaryContainer (#93C0AB lighter green)
+  /// Use for important text that needs brand color but readable in both themes
+  Color get cancelText => isDarkMode ? primaryContainer : primary;
+
+  /// Subtitle/muted text color for secondary information
+  /// Light: #72777A (slate gray), Dark: #B2C7BF (light greenish)
+  /// Use for subtitle text that needs good contrast in both themes
+  Color get subtitleTextColor =>
+      isDarkMode ? const Color(0xFFB2C7BF) : const Color(0xFF72777A);
+
   /// Secondary container hint text - Light: #4F4F4F, Dark: #B2C78F
   Color get secondaryContainerHintColor => isDarkMode
       ? DarkThemeColors.secondaryContainerHint
@@ -213,6 +225,12 @@ extension ColorSchemeExtension on BuildContext {
       ? DarkThemeColors.providerInfoDetailsContainer
       : LightThemeColors.providerInfoDetailsContainer;
 
+  /// Alternative button background - Light: onPrimary (white), Dark: #101D1C (dark green)
+  /// Use for buttons on colored backgrounds (like primary/green sections)
+  Color get buttonBackgroundAlt => isDarkMode
+      ? DarkThemeColors.secondaryContainer // #101D1C
+      : onPrimary; // white
+
   // ——— Bottom Navigation Colors ———
   /// Bottom nav inactive text - Both: #999999
   Color get bottomNavTextInactive => const Color(0xFF999999);
@@ -242,6 +260,14 @@ extension ColorSchemeExtension on BuildContext {
   Color get bottomSheetBackgroundColor => isDarkMode
       ? DarkThemeColors.bottomSheetBackground
       : LightThemeColors.bottomSheetBackground;
+
+  // ——— Status Colors ———
+  /// Status success/active background - Both: #5EAF5E
+  Color get statusSuccessBackground => const Color(0xFF5EAF5E);
+
+  /// Status success/active text - Light: #073807, Dark: #101D1C
+  Color get statusSuccessText =>
+      isDarkMode ? const Color(0xFF101D1C) : const Color(0xFF073807);
 
   // ══════════════════════════════════════════════════════════════════════════
   // CONVENIENCE HELPERS
