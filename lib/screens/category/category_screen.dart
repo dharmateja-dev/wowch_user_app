@@ -10,6 +10,7 @@ import 'package:booking_system_flutter/utils/constant.dart';
 import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/images.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -265,7 +266,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           child: Text(
             language.category,
-            style: boldTextStyle(),
+            style: context.boldTextStyle(),
           ),
         ),
         SizedBox(
@@ -323,7 +324,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
             Expanded(
               child: Text(
                 data.name.validate(),
-                style: primaryTextStyle(
+                style: context.primaryTextStyle(
                   size: 11,
                   weight: isSelected ? FontWeight.w600 : FontWeight.normal,
                   color: isSelected ? primaryColor : null,
@@ -348,7 +349,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Text(
             language.service,
-            style: boldTextStyle(size: 16),
+            style: context.boldTextStyle(size: 16),
           ),
         ),
         12.height,

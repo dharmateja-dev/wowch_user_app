@@ -6,6 +6,7 @@ import 'package:booking_system_flutter/utils/common.dart';
 import 'package:booking_system_flutter/utils/configs.dart';
 import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/images.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:booking_system_flutter/utils/theme_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -54,14 +55,15 @@ class _AboutScreenState extends State<AboutScreen> {
           // App Name
           Text(
             APP_NAME,
-            style: boldTextStyle(size: 24, color: appTextPrimaryColor),
+            style: context.boldTextStyle(size: 24, color: appTextPrimaryColor),
             textAlign: TextAlign.center,
           ),
           8.height,
           // Tagline
           Text(
             APP_NAME_TAG_LINE,
-            style: secondaryTextStyle(size: 14, color: appTextSecondaryColor),
+            style: context.secondaryTextStyle(
+                size: 14, color: appTextSecondaryColor),
             textAlign: TextAlign.center,
             maxLines: 2,
           ),
@@ -87,7 +89,7 @@ class _AboutScreenState extends State<AboutScreen> {
                       8.height,
                       Text(
                         language.lblCall,
-                        style: primaryTextStyle(size: 14),
+                        style: context.primaryTextStyle(size: 14),
                         textAlign: TextAlign.center,
                       ),
                     ],
@@ -120,7 +122,7 @@ class _AboutScreenState extends State<AboutScreen> {
                       8.height,
                       Text(
                         language.email,
-                        style: primaryTextStyle(size: 14),
+                        style: context.primaryTextStyle(size: 14),
                         textAlign: TextAlign.center,
                       ),
                     ],
@@ -142,14 +144,14 @@ class _AboutScreenState extends State<AboutScreen> {
             "Rustic decor can be incorporated into any part of your home, be it the living room, bedroom, balcony, kitchen and more. It is one of the most popular styles in modern homes today as it helps achieve a striking balance of authenticity and elegance.\n\n"
             "From among the many styles of interior design, the rustic style is one that emphasises inspiration from nature, coupled with earthy, incomplete, rough and uneven beauty. Though it may appear heavy in its original sense, rustic designs have evolved over the years to include other home styles that lend warmth, comfort, and a sense of freshness to any space.\n\n"
             "Rustic decor can be incorporated into any part of your home, be it the living room, bedroom, balcony, kitchen and more. It is one of the most popular styles in modern homes today as it helps achieve a striking balance of authenticity and elegance.",
-            style: primaryTextStyle(size: 14, height: 1.5),
+            style: context.primaryTextStyle(size: 14, height: 1.5),
             textAlign: TextAlign.justify,
           ),
           16.height,
           // Copyright text
           Text(
             "Copyright © ${DateTime.now().year} ${getStringAsync(SITE_NAME).isNotEmpty ? getStringAsync(SITE_NAME) : APP_NAME} All rights reserved.",
-            style: secondaryTextStyle(size: 12),
+            style: context.secondaryTextStyle(size: 12),
             textAlign: TextAlign.center,
           ),
           25.height,

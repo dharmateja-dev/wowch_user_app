@@ -1,5 +1,6 @@
 import 'package:booking_system_flutter/screens/newDashboard/dashboard_2/component/category_dashboard_component_2.dart';
 import 'package:booking_system_flutter/utils/context_extensions.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -43,7 +44,8 @@ class _CategoryListDashboardComponent2State
         ViewAllLabel(
           label: language.category,
           list: widget.categoryList!,
-          trailingTextStyle: boldTextStyle(color: context.primary, size: 12),
+          trailingTextStyle:
+              context.boldTextStyle(color: context.primary, size: 12),
           onTap: () {
             CategoryScreen().launch(context).then((value) {
               setStatusBarColor(Colors.transparent);

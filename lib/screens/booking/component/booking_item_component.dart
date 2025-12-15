@@ -9,6 +9,7 @@ import 'package:booking_system_flutter/utils/constant.dart';
 import 'package:booking_system_flutter/utils/images.dart';
 import 'package:booking_system_flutter/utils/model_keys.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -36,7 +37,8 @@ class _BookingItemComponentState extends State<BookingItemComponent> {
           tapTargetSize: MaterialTapTargetSize.shrinkWrap,
         ),
         icon: ic_edit_square.iconImage(
-          size: 16, context: context,
+          size: 16,
+          context: context,
         ),
         visualDensity: VisualDensity.compact,
         onPressed: () async {
@@ -183,7 +185,7 @@ class _BookingItemComponentState extends State<BookingItemComponent> {
                         Expanded(
                           child: Text(
                             serviceName,
-                            style: boldTextStyle(size: 16),
+                            style: context.boldTextStyle(size: 16),
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -220,7 +222,7 @@ class _BookingItemComponentState extends State<BookingItemComponent> {
                     // Booking ID
                     Text(
                       '${language.lblBookingID} #${widget.bookingData.id.validate()}',
-                      style: primaryTextStyle(size: 12),
+                      style: context.primaryTextStyle(size: 12),
                     ),
                     8.height,
                     // Price Row
@@ -236,7 +238,7 @@ class _BookingItemComponentState extends State<BookingItemComponent> {
                           6.width,
                           Text(
                             '₹ ${widget.bookingData.amount.validate().toStringAsFixed(0)}/hr',
-                            style: primaryTextStyle(size: 12),
+                            style: context.primaryTextStyle(size: 12),
                           ),
                         ],
                         const Spacer(),
@@ -314,12 +316,12 @@ class _BookingItemComponentState extends State<BookingItemComponent> {
         children: [
           Text(
             label,
-            style: primaryTextStyle(size: 12),
+            style: context.primaryTextStyle(size: 12),
           ),
           Expanded(
             child: Text(
               value,
-              style: boldTextStyle(
+              style: context.boldTextStyle(
                 size: 12,
                 color: valueColor,
               ),

@@ -2,6 +2,7 @@ import 'package:booking_system_flutter/component/cached_image_widget.dart';
 import 'package:booking_system_flutter/main.dart';
 import 'package:booking_system_flutter/screens/blog/model/blog_response_model.dart';
 import 'package:booking_system_flutter/screens/blog/view/blog_detail_screen.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -69,8 +70,8 @@ class _BlogItemComponentState extends State<BlogItemComponent> {
                   // Blog title - truncated with ellipsis as shown in design
                   Text(
                     widget.blogData!.title.validate(),
-                    style:
-                        boldTextStyle(size: 14, color: textPrimaryColorGlobal),
+                    style: context.boldTextStyle(
+                        size: 14, color: textPrimaryColorGlobal),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -95,13 +96,13 @@ class _BlogItemComponentState extends State<BlogItemComponent> {
                         children: [
                           Text(
                             widget.blogData!.authorName.validate(),
-                            style: primaryTextStyle(size: 12),
+                            style: context.primaryTextStyle(size: 12),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
                           Text(
                             widget.blogData!.publishDate.validate(),
-                            style: secondaryTextStyle(size: 11),
+                            style: context.secondaryTextStyle(size: 11),
                           ),
                         ],
                       ),

@@ -16,6 +16,7 @@ import 'package:booking_system_flutter/utils/constant.dart';
 import 'package:booking_system_flutter/utils/images.dart';
 import 'package:booking_system_flutter/utils/model_keys.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:http/http.dart';
@@ -147,7 +148,7 @@ class _CreateServiceScreenState extends State<CreateServiceScreen> {
     showInDialog(
       context,
       contentPadding: const EdgeInsets.symmetric(vertical: 16),
-      title: Text(language.chooseAction, style: boldTextStyle()),
+      title: Text(language.chooseAction, style: context.boldTextStyle()),
       builder: (p0) {
         return const FilePickerDialog(isSelected: (false));
       },
@@ -438,7 +439,7 @@ class _CreateServiceScreenState extends State<CreateServiceScreen> {
                     mainAxisSize: MainAxisSize.min,
                     key: formWidgetKey,
                     children: [
-                      //Text(language.lblChooseImage, style: boldTextStyle()),
+                      //Text(language.lblChooseImage,  style: context.boldTextStyle()),
                       8.height,
                       Container(
                         width: context.width(),
@@ -458,7 +459,7 @@ class _CreateServiceScreenState extends State<CreateServiceScreen> {
                                 color: primaryColor),
                             8.height,
                             Text(language.lblChooseImage,
-                                style: primaryTextStyle(
+                                style: context.primaryTextStyle(
                                     color: textPrimaryColorGlobal)),
                           ],
                         ).onTap(() async {
@@ -560,7 +561,8 @@ class _CreateServiceScreenState extends State<CreateServiceScreen> {
                         },
                       ).paddingBottom(16).visible(imageFiles.isNotEmpty),
                       20.height,
-                      Text(language.lblCategory, style: boldTextStyle()),
+                      Text(language.lblCategory,
+                          style: context.boldTextStyle()),
                       8.height,
                       DropdownButtonFormField<CategoryData>(
                         decoration: inputDecoration(context,
@@ -568,7 +570,7 @@ class _CreateServiceScreenState extends State<CreateServiceScreen> {
                             fillColor: const Color(0xFFEAF3EE),
                             borderRadius: 8),
                         hint: Text(language.lblEnterCategory,
-                            style: secondaryTextStyle()),
+                            style: context.secondaryTextStyle()),
                         initialValue: selectedCategory,
                         validator: (value) {
                           if (value == null) return errorThisFieldRequired;
@@ -580,7 +582,7 @@ class _CreateServiceScreenState extends State<CreateServiceScreen> {
                           return DropdownMenuItem<CategoryData>(
                             value: data,
                             child: Text(data.name.validate(),
-                                style: primaryTextStyle()),
+                                style: context.primaryTextStyle()),
                           );
                         }).toList(),
                         onChanged: isUpdate
@@ -591,7 +593,8 @@ class _CreateServiceScreenState extends State<CreateServiceScreen> {
                               },
                       ),
                       16.height,
-                      Text(language.serviceName, style: boldTextStyle()),
+                      Text(language.serviceName,
+                          style: context.boldTextStyle()),
                       8.height,
                       AppTextField(
                         controller: serviceNameCont,
@@ -605,7 +608,8 @@ class _CreateServiceScreenState extends State<CreateServiceScreen> {
                             borderRadius: 8),
                       ),
                       16.height,
-                      Text(language.serviceDescription, style: boldTextStyle()),
+                      Text(language.serviceDescription,
+                          style: context.boldTextStyle()),
                       8.height,
                       AppTextField(
                         controller: descriptionCont,

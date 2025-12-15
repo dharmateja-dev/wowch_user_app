@@ -15,6 +15,7 @@ import 'package:booking_system_flutter/screens/jobRequest/book_post_job_request_
 import 'package:booking_system_flutter/screens/jobRequest/components/bidder_item_component.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
 import 'package:booking_system_flutter/utils/model_keys.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -95,7 +96,7 @@ class _MyPostDetailScreenState extends State<MyPostDetailScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(title.validate(), style: secondaryTextStyle()),
+        Text(title.validate(), style: context.secondaryTextStyle()),
         4.height,
         if (isReadMore)
           ReadMoreText(
@@ -104,7 +105,7 @@ class _MyPostDetailScreenState extends State<MyPostDetailScreen> {
             colorClickableText: context.primaryColor,
           )
         else
-          Text(detail.validate(), style: boldTextStyle(size: 12)),
+          Text(detail.validate(), style: context.boldTextStyle(size: 12)),
         20.height,
       ],
     );
@@ -124,20 +125,20 @@ class _MyPostDetailScreenState extends State<MyPostDetailScreen> {
             titleWidget(
               title: language.postJobTitle,
               detail: data.title.validate(),
-              detailTextStyle: boldTextStyle(),
+              detailTextStyle: context.boldTextStyle(),
             ),
           if (data.description.validate().isNotEmpty)
             titleWidget(
               title: language.postJobDescription,
               detail: data.description.validate(),
-              detailTextStyle: primaryTextStyle(),
+              detailTextStyle: context.primaryTextStyle(),
               isReadMore: true,
             ),
           Text(
               data.status.validate() == JOB_REQUEST_STATUS_ASSIGNED
                   ? language.jobPrice
                   : language.estimatedPrice,
-              style: secondaryTextStyle()),
+              style: context.secondaryTextStyle()),
           4.height,
           PriceWidget(
             price: data.status.validate() == JOB_REQUEST_STATUS_ASSIGNED
@@ -157,7 +158,8 @@ class _MyPostDetailScreenState extends State<MyPostDetailScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(language.services, style: boldTextStyle(size: LABEL_TEXT_SIZE))
+        Text(language.services,
+                style: context.boldTextStyle(size: LABEL_TEXT_SIZE))
             .paddingOnly(left: 16, right: 16),
         8.height,
         AnimatedListView(
@@ -189,7 +191,7 @@ class _MyPostDetailScreenState extends State<MyPostDetailScreen> {
                   ),
                   16.width,
                   Text(data.name.validate(),
-                          style: primaryTextStyle(),
+                          style: context.primaryTextStyle(),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis)
                       .expand(),
@@ -251,7 +253,7 @@ class _MyPostDetailScreenState extends State<MyPostDetailScreen> {
         children: [
           16.height,
           Text(language.assignedProvider,
-              style: boldTextStyle(size: LABEL_TEXT_SIZE)),
+              style: context.boldTextStyle(size: LABEL_TEXT_SIZE)),
           16.height,
           InkWell(
             onTap: () {
@@ -285,7 +287,7 @@ class _MyPostDetailScreenState extends State<MyPostDetailScreen> {
                                 directionMarguee: DirectionMarguee.oneDirection,
                                 child: Text(
                                   user.displayName.validate(),
-                                  style: boldTextStyle(),
+                                  style: context.boldTextStyle(),
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
                                 ),
@@ -298,7 +300,7 @@ class _MyPostDetailScreenState extends State<MyPostDetailScreen> {
                               directionMarguee: DirectionMarguee.oneDirection,
                               child: Text(
                                 user.email.validate(),
-                                style: primaryTextStyle(size: 12),
+                                style: context.primaryTextStyle(size: 12),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                               ),
@@ -384,7 +386,7 @@ class _MyPostDetailScreenState extends State<MyPostDetailScreen> {
                   right: 16,
                   child: AppButton(
                     child: Text(language.bookTheService,
-                        style: boldTextStyle(color: white)),
+                        style: context.boldTextStyle(color: white)),
                     color: context.primaryColor,
                     width: context.width(),
                     onTap: () async {

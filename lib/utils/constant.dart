@@ -94,8 +94,8 @@ String getDemoCategoryImage(String? categoryName) {
   return DEMO_CATEGORY_IMAGES['default']!;
 }
 
-const double CATEGORY_ICON_SIZE = 70;
-const double SUBCATEGORY_ICON_SIZE = 45;
+const double CATEGORY_ICON_SIZE = 60;
+const double SUBCATEGORY_ICON_SIZE = 40;
 const APP_BAR_TEXT_SIZE = 20;
 const MARK_AS_READ = 'markas_read';
 const IS_CURRENT_LOCATION = 'CURRENT_LOCATION';

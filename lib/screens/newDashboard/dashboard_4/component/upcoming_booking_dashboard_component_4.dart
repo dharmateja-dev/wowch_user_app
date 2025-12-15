@@ -5,6 +5,7 @@ import 'package:booking_system_flutter/utils/common.dart';
 import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/images.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -69,7 +70,7 @@ class _UpComingBookingDashboardComponent4State
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         24.height,
-        Text(language.upcomingBooking, style: boldTextStyle())
+        Text(language.upcomingBooking, style: context.boldTextStyle())
             .paddingSymmetric(horizontal: 16),
         16.height,
         Container(
@@ -137,7 +138,7 @@ class _UpComingBookingDashboardComponent4State
                                           formatDate(widget
                                               .upComingBookingData!.date
                                               .validate()),
-                                          style: secondaryTextStyle(
+                                          style: context.secondaryTextStyle(
                                               color: appStore.isDarkMode
                                                   ? textPrimaryColorGlobal
                                                   : null),
@@ -155,7 +156,7 @@ class _UpComingBookingDashboardComponent4State
                                               widget.upComingBookingData!.date
                                                   .validate(),
                                               isTime: true),
-                                          style: secondaryTextStyle(
+                                          style: context.secondaryTextStyle(
                                               color: appStore.isDarkMode
                                                   ? textPrimaryColorGlobal
                                                   : null),
@@ -187,7 +188,7 @@ class _UpComingBookingDashboardComponent4State
                             widget.upComingBookingData!.serviceName.validate(),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
-                            style: boldTextStyle(),
+                            style: context.boldTextStyle(),
                           ),
                           4.height,
                         ],
@@ -202,7 +203,7 @@ class _UpComingBookingDashboardComponent4State
                             language.bookingStatus,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
-                            style: primaryTextStyle(size: 12),
+                            style: context.primaryTextStyle(size: 12),
                           ).expand(),
                           16.width,
                           Align(
@@ -213,7 +214,7 @@ class _UpComingBookingDashboardComponent4State
                                   .toBookingStatus(),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
-                              style: boldTextStyle(
+                              style: context.boldTextStyle(
                                 color: widget.upComingBookingData!.status
                                     .validate()
                                     .getPaymentStatusBackgroundColor,
@@ -230,7 +231,7 @@ class _UpComingBookingDashboardComponent4State
                             language.paymentStatus,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
-                            style: primaryTextStyle(size: 12),
+                            style: context.primaryTextStyle(size: 12),
                           ).expand(),
                           Align(
                             alignment: Alignment.topRight,
@@ -243,7 +244,7 @@ class _UpComingBookingDashboardComponent4State
                               ),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
-                              style: boldTextStyle(
+                              style: context.boldTextStyle(
                                 size: 12,
                                 color: widget.upComingBookingData!
                                                 .paymentStatus ==

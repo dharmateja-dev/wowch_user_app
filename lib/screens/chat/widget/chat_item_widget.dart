@@ -4,6 +4,7 @@ import 'package:booking_system_flutter/utils/colors.dart';
 import 'package:booking_system_flutter/utils/common.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
 import 'package:booking_system_flutter/utils/extensions/string_extentions.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -100,7 +101,8 @@ class _ChatItemWidgetState extends State<ChatItemWidget> {
               children: [
                 Text(
                   widget.chatItemData.message!,
-                  style: primaryTextStyle(color: textPrimaryColorGlobal),
+                  style:
+                      context.primaryTextStyle(color: textPrimaryColorGlobal),
                   maxLines: null,
                 ),
                 1.height,
@@ -109,7 +111,7 @@ class _ChatItemWidgetState extends State<ChatItemWidget> {
                   children: [
                     Text(
                       time,
-                      style: primaryTextStyle(
+                      style: context.primaryTextStyle(
                         color: Colors.blueGrey.withValues(alpha: 0.6),
                         size: 10,
                       ),
@@ -137,7 +139,8 @@ class _ChatItemWidgetState extends State<ChatItemWidget> {
                     ...filesComponent(),
                     Text(
                       widget.chatItemData.message!,
-                      style: primaryTextStyle(color: textPrimaryColorGlobal),
+                      style: context.primaryTextStyle(
+                          color: textPrimaryColorGlobal),
                       maxLines: null,
                     ).paddingTop(2).visible(
                         widget.chatItemData.message!.trim().isNotEmpty),
@@ -147,7 +150,7 @@ class _ChatItemWidgetState extends State<ChatItemWidget> {
                       children: [
                         Text(
                           time,
-                          style: primaryTextStyle(
+                          style: context.primaryTextStyle(
                             color: Colors.blueGrey.withValues(alpha: 0.6),
                             size: 10,
                           ),

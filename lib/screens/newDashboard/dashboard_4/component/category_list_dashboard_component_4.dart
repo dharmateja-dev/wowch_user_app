@@ -1,6 +1,7 @@
 import 'package:booking_system_flutter/model/category_model.dart';
 import 'package:booking_system_flutter/screens/newDashboard/dashboard_4/component/category_dashboard_component_4.dart';
 import 'package:booking_system_flutter/utils/context_extensions.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -24,7 +25,8 @@ class CategoryListDashboardComponent4 extends StatelessWidget {
         ViewAllLabel(
           label: listTiTle,
           list: categoryList,
-          trailingTextStyle: boldTextStyle(color: context.primary, size: 12),
+          trailingTextStyle:
+              context.boldTextStyle(color: context.primary, size: 12),
           onTap: () {
             CategoryScreen().launch(context).then((value) {
               setStatusBarColor(Colors.transparent);

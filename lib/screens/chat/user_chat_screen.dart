@@ -11,6 +11,7 @@ import 'package:booking_system_flutter/services/notification_services.dart';
 import 'package:booking_system_flutter/utils/colors.dart';
 import 'package:booking_system_flutter/utils/common.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_pagination/firebase_pagination.dart';
@@ -125,7 +126,7 @@ class _UserChatScreenState extends State<UserChatScreen>
         AppTextField(
           textFieldType: TextFieldType.OTHER,
           controller: messageCont,
-          textStyle: primaryTextStyle(),
+          textStyle: context.primaryTextStyle(),
           minLines: 1,
           onFieldSubmitted: (s) {
             sendMessages();
@@ -160,7 +161,8 @@ class _UserChatScreenState extends State<UserChatScreen>
             ],
           ),
           decoration: inputDecoration(context).copyWith(
-              hintText: language.message, hintStyle: primaryTextStyle()),
+              hintText: language.message,
+              hintStyle: context.primaryTextStyle()),
         ).expand(),
         8.width,
         IconButton(
@@ -559,7 +561,8 @@ class _UserChatScreenState extends State<UserChatScreen>
                 children: [
                   Text(
                     "${widget.receiverUser.firstName.validate() + " " + widget.receiverUser.lastName.validate()}",
-                    style: boldTextStyle(color: white, size: APP_BAR_TEXT_SIZE),
+                    style: context.boldTextStyle(
+                        color: white, size: APP_BAR_TEXT_SIZE),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -615,7 +618,8 @@ class _UserChatScreenState extends State<UserChatScreen>
                 list.add(
                   PopupMenuItem(
                     value: 0,
-                    child: Text(language.clearChat, style: primaryTextStyle()),
+                    child: Text(language.clearChat,
+                        style: context.primaryTextStyle()),
                   ),
                 );
                 return list;

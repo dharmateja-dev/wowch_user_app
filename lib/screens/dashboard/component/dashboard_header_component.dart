@@ -7,6 +7,7 @@ import 'package:booking_system_flutter/utils/constant.dart';
 import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/images.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -54,7 +55,7 @@ class DashboardHeaderComponent extends StatelessWidget {
                               children: [
                                 Text(
                                   "Amar Harmony",
-                                  style: boldTextStyle(
+                                  style: context.boldTextStyle(
                                     color: context.onPrimary,
                                     size: 14,
                                   ),
@@ -66,7 +67,7 @@ class DashboardHeaderComponent extends StatelessWidget {
                                   appStore.isCurrentLocation
                                       ? getStringAsync(CURRENT_ADDRESS)
                                       : language.lblLocationOff,
-                                  style: secondaryTextStyle(
+                                  style: context.secondaryTextStyle(
                                     color: context.onPrimary
                                         .withValues(alpha: 0.9),
                                     size: 11,
@@ -113,7 +114,7 @@ class DashboardHeaderComponent extends StatelessWidget {
                                     child: FittedBox(
                                       child: Text(
                                         appStore.unreadCount.toString(),
-                                        style: primaryTextStyle(
+                                        style: context.primaryTextStyle(
                                           size: 10,
                                           color: context.onPrimary,
                                         ),

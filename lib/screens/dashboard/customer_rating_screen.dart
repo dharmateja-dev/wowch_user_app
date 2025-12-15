@@ -2,6 +2,7 @@ import 'package:booking_system_flutter/component/base_scaffold_widget.dart';
 import 'package:booking_system_flutter/main.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -213,7 +214,7 @@ class _CustomerRatingScreenState extends State<CustomerRatingScreen> {
                                   children: [
                                     Text(
                                       data.serviceName.validate(),
-                                      style: boldTextStyle(
+                                      style: context.boldTextStyle(
                                         size: 16,
                                         color: textPrimaryColorGlobal,
                                       ),
@@ -230,7 +231,7 @@ class _CustomerRatingScreenState extends State<CustomerRatingScreen> {
                                       },
                                       child: Text(
                                         language.viewDetail,
-                                        style: secondaryTextStyle(
+                                        style: context.secondaryTextStyle(
                                           size: 12,
                                           color: textSecondaryColorGlobal,
                                         ),
@@ -258,7 +259,7 @@ class _CustomerRatingScreenState extends State<CustomerRatingScreen> {
                                 children: [
                                   Text(
                                     language.lblYourComment,
-                                    style: boldTextStyle(
+                                    style: context.boldTextStyle(
                                       size: 14,
                                       color: textPrimaryColorGlobal,
                                     ),
@@ -387,7 +388,7 @@ class _CustomerRatingScreenState extends State<CustomerRatingScreen> {
                               // Review text - light grey color
                               Text(
                                 data.review.validate(),
-                                style: secondaryTextStyle(
+                                style: context.secondaryTextStyle(
                                   color: textSecondaryColorGlobal,
                                 ),
                               ),

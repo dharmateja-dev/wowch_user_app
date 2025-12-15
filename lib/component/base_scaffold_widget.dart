@@ -1,5 +1,6 @@
 import 'package:booking_system_flutter/component/back_widget.dart';
 import 'package:booking_system_flutter/component/loader_widget.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -35,7 +36,7 @@ class AppScaffold extends StatelessWidget {
               centerTitle: true,
               title: Text(
                 appBarTitle.validate(),
-                style: boldTextStyle(
+                style: context.boldTextStyle(
                     size: APP_BAR_TEXT_SIZE,
                     color: context.scaffoldBackgroundColor),
               ),

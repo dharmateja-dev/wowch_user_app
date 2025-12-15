@@ -1,6 +1,7 @@
 import 'package:booking_system_flutter/component/dotted_line.dart';
 import 'package:booking_system_flutter/model/service_detail_response.dart';
 import 'package:booking_system_flutter/utils/extensions/num_extenstions.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -49,7 +50,8 @@ class CouponCardWidget extends StatelessWidget {
                               color: hold,
                               size: 24),
                           Text("${language.lblDiscount.toUpperCase()}",
-                              style: boldTextStyle(color: white, size: 16)),
+                              style: context.boldTextStyle(
+                                  color: white, size: 16)),
                         ],
                       )
                     : Column(
@@ -57,9 +59,11 @@ class CouponCardWidget extends StatelessWidget {
                         children: [
                           Text("${data.discount.validate()}%",
                               textAlign: TextAlign.center,
-                              style: boldTextStyle(color: hold, size: 24)),
+                              style:
+                                  context.boldTextStyle(color: hold, size: 24)),
                           Text("${language.lblDiscount.toUpperCase()}",
-                              style: boldTextStyle(color: white, size: 16)),
+                              style: context.boldTextStyle(
+                                  color: white, size: 16)),
                         ],
                       ),
               ).paddingRight(4).expand(flex: 1),
@@ -68,14 +72,14 @@ class CouponCardWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text("${data.code.validate()}",
-                      style: boldTextStyle(color: white)),
+                      style: context.boldTextStyle(color: white)),
                   8.height,
                   Text.rich(
                     TextSpan(
                       children: [
                         TextSpan(
                           text: '${language.useThisCodeToGet} ',
-                          style: primaryTextStyle(
+                          style: context.primaryTextStyle(
                               color: white, size: 12, weight: FontWeight.w500),
                         ),
                         TextSpan(
@@ -83,12 +87,12 @@ class CouponCardWidget extends StatelessWidget {
                                   couponData: data,
                                   price: servicePrice.validate())
                               .toPriceFormat(),
-                          style: primaryTextStyle(
+                          style: context.primaryTextStyle(
                               color: hold, size: 12, weight: FontWeight.w600),
                         ),
                         TextSpan(
                           text: ' ${language.off}',
-                          style: primaryTextStyle(
+                          style: context.primaryTextStyle(
                               color: white, size: 12, weight: FontWeight.w500),
                         ),
                       ],
@@ -102,7 +106,7 @@ class CouponCardWidget extends StatelessWidget {
                                 size: 16, color: completed),
                             6.width,
                             Text(language.applied,
-                                style: boldTextStyle(color: white)),
+                                style: context.boldTextStyle(color: white)),
                             8.width,
                           ],
                         ).paddingBottom(8)
@@ -113,7 +117,7 @@ class CouponCardWidget extends StatelessWidget {
                             text: data.isApplied
                                 ? language.applied
                                 : language.lblApply,
-                            textStyle: boldTextStyle(
+                            textStyle: context.boldTextStyle(
                                 color: appStore.isDarkMode
                                     ? white
                                     : context.primaryColor),
@@ -132,7 +136,7 @@ class CouponCardWidget extends StatelessWidget {
                         ),
                   Text(
                     "${language.lblExpiryDate} ${DateFormat(getStringAsync(DATE_FORMAT)).format(DateTime.parse(data.expireDate.validate()))}",
-                    style: primaryTextStyle(
+                    style: context.primaryTextStyle(
                       color: hold,
                       size: 12,
                       fontStyle: FontStyle.italic,

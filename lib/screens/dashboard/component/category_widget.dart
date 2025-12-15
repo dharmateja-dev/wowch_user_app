@@ -2,6 +2,8 @@ import 'package:booking_system_flutter/component/cached_image_widget.dart';
 import 'package:booking_system_flutter/main.dart';
 import 'package:booking_system_flutter/model/category_model.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -45,7 +47,7 @@ class CategoryWidget extends StatelessWidget {
             height: CATEGORY_ICON_SIZE,
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: Color(0xFFE8F3EC), // Light green background
+              color: context.secondaryContainer, // Light green background
               borderRadius: BorderRadius.circular(12),
             ),
             child: categoryData.categoryImage.validate().endsWith('.svg')
@@ -78,7 +80,7 @@ class CategoryWidget extends StatelessWidget {
             directionMarguee: DirectionMarguee.oneDirection,
             child: Text(
               '${categoryData.name.validate()}',
-              style: primaryTextStyle(size: 12),
+              style: context.primaryTextStyle(size: 12),
               textAlign: TextAlign.center,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,

@@ -5,6 +5,7 @@ import 'package:booking_system_flutter/screens/dashboard/dashboard_screen.dart';
 import 'package:booking_system_flutter/utils/colors.dart';
 import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/images.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -23,11 +24,11 @@ class CustomerRatingsComponent extends StatelessWidget {
           Image.asset(ic_customer_rating_stars),
           26.height,
           Text(language.lblIntroducingCustomerRating,
-              style: primaryTextStyle(size: 18, color: Colors.white)),
+              style: context.primaryTextStyle(size: 18, color: Colors.white)),
           16.height,
           AppButton(
             text: language.lblSeeYourRatings,
-            textStyle: primaryTextStyle(
+            textStyle: context.primaryTextStyle(
                 color: appStore.isDarkMode
                     ? textPrimaryColorGlobal
                     : primaryColor),

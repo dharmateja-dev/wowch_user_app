@@ -18,6 +18,7 @@ import 'package:booking_system_flutter/utils/constant.dart';
 import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/model_keys.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:country_picker/country_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -424,7 +425,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                   children: [
                     SettingItemWidget(
                       title: language.lblGallery,
-                      titleTextStyle: primaryTextStyle(),
+                      titleTextStyle: context.primaryTextStyle(),
                       leading: Icon(LineIcons.image_1, color: context.icon),
                       onTap: () {
                         finish(context, GalleryFileTypes.GALLERY);
@@ -432,7 +433,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                     ),
                     SettingItemWidget(
                       title: language.camera,
-                      titleTextStyle: primaryTextStyle(),
+                      titleTextStyle: context.primaryTextStyle(),
                       leading: Icon(LineIcons.camera, color: context.icon),
                       onTap: () {
                         finish(context, GalleryFileTypes.CAMERA);
@@ -461,8 +462,8 @@ class EditProfileScreenState extends State<EditProfileScreen> {
     showCountryPicker(
       context: context,
       countryListTheme: CountryListThemeData(
-        textStyle: secondaryTextStyle(color: textSecondaryColorGlobal),
-        searchTextStyle: primaryTextStyle(),
+        textStyle: context.secondaryTextStyle(color: textSecondaryColorGlobal),
+        searchTextStyle: context.primaryTextStyle(),
         inputDecoration: InputDecoration(
           labelText: language.search,
           prefixIcon: const Icon(Icons.search),
@@ -560,7 +561,8 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                     ],
                   ).center(),
                   16.height,
-                  Text(language.lblFirstName, style: boldTextStyle(size: 14)),
+                  Text(language.lblFirstName,
+                      style: context.boldTextStyle(size: 14)),
                   8.height,
                   AppTextField(
                     textFieldType: TextFieldType.NAME,
@@ -578,7 +580,8 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                     //suffix: ic_profile2.iconImage(size: 10).paddingAll(14),
                   ),
                   16.height,
-                  Text(language.lblLastName, style: boldTextStyle(size: 14)),
+                  Text(language.lblLastName,
+                      style: context.boldTextStyle(size: 14)),
                   8.height,
                   AppTextField(
                     textFieldType: TextFieldType.NAME,
@@ -596,7 +599,8 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                     //suffix: ic_profile2.iconImage(size: 10).paddingAll(14),
                   ),
                   16.height,
-                  Text(language.lblUserName, style: boldTextStyle(size: 14)),
+                  Text(language.lblUserName,
+                      style: context.boldTextStyle(size: 14)),
                   8.height,
                   AppTextField(
                     textFieldType: TextFieldType.NAME,
@@ -614,7 +618,8 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                     //suffix: ic_profile2.iconImage(size: 10).paddingAll(14),
                   ),
                   16.height,
-                  Text(language.lblEmail, style: boldTextStyle(size: 14)),
+                  Text(language.lblEmail,
+                      style: context.boldTextStyle(size: 14)),
                   8.height,
                   AppTextField(
                     textFieldType: TextFieldType.EMAIL_ENHANCED,
@@ -645,8 +650,8 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                   //             ? language.verified
                   //             : language.verifyEmail,
                   //         style: isEmailVerified
-                  //             ? secondaryTextStyle(color: Colors.green)
-                  //             : secondaryTextStyle(),
+                  //             ?context.secondaryTextStyle(color: Colors.green)
+                  //             :context.secondaryTextStyle(),
                   //       ),
                   //       if (!isEmailVerified && !showRefresh)
                   //         ic_pending.iconImage(color: Colors.amber, size: 14)
@@ -690,7 +695,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                   // ),
 
                   Text(language.lblMobileNumber,
-                      style: boldTextStyle(size: 14)),
+                      style: context.boldTextStyle(size: 14)),
                   8.height,
                   // Mobile number text field...
                   AppTextField(
@@ -722,7 +727,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                                     6.width,
                                     Text(
                                       "+${country.phoneCode}",
-                                      style: primaryTextStyle(size: 14),
+                                      style: context.primaryTextStyle(size: 14),
                                     ),
                                     4.width,
                                     Icon(
@@ -742,7 +747,8 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                     //     .paddingAll(14),
                   ),
                   16.height,
-                  Text(language.lblCountry, style: boldTextStyle(size: 14)),
+                  Text(language.lblCountry,
+                      style: context.boldTextStyle(size: 14)),
                   8.height,
                   AppTextField(
                     textFieldType: TextFieldType.NAME,
@@ -756,7 +762,8 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                         borderRadius: 8),
                   ),
                   16.height,
-                  Text(language.lblState, style: boldTextStyle(size: 14)),
+                  Text(language.lblState,
+                      style: context.boldTextStyle(size: 14)),
                   8.height,
                   AppTextField(
                     textFieldType: TextFieldType.NAME,
@@ -770,7 +777,8 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                         borderRadius: 8),
                   ),
                   16.height,
-                  Text(language.lblCity, style: boldTextStyle(size: 14)),
+                  Text(language.lblCity,
+                      style: context.boldTextStyle(size: 14)),
                   8.height,
                   AppTextField(
                     textFieldType: TextFieldType.NAME,
@@ -783,7 +791,8 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                         borderRadius: 8),
                   ),
                   16.height,
-                  Text(language.lblApartment, style: boldTextStyle(size: 14)),
+                  Text(language.lblApartment,
+                      style: context.boldTextStyle(size: 14)),
                   8.height,
                   AppTextField(
                     controller: addressCont,

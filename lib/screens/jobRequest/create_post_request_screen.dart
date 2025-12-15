@@ -10,6 +10,7 @@ import 'package:booking_system_flutter/utils/constant.dart';
 import 'package:booking_system_flutter/utils/images.dart';
 import 'package:booking_system_flutter/utils/model_keys.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -161,7 +162,8 @@ class _CreatePostRequestScreenState extends State<CreatePostRequestScreen> {
                       children: [
                         //Post Title
                         16.height,
-                        Text(language.postJobTitle, style: boldTextStyle()),
+                        Text(language.postJobTitle,
+                            style: context.boldTextStyle()),
                         8.height,
                         AppTextField(
                           controller: postTitleCont,
@@ -178,7 +180,7 @@ class _CreatePostRequestScreenState extends State<CreatePostRequestScreen> {
                         //Post Description
                         16.height,
                         Text(language.postJobDescription,
-                            style: boldTextStyle()),
+                            style: context.boldTextStyle()),
                         8.height,
                         AppTextField(
                           controller: descriptionCont,
@@ -205,7 +207,7 @@ class _CreatePostRequestScreenState extends State<CreatePostRequestScreen> {
                           ),
                         ),
                         16.height,
-                        Text(language.price, style: boldTextStyle()),
+                        Text(language.price, style: context.boldTextStyle()),
                         8.height,
                         AppTextField(
                           textFieldType: TextFieldType.PHONE,
@@ -235,7 +237,7 @@ class _CreatePostRequestScreenState extends State<CreatePostRequestScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(language.services,
-                          style: boldTextStyle(size: LABEL_TEXT_SIZE)),
+                          style: context.boldTextStyle(size: LABEL_TEXT_SIZE)),
                       TextButton(
                         style: TextButton.styleFrom(
                           foregroundColor: context.primaryColor,
@@ -248,7 +250,8 @@ class _CreatePostRequestScreenState extends State<CreatePostRequestScreen> {
                           if (res ?? false) init();
                         },
                         child: Text(language.addNewService,
-                            style: boldTextStyle(color: context.primaryColor)),
+                            style: context.boldTextStyle(
+                                color: context.primaryColor)),
                       ),
                     ],
                   ).paddingOnly(right: 8, left: 16),
@@ -290,13 +293,13 @@ class _CreatePostRequestScreenState extends State<CreatePostRequestScreen> {
                                   children: [
                                     Text(
                                       data.name.validate(),
-                                      style: boldTextStyle(size: 18),
+                                      style: context.boldTextStyle(size: 18),
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                     ),
                                     6.height,
                                     Text(data.categoryName.validate(),
-                                        style: primaryTextStyle()),
+                                        style: context.primaryTextStyle()),
                                   ],
                                 ),
                               ),
@@ -339,7 +342,7 @@ class _CreatePostRequestScreenState extends State<CreatePostRequestScreen> {
                                             setState(() {});
                                           },
                                           child: Text(language.add,
-                                              style: boldTextStyle(
+                                              style: context.boldTextStyle(
                                                   size: 12,
                                                   color: context.primaryColor)),
                                         ),
@@ -376,7 +379,7 @@ class _CreatePostRequestScreenState extends State<CreatePostRequestScreen> {
                   30.height,
                   AppButton(
                     child: Text(language.save,
-                        style: boldTextStyle(color: white, size: 18)),
+                        style: context.boldTextStyle(color: white, size: 18)),
                     color: context.primaryColor,
                     height: 52,
                     width: context.width(),

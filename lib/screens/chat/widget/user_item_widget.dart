@@ -4,6 +4,7 @@ import 'package:booking_system_flutter/model/user_data_model.dart';
 import 'package:booking_system_flutter/screens/chat/user_chat_screen.dart';
 import 'package:booking_system_flutter/screens/chat/widget/last_messege_chat.dart';
 import 'package:booking_system_flutter/utils/colors.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -46,7 +47,8 @@ class _UserItemWidgetState extends State<UserItemWidget> {
                                   .validate()[0]
                                   .validate()
                                   .toUpperCase(),
-                              style: boldTextStyle(color: context.primaryColor))
+                              style: context.boldTextStyle(
+                                  color: context.primaryColor))
                           .center()
                           .fit(),
                     ).cornerRadiusWithClipRRect(50)
@@ -67,7 +69,7 @@ class _UserItemWidgetState extends State<UserItemWidget> {
                             data.firstName.validate() +
                                 " " +
                                 data.lastName.validate(),
-                            style: boldTextStyle(),
+                            style: context.boldTextStyle(),
                             maxLines: 1,
                             textAlign: TextAlign.start,
                             overflow: TextOverflow.ellipsis,
@@ -87,7 +89,8 @@ class _UserItemWidgetState extends State<UserItemWidget> {
                                         color: primaryColor),
                                     child: Text(
                                       snap.data.validate().toString(),
-                                      style: primaryTextStyle(color: white),
+                                      style: context.primaryTextStyle(
+                                          color: white),
                                       textAlign: TextAlign.center,
                                     ).center(),
                                   );
@@ -114,7 +117,7 @@ class _UserItemWidgetState extends State<UserItemWidget> {
         }
         return Container(
           padding: const EdgeInsets.all(16),
-          child: Text(language.loadingChats, style: primaryTextStyle()),
+          child: Text(language.loadingChats, style: context.primaryTextStyle()),
         );
       },
     );

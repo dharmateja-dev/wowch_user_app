@@ -5,6 +5,7 @@ import 'package:booking_system_flutter/utils/common.dart';
 import 'package:booking_system_flutter/utils/configs.dart';
 import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/images.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -27,11 +28,12 @@ class NewUpdateDialog extends StatelessWidget {
             listAnimationType: ListAnimationType.FadeIn,
             children: [
               60.height,
-              Text(language.lblNewUpdate, style: boldTextStyle(size: 18)),
+              Text(language.lblNewUpdate,
+                  style: context.boldTextStyle(size: 18)),
               8.height,
               Text(
                 '${language.lblAnUpdateTo} $APP_NAME ${language.isAvailableGoTo}',
-                style: secondaryTextStyle(),
+                style: context.secondaryTextStyle(),
                 textAlign: TextAlign.left,
               ),
               24.height,
@@ -41,8 +43,8 @@ class NewUpdateDialog extends StatelessWidget {
                 children: [
                   AppButton(
                     text: canClose ? language.later : language.closeApp,
-                    textStyle:
-                        boldTextStyle(color: context.onPrimary, size: 14),
+                    textStyle: context.boldTextStyle(
+                        color: context.onPrimary, size: 14),
                     shapeBorder: RoundedRectangleBorder(
                         borderRadius: radius(),
                         side: BorderSide(color: context.primary)),
@@ -58,7 +60,7 @@ class NewUpdateDialog extends StatelessWidget {
                   32.width,
                   AppButton(
                     text: language.lblUpdate,
-                    textStyle: boldTextStyle(color: Colors.white),
+                    textStyle: context.boldTextStyle(color: Colors.white),
                     shapeBorder: RoundedRectangleBorder(borderRadius: radius()),
                     color: context.primary,
                     elevation: 0,

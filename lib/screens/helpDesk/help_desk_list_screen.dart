@@ -2,6 +2,7 @@ import 'package:booking_system_flutter/component/base_scaffold_widget.dart';
 import 'package:booking_system_flutter/screens/helpDesk/model/help_desk_status_model.dart';
 import 'package:booking_system_flutter/screens/helpDesk/shimmer/help_desk_list_shimmer.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -131,7 +132,7 @@ class _HelpDeskListScreenState extends State<HelpDeskListScreen> {
                             padding: const EdgeInsets.symmetric(horizontal: 10),
                             label: Text(
                               filterStatus.name,
-                              style: boldTextStyle(
+                              style: context.boldTextStyle(
                                 size: 12,
                                 color: selectedTab.status == filterStatus.status
                                     ? primaryColor
@@ -176,7 +177,7 @@ class _HelpDeskListScreenState extends State<HelpDeskListScreen> {
                         : NoDataWidget(
                             title:
                                 '${language.lblNo} ${selectedTab.name} ${language.queryYet}',
-                            titleTextStyle: boldTextStyle(),
+                            titleTextStyle: context.boldTextStyle(),
                             subTitle: selectedTab.status == HelpDeskStatus.open
                                 ? language.toSubmitYourProblems
                                 : '${language.noRecordsFoundFor} ${selectedTab.name.toLowerCase()} ${language.queries}',

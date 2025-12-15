@@ -2,6 +2,7 @@ import 'package:booking_system_flutter/main.dart';
 import 'package:booking_system_flutter/model/chat_message_model.dart';
 import 'package:booking_system_flutter/utils/common.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -13,7 +14,7 @@ class LastMessageChat extends StatelessWidget {
     required this.stream,
   });
 
-  Widget typeWidget(ChatMessageModel message) {
+  Widget typeWidget(ChatMessageModel message, BuildContext context) {
     String? type = message.messageType;
     switch (type) {
       case TEXT:
@@ -21,14 +22,14 @@ class LastMessageChat extends StatelessWidget {
           "${message.message.validate()}",
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: primaryTextStyle(size: 14),
+          style: context.primaryTextStyle(size: 14),
         );
       case IMAGE:
         return Row(
           children: [
             const Icon(Icons.photo_sharp, size: 16),
             6.width,
-            Text(language.lblImage, style: primaryTextStyle(size: 16)),
+            Text(language.lblImage, style: context.primaryTextStyle(size: 16)),
           ],
         );
       case VIDEO:
@@ -36,7 +37,7 @@ class LastMessageChat extends StatelessWidget {
           children: [
             const Icon(Icons.videocam_outlined, size: 16),
             6.width,
-            Text(language.lblVideo, style: primaryTextStyle(size: 16)),
+            Text(language.lblVideo, style: context.primaryTextStyle(size: 16)),
           ],
         );
       case AUDIO:
@@ -44,7 +45,7 @@ class LastMessageChat extends StatelessWidget {
           children: [
             const Icon(Icons.audiotrack, size: 16),
             6.width,
-            Text(language.lblAudio, style: primaryTextStyle(size: 16)),
+            Text(language.lblAudio, style: context.primaryTextStyle(size: 16)),
           ],
         );
       default:
@@ -87,9 +88,9 @@ class LastMessageChat extends StatelessWidget {
                         : Icon(Icons.done_all,
                             size: 12, color: textSecondaryColorGlobal)
                     : const Offstage(),
-                typeWidget(message).expand(),
+                typeWidget(message, context).expand(),
                 16.width,
-                Text(time, style: primaryTextStyle(size: 10)),
+                Text(time, style: context.primaryTextStyle(size: 10)),
               ],
             ).paddingTop(2);
           }

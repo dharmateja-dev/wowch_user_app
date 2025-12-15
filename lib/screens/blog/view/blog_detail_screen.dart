@@ -6,6 +6,7 @@ import 'package:booking_system_flutter/screens/blog/blog_repository.dart';
 import 'package:booking_system_flutter/screens/blog/model/blog_detail_response.dart';
 import 'package:booking_system_flutter/screens/blog/model/blog_response_model.dart';
 import 'package:booking_system_flutter/utils/model_keys.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -214,7 +215,7 @@ class _BlogDetailScreenState extends State<BlogDetailScreen> {
                           // Blog title - large and bold
                           Text(
                             data.blogDetail!.title.validate(),
-                            style: boldTextStyle(
+                            style: context.boldTextStyle(
                                 size: 22, color: textPrimaryColorGlobal),
                           ).paddingSymmetric(horizontal: 16),
 
@@ -240,7 +241,7 @@ class _BlogDetailScreenState extends State<BlogDetailScreen> {
                                 children: [
                                   Text(
                                     data.blogDetail!.authorName.validate(),
-                                    style: boldTextStyle(
+                                    style: context.boldTextStyle(
                                         size: 14,
                                         color: textPrimaryColorGlobal),
                                     maxLines: 1,
@@ -249,7 +250,7 @@ class _BlogDetailScreenState extends State<BlogDetailScreen> {
                                   4.height,
                                   Text(
                                     data.blogDetail!.publishDate.validate(),
-                                    style: secondaryTextStyle(
+                                    style: context.secondaryTextStyle(
                                         size: 12, color: Colors.grey),
                                   ),
                                 ],
@@ -282,7 +283,7 @@ class _BlogDetailScreenState extends State<BlogDetailScreen> {
                             32.height,
                             Text(
                               'Related Blogs',
-                              style: boldTextStyle(
+                              style: context.boldTextStyle(
                                   size: 20, color: textPrimaryColorGlobal),
                             ).paddingSymmetric(horizontal: 16),
                             16.height,
@@ -338,7 +339,7 @@ class _BlogDetailScreenState extends State<BlogDetailScreen> {
                                                 horizontal: 8),
                                             child: Text(
                                               blog.title.validate(),
-                                              style: boldTextStyle(
+                                              style: context.boldTextStyle(
                                                   size: 14,
                                                   color:
                                                       textPrimaryColorGlobal),
@@ -353,8 +354,8 @@ class _BlogDetailScreenState extends State<BlogDetailScreen> {
                                                 horizontal: 8),
                                             child: Text(
                                               blog.publishDate.validate(),
-                                              style:
-                                                  secondaryTextStyle(size: 12),
+                                              style: context.secondaryTextStyle(
+                                                  size: 12),
                                             ),
                                           ),
                                         ],

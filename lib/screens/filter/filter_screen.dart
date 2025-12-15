@@ -4,6 +4,7 @@ import 'package:booking_system_flutter/model/user_data_model.dart';
 import 'package:booking_system_flutter/screens/filter/component/filter_price_component.dart';
 import 'package:booking_system_flutter/screens/filter/component/filter_provider_component.dart';
 import 'package:booking_system_flutter/screens/filter/component/filter_rating_component.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -148,7 +149,7 @@ class _FilterScreenState extends State<FilterScreen> {
         color: isSelected ? context.cardColor : context.scaffoldBackgroundColor,
         borderRadius: radius(0),
       ),
-      child: Text(name, style: boldTextStyle(size: 12)),
+      child: Text(name, style: context.boldTextStyle(size: 12)),
     );
   }
 

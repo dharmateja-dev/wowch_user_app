@@ -5,6 +5,7 @@ import 'package:booking_system_flutter/utils/colors.dart';
 import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/images.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -171,7 +172,7 @@ class _UserInfoWidgetState extends State<UserInfoWidget> {
                         4.width,
                         Text(
                           "${widget.forProvider ? widget.data.providersServiceRating.validate().toStringAsPrecision(2) : widget.data.handymanRating.validate().toStringAsFixed(1)}",
-                          style: primaryTextStyle(
+                          style: context.primaryTextStyle(
                               size: 12, weight: FontWeight.bold),
                         ),
                       ],
@@ -189,7 +190,7 @@ class _UserInfoWidgetState extends State<UserInfoWidget> {
                     child: Text(
                       language.bookingCompleted(
                           widget.data.totalCompletedBooking.validate()),
-                      style: secondaryTextStyle(),
+                      style: context.secondaryTextStyle(),
                     ),
                   ),
                 ),
@@ -209,7 +210,8 @@ class _UserInfoWidgetState extends State<UserInfoWidget> {
                     widget.data.displayName.validate(),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
-                    style: primaryTextStyle(size: 16, weight: FontWeight.bold),
+                    style: context.primaryTextStyle(
+                        size: 16, weight: FontWeight.bold),
                   ).flexible(),
                   4.width,
                   Image.asset(ic_verified, height: 16, color: Colors.green)
@@ -220,7 +222,7 @@ class _UserInfoWidgetState extends State<UserInfoWidget> {
               Text(
                 widget.data.designation.validate(),
                 textAlign: TextAlign.center,
-                style: secondaryTextStyle(
+                style: context.secondaryTextStyle(
                     color: context.primary, weight: FontWeight.bold),
               )
             ],
@@ -230,28 +232,28 @@ class _UserInfoWidgetState extends State<UserInfoWidget> {
             list: [
               TextSpan(
                   text: language.lblMemberSince,
-                  style: primaryTextStyle(size: 12)),
+                  style: context.primaryTextStyle(size: 12)),
               const TextSpan(text: ' '),
               TextSpan(
                   text: formatDate(widget.data.createdAt.validate()),
-                  style: primaryTextStyle(size: 12)),
+                  style: context.primaryTextStyle(size: 12)),
             ],
           ).paddingSymmetric(horizontal: 16),
           if (widget.data.description.validate().isNotEmpty) ...[
             32.height,
             Text(
               language.whyChooseMe,
-              style: primaryTextStyle(weight: FontWeight.bold),
+              style: context.primaryTextStyle(weight: FontWeight.bold),
             ).paddingSymmetric(horizontal: 16),
             4.height,
             Text(
               "${widget.data.description.validate()}",
-              style: secondaryTextStyle(size: 12),
+              style: context.secondaryTextStyle(size: 12),
             ).paddingSymmetric(horizontal: 16),
           ],
           if (widget.data.whyChooseMeObj.reason.isNotEmpty) ...[
             32.height,
-            Text(language.reason, style: boldTextStyle(size: 16))
+            Text(language.reason, style: context.boldTextStyle(size: 16))
                 .paddingSymmetric(horizontal: 16),
             4.height,
             if (widget.data.whyChooseMeObj.reason.validate().isNotEmpty)
@@ -268,7 +270,7 @@ class _UserInfoWidgetState extends State<UserInfoWidget> {
                     prefix: Icon(Icons.check_circle_outline,
                         size: 16, color: primaryColor),
                     text: reason.validate(),
-                    textStyle: secondaryTextStyle(),
+                    textStyle: context.secondaryTextStyle(),
                     useMarquee: true,
                     expandedText: true,
                   );

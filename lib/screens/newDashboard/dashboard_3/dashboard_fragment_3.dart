@@ -11,6 +11,7 @@ import 'package:booking_system_flutter/screens/newDashboard/dashboard_3/shimmer/
 import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/dummy_data_helper.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -121,7 +122,7 @@ class _DashboardFragment3State extends State<DashboardFragment3> {
                                   appStore.isCurrentLocation
                                       ? getStringAsync(CURRENT_ADDRESS)
                                       : language.lblLocationOff,
-                                  style: secondaryTextStyle(),
+                                  style: context.secondaryTextStyle(),
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                 ).expand(),
@@ -215,7 +216,7 @@ class _DashboardFragment3State extends State<DashboardFragment3> {
                                   appStore.isCurrentLocation
                                       ? getStringAsync(CURRENT_ADDRESS)
                                       : language.lblLocationOff,
-                                  style: secondaryTextStyle(),
+                                  style: context.secondaryTextStyle(),
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                 ).expand(),

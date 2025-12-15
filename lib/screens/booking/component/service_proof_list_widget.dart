@@ -1,6 +1,7 @@
 import 'package:booking_system_flutter/component/cached_image_widget.dart';
 import 'package:booking_system_flutter/model/booking_detail_model.dart';
 import 'package:booking_system_flutter/screens/zoom_image_screen.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -16,12 +17,19 @@ class ServiceProofListWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (data.title.validate().isNotEmpty) Text(data.title.validate(), style: boldTextStyle(), maxLines: 1, overflow: TextOverflow.ellipsis),
+          if (data.title.validate().isNotEmpty)
+            Text(data.title.validate(),
+                style: context.boldTextStyle(),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis),
           if (data.description.validate().isNotEmpty)
             Column(
               children: [
                 8.height,
-                Text(data.description.validate(), style: secondaryTextStyle(), maxLines: 1, overflow: TextOverflow.ellipsis),
+                Text(data.description.validate(),
+                    style: context.secondaryTextStyle(),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis),
               ],
             ),
           if (data.attachments.validate().isNotEmpty)
@@ -43,7 +51,9 @@ class ServiceProofListWidget extends StatelessWidget {
                         fit: BoxFit.cover,
                       ),
                     ).onTap(() {
-                      ZoomImageScreen(galleryImages: data.attachments!, index: i).launch(context);
+                      ZoomImageScreen(
+                              galleryImages: data.attachments!, index: i)
+                          .launch(context);
                     });
                   },
                 ),

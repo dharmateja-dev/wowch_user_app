@@ -7,6 +7,7 @@ import 'package:booking_system_flutter/screens/service/service_detail_screen.dar
 import 'package:booking_system_flutter/utils/colors.dart';
 import 'package:booking_system_flutter/utils/extensions/num_extenstions.dart';
 import 'package:booking_system_flutter/utils/model_keys.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -273,14 +274,14 @@ class _ConfirmBookingDialogState extends State<ConfirmBookingDialog> {
             // Title
             Text(
               language.lblConfirmBooking,
-              style: boldTextStyle(size: 24),
+              style: context.boldTextStyle(size: 24),
               textAlign: TextAlign.center,
             ),
             12.height,
             // Subtitle
             Text(
               language.doYouWantToConfirmBooking,
-              style: primaryTextStyle(
+              style: context.primaryTextStyle(
                 size: 16,
               ),
               textAlign: TextAlign.center,
@@ -296,7 +297,7 @@ class _ConfirmBookingDialogState extends State<ConfirmBookingDialog> {
               ),
               child: Text(
                 '* ${language.a} ${appConfigurationStore.cancellationChargeAmount}% ${language.feeAppliesForCancellations} ${appConfigurationStore.cancellationChargeHours} ${language.hoursOfTheScheduled}',
-                style: secondaryTextStyle(
+                style: context.secondaryTextStyle(
                     size: 10,
                     color: redColor,
                     fontStyle: FontStyle.italic,
@@ -330,11 +331,11 @@ class _ConfirmBookingDialogState extends State<ConfirmBookingDialog> {
                       children: [
                         TextSpan(
                           text: '${language.iAgreeToYour}  ',
-                          style: boldTextStyle(size: 14),
+                          style: context.boldTextStyle(size: 14),
                         ),
                         TextSpan(
                           text: language.termsAndPrivacy,
-                          style: boldTextStyle(
+                          style: context.boldTextStyle(
                               color: context.primaryColor, size: 14),
                           recognizer: TapGestureRecognizer()
                             ..onTap = () {
@@ -367,8 +368,8 @@ class _ConfirmBookingDialogState extends State<ConfirmBookingDialog> {
                     ),
                     child: Text(
                       language.lblCancel,
-                      style:
-                          boldTextStyle(color: context.primaryColor, size: 16),
+                      style: context.boldTextStyle(
+                          color: context.primaryColor, size: 16),
                     ),
                   ),
                 ),
@@ -376,7 +377,7 @@ class _ConfirmBookingDialogState extends State<ConfirmBookingDialog> {
                 // Confirm button
                 Expanded(
                   child: AppButton(
-                    textStyle: boldTextStyle(
+                    textStyle: context.boldTextStyle(
                         size: 16, color: isSelected ? Colors.white : darkGray),
                     padding: EdgeInsets.symmetric(vertical: 12),
                     text: language.confirm,
@@ -407,19 +408,20 @@ class _ConfirmBookingDialogState extends State<ConfirmBookingDialog> {
   }
 }
 
-Widget serviceDetailsWidget(String title, String value, bool isPrice) {
+Widget serviceDetailsWidget(
+    String title, String value, bool isPrice, BuildContext context) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.start,
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       Text(title,
-              style: secondaryTextStyle(
+              style: context.secondaryTextStyle(
                   size: 12,
                   color:
                       appStore.isDarkMode ? darkGray : appTextSecondaryColor))
           .expand(flex: 2),
       Text(isPrice ? num.parse(value).toPriceFormat() : value,
-              style: boldTextStyle(size: 12))
+              style: context.boldTextStyle(size: 12))
           .expand(flex: 3),
     ],
   ).paddingBottom(6.0);

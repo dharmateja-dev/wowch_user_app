@@ -2,6 +2,7 @@ import 'package:booking_system_flutter/component/selected_item_widget.dart';
 import 'package:booking_system_flutter/main.dart';
 import 'package:booking_system_flutter/model/category_model.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -63,10 +64,10 @@ class _FilterCategoryComponentState extends State<FilterCategoryComponent> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(data.name.validate(), style: boldTextStyle()),
+                  Text(data.name.validate(), style: context.boldTextStyle()),
                   4.height,
                   Text('${data.services} ${language.service}',
-                      style: secondaryTextStyle()),
+                      style: context.secondaryTextStyle()),
                 ],
               ).expand(),
               8.width,

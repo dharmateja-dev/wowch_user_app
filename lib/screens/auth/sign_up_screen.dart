@@ -9,6 +9,7 @@ import 'package:booking_system_flutter/utils/constant.dart';
 import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/images.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:country_picker/country_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
@@ -153,8 +154,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
       countryListTheme: CountryListThemeData(
         borderRadius: BorderRadius.circular(0),
         bottomSheetHeight: 600,
-        textStyle: primaryTextStyle(),
-        searchTextStyle: primaryTextStyle(color: context.searchTextColor),
+        textStyle: context.primaryTextStyle(),
+        searchTextStyle:
+            context.primaryTextStyle(color: context.searchTextColor),
         backgroundColor: context.bottomSheetBackgroundColor,
         inputDecoration: InputDecoration(
           fillColor: context.searchFillColor,
@@ -175,7 +177,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
             ),
           ),
           hintText: language.search,
-          hintStyle: primaryTextStyle(size: 14, color: context.searchHintColor),
+          hintStyle: context.primaryTextStyle(
+              size: 14, color: context.searchHintColor),
           prefixIcon: Icon(Icons.search, color: context.searchHintColor),
         ),
       ),
@@ -256,10 +259,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
     return Column(
       children: [
         (context.height() * 0.08).toInt().height,
-        Text(language.lblHelloAgain, style: boldTextStyle(size: 24)).center(),
+        Text(language.lblHelloAgain, style: context.boldTextStyle(size: 24))
+            .center(),
         16.height,
         Text(language.lblSignUpSubTitle,
-                style: primaryTextStyle(size: 16), textAlign: TextAlign.center)
+                style: context.primaryTextStyle(size: 16),
+                textAlign: TextAlign.center)
             .center()
             .paddingSymmetric(horizontal: 8),
         16.height,
@@ -273,7 +278,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         16.height,
-        Text(language.lblFirstName, style: boldTextStyle(size: 14)),
+        Text(language.lblFirstName, style: context.boldTextStyle(size: 14)),
         8.height,
         //First Name
         AppTextField(
@@ -287,7 +292,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           suffix: ic_user.iconImage(size: 10, context: context).paddingAll(14),
         ),
         16.height,
-        Text(language.lblLastName, style: boldTextStyle(size: 14)),
+        Text(language.lblLastName, style: context.boldTextStyle(size: 14)),
         8.height,
         //Last Name
         AppTextField(
@@ -301,7 +306,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           suffix: ic_user.iconImage(size: 10, context: context).paddingAll(14),
         ),
         16.height,
-        Text(language.lblUserName, style: boldTextStyle(size: 14)),
+        Text(language.lblUserName, style: context.boldTextStyle(size: 14)),
         8.height,
         AppTextField(
           textFieldType: TextFieldType.USERNAME,
@@ -315,7 +320,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           suffix: ic_user.iconImage(size: 10, context: context).paddingAll(14),
         ),
         16.height,
-        Text(language.lblEmail, style: boldTextStyle(size: 14)),
+        Text(language.lblEmail, style: context.boldTextStyle(size: 14)),
         8.height,
         AppTextField(
           textFieldType: TextFieldType.EMAIL_ENHANCED,
@@ -329,7 +334,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ic_message.iconImage(size: 12, context: context).paddingAll(12),
         ),
         16.height,
-        Text(language.lblContactNumber, style: boldTextStyle(size: 14)),
+        Text(language.lblContactNumber, style: context.boldTextStyle(size: 14)),
         8.height,
         // Mobile number text field...
         AppTextField(
@@ -359,7 +364,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           6.width,
                           Text(
                             "+${country.phoneCode}",
-                            style: primaryTextStyle(size: 14),
+                            style: context.primaryTextStyle(size: 14),
                           ),
                           4.width,
                           Icon(
@@ -374,7 +379,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 },
               )),
           maxLength: 15,
-          suffix: ic_call.iconImage(size: 10, context: context).paddingAll(12),
+          suffix: ic_call.iconImage(size: 8, context: context).paddingAll(15),
         ),
         8.height,
         Align(
@@ -383,7 +388,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             onTap: () => changeCountry(),
             child: Text(
               language.selectCountry,
-              style: boldTextStyle(size: 13),
+              style: context.boldTextStyle(size: 13),
             ),
           ),
         ),
@@ -392,7 +397,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(language.lblPassword, style: boldTextStyle(size: 14)),
+              Text(language.lblPassword,
+                  style: context.boldTextStyle(size: 14)),
               8.height,
               AppTextField(
                 textFieldType: TextFieldType.PASSWORD,
@@ -465,20 +471,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
           list: [
             TextSpan(
                 text: '${language.lblAgree} ',
-                style: primaryTextStyle(size: 14)),
+                style: context.primaryTextStyle(size: 14)),
             TextSpan(
               text: language.lblTermsOfService,
-              style: boldTextStyle(color: context.primary, size: 14),
+              style: context.boldTextStyle(color: context.primary, size: 14),
               recognizer: TapGestureRecognizer()
                 ..onTap = () {
                   checkIfLink(context, appConfigurationStore.termConditions,
                       title: language.termsCondition);
                 },
             ),
-            TextSpan(text: ' & ', style: primaryTextStyle(size: 14)),
+            TextSpan(text: ' & ', style: context.primaryTextStyle(size: 14)),
             TextSpan(
               text: language.privacyPolicy,
-              style: boldTextStyle(color: context.primary, size: 14),
+              style: context.boldTextStyle(color: context.primary, size: 14),
               recognizer: TapGestureRecognizer()
                 ..onTap = () {
                   checkIfLink(context, appConfigurationStore.privacyPolicy,
@@ -499,10 +505,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
           list: [
             TextSpan(
                 text: "${language.alreadyHaveAccountTxt} ",
-                style: primaryTextStyle(size: 14)),
+                style: context.primaryTextStyle(size: 14)),
             TextSpan(
               text: language.signIn,
-              style: boldTextStyle(color: context.primary, size: 14),
+              style: context.boldTextStyle(color: context.primary, size: 14),
               recognizer: TapGestureRecognizer()
                 ..onTap = () {
                   finish(context);

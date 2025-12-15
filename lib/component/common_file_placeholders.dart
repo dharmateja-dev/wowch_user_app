@@ -1,4 +1,5 @@
 import 'package:booking_system_flutter/utils/context_extensions.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -42,7 +43,7 @@ class CommonPdfPlaceHolder extends StatelessWidget {
           Marquee(
               child: Text(text == "file" ? "File" : text,
                   overflow: TextOverflow.ellipsis,
-                  style: primaryTextStyle(),
+                  style: context.primaryTextStyle(),
                   maxLines: 1,
                   textAlign: TextAlign.center)),
         ],

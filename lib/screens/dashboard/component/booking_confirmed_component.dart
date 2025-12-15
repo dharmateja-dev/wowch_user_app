@@ -1,5 +1,6 @@
 import 'package:booking_system_flutter/main.dart';
 import 'package:booking_system_flutter/screens/booking/booking_detail_screen.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -14,7 +15,8 @@ class PendingBookingComponent extends StatefulWidget {
   PendingBookingComponent({this.upcomingConfirmedBooking});
 
   @override
-  State<PendingBookingComponent> createState() => _PendingBookingComponentState();
+  State<PendingBookingComponent> createState() =>
+      _PendingBookingComponentState();
 }
 
 class _PendingBookingComponentState extends State<PendingBookingComponent> {
@@ -22,18 +24,21 @@ class _PendingBookingComponentState extends State<PendingBookingComponent> {
   Widget build(BuildContext context) {
     if (widget.upcomingConfirmedBooking == null) return const Offstage();
 
-    if (getBoolAsync('$BOOKING_ID_CLOSED_${widget.upcomingConfirmedBooking!.id}')) {
+    if (getBoolAsync(
+        '$BOOKING_ID_CLOSED_${widget.upcomingConfirmedBooking!.id}')) {
       return const Offstage();
     }
 
-    if (widget.upcomingConfirmedBooking!.status != BOOKING_STATUS_PENDING && widget.upcomingConfirmedBooking!.status != BOOKING_STATUS_ACCEPT) {
+    if (widget.upcomingConfirmedBooking!.status != BOOKING_STATUS_PENDING &&
+        widget.upcomingConfirmedBooking!.status != BOOKING_STATUS_ACCEPT) {
       return const Offstage();
     }
 
     return Container(
       margin: const EdgeInsets.all(16),
       padding: const EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 26),
-      decoration: boxDecorationRoundedWithShadow(defaultRadius.toInt(), backgroundColor: primaryColor),
+      decoration: boxDecorationRoundedWithShadow(defaultRadius.toInt(),
+          backgroundColor: primaryColor),
       child: Column(
         children: [
           Row(
@@ -45,7 +50,9 @@ class _PendingBookingComponentState extends State<PendingBookingComponent> {
                     Container(
                       height: 20,
                       width: 3,
-                      decoration: boxDecorationRoundedWithShadow(defaultRadius.toInt(), backgroundColor: Colors.white.withValues(alpha:0.6)),
+                      decoration: boxDecorationRoundedWithShadow(
+                          defaultRadius.toInt(),
+                          backgroundColor: Colors.white.withValues(alpha: 0.6)),
                     ),
                     8.width,
                     Expanded(
@@ -53,7 +60,10 @@ class _PendingBookingComponentState extends State<PendingBookingComponent> {
                         directionMarguee: DirectionMarguee.oneDirection,
                         child: Text(
                           language.bookingConfirmedMsg,
-                          style: primaryTextStyle(color: Colors.white, size: LABEL_TEXT_SIZE, fontStyle: FontStyle.italic),
+                          style: context.primaryTextStyle(
+                              color: Colors.white,
+                              size: LABEL_TEXT_SIZE,
+                              fontStyle: FontStyle.italic),
                         ),
                       ),
                     ),
@@ -64,10 +74,13 @@ class _PendingBookingComponentState extends State<PendingBookingComponent> {
                 width: 30,
                 height: 22,
                 child: IconButton(
-                  icon: Icon(Icons.cancel, color: Colors.white.withValues(alpha:0.6)),
+                  icon: Icon(Icons.cancel,
+                      color: Colors.white.withValues(alpha: 0.6)),
                   visualDensity: VisualDensity.compact,
                   onPressed: () async {
-                    await setValue('$BOOKING_ID_CLOSED_${widget.upcomingConfirmedBooking!.id}', true);
+                    await setValue(
+                        '$BOOKING_ID_CLOSED_${widget.upcomingConfirmedBooking!.id}',
+                        true);
                     setState(() {});
                   },
                 ),
@@ -80,23 +93,32 @@ class _PendingBookingComponentState extends State<PendingBookingComponent> {
               Container(
                 height: 42,
                 width: 42,
-                decoration: boxDecorationRoundedWithShadow(21, backgroundColor: Colors.white.withValues(alpha:0.2)),
-                child: const Icon(Icons.library_add_check_outlined, size: 18, color: Colors.white),
+                decoration: boxDecorationRoundedWithShadow(21,
+                    backgroundColor: Colors.white.withValues(alpha: 0.2)),
+                child: const Icon(Icons.library_add_check_outlined,
+                    size: 18, color: Colors.white),
               ),
               8.width,
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(widget.upcomingConfirmedBooking!.serviceName.validate(), style: boldTextStyle(color: Colors.white)),
+                  Text(widget.upcomingConfirmedBooking!.serviceName.validate(),
+                      style: context.boldTextStyle(color: Colors.white)),
                   2.height,
-                  Text(formatDate(widget.upcomingConfirmedBooking!.date.validate(), showDateWithTime: true), style: primaryTextStyle(color: Colors.white, size: 14)),
+                  Text(
+                      formatDate(
+                          widget.upcomingConfirmedBooking!.date.validate(),
+                          showDateWithTime: true),
+                      style: context.primaryTextStyle(
+                          color: Colors.white, size: 14)),
                 ],
               ).flexible(),
             ],
           )
         ],
       ).onTap(() {
-        BookingDetailScreen(bookingId: widget.upcomingConfirmedBooking!.id!).launch(context);
+        BookingDetailScreen(bookingId: widget.upcomingConfirmedBooking!.id!)
+            .launch(context);
       }),
     );
   }

@@ -1,4 +1,5 @@
 import 'package:booking_system_flutter/main.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -45,7 +46,8 @@ class _FilterPriceComponentState extends State<FilterPriceComponent> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(language.lblPrice, style: boldTextStyle()).paddingAll(16),
+          Text(language.lblPrice, style: context.boldTextStyle())
+              .paddingAll(16),
           Marquee(
             child: Row(
               children: [
@@ -56,7 +58,7 @@ class _FilterPriceComponentState extends State<FilterPriceComponent> {
                   color: textPrimaryColorGlobal,
                   decimalPoint: 0,
                 ),
-                Text(" - ", style: boldTextStyle()),
+                Text(" - ", style: context.boldTextStyle()),
                 PriceWidget(
                   currencySymbol: "₹",
                   price: rangeValues.end.toInt(),

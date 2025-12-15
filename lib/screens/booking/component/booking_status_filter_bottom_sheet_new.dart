@@ -1,5 +1,6 @@
 import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -151,7 +152,7 @@ class _BookingStatusFilterBottomSheetNewState
               children: [
                 Text(
                   language.lblFilterBy,
-                  style: boldTextStyle(size: 18),
+                  style: context.boldTextStyle(size: 18),
                 ),
                 IconButton(
                   icon: Icon(
@@ -177,7 +178,7 @@ class _BookingStatusFilterBottomSheetNewState
             padding: const EdgeInsets.fromLTRB(20, 16, 20, 16),
             child: Text(
               language.bookingStatus,
-              style: boldTextStyle(size: 18),
+              style: context.boldTextStyle(size: 18),
             ),
           ),
 
@@ -279,7 +280,7 @@ class _StatusChip extends StatelessWidget {
         ),
         child: Text(
           label,
-          style: boldTextStyle(
+          style: context.boldTextStyle(
             size: 13,
           ),
         ),

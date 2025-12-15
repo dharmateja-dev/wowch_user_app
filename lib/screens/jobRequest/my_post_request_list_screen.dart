@@ -7,6 +7,7 @@ import 'package:booking_system_flutter/screens/jobRequest/components/my_post_req
 import 'package:booking_system_flutter/screens/jobRequest/create_post_request_screen.dart';
 import 'package:booking_system_flutter/screens/jobRequest/shimmer/my_post_job_shimmer.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:geolocator/geolocator.dart';
@@ -202,7 +203,8 @@ class _MyPostRequestListScreenState extends State<MyPostRequestListScreen> {
         ],
       ),
       bottomNavigationBar: AppButton(
-        child: Text(language.requestNewJob, style: boldTextStyle(color: white)),
+        child: Text(language.requestNewJob,
+            style: context.boldTextStyle(color: white)),
         color: context.primaryColor,
         width: context.width(),
         onTap: () async {

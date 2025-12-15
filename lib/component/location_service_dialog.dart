@@ -1,5 +1,6 @@
 import 'package:booking_system_flutter/main.dart';
 import 'package:booking_system_flutter/utils/context_extensions.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -24,7 +25,7 @@ class _LocationServiceDialogState extends State<LocationServiceDialog> {
                   appStore.isCurrentLocation
                       ? language.msgForLocationOn
                       : language.msgForLocationOff,
-                  style: primaryTextStyle())
+                  style: context.primaryTextStyle())
               .paddingAll(16),
           16.height,
           AppButton(

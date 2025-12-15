@@ -13,6 +13,7 @@ import 'package:booking_system_flutter/utils/constant.dart';
 import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/images.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -257,11 +258,12 @@ class _SignInScreenState extends State<SignInScreen> {
     return Container(
       child: Column(
         children: [
-          Text("${language.lblLoginTitle}!", style: boldTextStyle(size: 24))
+          Text("${language.lblLoginTitle}!",
+                  style: context.boldTextStyle(size: 24))
               .center(),
           16.height,
           Text(language.lblLoginSubTitle,
-                  style: primaryTextStyle(
+                  style: context.primaryTextStyle(
                     size: 16,
                   ),
                   textAlign: TextAlign.center)
@@ -299,7 +301,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 ),
                 Text(
                   language.rememberMe,
-                  style: primaryTextStyle(),
+                  style: context.primaryTextStyle(),
                 ),
               ],
             ),
@@ -315,7 +317,7 @@ class _SignInScreenState extends State<SignInScreen> {
               },
               child: Text(
                 language.forgotPassword,
-                style: boldTextStyle(
+                style: context.boldTextStyle(
                   color: context.primary,
                 ),
                 textAlign: TextAlign.right,
@@ -337,7 +339,7 @@ class _SignInScreenState extends State<SignInScreen> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(language.doNotHaveAccount, style: primaryTextStyle()),
+            Text(language.doNotHaveAccount, style: context.primaryTextStyle()),
             8.width,
             GestureDetector(
               onTap: () {
@@ -346,7 +348,7 @@ class _SignInScreenState extends State<SignInScreen> {
               },
               child: Text(
                 language.signUp,
-                style: boldTextStyle(
+                style: context.boldTextStyle(
                   color: context.primary,
                 ),
               ),
@@ -375,7 +377,7 @@ class _SignInScreenState extends State<SignInScreen> {
             }
           },
           child: Text(language.lblRegisterAsPartner,
-              style: boldTextStyle(color: primaryColor)),
+              style: context.boldTextStyle(color: primaryColor)),
         )
       ],
     );
@@ -458,7 +460,7 @@ class _SignInScreenState extends State<SignInScreen> {
             Divider(color: context.dividerColor, thickness: 1).expand(),
             16.width,
             Text(language.lblOrContinueWith,
-                style: primaryTextStyle(
+                style: context.primaryTextStyle(
                   size: 14,
                 )),
             16.width,
@@ -537,7 +539,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(language.lblEmail,
-                              style: boldTextStyle(size: 14)),
+                              style: context.boldTextStyle(size: 14)),
                           8.height,
                           AppTextField(
                             textFieldType: TextFieldType.EMAIL_ENHANCED,
@@ -556,7 +558,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           ),
                           16.height,
                           Text(language.lblPassword,
-                              style: boldTextStyle(size: 14)),
+                              style: context.boldTextStyle(size: 14)),
                           8.height,
                           AppTextField(
                             textFieldType: TextFieldType.PASSWORD,

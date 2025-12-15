@@ -1,6 +1,7 @@
 import 'package:booking_system_flutter/component/back_widget.dart';
 import 'package:booking_system_flutter/component/shimmer_widget.dart';
 import 'package:booking_system_flutter/utils/context_extensions.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -63,7 +64,7 @@ class BlogDetailShimmer extends StatelessWidget {
                                   color: Colors.grey.withValues(alpha: 0.2)),
                               alignment: Alignment.center,
                               child: Text('+' '5',
-                                  style: boldTextStyle(color: white)),
+                                  style: context.boldTextStyle(color: white)),
                             ),
                           ),
                         ],

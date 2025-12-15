@@ -1,5 +1,6 @@
 import 'package:booking_system_flutter/main.dart';
 import 'package:booking_system_flutter/utils/colors.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -38,12 +39,12 @@ class PriceWidget extends StatelessWidget {
 
     TextStyle _textStyle({int? aSize}) {
       return isBoldText
-          ? boldTextStyle(
+          ? context.boldTextStyle(
               size: aSize ?? size!.toInt(),
               color: color ?? primaryColor,
               decoration: textDecoration(),
               textDecorationStyle: TextDecorationStyle.solid)
-          : secondaryTextStyle(
+          : context.secondaryTextStyle(
               size: aSize ?? size!.toInt(),
               color: color ?? primaryColor,
               decoration: textDecoration(),
@@ -94,7 +95,8 @@ class PriceWidget extends StatelessWidget {
                 if (isHourlyService)
                   Text(
                     '/${language.lblHr}',
-                    style: secondaryTextStyle(color: hourlyTextColor, size: 12),
+                    style: context.secondaryTextStyle(
+                        color: hourlyTextColor, size: 12),
                   ),
               ],
             );

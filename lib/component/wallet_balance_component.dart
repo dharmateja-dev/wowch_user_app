@@ -1,4 +1,5 @@
 import 'package:booking_system_flutter/utils/extensions/num_extenstions.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -35,12 +36,13 @@ class _WalletBalanceComponentState extends State<WalletBalanceComponent> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        Text('${language.walletBalance}: ', style: secondaryTextStyle(size: 14)),
+        Text('${language.walletBalance}: ',
+            style: context.secondaryTextStyle(size: 14)),
         SnapHelperWidget(
           future: futureWalletBalance,
           onSuccess: (balance) => Text(
             balance.toPriceFormat(),
-            style: boldTextStyle(color: Colors.green, size: 16),
+            style: context.boldTextStyle(color: Colors.green, size: 16),
           ),
           useConnectionStateForLoader: true,
           errorBuilder: (p0) {

@@ -4,6 +4,7 @@ import 'package:booking_system_flutter/model/shop_model.dart';
 import 'package:booking_system_flutter/utils/common.dart';
 import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/model_keys.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -89,7 +90,7 @@ class _InvoiceRequestDialogComponentState
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(language.requestInvoice,
-                      style: boldTextStyle(color: Colors.white)),
+                      style: context.boldTextStyle(color: Colors.white)),
                   IconButton(
                     onPressed: () {
                       finish(context);
@@ -103,7 +104,8 @@ class _InvoiceRequestDialogComponentState
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(language.invoiceSubTitle, style: primaryTextStyle()),
+                Text(language.invoiceSubTitle,
+                    style: context.primaryTextStyle()),
                 20.height,
                 Observer(
                   builder: (_) => AppTextField(
@@ -119,7 +121,7 @@ class _InvoiceRequestDialogComponentState
                   text: language.send,
                   height: 40,
                   color: context.primary,
-                  textStyle: primaryTextStyle(color: white),
+                  textStyle: context.primaryTextStyle(color: white),
                   width: context.width() - context.navigationBarHeight,
                   onTap: () {
                     sentMail();

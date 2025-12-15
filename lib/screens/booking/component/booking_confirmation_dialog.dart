@@ -1,5 +1,6 @@
 import 'package:booking_system_flutter/model/package_data_model.dart';
 import 'package:booking_system_flutter/screens/booking/booking_detail_screen.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -48,12 +49,12 @@ class _BookingConfirmationDialogState extends State<BookingConfirmationDialog> {
       return Text(
           formatBookingDate(widget.data.serviceDetail!.bookingDate.validate(),
               format: DATE_FORMAT_2),
-          style: boldTextStyle(size: 14, color: context.primaryColor));
+          style: context.boldTextStyle(size: 14, color: context.primaryColor));
     }
     return Text(
         formatBookingDate(widget.data.serviceDetail!.dateTimeVal.validate(),
             format: DATE_FORMAT_2),
-        style: boldTextStyle(size: 14, color: context.primaryColor));
+        style: context.boldTextStyle(size: 14, color: context.primaryColor));
   }
 
   Widget buildTimeWidget() {
@@ -61,7 +62,7 @@ class _BookingConfirmationDialogState extends State<BookingConfirmationDialog> {
       return Text(
           formatBookingDate(widget.data.serviceDetail!.dateTimeVal.validate(),
               format: HOUR_12_FORMAT),
-          style: boldTextStyle(size: 14, color: context.primaryColor),
+          style: context.boldTextStyle(size: 14, color: context.primaryColor),
           textAlign: TextAlign.end);
     }
     return Text(
@@ -79,7 +80,7 @@ class _BookingConfirmationDialogState extends State<BookingConfirmationDialog> {
             .last
             .toInt(),
       ).format(context),
-      style: boldTextStyle(size: 14, color: context.primaryColor),
+      style: context.boldTextStyle(size: 14, color: context.primaryColor),
       textAlign: TextAlign.end,
     );
   }
@@ -111,14 +112,14 @@ class _BookingConfirmationDialogState extends State<BookingConfirmationDialog> {
           // Thank You title
           Text(
             language.thankYou,
-            style: boldTextStyle(size: 22),
+            style: context.boldTextStyle(size: 22),
             textAlign: TextAlign.center,
           ),
           8.height,
           // Booking confirmed message
           Text(
             language.bookingConfirmedMsg,
-            style: primaryTextStyle(size: 14),
+            style: context.primaryTextStyle(size: 14),
             textAlign: TextAlign.center,
           ),
           24.height,
@@ -136,7 +137,7 @@ class _BookingConfirmationDialogState extends State<BookingConfirmationDialog> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(language.lblDate, style: primaryTextStyle()),
+                      Text(language.lblDate, style: context.primaryTextStyle()),
                       4.height,
                       buildDateWidget(),
                     ],
@@ -146,7 +147,7 @@ class _BookingConfirmationDialogState extends State<BookingConfirmationDialog> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    Text(language.lblTime, style: primaryTextStyle()),
+                    Text(language.lblTime, style: context.primaryTextStyle()),
                     4.height,
                     buildTimeWidget(),
                   ],
@@ -177,7 +178,8 @@ class _BookingConfirmationDialogState extends State<BookingConfirmationDialog> {
                   ),
                   child: Text(
                     language.goToReview,
-                    style: boldTextStyle(color: context.primaryColor, size: 14),
+                    style: context.boldTextStyle(
+                        color: context.primaryColor, size: 14),
                   ),
                 ),
               ),
@@ -187,7 +189,8 @@ class _BookingConfirmationDialogState extends State<BookingConfirmationDialog> {
                 child: AppButton(
                   padding: EdgeInsets.symmetric(vertical: 14),
                   text: language.goToHome,
-                  textStyle: boldTextStyle(size: 14, color: Colors.white),
+                  textStyle:
+                      context.boldTextStyle(size: 14, color: Colors.white),
                   color: context.primaryColor,
                   shapeBorder: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),

@@ -2,6 +2,7 @@ import 'package:booking_system_flutter/main.dart';
 import 'package:booking_system_flutter/utils/colors.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
 import 'package:booking_system_flutter/utils/context_extensions.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -58,7 +59,7 @@ class ThemeSelectionDaiLogState extends State<ThemeSelectionDaiLog> {
                 Expanded(
                   child: Text(
                     language.chooseTheme,
-                    style: boldTextStyle(
+                    style: context.boldTextStyle(
                       size: 20,
                     ),
                   ),
@@ -151,7 +152,7 @@ class ThemeSelectionDaiLogState extends State<ThemeSelectionDaiLog> {
                         // Option Text
                         Text(
                           themeModeList[index],
-                          style: primaryTextStyle(
+                          style: context.primaryTextStyle(
                             size: 16,
                           ),
                         ),

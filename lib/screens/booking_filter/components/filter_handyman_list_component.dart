@@ -1,3 +1,4 @@
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -13,10 +14,12 @@ import '../../../utils/constant.dart';
 
 class FilterHandymanListComponent extends StatefulWidget {
   @override
-  State<FilterHandymanListComponent> createState() => _FilterHandymanListComponentState();
+  State<FilterHandymanListComponent> createState() =>
+      _FilterHandymanListComponentState();
 }
 
-class _FilterHandymanListComponentState extends State<FilterHandymanListComponent> {
+class _FilterHandymanListComponentState
+    extends State<FilterHandymanListComponent> {
   Future<List<UserData>>? future;
 
   List<UserData> handymanList = [];
@@ -83,7 +86,8 @@ class _FilterHandymanListComponentState extends State<FilterHandymanListComponen
               itemCount: list.length,
               listAnimationType: ListAnimationType.FadeIn,
               fadeInConfiguration: FadeInConfiguration(duration: 2.seconds),
-              padding: EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 80),
+              padding:
+                  EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 80),
               emptyWidget: NoDataWidget(
                 title: language.handymanNotFound,
                 imageWidget: EmptyStateWidget(),
@@ -113,7 +117,9 @@ class _FilterHandymanListComponentState extends State<FilterHandymanListComponen
                   decoration: boxDecorationWithRoundedCorners(
                     borderRadius: radius(),
                     backgroundColor: context.cardColor,
-                    border: appStore.isDarkMode ? Border.all(color: context.dividerColor) : null,
+                    border: appStore.isDarkMode
+                        ? Border.all(color: context.dividerColor)
+                        : null,
                   ),
                   child: Row(
                     children: [
@@ -122,9 +128,12 @@ class _FilterHandymanListComponentState extends State<FilterHandymanListComponen
                         height: 45,
                       ),
                       16.width,
-                      Text(data.displayName.validate(), style: boldTextStyle()).expand(),
+                      Text(data.displayName.validate(),
+                              style: context.boldTextStyle())
+                          .expand(),
                       4.width,
-                      SelectedItemWidget(isSelected: filterStore.handymanId.contains(data.id)),
+                      SelectedItemWidget(
+                          isSelected: filterStore.handymanId.contains(data.id)),
                     ],
                   ),
                 ).onTap(() {
@@ -138,17 +147,23 @@ class _FilterHandymanListComponentState extends State<FilterHandymanListComponen
 
                   handymanList.forEach((element) {
                     if (element.isSelected) {
-                      filterStore.addToHandymanList(prodId: element.id.validate());
+                      filterStore.addToHandymanList(
+                          prodId: element.id.validate());
                     }
                   });
 
                   setState(() {});
-                }, hoverColor: Colors.transparent, highlightColor: Colors.transparent, splashColor: Colors.transparent);
+                },
+                    hoverColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
+                    splashColor: Colors.transparent);
               },
             );
           },
         ),
-        Observer(builder: (_) => LoaderWidget().visible(appStore.isLoading && page != 1)),
+        Observer(
+            builder: (_) =>
+                LoaderWidget().visible(appStore.isLoading && page != 1)),
       ],
     );
   }

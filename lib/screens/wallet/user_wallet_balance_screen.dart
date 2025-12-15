@@ -3,6 +3,7 @@
 import 'package:booking_system_flutter/component/price_widget.dart';
 import 'package:booking_system_flutter/services/flutter_wave_service_new.dart';
 import 'package:booking_system_flutter/utils/extensions/num_extenstions.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -389,8 +390,8 @@ class _UserWalletBalanceScreenState extends State<UserWalletBalanceScreen> {
                     child: Row(
                       children: [
                         Text(language.balance,
-                                style:
-                                    boldTextStyle(color: context.primaryColor))
+                                style: context.boldTextStyle(
+                                    color: context.primaryColor))
                             .expand(),
                         Observer(
                             builder: (context) => PriceWidget(
@@ -406,10 +407,10 @@ class _UserWalletBalanceScreenState extends State<UserWalletBalanceScreen> {
                     children: [
                       16.height,
                       Text(language.topUpWallet,
-                          style: boldTextStyle(size: LABEL_TEXT_SIZE)),
+                          style: context.boldTextStyle(size: LABEL_TEXT_SIZE)),
                       8.height,
                       Text(language.topUpAmountQuestion,
-                          style: secondaryTextStyle()),
+                          style: context.secondaryTextStyle()),
                       Container(
                         width: context.width(),
                         margin: const EdgeInsets.symmetric(vertical: 16),
@@ -425,7 +426,8 @@ class _UserWalletBalanceScreenState extends State<UserWalletBalanceScreen> {
                               //  textAlign: TextAlign.center,
                               controller: walletAmountCont,
                               focus: walletAmountFocus,
-                              textStyle: primaryTextStyle(color: Colors.white),
+                              textStyle:
+                                  context.primaryTextStyle(color: Colors.white),
                               inputFormatters: [
                                 FilteringTextInputFormatter.digitsOnly
                               ],
@@ -441,13 +443,13 @@ class _UserWalletBalanceScreenState extends State<UserWalletBalanceScreen> {
                                 prefixText: isCurrencyPositionLeft
                                     ? appConfigurationStore.currencySymbol + " "
                                     : '',
-                                prefixStyle:
-                                    primaryTextStyle(color: Colors.white),
+                                prefixStyle: context.primaryTextStyle(
+                                    color: Colors.white),
                                 suffixText: isCurrencyPositionRight
                                     ? appConfigurationStore.currencySymbol + " "
                                     : '',
-                                suffixStyle:
-                                    primaryTextStyle(color: Colors.white),
+                                suffixStyle: context.primaryTextStyle(
+                                    color: Colors.white),
                               ),
                               onChanged: (p0) {
                                 //
@@ -480,7 +482,7 @@ class _UserWalletBalanceScreenState extends State<UserWalletBalanceScreen> {
                                     defaultAmounts[index]
                                         .toString()
                                         .formatNumberWithComma(),
-                                    style: primaryTextStyle(
+                                    style: context.primaryTextStyle(
                                         color:
                                             defaultAmounts[index].toString() ==
                                                     walletAmountCont.text
@@ -499,10 +501,10 @@ class _UserWalletBalanceScreenState extends State<UserWalletBalanceScreen> {
                       ),
                       16.height,
                       Text(language.paymentMethod,
-                          style: boldTextStyle(size: LABEL_TEXT_SIZE)),
+                          style: context.boldTextStyle(size: LABEL_TEXT_SIZE)),
                       4.height,
                       Text(language.selectYourPaymentMethodToAddBalance,
-                          style: secondaryTextStyle()),
+                          style: context.secondaryTextStyle()),
                       4.height,
                       SnapHelperWidget<List<PaymentSetting>>(
                         future: future,
@@ -544,7 +546,8 @@ class _UserWalletBalanceScreenState extends State<UserWalletBalanceScreen> {
                                       child: icon.isNotEmpty
                                           ? Image.asset(icon)
                                           : Text(value.type.validate(),
-                                              style: primaryTextStyle()),
+                                              style:
+                                                  context.primaryTextStyle()),
                                     ).onTap(() {
                                       currentPaymentMethod = value;
 
@@ -588,7 +591,7 @@ class _UserWalletBalanceScreenState extends State<UserWalletBalanceScreen> {
               height: 16,
               color: context.primaryColor,
               text: language.proceedToTopUp,
-              textStyle: boldTextStyle(color: white),
+              textStyle: context.boldTextStyle(color: white),
               onTap: () async {
                 hideKeyboard(context);
                 _handleClick();

@@ -6,6 +6,7 @@ import 'package:booking_system_flutter/network/rest_apis.dart';
 import 'package:booking_system_flutter/screens/jobRequest/book_post_job_request_screen.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
 import 'package:booking_system_flutter/utils/model_keys.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -18,7 +19,11 @@ class BidderItemComponent extends StatefulWidget {
   final PostJobData postJobData;
   final PostJobDetailResponse? postJobDetailResponse;
 
-  const BidderItemComponent({required this.data, required this.postRequestId, required this.postJobData, this.postJobDetailResponse});
+  const BidderItemComponent(
+      {required this.data,
+      required this.postRequestId,
+      required this.postJobData,
+      this.postJobDetailResponse});
 
   @override
   _BidderItemComponentState createState() => _BidderItemComponentState();
@@ -41,7 +46,8 @@ class _BidderItemComponentState extends State<BidderItemComponent> {
       negativeText: language.lblNo,
       dialogType: DialogType.CONFIRMATION,
       primaryColor: context.primaryColor,
-      title: '${language.doYouWantToAssign} ${widget.data.provider!.displayName.validate()}?',
+      title:
+          '${language.doYouWantToAssign} ${widget.data.provider!.displayName.validate()}?',
       positiveText: language.lblYes,
       onAccept: (c) async {
         List<int> serviceList = [];
@@ -69,7 +75,8 @@ class _BidderItemComponentState extends State<BidderItemComponent> {
           finish(context);
           LiveStream().emit(LIVESTREAM_UPDATE_BIDER);
 
-          widget.postJobDetailResponse!.postRequestDetail!.jobPrice = widget.data.price.validate();
+          widget.postJobDetailResponse!.postRequestDetail!.jobPrice =
+              widget.data.price.validate();
 
           BookPostJobRequestScreen(
             postJobDetailResponse: widget.postJobDetailResponse!,
@@ -94,7 +101,9 @@ class _BidderItemComponentState extends State<BidderItemComponent> {
     return Container(
       margin: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
       padding: const EdgeInsets.all(16),
-      decoration: boxDecorationWithRoundedCorners(backgroundColor: context.cardColor, borderRadius: const BorderRadius.all(Radius.circular(16))),
+      decoration: boxDecorationWithRoundedCorners(
+          backgroundColor: context.cardColor,
+          borderRadius: const BorderRadius.all(Radius.circular(16))),
       child: Row(
         children: [
           CachedImageWidget(
@@ -110,13 +119,15 @@ class _BidderItemComponentState extends State<BidderItemComponent> {
             children: [
               Marquee(
                 directionMarguee: DirectionMarguee.oneDirection,
-                child: Text(widget.data.provider!.displayName.validate(), style: boldTextStyle()),
+                child: Text(widget.data.provider!.displayName.validate(),
+                    style: context.boldTextStyle()),
               ),
               4.height,
               if (widget.data.provider!.designation.validate().isNotEmpty)
                 Marquee(
                   directionMarguee: DirectionMarguee.oneDirection,
-                  child: Text(widget.data.provider!.designation.validate(), style: primaryTextStyle(size: 12)),
+                  child: Text(widget.data.provider!.designation.validate(),
+                      style: context.primaryTextStyle(size: 12)),
                 ),
               4.height,
               DisabledRatingBarWidget(
@@ -128,7 +139,8 @@ class _BidderItemComponentState extends State<BidderItemComponent> {
                 directionMarguee: DirectionMarguee.oneDirection,
                 child: Row(
                   children: [
-                    Text('${language.bidPrice}: ', style: secondaryTextStyle()),
+                    Text('${language.bidPrice}: ',
+                        style: context.secondaryTextStyle()),
                     PriceWidget(
                       price: widget.data.price.validate(),
                       isHourlyService: false,
@@ -149,7 +161,8 @@ class _BidderItemComponentState extends State<BidderItemComponent> {
                 children: [
                   const Icon(Icons.check, color: white, size: 16),
                   4.width,
-                  Text(language.accept, style: boldTextStyle(color: white, size: 12)),
+                  Text(language.accept,
+                      style: context.boldTextStyle(color: white, size: 12)),
                 ],
               ),
               color: context.primaryColor,

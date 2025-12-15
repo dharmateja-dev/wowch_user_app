@@ -7,6 +7,7 @@ import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/extensions/num_extenstions.dart';
 import 'package:booking_system_flutter/utils/images.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -147,7 +148,7 @@ class _WithdrawRequestState extends State<WithdrawRequest> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(language.availableBalance,
-                            style: boldTextStyle(size: 14)),
+                            style: context.boldTextStyle(size: 14)),
                         PriceWidget(
                             price: widget.availableBalance.validate(),
                             color: context.primaryColor,
@@ -156,7 +157,8 @@ class _WithdrawRequestState extends State<WithdrawRequest> {
                     ),
                   ),
                   (context.height() * 0.05).toInt().height,
-                  Text(language.lblEnterAmount, style: boldTextStyle(size: 14)),
+                  Text(language.lblEnterAmount,
+                      style: context.boldTextStyle(size: 14)),
                   8.height,
                   AppTextField(
                     textFieldType: TextFieldType.NUMBER,
@@ -196,7 +198,7 @@ class _WithdrawRequestState extends State<WithdrawRequest> {
                     children: [
                       Text(
                         language.chooseBank,
-                        style: boldTextStyle(size: 14),
+                        style: context.boldTextStyle(size: 14),
                       ),
                       const Spacer(),
                       GestureDetector(
@@ -215,7 +217,8 @@ class _WithdrawRequestState extends State<WithdrawRequest> {
                         },
                         child: Text(
                           language.addBank,
-                          style: boldTextStyle(size: 14, color: primaryColor),
+                          style: context.boldTextStyle(
+                              size: 14, color: primaryColor),
                         ),
                       ),
                     ],
@@ -228,7 +231,7 @@ class _WithdrawRequestState extends State<WithdrawRequest> {
                     initialValue: selectedBank,
                     hint: Text(
                       language.egCentralNationalBank,
-                      style: secondaryTextStyle(size: 12),
+                      style: context.secondaryTextStyle(size: 12),
                     ),
                     icon: ic_down_arrow.iconImage(size: 16, context: context),
                     dropdownColor: context.cardColor,
@@ -236,7 +239,7 @@ class _WithdrawRequestState extends State<WithdrawRequest> {
                       return DropdownMenuItem<BankHistory>(
                         value: e,
                         child: Text(e.bankName.validate(),
-                            style: primaryTextStyle(),
+                            style: context.primaryTextStyle(),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis),
                       );
@@ -255,7 +258,7 @@ class _WithdrawRequestState extends State<WithdrawRequest> {
                     text: language.withdraw,
                     height: 40,
                     color: context.primary,
-                    textStyle: boldTextStyle(color: white),
+                    textStyle: context.boldTextStyle(color: white),
                     width: context.width() - context.navigationBarHeight,
                     onTap: () {
                       if (formKey.currentState!.validate()) {

@@ -208,6 +208,7 @@ class _DashboardFragmentState extends State<DashboardFragment> {
                     16.height,
                     FeaturedServiceListComponent(
                         serviceList: snap.featuredServices.validate()),
+
                     ServiceListComponent(serviceList: snap.service.validate()),
                     16.height,
                     const NewJobRequestComponent(),

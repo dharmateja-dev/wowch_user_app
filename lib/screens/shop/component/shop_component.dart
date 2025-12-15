@@ -11,6 +11,7 @@ import 'package:booking_system_flutter/utils/colors.dart';
 import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/images.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -97,7 +98,7 @@ class ShopComponent extends StatelessWidget {
                   children: [
                     Text(
                       shop.name,
-                      style: boldTextStyle(size: 16),
+                      style: context.boldTextStyle(size: 16),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -113,7 +114,7 @@ class ShopComponent extends StatelessWidget {
                             child: Marquee(
                               child: Text(
                                 "${shop.buildFullAddress()}",
-                                style: secondaryTextStyle(),
+                                style: context.secondaryTextStyle(),
                               ),
                             ),
                           ),
@@ -131,7 +132,7 @@ class ShopComponent extends StatelessWidget {
                         context: context,
                         size: 14,
                       ),
-                      textStyle: secondaryTextStyle(),
+                      textStyle: context.secondaryTextStyle(),
                       spacing: 4,
                     ),
                   ],
@@ -176,7 +177,8 @@ class ShopComponent extends StatelessWidget {
                           ),
                           child: Text(
                             service.name.validate(),
-                            style: secondaryTextStyle(color: primaryColor),
+                            style:
+                                context.secondaryTextStyle(color: primaryColor),
                           ),
                         ),
                       );

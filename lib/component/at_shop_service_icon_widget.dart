@@ -1,6 +1,7 @@
 import 'package:booking_system_flutter/generated/assets.dart';
 import 'package:booking_system_flutter/main.dart';
 import 'package:booking_system_flutter/utils/colors.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -32,7 +33,8 @@ class ShopServiceIconWidget extends StatelessWidget {
               ),
             ),
             4.width,
-            Text(language.lblAtShop, style: boldTextStyle(size: 12)).paddingSymmetric(vertical: 4, horizontal: 2),
+            Text(language.lblAtShop, style: context.boldTextStyle(size: 12))
+                .paddingSymmetric(vertical: 4, horizontal: 2),
             8.width,
           ],
         ),

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:booking_system_flutter/component/back_widget.dart';
 import 'package:booking_system_flutter/component/price_widget.dart';
 import 'package:booking_system_flutter/utils/context_extensions.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -159,7 +160,7 @@ class _AddBankScreenState extends State<AddBankScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(language.availableBalance,
-                              style: boldTextStyle(size: 14)),
+                              style: context.boldTextStyle(size: 14)),
                           PriceWidget(
                               price: widget.availableBalance.validate(),
                               color: context.primaryColor,
@@ -168,7 +169,8 @@ class _AddBankScreenState extends State<AddBankScreen> {
                       ),
                     ),
                     (context.height() * 0.04).toInt().height,
-                    Text(language.lblBankName, style: boldTextStyle(size: 14)),
+                    Text(language.lblBankName,
+                        style: context.boldTextStyle(size: 14)),
                     8.height,
                     AppTextField(
                       textFieldType: TextFieldType.NAME,
@@ -183,7 +185,7 @@ class _AddBankScreenState extends State<AddBankScreen> {
                     ),
                     16.height,
                     Text(language.lblFullNameOnBankAccount,
-                        style: boldTextStyle(size: 14)),
+                        style: context.boldTextStyle(size: 14)),
                     8.height,
                     AppTextField(
                       textFieldType: TextFieldType.NAME,
@@ -198,7 +200,7 @@ class _AddBankScreenState extends State<AddBankScreen> {
                     ),
                     16.height,
                     Text(language.lblAccountNumber,
-                        style: boldTextStyle(size: 14)),
+                        style: context.boldTextStyle(size: 14)),
                     8.height,
                     AppTextField(
                       textFieldType: TextFieldType.NAME,
@@ -214,7 +216,8 @@ class _AddBankScreenState extends State<AddBankScreen> {
                       //     .paddingAll(14),
                     ),
                     16.height,
-                    Text(language.lblIFSCCode, style: boldTextStyle(size: 14)),
+                    Text(language.lblIFSCCode,
+                        style: context.boldTextStyle(size: 14)),
                     8.height,
                     AppTextField(
                       textFieldType: TextFieldType.NAME,
@@ -230,7 +233,8 @@ class _AddBankScreenState extends State<AddBankScreen> {
                       isValidationRequired: false,
                     ),
                     16.height,
-                    Text(language.lblStatus, style: boldTextStyle(size: 14)),
+                    Text(language.lblStatus,
+                        style: context.boldTextStyle(size: 14)),
                     8.height,
                     DropdownButtonFormField<StaticDataModel>(
                       isExpanded: true,
@@ -242,7 +246,7 @@ class _AddBankScreenState extends State<AddBankScreen> {
                         return DropdownMenuItem<StaticDataModel>(
                           value: data,
                           child: Text(data.value.validate(),
-                              style: primaryTextStyle()),
+                              style: context.primaryTextStyle()),
                         );
                       }).toList(),
                       decoration: inputDecoration(context,
@@ -270,7 +274,7 @@ class _AddBankScreenState extends State<AddBankScreen> {
               child: AppButton(
                 text: language.btnSave,
                 color: context.primary,
-                textStyle: boldTextStyle(color: context.onPrimary),
+                textStyle: context.boldTextStyle(color: context.onPrimary),
                 width: context.width(),
                 onTap: () {
                   if (formKey.currentState!.validate()) {

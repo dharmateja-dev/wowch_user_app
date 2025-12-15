@@ -1,3 +1,4 @@
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -45,7 +46,10 @@ class _PaymentStatusFilterState extends State<PaymentStatusFilter> {
                         ? lightPrimaryColor
                         : context.cardColor,
                 borderRadius: radius(8),
-                border: Border.all(color: appStore.isDarkMode ? Colors.white54 : lightPrimaryColor),
+                border: Border.all(
+                    color: appStore.isDarkMode
+                        ? Colors.white54
+                        : lightPrimaryColor),
               ),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
@@ -54,11 +58,12 @@ class _PaymentStatusFilterState extends State<PaymentStatusFilter> {
                     Container(
                       padding: const EdgeInsets.all(2),
                       margin: const EdgeInsets.only(right: 1),
-                      child: Icon(Icons.done, size: 16, color: context.primaryColor),
+                      child: Icon(Icons.done,
+                          size: 16, color: context.primaryColor),
                     ),
                   Text(
                     getPaymentStatusFilterText(res.status.validate()),
-                    style: primaryTextStyle(
+                    style: context.primaryTextStyle(
                         color: appStore.isDarkMode
                             ? res.isSelected
                                 ? context.primaryColor
@@ -74,9 +79,11 @@ class _PaymentStatusFilterState extends State<PaymentStatusFilter> {
               setState(() {
                 res.isSelected = !res.isSelected;
                 if (res.isSelected) {
-                  filterStore.addToPaymentStatusList(paymentStatusList: res.status.validate());
+                  filterStore.addToPaymentStatusList(
+                      paymentStatusList: res.status.validate());
                 } else {
-                  filterStore.removeFromPaymentStatusList(paymentStatusList: res.status.validate());
+                  filterStore.removeFromPaymentStatusList(
+                      paymentStatusList: res.status.validate());
                 }
               });
             });

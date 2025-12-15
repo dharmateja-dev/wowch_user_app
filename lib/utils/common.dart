@@ -13,6 +13,7 @@ import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/images.dart';
 import 'package:booking_system_flutter/utils/permissions.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -194,9 +195,9 @@ InputDecoration inputDecoration(
   return InputDecoration(
     contentPadding: EdgeInsets.only(left: 12, bottom: 8, top: 8, right: 10),
     labelText: labelText,
-    labelStyle: primaryTextStyle(),
+    labelStyle: context.primaryTextStyle(),
     hintText: hintText,
-    hintStyle: secondaryTextStyle(size: 14, color: context.hintColor),
+    hintStyle: context.secondaryTextStyle(size: 14, color: context.hintColor),
     alignLabelWithHint: true,
     counterText: counter == false ? "" : counterText,
     prefixIcon: prefixIcon,
@@ -224,7 +225,7 @@ InputDecoration inputDecoration(
       borderRadius: radius(borderRadius ?? defaultRadius),
       borderSide: BorderSide(color: context.inputBorderColor, width: 1.0),
     ),
-    errorStyle: primaryTextStyle(color: Colors.red, size: 11),
+    errorStyle: context.primaryTextStyle(color: Colors.red, size: 11),
     focusedBorder: OutlineInputBorder(
       borderRadius: radius(borderRadius ?? defaultRadius),
       borderSide: BorderSide(color: context.primary, width: 1.0),
@@ -685,11 +686,12 @@ Widget mobileNumberInfoWidget(BuildContext context) {
   return RichTextWidget(
     list: [
       TextSpan(
-          text: '${language.addYourCountryCode}', style: secondaryTextStyle()),
-      TextSpan(text: ' "91-", "236-" ', style: boldTextStyle(size: 12)),
+          text: '${language.addYourCountryCode}',
+          style: context.secondaryTextStyle()),
+      TextSpan(text: ' "91-", "236-" ', style: context.boldTextStyle(size: 12)),
       TextSpan(
         text: ' (${language.help})',
-        style: boldTextStyle(size: 12, color: primaryColor),
+        style: context.boldTextStyle(size: 12, color: primaryColor),
         recognizer: TapGestureRecognizer()
           ..onTap = () {
             launchUrlCustomTab("https://countrycode.org/");
@@ -716,7 +718,7 @@ class OptionListWidget extends StatelessWidget {
               onTap: optionList[index].onTap,
               child: Text(
                 optionList[index].title,
-                style: secondaryTextStyle(
+                style: context.secondaryTextStyle(
                   color: context.primary,
                   size: 12,
                   weight: FontWeight.bold,
@@ -724,7 +726,7 @@ class OptionListWidget extends StatelessWidget {
               ),
             ),
             8.width,
-            Text("|", style: secondaryTextStyle())
+            Text("|", style: context.secondaryTextStyle())
                 .visible(optionList.length != index + 1),
             8.width,
           ],
@@ -851,7 +853,7 @@ class MultiLanguageWidget extends StatelessWidget {
                             url: languageData.flag.validate(), height: 16),
                         4.width,
                         Text(languageData.name.validate().toUpperCase(),
-                            style: secondaryTextStyle(
+                            style: context.secondaryTextStyle(
                                 color: appStore.selectedLanguage.languageCode ==
                                         languageData.languageCode
                                     ? white

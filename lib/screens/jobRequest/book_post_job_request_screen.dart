@@ -13,6 +13,7 @@ import 'package:booking_system_flutter/utils/images.dart';
 import 'package:booking_system_flutter/utils/model_keys.dart';
 import 'package:booking_system_flutter/utils/permissions.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -22,10 +23,14 @@ class BookPostJobRequestScreen extends StatefulWidget {
   final num? providerId;
   final num? jobPrice;
 
-  BookPostJobRequestScreen({required this.postJobDetailResponse, required this.providerId, this.jobPrice});
+  BookPostJobRequestScreen(
+      {required this.postJobDetailResponse,
+      required this.providerId,
+      this.jobPrice});
 
   @override
-  _BookPostJobRequestScreenState createState() => _BookPostJobRequestScreenState();
+  _BookPostJobRequestScreenState createState() =>
+      _BookPostJobRequestScreenState();
 }
 
 class _BookPostJobRequestScreenState extends State<BookPostJobRequestScreen> {
@@ -75,22 +80,28 @@ class _BookPostJobRequestScreenState extends State<BookPostJobRequestScreen> {
           initialTime: pickedTime ?? TimeOfDay.now(),
           builder: (_, child) {
             return Theme(
-              data: appStore.isDarkMode ? ThemeData.dark() : AppTheme.lightTheme(),
+              data: appStore.isDarkMode
+                  ? ThemeData.dark()
+                  : AppTheme.lightTheme(),
               child: child!,
             );
           },
         ).then((time) {
           if (time != null) {
-            finalDate = DateTime(date.year, date.month, date.day, time.hour, time.minute);
+            finalDate = DateTime(
+                date.year, date.month, date.day, time.hour, time.minute);
 
             DateTime now = DateTime.now().subtract(1.minutes);
-            if (date.isToday && finalDate!.millisecondsSinceEpoch < now.millisecondsSinceEpoch) {
+            if (date.isToday &&
+                finalDate!.millisecondsSinceEpoch <
+                    now.millisecondsSinceEpoch) {
               return toast(language.selectedBookingTimeIsAlreadyPassed);
             }
 
             selectedDate = date;
             pickedTime = time;
-            dateTimeCont.text = "${formatBookingDate(selectedDate.toString(), format: DATE_FORMAT_3)} ${pickedTime!.format(context).toString()}";
+            dateTimeCont.text =
+                "${formatBookingDate(selectedDate.toString(), format: DATE_FORMAT_3)} ${pickedTime!.format(context).toString()}";
           }
         }).catchError((e) {
           toast(e.toString());
@@ -104,7 +115,10 @@ class _BookPostJobRequestScreenState extends State<BookPostJobRequestScreen> {
       await setValue(PERMISSION_STATUS, value);
 
       if (value) {
-        String? res = await MapScreen(latitude: getDoubleAsync(LATITUDE), latLong: getDoubleAsync(LONGITUDE)).launch(context);
+        String? res = await MapScreen(
+                latitude: getDoubleAsync(LATITUDE),
+                latLong: getDoubleAsync(LONGITUDE))
+            .launch(context);
 
         if (res != null) {
           addressCont.text = res;
@@ -148,11 +162,15 @@ class _BookPostJobRequestScreenState extends State<BookPostJobRequestScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Image.asset(ic_confirm_check, height: 100, width: 100, color: context.primaryColor),
+                  Image.asset(ic_confirm_check,
+                      height: 100, width: 100, color: context.primaryColor),
                   24.height,
-                  Text(language.lblConfirmBooking, style: boldTextStyle(size: 20)),
+                  Text(language.lblConfirmBooking,
+                      style: context.boldTextStyle(size: 20)),
                   16.height,
-                  Text(language.lblConfirmMsg, style: primaryTextStyle(), textAlign: TextAlign.center),
+                  Text(language.lblConfirmMsg,
+                      style: context.primaryTextStyle(),
+                      textAlign: TextAlign.center),
                   16.height,
                   Row(
                     children: [
@@ -161,7 +179,9 @@ class _BookPostJobRequestScreenState extends State<BookPostJobRequestScreen> {
                           finish(context);
                         },
                         text: language.lblCancel,
-                        color: appStore.isDarkMode ? context.scaffoldBackgroundColor : context.cardColor,
+                        color: appStore.isDarkMode
+                            ? context.scaffoldBackgroundColor
+                            : context.cardColor,
                         textColor: textPrimaryColorGlobal,
                       ).expand(),
                       16.width,
@@ -193,23 +213,31 @@ class _BookPostJobRequestScreenState extends State<BookPostJobRequestScreen> {
   }
 
   void bookServices() {
-    if (widget.postJobDetailResponse.postRequestDetail != null && widget.postJobDetailResponse.postRequestDetail!.service.validate().isNotEmpty) {
-      serviceId = widget.postJobDetailResponse.postRequestDetail!.service!.first.id.validate();
+    if (widget.postJobDetailResponse.postRequestDetail != null &&
+        widget.postJobDetailResponse.postRequestDetail!.service
+            .validate()
+            .isNotEmpty) {
+      serviceId = widget
+          .postJobDetailResponse.postRequestDetail!.service!.first.id
+          .validate();
     }
 
     log(widget.postJobDetailResponse.postRequestDetail!.toJson());
 
     Map request = {
       CommonKeys.id: "",
-      PostJob.postRequestId: widget.postJobDetailResponse.postRequestDetail!.id.validate(),
+      PostJob.postRequestId:
+          widget.postJobDetailResponse.postRequestDetail!.id.validate(),
       CommonKeys.serviceId: serviceId,
       CommonKeys.providerId: widget.providerId.toString(),
       CommonKeys.customerId: appStore.userId.toString().toString(),
       CommonKeys.status: BookingStatusKeys.accept,
       CommonKeys.address: addressCont.text.validate(),
       CommonKeys.date: dateTimeCont.text,
-      BookService.amount: widget.postJobDetailResponse.postRequestDetail!.jobPrice.validate(),
-      BookingServiceKeys.totalAmount: widget.postJobDetailResponse.postRequestDetail!.jobPrice.validate(),
+      BookService.amount:
+          widget.postJobDetailResponse.postRequestDetail!.jobPrice.validate(),
+      BookingServiceKeys.totalAmount:
+          widget.postJobDetailResponse.postRequestDetail!.jobPrice.validate(),
       BookingServiceKeys.type: BOOKING_TYPE_USER_POST_JOB,
       BookingServiceKeys.couponId: '',
       BookingServiceKeys.description: '',
@@ -221,7 +249,8 @@ class _BookPostJobRequestScreenState extends State<BookPostJobRequestScreen> {
     saveBooking(request).then((value) {
       appStore.setLoading(false);
 
-      DashboardScreen(redirectToBooking: true).launch(context, isNewTask: true, pageRouteAnimation: PageRouteAnimation.Fade);
+      DashboardScreen(redirectToBooking: true).launch(context,
+          isNewTask: true, pageRouteAnimation: PageRouteAnimation.Fade);
     }).catchError((e) {
       appStore.setLoading(false);
       toast(e.toString(), print: true);
@@ -247,11 +276,13 @@ class _BookPostJobRequestScreenState extends State<BookPostJobRequestScreen> {
                 key: formKey,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 26),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 26),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(language.lblDateAndTime, style: boldTextStyle(size: LABEL_TEXT_SIZE)),
+                      Text(language.lblDateAndTime,
+                          style: context.boldTextStyle(size: LABEL_TEXT_SIZE)),
                       8.height,
                       AppTextField(
                         textFieldType: TextFieldType.OTHER,
@@ -265,15 +296,20 @@ class _BookPostJobRequestScreenState extends State<BookPostJobRequestScreen> {
                         onTap: () {
                           selectDateAndTime(context);
                         },
-                        decoration: inputDecoration(context, prefixIcon: ic_calendar.iconImage(size: 10, context: context).paddingAll(14)).copyWith(
+                        decoration: inputDecoration(context,
+                                prefixIcon: ic_calendar
+                                    .iconImage(size: 10, context: context)
+                                    .paddingAll(14))
+                            .copyWith(
                           fillColor: context.cardColor,
                           filled: true,
                           hintText: language.chooseDateAndTime,
-                          hintStyle: secondaryTextStyle(),
+                          hintStyle: context.secondaryTextStyle(),
                         ),
                       ),
                       20.height,
-                      Text(language.lblYourAddress, style: boldTextStyle(size: LABEL_TEXT_SIZE)),
+                      Text(language.lblYourAddress,
+                          style: context.boldTextStyle(size: LABEL_TEXT_SIZE)),
                       8.height,
                       AppTextField(
                         textFieldType: TextFieldType.MULTILINE,
@@ -288,14 +324,16 @@ class _BookPostJobRequestScreenState extends State<BookPostJobRequestScreen> {
                             mainAxisSize: MainAxisSize.min,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              ic_location.iconImage(size: 22, context:context).paddingOnly(top: 8),
+                              ic_location
+                                  .iconImage(size: 22, context: context)
+                                  .paddingOnly(top: 8),
                             ],
                           ),
                         ).copyWith(
                           fillColor: context.cardColor,
                           filled: true,
                           hintText: language.lblEnterYourAddress,
-                          hintStyle: secondaryTextStyle(),
+                          hintStyle: context.secondaryTextStyle(),
                         ),
                       ),
                       8.height,
@@ -303,20 +341,25 @@ class _BookPostJobRequestScreenState extends State<BookPostJobRequestScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           TextButton(
-                            child: Text(language.lblChooseFromMap, style: boldTextStyle(color: context.primaryColor, size: 13)),
+                            child: Text(language.lblChooseFromMap,
+                                style: context.boldTextStyle(
+                                    color: context.primaryColor, size: 13)),
                             onPressed: () {
                               _handleSetLocationClick();
                             },
                           ).flexible(),
                           TextButton(
                             onPressed: _handleCurrentLocationClick,
-                            child: Text(language.lblUseCurrentLocation, style: boldTextStyle(color: context.primaryColor, size: 13)),
+                            child: Text(language.lblUseCurrentLocation,
+                                style: context.boldTextStyle(
+                                    color: context.primaryColor, size: 13)),
                           ).flexible(),
                         ],
                       ),
                       16.height,
                       AppButton(
-                        child: Text(language.lblBookNow, style: boldTextStyle(color: white)), //
+                        child: Text(language.lblBookNow,
+                            style: context.boldTextStyle(color: white)), //
                         color: context.primaryColor,
                         width: context.width(),
                         onTap: () {

@@ -1,3 +1,4 @@
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -17,11 +18,13 @@ class AppCommonDialog extends StatelessWidget {
           width: context.width(),
           decoration: boxDecorationDefault(
             color: context.primaryColor,
-            borderRadius: radiusOnly(topRight: defaultRadius, topLeft: defaultRadius),
+            borderRadius:
+                radiusOnly(topRight: defaultRadius, topLeft: defaultRadius),
           ),
           child: Row(
             children: [
-              Text(title, style: boldTextStyle(color: Colors.white)).expand(),
+              Text(title, style: context.boldTextStyle(color: Colors.white))
+                  .expand(),
               const CloseButton(color: Colors.white),
             ],
           ),

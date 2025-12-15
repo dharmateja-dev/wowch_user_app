@@ -1,7 +1,7 @@
 import 'package:booking_system_flutter/main.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
-import 'package:nb_utils/nb_utils.dart';
 
 class ViewAllLabel extends StatelessWidget {
   final String label;
@@ -29,7 +29,10 @@ class ViewAllLabel extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(label, style: boldTextStyle(size: labelSize ?? LABEL_TEXT_SIZE)),
+        Text(label,
+            style: context.boldTextStyle(
+              size: labelSize ?? LABEL_TEXT_SIZE,
+            )),
         Builder(builder: (context) {
           bool shouldShow = list == null
               ? true
@@ -41,7 +44,7 @@ class ViewAllLabel extends StatelessWidget {
             onTap: () => onTap?.call(),
             child: Text(
               language.lblViewAll,
-              style: trailingTextStyle ?? secondaryTextStyle(),
+              style: trailingTextStyle ?? context.primaryTextStyle(),
             ),
           );
         }),

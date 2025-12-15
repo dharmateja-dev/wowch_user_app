@@ -11,6 +11,7 @@ import 'package:booking_system_flutter/screens/shop/shimmer/shop_shimmer.dart';
 import 'package:booking_system_flutter/utils/colors.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
 import 'package:booking_system_flutter/utils/context_extensions.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -161,7 +162,7 @@ class _FilterShopListComponentState extends State<FilterShopListComponent> {
                         ),
                       ),
                       16.width,
-                      Text(data.name.validate(), style: boldTextStyle())
+                      Text(data.name.validate(), style: context.boldTextStyle())
                           .expand(),
                       4.width,
                       SelectedItemWidget(

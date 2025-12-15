@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:booking_system_flutter/utils/string_extensions.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -77,7 +78,8 @@ class _CustomImagePickerState extends State<CustomImagePicker> {
             await showInDialog(
               context,
               contentPadding: const EdgeInsets.symmetric(vertical: 16),
-              title: Text(language.chooseAction, style: boldTextStyle()),
+              title:
+                  Text(language.chooseAction, style: context.boldTextStyle()),
               builder: (p0) {
                 return const FilePickerDialog(isSelected: false);
               },
@@ -136,7 +138,7 @@ class _CustomImagePickerState extends State<CustomImagePicker> {
                       size: widget.iconSize ?? 46, context: context),
                   8.height,
                   Text(language.chooseImage,
-                      style: secondaryTextStyle(size: widget.textSize)),
+                      style: context.secondaryTextStyle(size: widget.textSize)),
                 ],
               ),
             ),
@@ -145,8 +147,9 @@ class _CustomImagePickerState extends State<CustomImagePicker> {
         16.height,
 
         /// Uncomment when multiple images upload and set condition
-        // Text('Note: You can upload images with \'jpg\', \'png\', \'jpeg\' extensions & you can select multiple images', style: secondaryTextStyle(size: 10)),
-        Text(language.noteYouCanUpload, style: secondaryTextStyle(size: 10)),
+        // Text('Note: You can upload images with \'jpg\', \'png\', \'jpeg\' extensions & you can select multiple images', style: context.secondaryTextStyle(size: 10)),
+        Text(language.noteYouCanUpload,
+            style: context.secondaryTextStyle(size: 10)),
         16.height,
         HorizontalList(
           itemCount: imageFiles.length,
@@ -209,7 +212,7 @@ class FilePickerDialog extends StatelessWidget {
         children: [
           SettingItemWidget(
             title: language.removeImage,
-            titleTextStyle: primaryTextStyle(),
+            titleTextStyle: context.primaryTextStyle(),
             leading: Icon(
               Icons.close,
             ),
@@ -219,7 +222,7 @@ class FilePickerDialog extends StatelessWidget {
           ).visible(isSelected),
           SettingItemWidget(
             title: language.camera,
-            titleTextStyle: primaryTextStyle(),
+            titleTextStyle: context.primaryTextStyle(),
             leading: Icon(
               LineIcons.camera,
             ),
@@ -229,7 +232,7 @@ class FilePickerDialog extends StatelessWidget {
           ).visible(!isWeb),
           SettingItemWidget(
             title: language.lblGallery,
-            titleTextStyle: primaryTextStyle(),
+            titleTextStyle: context.primaryTextStyle(),
             leading: Icon(
               LineIcons.image_1,
             ),

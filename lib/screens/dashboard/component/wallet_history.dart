@@ -3,6 +3,7 @@ import 'package:booking_system_flutter/main.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
 import 'package:booking_system_flutter/utils/extensions/num_extenstions.dart';
 import 'package:booking_system_flutter/utils/images.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:intl/intl.dart';
@@ -263,7 +264,7 @@ class _UserWalletHistoryScreenState extends State<UserWalletHistoryScreen> {
                     ),
                     32.height,
                     Text(language.lastTransaction,
-                        style: boldTextStyle(size: 20)),
+                        style: context.boldTextStyle(size: 20)),
                     16.height,
                     AnimatedListView(
                       physics: const NeverScrollableScrollPhysics(),
@@ -307,8 +308,7 @@ class _UserWalletHistoryScreenState extends State<UserWalletHistoryScreen> {
                           margin: const EdgeInsets.symmetric(vertical: 5),
                           decoration: boxDecorationWithRoundedCorners(
                             borderRadius: BorderRadius.circular(8),
-                            backgroundColor:
-                                Color(0xFFE8F3EC),
+                            backgroundColor: Color(0xFFE8F3EC),
                           ),
                           width: context.width(),
                           child: Row(
@@ -348,7 +348,7 @@ class _UserWalletHistoryScreenState extends State<UserWalletHistoryScreen> {
                                     // Transaction type (Debit/Credit)
                                     Text(
                                       transactionTypeText,
-                                      style: boldTextStyle(size: 16),
+                                      style: context.boldTextStyle(size: 16),
                                     ),
                                     4.height,
                                     // Transaction description
@@ -357,7 +357,8 @@ class _UserWalletHistoryScreenState extends State<UserWalletHistoryScreen> {
                                         .isNotEmpty)
                                       Text(
                                         data.activityMessage.validate(),
-                                        style: primaryTextStyle(size: 12),
+                                        style:
+                                            context.primaryTextStyle(size: 12),
                                         maxLines: 2,
                                         overflow: TextOverflow.ellipsis,
                                       ),
@@ -372,7 +373,7 @@ class _UserWalletHistoryScreenState extends State<UserWalletHistoryScreen> {
                                   // Date on top
                                   Text(
                                     formattedDate,
-                                    style: boldTextStyle(size: 12),
+                                    style: context.boldTextStyle(size: 12),
                                   ),
                                   8.height,
                                   // Amount below date
@@ -381,7 +382,7 @@ class _UserWalletHistoryScreenState extends State<UserWalletHistoryScreen> {
                                     data.activityData!.creditDebitAmount
                                         .validate()
                                         .toPriceFormat(),
-                                    style: boldTextStyle(
+                                    style: context.boldTextStyle(
                                       size: 14,
                                       color:
                                           isDebit ? Colors.red : Colors.green,

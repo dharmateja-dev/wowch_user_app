@@ -7,6 +7,7 @@ import 'package:booking_system_flutter/utils/constant.dart';
 import 'package:booking_system_flutter/utils/firebase_messaging_utils.dart';
 import 'package:booking_system_flutter/utils/images.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -37,7 +38,7 @@ class _SettingScreenState extends State<SettingScreen> {
               ),
               title: language.changePassword,
               trailing: trailing(context),
-              titleTextStyle: boldTextStyle(),
+              titleTextStyle: context.boldTextStyle(),
               onTap: () {
                 doIfLoggedIn(context, () {
                   ChangePasswordScreen().launch(context);
@@ -53,7 +54,7 @@ class _SettingScreenState extends State<SettingScreen> {
                 .paddingOnly(left: 2),
             title: language.language,
             trailing: trailing(context),
-            titleTextStyle: boldTextStyle(),
+            titleTextStyle: context.boldTextStyle(),
             onTap: () {
               LanguagesScreen().launch(context).then((value) {
                 setState(() {});
@@ -68,7 +69,7 @@ class _SettingScreenState extends State<SettingScreen> {
             title: language.appTheme,
             paddingAfterLeading: 12,
             trailing: trailing(context),
-            titleTextStyle: boldTextStyle(),
+            titleTextStyle: context.boldTextStyle(),
             onTap: () async {
               await showInDialog(
                 context,
@@ -83,7 +84,7 @@ class _SettingScreenState extends State<SettingScreen> {
               context: context,
             ),
             title: language.lblAutoSliderStatus,
-            titleTextStyle: boldTextStyle(),
+            titleTextStyle: context.boldTextStyle(),
             trailing: Transform.scale(
               scale: 0.8,
               child: Switch.adaptive(
@@ -101,7 +102,7 @@ class _SettingScreenState extends State<SettingScreen> {
               context: context,
             ),
             title: language.lblOptionalUpdateNotify,
-            titleTextStyle: boldTextStyle(),
+            titleTextStyle: context.boldTextStyle(),
             trailing: Transform.scale(
               scale: 0.8,
               child: Switch.adaptive(
@@ -116,7 +117,7 @@ class _SettingScreenState extends State<SettingScreen> {
           // SettingItemWidget(
           //   leading: ic_check_update.iconImage(size: SETTING_ICON_SIZE),
           //   title: 'Auto Update',
-          //   titleTextStyle: boldTextStyle(size: 12),
+          //   titleTextStyle:context.boldTextStyle(size: 12),
           //   trailing: Transform.scale(
           //     scale: 0.8,
           //     child: Switch.adaptive(
@@ -137,7 +138,7 @@ class _SettingScreenState extends State<SettingScreen> {
                 size: SETTING_ICON_SIZE,
               ),
               title: language.pushNotification,
-              titleTextStyle: boldTextStyle(),
+              titleTextStyle: context.boldTextStyle(),
               trailing: Transform.scale(
                 scale: 0.8,
                 child: Observer(
@@ -170,7 +171,7 @@ class _SettingScreenState extends State<SettingScreen> {
           //         leading: ic_android_12.iconImage(
           //             size: SETTING_ICON_SIZE, ),
           //         title: language.lblMaterialTheme,
-          //         titleTextStyle: boldTextStyle(),
+          //         titleTextStyle:context.boldTextStyle(),
           //         trailing: Transform.scale(
           //           scale: 0.8,
           //           child: Switch.adaptive(

@@ -2,6 +2,7 @@ import 'package:booking_system_flutter/component/cached_image_widget.dart';
 import 'package:booking_system_flutter/screens/blog/model/blog_response_model.dart';
 import 'package:booking_system_flutter/screens/gallery/gallery_component.dart';
 import 'package:booking_system_flutter/screens/gallery/gallery_screen.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -87,7 +88,7 @@ class _BlogDetailHeaderComponentState extends State<BlogDetailHeaderComponent> {
                           ),
                           child: Text(
                               '+' '${widget.blogData.attachment!.length - 2}',
-                              style: boldTextStyle(color: white)),
+                              style: context.boldTextStyle(color: white)),
                         ),
                       ).onTap(() {
                         GalleryScreen(

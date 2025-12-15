@@ -1,5 +1,6 @@
 import 'package:booking_system_flutter/component/cached_image_widget.dart';
 import 'package:booking_system_flutter/model/category_model.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -99,7 +100,7 @@ class CategoryDashboardComponent4 extends StatelessWidget {
             child: Marquee(
               child: Text(
                 categoryData.name.validate(),
-                style: boldTextStyle(color: Colors.white, size: 10),
+                style: context.boldTextStyle(color: Colors.white, size: 10),
               ),
             ).center(),
           ),

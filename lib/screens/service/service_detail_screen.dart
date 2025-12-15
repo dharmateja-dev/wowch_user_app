@@ -30,6 +30,7 @@ import 'package:booking_system_flutter/utils/colors.dart';
 import 'package:booking_system_flutter/utils/common.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -205,7 +206,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           8.height,
-          Text(language.lblAvailableAt, style: boldTextStyle()),
+          Text(language.lblAvailableAt, style: context.boldTextStyle()),
           8.height,
           Align(
             alignment: Alignment.centerLeft,
@@ -242,7 +243,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen>
                                   : Color(0xFFE8F3EC)),
                       child: Text(
                         value.name.validate(),
-                        style: boldTextStyle(
+                        style: context.boldTextStyle(
                             color: isSelected
                                 ? Colors.white
                                 : textPrimaryColorGlobal),
@@ -263,7 +264,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen>
         children: [
           8.height,
           Text(language.lblAvailableAt,
-              style: boldTextStyle(size: LABEL_TEXT_SIZE)),
+              style: context.boldTextStyle(size: LABEL_TEXT_SIZE)),
           8.height,
           Align(
             alignment: Alignment.centerLeft,
@@ -299,7 +300,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen>
                                   : Color(0xFFE8F3EC)),
                       child: Text(
                         value.name.validate(),
-                        style: boldTextStyle(
+                        style: context.boldTextStyle(
                             color: isSelected
                                 ? Colors.white
                                 : textPrimaryColorGlobal),
@@ -322,7 +323,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen>
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(language.lblAboutProvider,
-            style: boldTextStyle(size: LABEL_TEXT_SIZE)),
+            style: context.boldTextStyle(size: LABEL_TEXT_SIZE)),
         16.height,
         BookingDetailProviderWidget(
                 providerData: data, showContactButtons: false)
@@ -369,7 +370,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen>
       children: [
         8.height,
         Text(language.lblAvailableOnTheseDays,
-            style: boldTextStyle(size: LABEL_TEXT_SIZE)),
+            style: context.boldTextStyle(size: LABEL_TEXT_SIZE)),
         8.height,
         Wrap(
           spacing: 16,
@@ -391,7 +392,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen>
                     : null,
               ),
               child: Text(value.day.capitalizeFirstLetter(),
-                  style: secondaryTextStyle(
+                  style: context.secondaryTextStyle(
                       size: LABEL_TEXT_SIZE, color: primaryColor)),
             );
           }),
@@ -423,7 +424,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen>
                   (index) => ReviewWidget(data: data[index]),
                 ),
               ).paddingTop(8)
-            : Text(language.lblNoReviews, style: primaryTextStyle()),
+            : Text(language.lblNoReviews, style: context.primaryTextStyle()),
       ],
     ).paddingSymmetric(horizontal: 16);
   }
@@ -440,7 +441,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen>
         if (serviceList.isNotEmpty)
           Text(
             language.lblRelatedServices,
-            style: boldTextStyle(size: LABEL_TEXT_SIZE),
+            style: context.boldTextStyle(size: LABEL_TEXT_SIZE),
           ).paddingSymmetric(horizontal: 16),
         8.height,
         if (serviceList.isNotEmpty)
@@ -492,7 +493,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen>
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(data.name.validate(),
-                    style: boldTextStyle(),
+                    style: context.boldTextStyle(),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis),
                 4.height,
@@ -517,7 +518,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen>
               toast(language.lblBookNow);
             },
             child: Text(language.buy,
-                style: boldTextStyle(
+                style: context.boldTextStyle(
                   color: white,
                 )),
           ),
@@ -698,7 +699,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen>
                         children: [
                           Text(
                             language.serviceVisitType,
-                            style: boldTextStyle(),
+                            style: context.boldTextStyle(),
                           ),
                           8.height,
                           Text(
@@ -709,7 +710,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen>
                                     : snap.data!.serviceDetail!.isOnSiteService
                                         ? 'This Service will be completed at your location.'
                                         : language.notAvailable,
-                            style: primaryTextStyle(),
+                            style: context.primaryTextStyle(),
                           ),
                         ],
                       ).paddingSymmetric(horizontal: 16, vertical: 16),
@@ -721,7 +722,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen>
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(language.hintDescription,
-                              style: boldTextStyle()),
+                              style: context.boldTextStyle()),
                           8.height,
                           snap.data!.serviceDetail!.description
                                   .validate()
@@ -729,12 +730,12 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen>
                               ? ReadMoreText(
                                   snap.data!.serviceDetail!.description
                                       .validate(),
-                                  style: primaryTextStyle(),
+                                  style: context.primaryTextStyle(),
                                   colorClickableText: context.primaryColor,
                                   textAlign: TextAlign.justify,
                                 )
                               : Text(language.lblNotDescription,
-                                  style: primaryTextStyle()),
+                                  style: context.primaryTextStyle()),
                           12.height,
                           slotsAvailable(
                             data: snap.data!.serviceDetail!.bookingSlots
@@ -766,7 +767,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen>
                           children: [
                             16.height,
                             Text(language.frequentlyBoughtTogether,
-                                style: boldTextStyle()),
+                                style: context.boldTextStyle()),
                             8.height,
                             _frequentlyBoughtCard(
                                 snap.data!.relatedService!.first),
@@ -822,7 +823,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen>
                   },
                   color: context.primaryColor,
                   child: Text(language.lblBookNow,
-                      style: boldTextStyle(color: white)),
+                      style: context.boldTextStyle(color: white)),
                   width: context.width(),
                   textColor: Colors.white,
                 ).paddingSymmetric(horizontal: 16.0, vertical: 10.0)

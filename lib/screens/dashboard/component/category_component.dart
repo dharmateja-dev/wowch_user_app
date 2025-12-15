@@ -32,48 +32,41 @@ class CategoryComponentState extends State<CategoryComponent> {
   Widget build(BuildContext context) {
     if (widget.categoryList.validate().isEmpty) return const Offstage();
 
-    return Container(
-      //margin: const EdgeInsets.symmetric(horizontal: 16),
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-      decoration: boxDecorationDefault(
-        borderRadius: radius(12),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ViewAllLabel(
-              label: language.category,
-              list: widget.categoryList,
-              onTap: () {
-                CategoryScreen().launch(context).then((value) {
-                  setStatusBarColor(Colors.transparent);
-                });
-              }),
-          12.height,
-          if (widget.categoryList.validate().isNotEmpty)
-            HorizontalList(
-              itemCount: widget.categoryList.validate().length,
-              spacing: 0,
-              padding: const EdgeInsets.only(bottom: 4),
-              itemBuilder: (context, index) {
-                CategoryData data = widget.categoryList![index];
-                return GestureDetector(
-                  onTap: () {
-                    ViewAllServiceScreen(
-                      categoryId: data.id.validate(),
-                      categoryName: data.name,
-                      isFromCategory: true,
-                    ).launch(context);
-                  },
-                  child: CategoryWidget(
-                    categoryData: data,
-                    width: 90, // Fixed width for horizontal scroll
-                  ),
-                );
-              },
-            ),
-        ],
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        ViewAllLabel(
+            label: language.category,
+            list: widget.categoryList,
+            onTap: () {
+              CategoryScreen().launch(context).then((value) {
+                setStatusBarColor(Colors.transparent);
+              });
+            }).paddingSymmetric(horizontal: 16),
+        12.height,
+        if (widget.categoryList.validate().isNotEmpty)
+          HorizontalList(
+            itemCount: widget.categoryList.validate().length,
+            spacing: 0,
+            padding: const EdgeInsets.only(bottom: 4),
+            itemBuilder: (context, index) {
+              CategoryData data = widget.categoryList![index];
+              return GestureDetector(
+                onTap: () {
+                  ViewAllServiceScreen(
+                    categoryId: data.id.validate(),
+                    categoryName: data.name,
+                    isFromCategory: true,
+                  ).launch(context);
+                },
+                child: CategoryWidget(
+                  categoryData: data,
+                  width: 80, // Fixed width for horizontal scroll
+                ),
+              );
+            },
+          ).paddingSymmetric(horizontal: 12),
+      ],
     );
   }
 }

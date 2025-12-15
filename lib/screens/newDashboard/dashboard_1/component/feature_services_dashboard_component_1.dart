@@ -1,5 +1,6 @@
 import 'package:booking_system_flutter/screens/newDashboard/dashboard_1/component/service_dashboard_component_1.dart';
 import 'package:booking_system_flutter/utils/context_extensions.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -24,7 +25,8 @@ class FeatureServicesDashboardComponent1 extends StatelessWidget {
         ViewAllLabel(
           label: language.featuredServices,
           list: serviceList,
-          trailingTextStyle: boldTextStyle(color: context.primary, size: 12),
+          trailingTextStyle:
+              context.boldTextStyle(color: context.primary, size: 12),
           onTap: () {
             ViewAllServiceScreen(isFeatured: "1").launch(context);
           },

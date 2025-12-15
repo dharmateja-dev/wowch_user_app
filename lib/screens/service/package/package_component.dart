@@ -3,6 +3,7 @@ import 'package:booking_system_flutter/main.dart';
 import 'package:booking_system_flutter/model/package_data_model.dart';
 import 'package:booking_system_flutter/screens/service/package/package_detail_screen.dart';
 import 'package:booking_system_flutter/utils/common.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -39,7 +40,8 @@ class _PackageComponentState extends State<PackageComponent> {
 
   bool _isDateClose(String endDate) {
     final DateTime currentDate = DateTime.now();
-    final DateTime endDateTime = DateFormat('yyyy-MM-dd').parse(endDate); // Ensure the date format matches
+    final DateTime endDateTime = DateFormat('yyyy-MM-dd')
+        .parse(endDate); // Ensure the date format matches
     final difference = endDateTime.difference(currentDate).inDays;
 
     return difference <= 2;
@@ -74,14 +76,18 @@ class _PackageComponentState extends State<PackageComponent> {
               decoration: boxDecorationWithRoundedCorners(
                 borderRadius: radius(),
                 backgroundColor: context.cardColor,
-                border: appStore.isDarkMode ? Border.all(color: context.dividerColor) : null,
+                border: appStore.isDarkMode
+                    ? Border.all(color: context.dividerColor)
+                    : null,
               ),
               child: Column(
                 children: [
                   Row(
                     children: [
                       CachedImageWidget(
-                        url: data.imageAttachments.validate().isNotEmpty ? data.imageAttachments!.first.validate() : "",
+                        url: data.imageAttachments.validate().isNotEmpty
+                            ? data.imageAttachments!.first.validate()
+                            : "",
                         height: 60,
                         fit: BoxFit.cover,
                         radius: defaultRadius,
@@ -95,7 +101,8 @@ class _PackageComponentState extends State<PackageComponent> {
                             children: [
                               Marquee(
                                 directionMarguee: DirectionMarguee.oneDirection,
-                                child: Text(data.name.validate(), style: boldTextStyle()),
+                                child: Text(data.name.validate(),
+                                    style: context.boldTextStyle()),
                               ),
                               10.height,
                               Row(
@@ -118,7 +125,10 @@ class _PackageComponentState extends State<PackageComponent> {
                                   10.width,
                                   Text(
                                     '${(((data.originalPrice - data.price.validate()) / data.originalPrice) * 100).toStringAsFixed(1)}% off', // Todo translate
-                                    style: const TextStyle(fontSize: 12, color: defaultActivityStatus, fontWeight: FontWeight.bold),
+                                    style: const TextStyle(
+                                        fontSize: 12,
+                                        color: defaultActivityStatus,
+                                        fontWeight: FontWeight.bold),
                                   ),
                                 ],
                               ),
@@ -133,7 +143,10 @@ class _PackageComponentState extends State<PackageComponent> {
                     alignment: Alignment.centerLeft,
                     child: Text(
                       "${data.serviceList!.length.toString().padLeft(2, '0')} service included", //Todo Language
-                      style: const TextStyle(color: lineTextColor, fontWeight: FontWeight.bold, fontSize: 12),
+                      style: const TextStyle(
+                          color: lineTextColor,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12),
                     ).paddingOnly(left: 75),
                   ),
                   16.height,
@@ -141,19 +154,25 @@ class _PackageComponentState extends State<PackageComponent> {
                     width: context.width(),
                     child: Text(
                       "Purchase", //Todo language
-                      style: boldTextStyle(color: Colors.white),
+                      style: context.boldTextStyle(color: Colors.white),
                     ),
                     color: context.primaryColor,
                     onTap: () async {
-                      PackageDetailScreen(packageData: data, isFromServiceDetail: true, callBack: widget.callBack).launch(context);
+                      PackageDetailScreen(
+                              packageData: data,
+                              isFromServiceDetail: true,
+                              callBack: widget.callBack)
+                          .launch(context);
                     },
                   ),
                   5.height,
                   if (data.endDate.validate().isNotEmpty)
                     Text(
                       '${language.endOn}: ${formatDate(data.endDate.validate())}',
-                      style: boldTextStyle(
-                        color: _isDateClose(data.endDate.validate()) ? cancelled : defaultActivityStatus, // Set color conditionally
+                      style: context.boldTextStyle(
+                        color: _isDateClose(data.endDate.validate())
+                            ? cancelled
+                            : defaultActivityStatus, // Set color conditionally
                         size: 12,
                       ),
                     ).paddingTop(2),

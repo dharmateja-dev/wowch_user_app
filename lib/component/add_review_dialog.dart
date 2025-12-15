@@ -2,6 +2,7 @@ import 'package:booking_system_flutter/component/loader_widget.dart';
 import 'package:booking_system_flutter/main.dart';
 import 'package:booking_system_flutter/model/service_detail_response.dart';
 import 'package:booking_system_flutter/network/rest_apis.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -144,7 +145,7 @@ class _AddReviewDialogState extends State<AddReviewDialog> {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(16, 20, 16, 20),
                   child: Text(language.yourReview,
-                      style: boldTextStyle(
+                      style: context.boldTextStyle(
                         size: 18,
                         color: textPrimaryColorGlobal,
                       )).center(),
@@ -162,7 +163,7 @@ class _AddReviewDialogState extends State<AddReviewDialog> {
                       // "Your Rating" text on left
                       Text(
                         language.lblYourRating,
-                        style: primaryTextStyle(
+                        style: context.primaryTextStyle(
                           size: 14,
                           color: textPrimaryColorGlobal,
                         ),
@@ -199,7 +200,7 @@ class _AddReviewDialogState extends State<AddReviewDialog> {
                     enableChatGPT: appConfigurationStore.chatGPTStatus,
                     promptFieldInputDecorationChatGPT: InputDecoration(
                       hintText: 'Enter Your Review (Optional)',
-                      hintStyle: secondaryTextStyle(
+                      hintStyle: context.secondaryTextStyle(
                         color: textSecondaryColorGlobal,
                       ),
                       border: InputBorder.none,
@@ -210,7 +211,7 @@ class _AddReviewDialogState extends State<AddReviewDialog> {
                     textCapitalization: TextCapitalization.sentences,
                     decoration: InputDecoration(
                       hintText: 'Enter Your Review (Optional)',
-                      hintStyle: secondaryTextStyle(
+                      hintStyle: context.secondaryTextStyle(
                         color: textSecondaryColorGlobal,
                       ),
                       border: InputBorder.none,
@@ -268,7 +269,7 @@ class _AddReviewDialogState extends State<AddReviewDialog> {
                             isHandymanUpdate
                                 ? language.lblDelete
                                 : language.lblCancel,
-                            style: boldTextStyle(
+                            style: context.boldTextStyle(
                               size: 14,
                               color: isHandymanUpdate
                                   ? Colors.red

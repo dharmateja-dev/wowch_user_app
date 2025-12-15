@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:booking_system_flutter/component/base_scaffold_widget.dart';
 import 'package:booking_system_flutter/component/loader_widget.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -97,7 +98,13 @@ class _HelpDeskDetailScreenState extends State<HelpDeskDetailScreen> {
       };
 
       log("Reply Query Request: $req");
-      saveHelpDeskActivityMultiPart(helpDeskId: widget.helpDeskData.id.validate(), value: req, imageFile: imageFiles.where((element) => !element.path.contains('http')).toList()).then((value) {
+      saveHelpDeskActivityMultiPart(
+              helpDeskId: widget.helpDeskData.id.validate(),
+              value: req,
+              imageFile: imageFiles
+                  .where((element) => !element.path.contains('http'))
+                  .toList())
+          .then((value) {
         isReplyBtnClick = false;
         init();
         setState(() {});
@@ -119,7 +126,8 @@ class _HelpDeskDetailScreenState extends State<HelpDeskDetailScreen> {
             physics: const AlwaysScrollableScrollPhysics(),
             listAnimationType: ListAnimationType.FadeIn,
             fadeInConfiguration: FadeInConfiguration(duration: 2.seconds),
-            padding: const EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 120),
+            padding: const EdgeInsets.only(
+                left: 16, right: 16, top: 16, bottom: 120),
             crossAxisAlignment: CrossAxisAlignment.start,
             onSwipeRefresh: () async {
               appStore.setLoading(true);
@@ -130,18 +138,21 @@ class _HelpDeskDetailScreenState extends State<HelpDeskDetailScreen> {
               return await 2.seconds.delay;
             },
             children: [
-              Text('#${widget.helpDeskData.id}', style: boldTextStyle(color: primaryColor)),
+              Text('#${widget.helpDeskData.id}',
+                  style: context.boldTextStyle(color: primaryColor)),
               8.height,
               Text(
-                formatBookingDate(widget.helpDeskData.createdAt.validate(), format: DATE_FORMAT_10),
-                style: secondaryTextStyle(),
+                formatBookingDate(widget.helpDeskData.createdAt.validate(),
+                    format: DATE_FORMAT_10),
+                style: context.secondaryTextStyle(),
               ),
               16.height,
-              Text(widget.helpDeskData.subject.validate(), style: boldTextStyle()),
+              Text(widget.helpDeskData.subject.validate(),
+                  style: context.boldTextStyle()),
               8.height,
               Text(
                 widget.helpDeskData.description.validate(),
-                style: secondaryTextStyle(),
+                style: context.secondaryTextStyle(),
               ),
               16.height,
               SnapHelperWidget<List<HelpDeskActivityData>>(
@@ -175,10 +186,11 @@ class _HelpDeskDetailScreenState extends State<HelpDeskDetailScreen> {
                           physics: const NeverScrollableScrollPhysics(),
                           itemCount: helpDeskActivityList.length,
                           listAnimationType: ListAnimationType.FadeIn,
-                          fadeInConfiguration: FadeInConfiguration(duration: 2.seconds),
+                          fadeInConfiguration:
+                              FadeInConfiguration(duration: 2.seconds),
                           emptyWidget: NoDataWidget(
                             title: language.noActivityYet,
-                            titleTextStyle: boldTextStyle(),
+                            titleTextStyle: context.boldTextStyle(),
                             subTitle: language.noRecordsFound,
                             imageWidget: const EmptyStateWidget(),
                           ),
@@ -200,12 +212,14 @@ class _HelpDeskDetailScreenState extends State<HelpDeskDetailScreen> {
                             return await 2.seconds.delay;
                           },
                           itemBuilder: (BuildContext context, index) {
-                            HelpDeskActivityData helpDeskActivityData = helpDeskActivityList[index];
+                            HelpDeskActivityData helpDeskActivityData =
+                                helpDeskActivityList[index];
 
                             return HelpDeskActivityComponent(
                               helpDeskIndex: index,
                               showBtnOption: showBtnOption,
-                              helpDeskActivityCount: helpDeskActivityList.length,
+                              helpDeskActivityCount:
+                                  helpDeskActivityList.length,
                               helpDeskActivityData: helpDeskActivityData,
                             );
                           },
@@ -218,16 +232,21 @@ class _HelpDeskDetailScreenState extends State<HelpDeskDetailScreen> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(language.reply, style: boldTextStyle(size: 12)),
+                                    Text(language.reply,
+                                        style: context.boldTextStyle(size: 12)),
                                     8.height,
                                     Container(
                                       padding: const EdgeInsets.all(16),
-                                      decoration: boxDecorationWithRoundedCorners(
+                                      decoration:
+                                          boxDecorationWithRoundedCorners(
                                         borderRadius: radius(),
-                                        backgroundColor: appStore.isDarkMode ? appButtonColorDark : Colors.white,
+                                        backgroundColor: appStore.isDarkMode
+                                            ? appButtonColorDark
+                                            : Colors.white,
                                       ),
                                       child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
                                           CustomImagePicker(
                                             key: uniqueKey,
@@ -238,48 +257,70 @@ class _HelpDeskDetailScreenState extends State<HelpDeskDetailScreen> {
                                               showConfirmDialogCustom(
                                                 context,
                                                 dialogType: DialogType.DELETE,
-                                                positiveText: language.lblDelete,
-                                                negativeText: language.lblCancel,
+                                                positiveText:
+                                                    language.lblDelete,
+                                                negativeText:
+                                                    language.lblCancel,
                                                 onAccept: (p0) {
-                                                  imageFiles.removeWhere((element) => element.path == value);
+                                                  imageFiles.removeWhere(
+                                                      (element) =>
+                                                          element.path ==
+                                                          value);
                                                   setState(() {});
                                                 },
                                               );
                                             },
-                                            onFileSelected: (List<File> files) async {
+                                            onFileSelected:
+                                                (List<File> files) async {
                                               imageFiles = files;
                                               setState(() {});
                                             },
                                           ),
                                           4.height,
-                                          Text(language.hintDescription, style: boldTextStyle(size: 12)),
+                                          Text(language.hintDescription,
+                                              style: context.boldTextStyle(
+                                                  size: 12)),
                                           4.height,
                                           AppTextField(
-                                            textFieldType: TextFieldType.MULTILINE,
+                                            textFieldType:
+                                                TextFieldType.MULTILINE,
                                             controller: descriptionCont,
                                             focus: descriptionFocus,
                                             maxLines: 10,
                                             minLines: 3,
-                                            enableChatGPT: appConfigurationStore.chatGPTStatus,
-                                            promptFieldInputDecorationChatGPT: inputDecoration(context).copyWith(
+                                            enableChatGPT: appConfigurationStore
+                                                .chatGPTStatus,
+                                            promptFieldInputDecorationChatGPT:
+                                                inputDecoration(context)
+                                                    .copyWith(
                                               hintText: language.writeHere,
-                                              fillColor: context.scaffoldBackgroundColor,
+                                              fillColor: context
+                                                  .scaffoldBackgroundColor,
                                               filled: true,
-                                              hintStyle: primaryTextStyle(),
+                                              hintStyle:
+                                                  context.primaryTextStyle(),
                                             ),
-                                            testWithoutKeyChatGPT: appConfigurationStore.testWithoutKey,
-                                            loaderWidgetForChatGPT: const ChatGPTLoadingWidget(),
+                                            testWithoutKeyChatGPT:
+                                                appConfigurationStore
+                                                    .testWithoutKey,
+                                            loaderWidgetForChatGPT:
+                                                const ChatGPTLoadingWidget(),
                                             decoration: inputDecoration(
                                               context,
-                                              hintText: language.eGDuringTheService,
+                                              hintText:
+                                                  language.eGDuringTheService,
                                             ),
                                           ),
                                           16.height,
                                           Row(
-                                            mainAxisAlignment: MainAxisAlignment.end,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.end,
                                             children: [
                                               AppButton(
-                                                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 16,
+                                                        vertical: 12),
                                                 color: context.cardColor,
                                                 onTap: () {
                                                   isReplyBtnClick = false;
@@ -288,14 +329,23 @@ class _HelpDeskDetailScreenState extends State<HelpDeskDetailScreen> {
                                                   setState(() {});
                                                 },
                                                 text: language.close,
-                                                textStyle: boldTextStyle(),
+                                                textStyle:
+                                                    context.boldTextStyle(),
                                               ),
                                               16.width,
                                               AppButton(
                                                 text: language.btnSubmit,
-                                                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                                                color: appStore.isLoading ? primaryColor.withValues(alpha:0.5) : primaryColor,
-                                                textStyle: boldTextStyle(color: white),
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 16,
+                                                        vertical: 12),
+                                                color: appStore.isLoading
+                                                    ? primaryColor.withValues(
+                                                        alpha: 0.5)
+                                                    : primaryColor,
+                                                textStyle:
+                                                    context.boldTextStyle(
+                                                        color: white),
                                                 onTap: appStore.isLoading
                                                     ? () {}
                                                     : () {
@@ -314,30 +364,41 @@ class _HelpDeskDetailScreenState extends State<HelpDeskDetailScreen> {
                               Row(
                                 children: [
                                   AppButton(
-                                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 16, vertical: 12),
                                     onTap: () {
                                       showConfirmDialogCustom(
                                         context,
-                                        title: language.doYouWantClosedThisQuery,
-                                        positiveText: language.closed.capitalizeFirstLetter(),
+                                        title:
+                                            language.doYouWantClosedThisQuery,
+                                        positiveText: language.closed
+                                            .capitalizeFirstLetter(),
                                         negativeText: language.lblNo,
                                         dialogType: DialogType.CONFIRMATION,
                                         primaryColor: primaryColor,
                                         onAccept: (p0) async {
                                           appStore.setLoading(true);
-                                          helpDeskClosed(id: widget.helpDeskData.id.validate(), status: widget.helpDeskData.status.validate());
+                                          helpDeskClosed(
+                                              id: widget.helpDeskData.id
+                                                  .validate(),
+                                              status: widget.helpDeskData.status
+                                                  .validate());
                                         },
                                       );
                                     },
                                     text: language.markAsClosed,
-                                    textStyle: boldTextStyle(),
+                                    textStyle: context.boldTextStyle(),
                                   ).expand(),
                                   16.width,
                                   AppButton(
                                     text: language.reply,
-                                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                                    color: appStore.isLoading ? primaryColor.withValues(alpha:0.5) : primaryColor,
-                                    textStyle: boldTextStyle(color: white),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 16, vertical: 12),
+                                    color: appStore.isLoading
+                                        ? primaryColor.withValues(alpha: 0.5)
+                                        : primaryColor,
+                                    textStyle:
+                                        context.boldTextStyle(color: white),
                                     onTap: () {
                                       isReplyBtnClick = true;
                                       imageFiles.clear();
@@ -354,10 +415,12 @@ class _HelpDeskDetailScreenState extends State<HelpDeskDetailScreen> {
                   );
                 },
               ),
-              if (showBtnOption != CLOSED && widget.helpDeskData.status != CLOSED)
+              if (showBtnOption != CLOSED &&
+                  widget.helpDeskData.status != CLOSED)
                 Text(
                   '*${language.youCanMarkThis}',
-                  style: secondaryTextStyle(size: 12, fontStyle: FontStyle.italic),
+                  style: context.secondaryTextStyle(
+                      size: 12, fontStyle: FontStyle.italic),
                 ).paddingTop(20),
             ],
           ),

@@ -19,6 +19,7 @@ import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/extensions/num_extenstions.dart';
 import 'package:booking_system_flutter/utils/images.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
@@ -142,7 +143,7 @@ class ProfileFragmentState extends State<ProfileFragment> {
                                       child: Text(
                                         //appStore.userFullName,
                                         'Abdul Kader',
-                                        style: boldTextStyle(
+                                        style: context.boldTextStyle(
                                             size: 16,
                                             color: textPrimaryColorGlobal),
                                       ),
@@ -151,7 +152,7 @@ class ProfileFragmentState extends State<ProfileFragment> {
                                       child: Text(
                                         //appStore.userEmail,
                                         'demouser@gmail.com',
-                                        style: primaryTextStyle(),
+                                        style: context.primaryTextStyle(),
                                       ),
                                     ),
                                   ],
@@ -173,8 +174,8 @@ class ProfileFragmentState extends State<ProfileFragment> {
                   Observer(
                     builder: (context) {
                       return SettingSection(
-                        title:
-                            Text(language.lblGENERAL, style: boldTextStyle()),
+                        title: Text(language.lblGENERAL,
+                            style: context.boldTextStyle()),
                         headingDecoration: boxDecorationDefault(
                           borderRadius: const BorderRadiusDirectional.vertical(
                               top: Radius.circular(0)),
@@ -194,11 +195,11 @@ class ProfileFragmentState extends State<ProfileFragment> {
                               leading: ic_wallet_cartoon.iconImage(
                                   size: SETTING_ICON_SIZE, context: context),
                               title: language.walletBalance,
-                              titleTextStyle: boldTextStyle(),
+                              titleTextStyle: context.boldTextStyle(),
                               trailing: Observer(
                                 builder: (context) => Text(
                                   appStore.userWalletAmount.toPriceFormat(),
-                                  style: boldTextStyle(
+                                  style: context.boldTextStyle(
                                     color: context.primary,
                                   ),
                                 ),
@@ -223,7 +224,7 @@ class ProfileFragmentState extends State<ProfileFragment> {
                               leading: ic_wallet_history.iconImage(
                                   size: SETTING_ICON_SIZE, context: context),
                               title: language.walletHistory,
-                              titleTextStyle: boldTextStyle(),
+                              titleTextStyle: context.boldTextStyle(),
                               trailing: trailing(context),
                               onTap: () {
                                 const UserWalletHistoryScreen().launch(context);
@@ -242,7 +243,7 @@ class ProfileFragmentState extends State<ProfileFragment> {
                           //     leading: ic_card.iconImage(
                           //         size: SETTING_ICON_SIZE, context: context),
                           //     title: language.lblBankDetails,
-                          //     titleTextStyle: boldTextStyle(),
+                          //     titleTextStyle:context.boldTextStyle(),
                           //     trailing: trailing(context),
                           //     onTap: () {
                           //       const BankDetails().launch(context);
@@ -259,7 +260,7 @@ class ProfileFragmentState extends State<ProfileFragment> {
                             leading: ic_heart.iconImage(
                                 size: SETTING_ICON_SIZE, context: context),
                             title: language.lblFavorite,
-                            titleTextStyle: boldTextStyle(),
+                            titleTextStyle: context.boldTextStyle(),
                             trailing: trailing(context),
                             onTap: () {
                               doIfLoggedIn(context, () {
@@ -277,7 +278,7 @@ class ProfileFragmentState extends State<ProfileFragment> {
                             leading: ic_profile2.iconImage(
                                 size: SETTING_ICON_SIZE, context: context),
                             title: language.favouriteProvider,
-                            titleTextStyle: boldTextStyle(),
+                            titleTextStyle: context.boldTextStyle(),
                             trailing: trailing(context),
                             onTap: () {
                               doIfLoggedIn(context, () {
@@ -290,7 +291,7 @@ class ProfileFragmentState extends State<ProfileFragment> {
                           //   decoration: boxDecorationDefault(color: context.cardColor,borderRadius: BorderRadiusDirectional.vertical(bottom: Radius.circular(0))),
                           //   leading: Icon(Icons.store_outlined, size: SETTING_ICON_SIZE, ),
                           //   title: language.lblFavoriteShops,
-                          //   titleTextStyle: boldTextStyle(size: 14),
+                          //   titleTextStyle:context.boldTextStyle(size: 14),
                           //   trailing: trailing,
                           //   padding: EdgeInsets.only(top: 20, left: 16, right: 16),
                           //   onTap: () {
@@ -311,7 +312,7 @@ class ProfileFragmentState extends State<ProfileFragment> {
                             leading: ic_document.iconImage(
                                 size: SETTING_ICON_SIZE, context: context),
                             title: language.blogs,
-                            titleTextStyle: boldTextStyle(),
+                            titleTextStyle: context.boldTextStyle(),
                             trailing: trailing(context),
                             onTap: () {
                               const BlogListScreen().launch(context);
@@ -329,7 +330,7 @@ class ProfileFragmentState extends State<ProfileFragment> {
                             leading: ic_star.iconImage(
                                 size: SETTING_ICON_SIZE, context: context),
                             title: language.rateUs,
-                            titleTextStyle: boldTextStyle(),
+                            titleTextStyle: context.boldTextStyle(),
                             trailing: trailing(context),
                             onTap: () async {
                               if (isAndroid) {
@@ -372,7 +373,7 @@ class ProfileFragmentState extends State<ProfileFragment> {
                               leading: ic_my_review.iconImage(
                                   size: SETTING_ICON_SIZE, context: context),
                               title: language.myReviews,
-                              titleTextStyle: boldTextStyle(),
+                              titleTextStyle: context.boldTextStyle(),
                               trailing: trailing(context),
                               onTap: () async {
                                 doIfLoggedIn(context, () {
@@ -389,7 +390,7 @@ class ProfileFragmentState extends State<ProfileFragment> {
                           //           const BorderRadiusDirectional.vertical(
                           //               bottom: Radius.circular(16))),
                           //   title: '',
-                          //   titleTextStyle: boldTextStyle(),
+                          //   titleTextStyle:context.boldTextStyle(),
                           //   highlightColor: Colors.transparent,
                           //   splashColor: Colors.transparent,
                           //   onTap: () {},
@@ -400,7 +401,7 @@ class ProfileFragmentState extends State<ProfileFragment> {
                   ),
                   SettingSection(
                     title: Text(language.lblAboutApp.toUpperCase(),
-                        style: boldTextStyle()),
+                        style: context.boldTextStyle()),
                     headingDecoration: boxDecorationDefault(
                       color: Color(0xFFE8F3EC),
                       borderRadius: const BorderRadiusDirectional.vertical(
@@ -419,7 +420,7 @@ class ProfileFragmentState extends State<ProfileFragment> {
                             size: SETTING_ICON_SIZE, context: context),
                         trailing: trailing(context),
                         title: language.lblAboutApp,
-                        titleTextStyle: boldTextStyle(),
+                        titleTextStyle: context.boldTextStyle(),
                         onTap: () {
                           AboutScreen().launch(context);
                         },
@@ -435,7 +436,7 @@ class ProfileFragmentState extends State<ProfileFragment> {
                             size: SETTING_ICON_SIZE, context: context),
                         trailing: trailing(context),
                         title: language.privacyPolicy,
-                        titleTextStyle: boldTextStyle(),
+                        titleTextStyle: context.boldTextStyle(),
                         onTap: () {
                           StaticContentScreen(title: language.privacyPolicy)
                               .launch(context);
@@ -452,7 +453,7 @@ class ProfileFragmentState extends State<ProfileFragment> {
                             size: SETTING_ICON_SIZE, context: context),
                         trailing: trailing(context),
                         title: language.termsCondition,
-                        titleTextStyle: boldTextStyle(),
+                        titleTextStyle: context.boldTextStyle(),
                         onTap: () {
                           StaticContentScreen(title: language.termsCondition)
                               .launch(context);
@@ -469,7 +470,7 @@ class ProfileFragmentState extends State<ProfileFragment> {
                             size: SETTING_ICON_SIZE, context: context),
                         trailing: trailing(context),
                         title: language.refundPolicy,
-                        titleTextStyle: boldTextStyle(),
+                        titleTextStyle: context.boldTextStyle(),
                         onTap: () {
                           StaticContentScreen(title: language.refundPolicy)
                               .launch(context);
@@ -487,7 +488,7 @@ class ProfileFragmentState extends State<ProfileFragment> {
                             size: SETTING_ICON_SIZE, context: context),
                         trailing: trailing(context),
                         title: language.helpSupport,
-                        titleTextStyle: boldTextStyle(),
+                        titleTextStyle: context.boldTextStyle(),
                         onTap: () {
                           if (appConfigurationStore.helpAndSupport.isNotEmpty) {
                             checkIfLink(
@@ -511,7 +512,7 @@ class ProfileFragmentState extends State<ProfileFragment> {
                       //   leading: ic_help_desk.iconImage(
                       //       , size: SETTING_ICON_SIZE),
                       //   title: language.helpDesk,
-                      //   titleTextStyle: boldTextStyle(),
+                      //   titleTextStyle:context.boldTextStyle(),
                       //   trailing: trailing(context),
                       //   highlightColor: Colors.transparent,
                       //   splashColor: Colors.transparent,
@@ -538,7 +539,7 @@ class ProfileFragmentState extends State<ProfileFragment> {
                               size: SETTING_ICON_SIZE, context: context),
                           trailing: trailing(context),
                           title: language.lblHelplineNumber,
-                          titleTextStyle: boldTextStyle(),
+                          titleTextStyle: context.boldTextStyle(),
                           highlightColor: Colors.transparent,
                           splashColor: Colors.transparent,
                           onTap: () {
@@ -561,7 +562,7 @@ class ProfileFragmentState extends State<ProfileFragment> {
                         ),
                         trailing: trailing(context),
                         title: language.signIn,
-                        titleTextStyle: boldTextStyle(),
+                        titleTextStyle: context.boldTextStyle(),
                         onTap: () {
                           const SignInScreen().launch(context);
                         },
@@ -578,7 +579,7 @@ class ProfileFragmentState extends State<ProfileFragment> {
                         paddingBeforeTrailing: 4,
                         trailing: trailing(context),
                         title: language.lblDeleteAccount,
-                        titleTextStyle: boldTextStyle(),
+                        titleTextStyle: context.boldTextStyle(),
                         highlightColor: Colors.transparent,
                         splashColor: Colors.transparent,
                         onTap: () {
@@ -674,7 +675,7 @@ class ProfileFragmentState extends State<ProfileFragment> {
                             );
                           },
                           child: Text(language.logout,
-                              style: boldTextStyle(
+                              style: context.boldTextStyle(
                                   color: context.primary, size: 16)),
                         ).center(),
                       //32.height,
@@ -684,7 +685,7 @@ class ProfileFragmentState extends State<ProfileFragment> {
                       //     return TextButton(
                       //       child: VersionInfoWidget(
                       //           prefixText: 'v',
-                      //           textStyle: secondaryTextStyle()),
+                      //           textStyle:context.secondaryTextStyle()),
                       //       onPressed: () {
                       //         showAboutDialog(
                       //           context: context,

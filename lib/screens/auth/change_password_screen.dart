@@ -7,6 +7,7 @@ import 'package:booking_system_flutter/utils/common.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
 import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/model_keys.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -88,9 +89,9 @@ class ChangePasswordScreenState extends State<ChangePasswordScreen> {
             children: [
               16.height,
               Text(language.lblChangePwdTitle,
-                  style: primaryTextStyle(size: 14)),
+                  style: context.primaryTextStyle(size: 14)),
               24.height,
-              Text(language.hintOldPasswordTxt, style: boldTextStyle()),
+              Text(language.hintOldPasswordTxt, style: context.boldTextStyle()),
               8.height,
               AppTextField(
                 textFieldType: TextFieldType.PASSWORD,
@@ -116,7 +117,7 @@ class ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 },
               ),
               16.height,
-              Text(language.hintNewPasswordTxt, style: boldTextStyle()),
+              Text(language.hintNewPasswordTxt, style: context.boldTextStyle()),
               8.height,
               AppTextField(
                 textFieldType: TextFieldType.PASSWORD,
@@ -142,7 +143,8 @@ class ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 },
               ),
               16.height,
-              Text(language.hintReenterPasswordTxt, style: boldTextStyle()),
+              Text(language.hintReenterPasswordTxt,
+                  style: context.boldTextStyle()),
               8.height,
               AppTextField(
                 textFieldType: TextFieldType.PASSWORD,

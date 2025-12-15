@@ -11,6 +11,7 @@ import 'package:booking_system_flutter/utils/common.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
 import 'package:booking_system_flutter/utils/images.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -180,10 +181,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
               indicatorColor: Colors.transparent,
               labelTextStyle: WidgetStateProperty.resolveWith((states) {
                 if (states.contains(WidgetState.selected)) {
-                  return primaryTextStyle(
+                  return context.primaryTextStyle(
                       size: 11, color: context.primaryColor);
                 }
-                return primaryTextStyle(size: 11, color: appTextSecondaryColor);
+                return context.primaryTextStyle(
+                    size: 11, color: appTextSecondaryColor);
               }),
               surfaceTintColor: Colors.transparent,
               shadowColor: Colors.transparent,
@@ -200,9 +202,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   label: language.home,
                 ),
                 NavigationDestination(
-                  icon: ic_ticket.iconImage(color: appTextSecondaryColor, context: context),
-                  selectedIcon:
-                      ic_ticket.iconImage(color: context.primaryColor, context: context),
+                  icon: ic_ticket.iconImage(
+                      color: appTextSecondaryColor, context: context),
+                  selectedIcon: ic_ticket.iconImage(
+                      color: context.primaryColor, context: context),
                   label: language.booking,
                 ),
                 NavigationDestination(

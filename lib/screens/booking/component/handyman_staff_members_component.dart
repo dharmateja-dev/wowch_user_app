@@ -1,4 +1,5 @@
 import 'package:booking_system_flutter/screens/booking/handyman_info_screen.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -18,7 +19,9 @@ class HandymanStaffMembersComponent extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("${language.team} (${ handymanList.length})" , style: boldTextStyle(size: LABEL_TEXT_SIZE)).paddingSymmetric(horizontal: 16),
+        Text("${language.team} (${handymanList.length})",
+                style: context.boldTextStyle(size: LABEL_TEXT_SIZE))
+            .paddingSymmetric(horizontal: 16),
         10.height,
         HorizontalList(
           padding: EdgeInsets.symmetric(horizontal: 16),
@@ -31,8 +34,10 @@ class HandymanStaffMembersComponent extends StatelessWidget {
                 right: 8.0,
               ),
               child: Container(
-                decoration: BoxDecoration(color: context.cardColor, borderRadius: radius()),
-                padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 7),
+                decoration: BoxDecoration(
+                    color: context.cardColor, borderRadius: radius()),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12.0, vertical: 7),
                 child: Row(
                   children: [
                     Container(
@@ -48,7 +53,7 @@ class HandymanStaffMembersComponent extends StatelessWidget {
                     10.width,
                     Text(
                       handyman.firstName.validate(),
-                      style: boldTextStyle(size: 12),
+                      style: context.boldTextStyle(size: 12),
                       textAlign: TextAlign.center,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
@@ -58,7 +63,9 @@ class HandymanStaffMembersComponent extends StatelessWidget {
               ),
             ).onTap(() {
               HandymanInfoScreen(handymanId: handyman.id).launch(context);
-            }, splashColor: Colors.transparent, highlightColor: Colors.transparent);
+            },
+                splashColor: Colors.transparent,
+                highlightColor: Colors.transparent);
           },
         )
       ],

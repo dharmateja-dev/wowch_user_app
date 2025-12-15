@@ -10,6 +10,7 @@ import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/images.dart';
 import 'package:booking_system_flutter/utils/model_keys.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -153,10 +154,10 @@ class _EditBookingServiceDialogState extends State<EditBookingServiceDialog> {
               Row(
                 children: [
                   Text('#${widget.data.id.validate()}',
-                      style: boldTextStyle(color: primaryColor)),
+                      style: context.boldTextStyle(color: primaryColor)),
                   16.width,
                   Text('${widget.data.serviceName.validate()}',
-                          style: boldTextStyle())
+                          style: context.boldTextStyle())
                       .flexible(),
                 ],
               ),
@@ -169,7 +170,7 @@ class _EditBookingServiceDialogState extends State<EditBookingServiceDialog> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text('${language.lblDateAndTime} ',
-                        style: secondaryTextStyle()),
+                        style: context.secondaryTextStyle()),
                     16.height,
                     AppTextField(
                       textFieldType: TextFieldType.OTHER,
@@ -191,7 +192,7 @@ class _EditBookingServiceDialogState extends State<EditBookingServiceDialog> {
                         fillColor: context.cardColor,
                         filled: true,
                         hintText: language.chooseDateAndTime,
-                        hintStyle: secondaryTextStyle(),
+                        hintStyle: context.secondaryTextStyle(),
                       ),
                     ),
                   ],

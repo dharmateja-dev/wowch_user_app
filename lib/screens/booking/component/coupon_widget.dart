@@ -3,6 +3,7 @@ import 'package:booking_system_flutter/model/service_detail_response.dart';
 import 'package:booking_system_flutter/utils/colors.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
 import 'package:booking_system_flutter/utils/context_extensions.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -81,7 +82,7 @@ class _CouponWidgetState extends State<CouponWidget> {
                                   : context.cardColor,
                               child: Text(
                                 data.code.validate(),
-                                style: primaryTextStyle(
+                                style: context.primaryTextStyle(
                                     color: selectedIndex == index
                                         ? context.primaryColor
                                         : null),
@@ -107,30 +108,30 @@ class _CouponWidgetState extends State<CouponWidget> {
                                 decimalPoint: 0,
                                 color: appTextSecondaryColor),
                             Text(" ${language.lblOff.toLowerCase()}",
-                                style: primaryTextStyle()),
+                                style: context.primaryTextStyle()),
                           ],
                         )
                       else
                         Text(
                             "${widget.couponData[selectedIndex ?? 0].discount.validate()}% ${language.lblOff.toLowerCase()}",
-                            style: primaryTextStyle()),
+                            style: context.primaryTextStyle()),
                       16.height,
                       RichTextWidget(
                         list: [
                           TextSpan(
                               text: '${language.lblExpiryDate} ',
-                              style: secondaryTextStyle()),
+                              style: context.secondaryTextStyle()),
                           TextSpan(
                             text:
                                 " ${DateFormat(DATE_FORMAT_2).format(DateTime.parse(widget.couponData[selectedIndex ?? 0].expireDate.validate()))}",
-                            style: boldTextStyle(size: 12),
+                            style: context.boldTextStyle(size: 12),
                           ),
                         ],
                       ),
                       if (isUpdate)
                         TextIcon(
                           text: language.lblRemoveCoupon,
-                          textStyle: boldTextStyle(color: Colors.red),
+                          textStyle: context.boldTextStyle(color: Colors.red),
                           onTap: () {
                             couponCode = '';
                             selectedIndex = null;
@@ -146,7 +147,8 @@ class _CouponWidgetState extends State<CouponWidget> {
               ],
             )
           else
-            Text(language.lblNoCouponsAvailable, style: secondaryTextStyle())
+            Text(language.lblNoCouponsAvailable,
+                    style: context.secondaryTextStyle())
                 .center()
                 .paddingSymmetric(vertical: 50),
           16.height,

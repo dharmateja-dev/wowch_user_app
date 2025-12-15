@@ -5,6 +5,7 @@ import 'package:booking_system_flutter/utils/common.dart';
 import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/images.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -70,7 +71,7 @@ class _UpcomingBookingDashboardComponent3State
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         26.height,
-        Text(language.upcomingBooking, style: boldTextStyle())
+        Text(language.upcomingBooking, style: context.boldTextStyle())
             .paddingSymmetric(horizontal: 16),
         16.height,
         Stack(
@@ -100,7 +101,7 @@ class _UpcomingBookingDashboardComponent3State
                                       .validate(),
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
-                                  style: boldTextStyle(),
+                                  style: context.boldTextStyle(),
                                 ),
                                 8.height,
                                 Row(
@@ -115,11 +116,13 @@ class _UpcomingBookingDashboardComponent3State
                                         Text(
                                             language.lblDate
                                                 .suffixText(value: ': '),
-                                            style: secondaryTextStyle()),
+                                            style:
+                                                context.secondaryTextStyle()),
                                         Text(
                                             formatDate(widget
                                                 .upcomingBookingData!.date),
-                                            style: primaryTextStyle(size: 12)),
+                                            style: context.primaryTextStyle(
+                                                size: 12)),
                                       ],
                                     ),
                                     8.width,
@@ -128,13 +131,15 @@ class _UpcomingBookingDashboardComponent3State
                                         Text(
                                             language.lblTime
                                                 .suffixText(value: ': '),
-                                            style: secondaryTextStyle()),
+                                            style:
+                                                context.secondaryTextStyle()),
                                         Text(
                                             formatDate(
                                                 widget
                                                     .upcomingBookingData!.date,
                                                 isTime: true),
-                                            style: primaryTextStyle(size: 12)),
+                                            style: context.primaryTextStyle(
+                                                size: 12)),
                                       ],
                                     ),
                                   ],
@@ -199,7 +204,7 @@ class _UpcomingBookingDashboardComponent3State
                                     8.width,
                                     Text(
                                       '${language.bookingStatus}: ',
-                                      style: primaryTextStyle(size: 12),
+                                      style: context.primaryTextStyle(size: 12),
                                     ),
                                   ],
                                 ),
@@ -213,7 +218,7 @@ class _UpcomingBookingDashboardComponent3State
                                     8.width,
                                     Text(
                                       '${language.paymentStatus}: ',
-                                      style: primaryTextStyle(size: 12),
+                                      style: context.primaryTextStyle(size: 12),
                                     ),
                                   ],
                                 ),
@@ -229,7 +234,7 @@ class _UpcomingBookingDashboardComponent3State
                                       .toBookingStatus(),
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
-                                  style: boldTextStyle(
+                                  style: context.boldTextStyle(
                                     color: widget.upcomingBookingData!.status
                                         .validate()
                                         .getPaymentStatusBackgroundColor,
@@ -246,7 +251,7 @@ class _UpcomingBookingDashboardComponent3State
                                   ),
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
-                                  style: boldTextStyle(
+                                  style: context.boldTextStyle(
                                     color: widget.upcomingBookingData!
                                                     .paymentStatus ==
                                                 SERVICE_PAYMENT_STATUS_ADVANCE_PAID ||

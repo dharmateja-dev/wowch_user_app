@@ -4,6 +4,7 @@ import 'package:booking_system_flutter/screens/maintenance_mode_screen.dart';
 import 'package:booking_system_flutter/utils/configs.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
 import 'package:booking_system_flutter/utils/images.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -135,7 +136,7 @@ class _SplashScreenState extends State<SplashScreen> {
               Image.asset(appLogo, height: 120, width: 120),
               32.height,
               Text(APP_NAME,
-                  style: boldTextStyle(
+                  style: context.boldTextStyle(
                       size: 26,
                       color: appStore.isDarkMode ? Colors.white : Colors.black),
                   textAlign: TextAlign.center),
@@ -145,7 +146,8 @@ class _SplashScreenState extends State<SplashScreen> {
                   builder: (_) => appStore.isLoading
                       ? LoaderWidget().center()
                       : TextButton(
-                          child: Text(language.reload, style: boldTextStyle()),
+                          child: Text(language.reload,
+                              style: context.boldTextStyle()),
                           onPressed: () {
                             appStore.setLoading(true);
                             init();

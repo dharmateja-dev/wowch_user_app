@@ -3,6 +3,7 @@ import 'package:booking_system_flutter/main.dart';
 import 'package:booking_system_flutter/model/user_data_model.dart';
 import 'package:booking_system_flutter/utils/common.dart';
 import 'package:booking_system_flutter/utils/images.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -99,7 +100,7 @@ class BookingDetailProviderWidgetState
                       children: [
                         Text(
                           widget.providerData.displayName.validate(),
-                          style: boldTextStyle(size: 16),
+                          style: context.boldTextStyle(size: 16),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -165,7 +166,8 @@ class BookingDetailProviderWidgetState
                         size: 18,
                       ),
                       8.width,
-                      Text(language.lblCall, style: boldTextStyle(size: 14)),
+                      Text(language.lblCall,
+                          style: context.boldTextStyle(size: 14)),
                     ],
                   ),
                   color: Colors.white,
@@ -195,7 +197,8 @@ class BookingDetailProviderWidgetState
                         size: 18,
                       ),
                       8.width,
-                      Text(language.lblChat, style: boldTextStyle(size: 14)),
+                      Text(language.lblChat,
+                          style: context.boldTextStyle(size: 14)),
                     ],
                   ),
                   color: Colors.white,

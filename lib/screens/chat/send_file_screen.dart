@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:booking_system_flutter/utils/extensions/string_extentions.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -50,7 +51,7 @@ class _SendFilePreviewScreenState extends State<SendFilePreviewScreen> {
             statusBarIconBrightness: Brightness.light),
         titleWidget: Text(
           language.sendMessage,
-          style: boldTextStyle(color: white, size: APP_BAR_TEXT_SIZE),
+          style: context.boldTextStyle(color: white, size: APP_BAR_TEXT_SIZE),
         ),
       ),
       body: SizedBox(
@@ -159,7 +160,7 @@ class _SendFilePreviewScreenState extends State<SendFilePreviewScreen> {
         AppTextField(
           textFieldType: TextFieldType.OTHER,
           controller: messageCont,
-          textStyle: primaryTextStyle(),
+          textStyle: context.primaryTextStyle(),
           minLines: 1,
           // onFieldSubmitted: (s) {},
           focus: messageFocus,
@@ -169,7 +170,8 @@ class _SendFilePreviewScreenState extends State<SendFilePreviewScreen> {
           textCapitalization: TextCapitalization.sentences,
           keyboardType: TextInputType.multiline,
           decoration: inputDecoration(context).copyWith(
-              hintText: language.message, hintStyle: secondaryTextStyle()),
+              hintText: language.message,
+              hintStyle: context.secondaryTextStyle()),
         ).expand(),
       ],
     );

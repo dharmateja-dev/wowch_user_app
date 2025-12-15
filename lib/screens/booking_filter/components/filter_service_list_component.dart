@@ -1,4 +1,5 @@
 import 'package:booking_system_flutter/screens/service/shimmer/view_all_service_shimmer.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -18,10 +19,12 @@ class FilterServiceListComponent extends StatefulWidget {
   FilterServiceListComponent({this.showLoader = true});
 
   @override
-  State<FilterServiceListComponent> createState() => _FilterServiceListComponentState();
+  State<FilterServiceListComponent> createState() =>
+      _FilterServiceListComponentState();
 }
 
-class _FilterServiceListComponentState extends State<FilterServiceListComponent> {
+class _FilterServiceListComponentState
+    extends State<FilterServiceListComponent> {
   Future<List<ServiceData>>? future;
 
   List<ServiceData> servicesList = [];
@@ -88,7 +91,8 @@ class _FilterServiceListComponentState extends State<FilterServiceListComponent>
               itemCount: list.length,
               listAnimationType: ListAnimationType.FadeIn,
               fadeInConfiguration: FadeInConfiguration(duration: 2.seconds),
-              padding: EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 80),
+              padding:
+                  EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 80),
               emptyWidget: NoDataWidget(
                 title: language.lblNoServicesFound,
                 imageWidget: EmptyStateWidget(),
@@ -116,18 +120,24 @@ class _FilterServiceListComponentState extends State<FilterServiceListComponent>
                   decoration: boxDecorationWithRoundedCorners(
                     borderRadius: radius(),
                     backgroundColor: context.cardColor,
-                    border: appStore.isDarkMode ? Border.all(color: context.dividerColor) : null,
+                    border: appStore.isDarkMode
+                        ? Border.all(color: context.dividerColor)
+                        : null,
                   ),
                   child: Row(
                     children: [
                       ImageBorder(
-                        src: data.attachments!.isNotEmpty ? data.attachments!.first.validate() : "",
+                        src: data.attachments!.isNotEmpty
+                            ? data.attachments!.first.validate()
+                            : "",
                         height: 45,
                       ),
                       16.width,
-                      Text(data.name.validate(), style: boldTextStyle()).expand(),
+                      Text(data.name.validate(), style: context.boldTextStyle())
+                          .expand(),
                       4.width,
-                      SelectedItemWidget(isSelected: filterStore.serviceId.contains(data.id)),
+                      SelectedItemWidget(
+                          isSelected: filterStore.serviceId.contains(data.id)),
                     ],
                   ),
                 ).onTap(
@@ -142,7 +152,8 @@ class _FilterServiceListComponentState extends State<FilterServiceListComponent>
 
                     servicesList.forEach((element) {
                       if (element.isSelected.validate()) {
-                        filterStore.addToServiceList(serId: element.id.validate());
+                        filterStore.addToServiceList(
+                            serId: element.id.validate());
                       }
                     });
 
@@ -156,7 +167,9 @@ class _FilterServiceListComponentState extends State<FilterServiceListComponent>
             );
           },
         ),
-        Observer(builder: (_) => LoaderWidget().visible(appStore.isLoading && widget.showLoader)),
+        Observer(
+            builder: (_) => LoaderWidget()
+                .visible(appStore.isLoading && widget.showLoader)),
       ],
     );
   }

@@ -2,6 +2,7 @@ import 'package:booking_system_flutter/component/base_scaffold_widget.dart';
 import 'package:booking_system_flutter/store/filter_store.dart';
 import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -204,7 +205,7 @@ class _ViewAllServiceScreenState extends State<ViewAllServiceScreen> {
         16.height,
         Text(
           language.lblSubcategories,
-          style: boldTextStyle(),
+          style: context.boldTextStyle(),
         ).paddingSymmetric(horizontal: 16),
         12.height,
         // Grid layout for subcategories
@@ -314,7 +315,7 @@ class _ViewAllServiceScreenState extends State<ViewAllServiceScreen> {
             8.height,
             Text(
               name,
-              style: primaryTextStyle(
+              style: context.primaryTextStyle(
                 size: 10,
                 weight: isSelected ? FontWeight.w600 : FontWeight.normal,
                 color: isSelected ? context.primaryColor : null,
@@ -447,7 +448,7 @@ class _ViewAllServiceScreenState extends State<ViewAllServiceScreen> {
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Text(
             language.service,
-            style: boldTextStyle(size: LABEL_TEXT_SIZE),
+            style: context.boldTextStyle(size: LABEL_TEXT_SIZE),
           ),
         ),
         12.height,

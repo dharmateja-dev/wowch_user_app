@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -141,7 +142,7 @@ class _SliderDashboardComponent1State extends State<SliderDashboardComponent1> {
                                 padding: const EdgeInsets.all(4),
                                 child: FittedBox(
                                   child: Text(appStore.unreadCount.toString(),
-                                      style: primaryTextStyle(
+                                      style: context.primaryTextStyle(
                                           size: 12, color: Colors.white)),
                                 ),
                                 decoration: boxDecorationDefault(
@@ -200,7 +201,7 @@ class _SliderDashboardComponent1State extends State<SliderDashboardComponent1> {
                                 appStore.isCurrentLocation
                                     ? 'Current Location'
                                     : language.lblLocationOff,
-                                style: boldTextStyle(
+                                style: context.boldTextStyle(
                                     color: Colors.white, size: 14),
                               ),
                               2.height,
@@ -208,7 +209,7 @@ class _SliderDashboardComponent1State extends State<SliderDashboardComponent1> {
                                 appStore.isCurrentLocation
                                     ? getStringAsync(CURRENT_ADDRESS)
                                     : 'Enable location',
-                                style: secondaryTextStyle(
+                                style: context.secondaryTextStyle(
                                     color: Colors.white70, size: 12),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
@@ -242,7 +243,7 @@ class _SliderDashboardComponent1State extends State<SliderDashboardComponent1> {
                                         child: FittedBox(
                                           child: Text(
                                             appStore.unreadCount.toString(),
-                                            style: primaryTextStyle(
+                                            style: context.primaryTextStyle(
                                                 size: 10, color: Colors.white),
                                           ),
                                         ),
@@ -285,8 +286,8 @@ class _SliderDashboardComponent1State extends State<SliderDashboardComponent1> {
                         12.width,
                         Text(
                           'Search',
-                          style:
-                              secondaryTextStyle(color: Colors.grey, size: 14),
+                          style: context.secondaryTextStyle(
+                              color: Colors.grey, size: 14),
                         ),
                         Spacer(),
                         Icon(Icons.my_location_outlined,

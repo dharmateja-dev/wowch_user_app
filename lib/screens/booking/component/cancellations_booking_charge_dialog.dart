@@ -9,6 +9,7 @@ import 'package:booking_system_flutter/utils/common.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
 import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/model_keys.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -50,11 +51,11 @@ class _CancellationsBookingChargeDialogState
                     Image.asset(ic_cancel_booking, height: 62),
                     32.height,
                     Text(language.lblCancelBooking,
-                        style: boldTextStyle(size: 16)),
+                        style: context.boldTextStyle(size: 16)),
                     8.height,
                     Text(language.areYouSureYou,
                         textAlign: TextAlign.center,
-                        style: primaryTextStyle(
+                        style: context.primaryTextStyle(
                             size: 12, color: appTextSecondaryColor)),
                     32.height,
                     Container(
@@ -72,7 +73,7 @@ class _CancellationsBookingChargeDialogState
                         child: Row(
                           children: [
                             Text("${language.totalCancellationFee}:",
-                                    style: boldTextStyle(size: 12))
+                                    style: context.boldTextStyle(size: 12))
                                 .expand(),
                             10.width,
                             PriceWidget(
@@ -100,12 +101,12 @@ class _CancellationsBookingChargeDialogState
                               children: [
                                 TextSpan(
                                   text: '${language.reason}',
-                                  style: boldTextStyle(
+                                  style: context.boldTextStyle(
                                       size: 12, weight: FontWeight.w600),
                                 ),
                                 TextSpan(
                                   text: "*",
-                                  style: boldTextStyle(
+                                  style: context.boldTextStyle(
                                       color: redColor,
                                       size: 12,
                                       weight: FontWeight.w600),
@@ -150,8 +151,8 @@ class _CancellationsBookingChargeDialogState
                           color: context.dividerColor,
                           height: 40,
                           text: language.goBack,
-                          textStyle:
-                              boldTextStyle(weight: FontWeight.w600, size: 12),
+                          textStyle: context.boldTextStyle(
+                              weight: FontWeight.w600, size: 12),
                           width: context.width() - context.navigationBarHeight,
                           onTap: () {
                             finish(context);
@@ -162,7 +163,7 @@ class _CancellationsBookingChargeDialogState
                           color: context.primary,
                           height: 40,
                           text: language.lblCancelBooking,
-                          textStyle: boldTextStyle(
+                          textStyle: context.boldTextStyle(
                               color: Colors.white,
                               weight: FontWeight.w600,
                               size: 12),

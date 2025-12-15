@@ -6,6 +6,7 @@ import 'package:booking_system_flutter/utils/common.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
 import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/model_keys.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:intl/intl.dart';
@@ -72,7 +73,7 @@ class _ReasonDialogState extends State<ReasonDialog> {
                     color: context.primary,
                     height: 40,
                     text: language.btnSubmit,
-                    textStyle: boldTextStyle(color: context.onPrimary),
+                    textStyle: context.boldTextStyle(color: context.onPrimary),
                     width: context.width() - context.navigationBarHeight,
                     onTap: () {
                       _handleClick();

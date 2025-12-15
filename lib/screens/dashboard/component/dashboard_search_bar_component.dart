@@ -1,11 +1,11 @@
 import 'package:booking_system_flutter/main.dart';
 import 'package:booking_system_flutter/model/service_data_model.dart';
 import 'package:booking_system_flutter/screens/service/search_service_screen.dart';
-import 'package:booking_system_flutter/utils/colors.dart';
 import 'package:booking_system_flutter/utils/common.dart';
 import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/images.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -29,7 +29,7 @@ class DashboardSearchBarComponent extends StatelessWidget {
           Expanded(
             child: Text(
               language.search, // localized placeholder "Search"
-              style: primaryTextStyle(
+              style: context.primaryTextStyle(
                 color: context.searchHintTextColor,
                 size: 14,
               ),

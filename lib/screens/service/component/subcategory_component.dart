@@ -3,6 +3,7 @@ import 'package:booking_system_flutter/main.dart';
 import 'package:booking_system_flutter/model/category_model.dart';
 import 'package:booking_system_flutter/network/rest_apis.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -64,7 +65,7 @@ class _SubCategoryComponentState extends State<SubCategoryComponent> {
               children: [
                 16.height,
                 Text(language.lblSubcategories,
-                        style: boldTextStyle(size: LABEL_TEXT_SIZE))
+                        style: context.boldTextStyle(size: LABEL_TEXT_SIZE))
                     .paddingLeft(16),
                 HorizontalList(
                   itemCount: snap.data!.categoryList.validate().length,
@@ -105,7 +106,7 @@ class _SubCategoryComponentState extends State<SubCategoryComponent> {
                                         ),
                                         alignment: Alignment.center,
                                         child: Text(data.name.validate(),
-                                            style: boldTextStyle()),
+                                            style: context.boldTextStyle()),
                                       ),
                                     if (index != 0)
                                       data.categoryImage
@@ -158,13 +159,13 @@ class _SubCategoryComponentState extends State<SubCategoryComponent> {
                                     4.height,
                                     if (index == 0)
                                       Text(language.lblViewAll,
-                                          style: boldTextStyle(),
+                                          style: context.boldTextStyle(),
                                           textAlign: TextAlign.center,
                                           maxLines: 1),
                                     if (index != 0)
                                       Marquee(
                                           child: Text('${data.name.validate()}',
-                                              style: boldTextStyle(),
+                                              style: context.boldTextStyle(),
                                               textAlign: TextAlign.center,
                                               maxLines: 1)),
                                   ],

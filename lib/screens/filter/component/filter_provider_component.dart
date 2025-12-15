@@ -4,6 +4,7 @@ import 'package:booking_system_flutter/main.dart';
 import 'package:booking_system_flutter/model/user_data_model.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
 import 'package:booking_system_flutter/utils/images.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:intl/intl.dart';
@@ -70,7 +71,8 @@ class _FilterProviderComponentState extends State<FilterProviderComponent> {
                     : Center(
                         child: Text(
                           'Hello',
-                          style: boldTextStyle(color: Colors.white, size: 10),
+                          style: context.boldTextStyle(
+                              color: Colors.white, size: 10),
                         ),
                       ),
               ),
@@ -85,7 +87,7 @@ class _FilterProviderComponentState extends State<FilterProviderComponent> {
                       children: [
                         Text(
                           data.displayName.validate(),
-                          style: boldTextStyle(size: 14),
+                          style: context.boldTextStyle(size: 14),
                         ),
                         16.width,
                         // Rating Badge
@@ -103,7 +105,7 @@ class _FilterProviderComponentState extends State<FilterProviderComponent> {
                               data.providersServiceRating
                                   .validate()
                                   .toStringAsFixed(1),
-                              style: primaryTextStyle(
+                              style: context.primaryTextStyle(
                                 size: 10,
                               ),
                             ),
@@ -116,13 +118,13 @@ class _FilterProviderComponentState extends State<FilterProviderComponent> {
                     Text(
                       DateFormat('MMMM dd, yyyy')
                           .format(DateTime.parse(data.createdAt.validate())),
-                      style: secondaryTextStyle(size: 12),
+                      style: context.secondaryTextStyle(size: 12),
                     ),
                     6.height,
                     // Services Member Since
                     Text(
                       'Services\nMember Since ${DateFormat(YEAR).format(DateTime.parse(data.createdAt.validate()))}',
-                      style: secondaryTextStyle(size: 11),
+                      style: context.secondaryTextStyle(size: 11),
                     ),
                   ],
                 ),

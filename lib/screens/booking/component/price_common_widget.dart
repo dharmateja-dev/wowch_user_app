@@ -9,6 +9,7 @@ import 'package:booking_system_flutter/utils/common.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
 import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/model_keys.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -42,7 +43,7 @@ class PriceCommonWidget extends StatelessWidget {
         24.height,
         Text(
           language.paymentDetail,
-          style: boldTextStyle(),
+          style: context.boldTextStyle(),
         ),
         16.height,
         Container(
@@ -160,7 +161,7 @@ class PriceCommonWidget extends StatelessWidget {
                     children: [
                       Text(
                         language.totalAmount,
-                        style: primaryTextStyle(size: 12),
+                        style: context.primaryTextStyle(size: 12),
                       ).expand(),
                       PriceWidget(
                         currencySymbol: '₹',
@@ -181,7 +182,7 @@ class PriceCommonWidget extends StatelessWidget {
                   padding: EdgeInsets.only(top: 12),
                   child: Text(
                     "${language.lblOnBase} ${calculateTimer(bookingDetail.durationDiff.validate().toInt())} ${getMinHour(durationDiff: bookingDetail.durationDiff.validate())}",
-                    style: primaryTextStyle(size: 12),
+                    style: context.primaryTextStyle(size: 12),
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -207,7 +208,7 @@ class PriceCommonWidget extends StatelessWidget {
             Flexible(
               child: Text(
                 label,
-                style: primaryTextStyle(size: 12),
+                style: context.primaryTextStyle(size: 12),
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
               ),
@@ -241,7 +242,7 @@ class PriceCommonWidget extends StatelessWidget {
               children: [
                 Text(
                   language.lblTax,
-                  style: primaryTextStyle(size: 12),
+                  style: context.primaryTextStyle(size: 12),
                 ),
                 8.width,
                 GestureDetector(
@@ -282,7 +283,6 @@ class PriceCommonWidget extends StatelessWidget {
       ],
     );
   }
-
 
   num get getAdvancePaymentAmount {
     if (bookingDetail.paidAmount.validate() != 0) {

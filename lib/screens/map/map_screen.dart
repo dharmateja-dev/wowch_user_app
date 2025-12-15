@@ -5,6 +5,7 @@ import 'package:booking_system_flutter/services/location_service.dart';
 import 'package:booking_system_flutter/utils/colors.dart';
 import 'package:booking_system_flutter/utils/common.dart';
 import 'package:booking_system_flutter/utils/context_extensions.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:geolocator/geolocator.dart';
@@ -239,7 +240,7 @@ class MapScreenState extends State<MapScreen> {
                       textFieldType: TextFieldType.MULTILINE,
                       controller: destinationAddressController,
                       focus: destinationAddressFocusNode,
-                      textStyle: primaryTextStyle(
+                      textStyle: context.primaryTextStyle(
                           color: appStore.isDarkMode
                               ? Colors.white
                               : Colors.black),
@@ -258,7 +259,7 @@ class MapScreenState extends State<MapScreen> {
                   height: 16,
                   color: primaryColor.withValues(alpha: 0.8),
                   text: language.setAddress.toUpperCase(),
-                  textStyle: boldTextStyle(color: white, size: 12),
+                  textStyle: context.boldTextStyle(color: white, size: 12),
                   onTap: () {
                     if (destinationAddressController.text.isNotEmpty) {
                       finish(context, destinationAddressController.text);

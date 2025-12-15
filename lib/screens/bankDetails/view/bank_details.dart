@@ -1,5 +1,6 @@
 import 'package:booking_system_flutter/screens/bankDetails/view/add_bank.dart';
 import 'package:booking_system_flutter/utils/context_extensions.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -181,7 +182,7 @@ class _BankDetailsState extends State<BankDetails> {
                       children: [
                         Marquee(
                                 child: Text(data.bankName.validate(),
-                                    style: primaryTextStyle(
+                                    style: context.primaryTextStyle(
                                         size: 14, weight: FontWeight.bold)))
                             .expand(),
                         16.width,
@@ -193,13 +194,14 @@ class _BankDetailsState extends State<BankDetails> {
                               color: context.primary,
                               borderRadius: BorderRadius.circular(50)),
                           child: Text(language.lbldefault,
-                              style: primaryTextStyle(size: 10, color: white)),
+                              style: context.primaryTextStyle(
+                                  size: 10, color: white)),
                         ).visible(data.isDefault == 1),
                       ],
                     ),
                     8.height,
                     Text(bankAccountWidget(data.accountNo.validate()),
-                        style: secondaryTextStyle()),
+                        style: context.secondaryTextStyle()),
                     8.height,
                     OptionListWidget(optionList: optionList(bankHistory: data)),
                   ],

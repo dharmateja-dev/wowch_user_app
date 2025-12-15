@@ -1,3 +1,4 @@
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -20,7 +21,8 @@ class NewJobRequestComponent extends StatelessWidget {
       child: Column(
         children: [
           Text(language.jobRequestSubtitle,
-                  style: primaryTextStyle(color: Colors.white, size: 20),
+                  style:
+                      context.primaryTextStyle(color: Colors.white, size: 20),
                   textAlign: TextAlign.center)
               .paddingSymmetric(horizontal: 12, vertical: 12),
           AppButton(
@@ -35,13 +37,13 @@ class NewJobRequestComponent extends StatelessWidget {
                         : context.primaryColor),
                 4.width,
                 Text(language.newPostJobRequest,
-                    style: boldTextStyle(
+                    style: context.boldTextStyle(
                         color: appStore.isDarkMode
                             ? Colors.white
                             : context.primaryColor)),
               ],
             ),
-            textStyle: primaryTextStyle(
+            textStyle: context.primaryTextStyle(
                 color: appStore.isDarkMode
                     ? textPrimaryColorGlobal
                     : context.primaryColor),

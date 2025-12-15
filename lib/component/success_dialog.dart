@@ -2,6 +2,7 @@ import 'package:booking_system_flutter/component/cached_image_widget.dart';
 import 'package:booking_system_flutter/main.dart';
 import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/images.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -52,20 +53,22 @@ class SuccessDialog extends StatelessWidget {
                   Text(
                     title,
                     textAlign: TextAlign.center,
-                    style: primaryTextStyle(size: 18, weight: FontWeight.bold),
+                    style: context.primaryTextStyle(
+                        size: 18, weight: FontWeight.bold),
                   ),
                   8.height,
                   Text(
                     description,
                     textAlign: TextAlign.center,
-                    style: secondaryTextStyle(size: 14, color: Colors.grey),
+                    style: context.secondaryTextStyle(
+                        size: 14, color: Colors.grey),
                   ),
                   32.height,
                   AppButton(
                     text: language.done,
                     height: 40,
                     color: context.primary,
-                    textStyle: boldTextStyle(color: context.onPrimary),
+                    textStyle: context.boldTextStyle(color: context.onPrimary),
                     width: context.width() * 0.4,
                     onTap: () {
                       finish(context, true);

@@ -10,6 +10,7 @@ import 'package:booking_system_flutter/model/shop_model.dart';
 import 'package:booking_system_flutter/network/rest_apis.dart';
 import 'package:booking_system_flutter/utils/images.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -370,7 +371,7 @@ class ProviderInfoScreenState extends State<ProviderInfoScreen> {
             // Provider name
             Text(
               userData.displayName.validate(),
-              style: boldTextStyle(
+              style: context.boldTextStyle(
                 size: 18,
               ),
             ),
@@ -380,7 +381,7 @@ class ProviderInfoScreenState extends State<ProviderInfoScreen> {
               userData.designation.validate().isNotEmpty
                   ? userData.designation.validate()
                   : userData.providerType.validate(),
-              style: boldTextStyle(
+              style: context.boldTextStyle(
                 size: 14,
               ),
             ),
@@ -391,7 +392,7 @@ class ProviderInfoScreenState extends State<ProviderInfoScreen> {
               children: [
                 Text(
                   language.lblMemberSince + " $memberSince",
-                  style: boldTextStyle(
+                  style: context.boldTextStyle(
                     size: 12,
                   ),
                 ),
@@ -400,7 +401,7 @@ class ProviderInfoScreenState extends State<ProviderInfoScreen> {
                 4.width,
                 Text(
                   userData.providersServiceRating.validate().toStringAsFixed(1),
-                  style: boldTextStyle(
+                  style: context.boldTextStyle(
                     size: 12,
                   ),
                 ),
@@ -414,7 +415,7 @@ class ProviderInfoScreenState extends State<ProviderInfoScreen> {
               },
               child: Text(
                 language.whyChooseMe,
-                style: boldTextStyle(
+                style: context.boldTextStyle(
                   color: context.primaryColor,
                   size: 14,
                 ),
@@ -478,13 +479,13 @@ class ProviderInfoScreenState extends State<ProviderInfoScreen> {
                     // Title
                     Text(
                       title,
-                      style: boldTextStyle(size: 18),
+                      style: context.boldTextStyle(size: 18),
                     ),
                     16.height,
                     // Description
                     Text(
                       description,
-                      style: primaryTextStyle(
+                      style: context.primaryTextStyle(
                         size: 14,
                       ),
                     ),
@@ -509,7 +510,7 @@ class ProviderInfoScreenState extends State<ProviderInfoScreen> {
       children: [
         Text(
           language.knownLanguages,
-          style: boldTextStyle(),
+          style: context.boldTextStyle(),
         ).paddingSymmetric(horizontal: 16),
         12.height,
         Wrap(
@@ -524,7 +525,7 @@ class ProviderInfoScreenState extends State<ProviderInfoScreen> {
               ),
               child: Text(
                 lang,
-                style: boldTextStyle(),
+                style: context.boldTextStyle(),
               ),
             );
           }).toList(),
@@ -548,7 +549,7 @@ class ProviderInfoScreenState extends State<ProviderInfoScreen> {
       children: [
         Text(
           language.team,
-          style: boldTextStyle(),
+          style: context.boldTextStyle(),
         ).paddingSymmetric(horizontal: 16),
         12.height,
         SizedBox(
@@ -592,7 +593,7 @@ class ProviderInfoScreenState extends State<ProviderInfoScreen> {
                     child: Center(
                       child: Text(
                         "+$remainingCount",
-                        style: boldTextStyle(
+                        style: context.boldTextStyle(
                           size: 16,
                         ),
                       ),
@@ -614,7 +615,7 @@ class ProviderInfoScreenState extends State<ProviderInfoScreen> {
       children: [
         Text(
           language.personalInfo,
-          style: boldTextStyle(),
+          style: context.boldTextStyle(),
         ).paddingSymmetric(horizontal: 16),
         12.height,
         // Email row
@@ -625,7 +626,7 @@ class ProviderInfoScreenState extends State<ProviderInfoScreen> {
             Expanded(
               child: Text(
                 userData.email.validate(),
-                style: primaryTextStyle(),
+                style: context.primaryTextStyle(),
               ),
             ),
           ],
@@ -641,7 +642,7 @@ class ProviderInfoScreenState extends State<ProviderInfoScreen> {
             Expanded(
               child: Text(
                 userData.contactNumber.validate(),
-                style: primaryTextStyle(),
+                style: context.primaryTextStyle(),
               ),
             ),
           ],
@@ -666,7 +667,7 @@ class ProviderInfoScreenState extends State<ProviderInfoScreen> {
           children: [
             Text(
               language.service,
-              style: boldTextStyle(),
+              style: context.boldTextStyle(),
             ),
             GestureDetector(
               onTap: () {
@@ -677,7 +678,7 @@ class ProviderInfoScreenState extends State<ProviderInfoScreen> {
               },
               child: Text(
                 language.lblViewAll,
-                style: primaryTextStyle(),
+                style: context.primaryTextStyle(),
               ),
             ),
           ],
@@ -743,7 +744,7 @@ class ProviderInfoScreenState extends State<ProviderInfoScreen> {
                       Expanded(
                         child: Text(
                           service.name.validate(),
-                          style: boldTextStyle(),
+                          style: context.boldTextStyle(),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -754,7 +755,7 @@ class ProviderInfoScreenState extends State<ProviderInfoScreen> {
                           2.width,
                           Text(
                             service.totalRating.validate().toStringAsFixed(1),
-                            style: boldTextStyle(),
+                            style: context.boldTextStyle(),
                           ),
                         ],
                       ),
@@ -764,7 +765,7 @@ class ProviderInfoScreenState extends State<ProviderInfoScreen> {
                   // Description
                   Text(
                     service.description.validate(),
-                    style: primaryTextStyle(),
+                    style: context.primaryTextStyle(),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -779,7 +780,7 @@ class ProviderInfoScreenState extends State<ProviderInfoScreen> {
                     ),
                     child: Text(
                       "₹ ${service.price.validate().toStringAsFixed(0)}",
-                      style: boldTextStyle(color: white),
+                      style: context.boldTextStyle(color: white),
                     ),
                   ),
                 ],

@@ -1,11 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:booking_system_flutter/utils/theme_colors.dart';
 
+/// ══════════════════════════════════════════════════════════════════════════
+/// CONTEXT EXTENSIONS - Theme-aware color access
+/// ══════════════════════════════════════════════════════════════════════════
+///
+/// This extension provides easy access to theme colors via BuildContext.
+///
+/// USAGE:
+///   context.primary       // Primary brand color
+///   context.onSurface     // Text color (black/white based on theme)
+///   context.surface       // Background color for cards/components
+///
+/// PRINCIPLE:
+///   - Colors from ColorScheme → Use directly (auto theme-aware)
+///   - Custom semantic colors → Only when ColorScheme doesn't have equivalent
+/// ══════════════════════════════════════════════════════════════════════════
+
 extension ColorSchemeExtension on BuildContext {
+  // ══════════════════════════════════════════════════════════════════════════
+  // CORE THEME ACCESS
+  // ══════════════════════════════════════════════════════════════════════════
+
   ThemeData get appTheme => Theme.of(this);
   ColorScheme get colorScheme => appTheme.colorScheme;
   TextTheme get appTextTheme => appTheme.textTheme;
   bool get isDarkMode => appTheme.brightness == Brightness.dark;
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // COLOR SCHEME ACCESSORS (Direct from Material 3 ColorScheme)
+  // These are ALWAYS theme-aware - no manual isDarkMode checks needed!
+  // ══════════════════════════════════════════════════════════════════════════
 
   // ——— Primary Colors ———
   Color get primary => colorScheme.primary;
@@ -53,53 +78,74 @@ extension ColorSchemeExtension on BuildContext {
   Color get inversePrimary => colorScheme.inversePrimary;
 
   // ══════════════════════════════════════════════════════════════════════════
-  // TEXT COLORS
+  // SEMANTIC ALIASES (Map to ColorScheme - NO redundant ternaries!)
+  // Use these for semantic meaning in your code
   // ══════════════════════════════════════════════════════════════════════════
 
-  /// Primary text color - Light: #1E1E1E, Dark: #E8F5F0
-  Color get primaryTextColor =>
-      isDarkMode ? DarkThemeColors.pureWhite : LightThemeColors.deepBlack;
+  // ——— Text Colors ———
+  /// Primary text color → Uses onSurface (auto theme-aware)
+  Color get primaryTextColor => onSurface;
 
-  /// Secondary text color - Light: #4F4F4F, Dark: #4F4F4F
-  Color get secondaryTextColor =>
-      isDarkMode ? DarkThemeColors.softWhite : LightThemeColors.darkGray;
+  /// Secondary/muted text color → Uses onSurfaceVariant
+  Color get secondaryTextColor => onSurfaceVariant;
 
-  /// Normal hint text color - Light: #9E9E9E, Dark: #6E7D78
-  Color get hintTextColor =>
-      isDarkMode ? DarkThemeColors.hintText : LightThemeColors.mutedText;
+  /// Hint text color → Uses onSurfaceVariant
+  Color get hintTextColor => onSurfaceVariant;
 
-  /// Secondary container hint text color - Light: #4F4F4F, Dark: #B2C78F
+  // ——— Icon Colors ———
+  /// Main icon color → Uses onSurface
+  Color get iconColor => onSurface;
+
+  /// Muted/inactive icon → Uses onSurfaceVariant
+  Color get iconMuted => onSurfaceVariant;
+
+  /// Primary/active icon → Uses primary
+  Color get iconPrimary => primary;
+
+  // ——— Border Colors ———
+  /// Input field border → Uses outline
+  Color get inputBorderColor => outline;
+
+  // ——— Container Aliases ———
+  /// Shaded green container → Uses primaryContainer
+  Color get shadedGreenContainer => primaryContainer;
+
+  /// On shaded green container → Uses onPrimaryContainer
+  Color get onShadedGreenContainer => onPrimaryContainer;
+
+  /// Light shaded green container → Uses secondaryContainer
+  Color get lightShadedGreenContainer => secondaryContainer;
+
+  /// Input fill for secondary sections → Uses secondaryContainer
+  Color get inputFillColorSecondary => secondaryContainer;
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // CUSTOM SEMANTIC COLORS (Only when ColorScheme doesn't have equivalent)
+  // These NEED ternary operators because they're custom to your design
+  // ══════════════════════════════════════════════════════════════════════════
+
+  // ——— Custom Text Colors ———
+  /// Secondary container hint text - Light: #4F4F4F, Dark: #B2C78F
   Color get secondaryContainerHintColor => isDarkMode
       ? DarkThemeColors.secondaryContainerHint
       : LightThemeColors.secondaryContainerHint;
 
-  /// Secondary text for lite green container - Light: #9E9E9E, Dark: #B2C7BF
+  /// Lite green container text - Light: #9E9E9E, Dark: #B2C7BF
   Color get liteGreenContainerTextColor => isDarkMode
       ? DarkThemeColors.liteGreenContainerText
       : LightThemeColors.liteGreenContainerText;
 
-  // ══════════════════════════════════════════════════════════════════════════
-  // ICON COLORS
-  // ══════════════════════════════════════════════════════════════════════════
+  // ——— Custom Icon Colors ———
+  /// Icon primary green - Both: #2E6B4F
+  Color get iconPrimaryGreen => LightThemeColors.iconPrimaryGreen;
 
-  /// Main icon color - Light: #1E1E1E, Dark: #E8F5F0
-  Color get iconColor =>
-      isDarkMode ? DarkThemeColors.icon : LightThemeColors.icon;
-
-  /// Icon primary green color - Both: #2E6B4F
-  Color get iconPrimaryGreen => isDarkMode
-      ? DarkThemeColors.iconPrimaryGreen
-      : LightThemeColors.iconPrimaryGreen;
-
-  /// Icon background color - Light: #FFFFFF, Dark: #F2F4F3
+  /// Icon background - Light: #FFFFFF, Dark: #F2F4F3
   Color get iconBackgroundColor => isDarkMode
       ? DarkThemeColors.iconBackgroundColor
       : LightThemeColors.iconBackgroundColor;
 
   /// Icon on primary container - Both: #FFFFFF
-  Color get iconOnPrimaryContainer => isDarkMode
-      ? DarkThemeColors.iconOnPrimaryContainer
-      : LightThemeColors.iconOnPrimaryContainer;
+  Color get iconOnPrimaryContainer => LightThemeColors.iconOnPrimaryContainer;
 
   /// Icon on secondary container - Light: #1E1E1E, Dark: #E8F5F0
   Color get iconOnSecondaryContainer => isDarkMode
@@ -110,136 +156,84 @@ extension ColorSchemeExtension on BuildContext {
   Color get taxIconColor =>
       isDarkMode ? DarkThemeColors.taxIconColor : LightThemeColors.taxIconColor;
 
-  /// Muted/Unselected icon color (e.g., bottom nav unselected)
-  Color get iconMuted => onSurfaceVariant;
-
-  /// Primary/Active icon color (e.g., bottom nav selected, action icons)
-  Color get iconPrimary => primary;
-
-  // ══════════════════════════════════════════════════════════════════════════
-  // BORDER COLORS
-  // ══════════════════════════════════════════════════════════════════════════
-
-  /// Input field border color - Light: #D6D6D6, Dark: #B2C7BF
-  Color get inputBorderColor => outline;
-
-  /// Green border color - Light: #2E6B4F, Dark: #93C0AB
+  // ——— Custom Border Colors ———
+  /// Green border - Light: #2E6B4F, Dark: #93C0AB
   Color get greenBorderColor =>
       isDarkMode ? DarkThemeColors.greenBorder : LightThemeColors.greenBorder;
 
-  /// Main border color (not for input field) - Light: #D6D6D6, Dark: #E0E0E0
+  /// Main border (non-input) - Light: #D6D6D6, Dark: #E0E0E0
   Color get mainBorderColor =>
       isDarkMode ? DarkThemeColors.mainBorder : LightThemeColors.mainBorder;
 
-  // ══════════════════════════════════════════════════════════════════════════
-  // DIVIDER COLORS
-  // ══════════════════════════════════════════════════════════════════════════
-
-  /// Main divider color in gray - Light: #1E1E1E, Dark: #E8F5F0
+  // ——— Custom Divider Colors ———
+  /// Main divider - Light: #1E1E1E, Dark: #E8F5F0
   Color get mainDividerColor =>
       isDarkMode ? DarkThemeColors.mainDivider : LightThemeColors.mainDivider;
 
-  /// Divider on secondary container color - Light: #1E1E1E, Dark: #6E7D73
+  /// Divider on secondary container - Light: #1E1E1E, Dark: #6E7D73
   Color get dividerOnSecondaryContainerColor => isDarkMode
       ? DarkThemeColors.dividerOnSecondaryContainer
       : LightThemeColors.dividerOnSecondaryContainer;
 
-  /// Standard theme divider color
+  /// Theme divider color
   Color get themeDividerColor => appTheme.dividerColor;
 
-  // ══════════════════════════════════════════════════════════════════════════
-  // INPUT FIELD COLORS
-  // ══════════════════════════════════════════════════════════════════════════
-
-  /// Input field fill color
-  /// Light theme: transparent (for authentication section), secondary container otherwise
-  /// Dark theme: #10101C
+  // ——— Custom Input Colors ———
+  /// Input fill - Light: transparent, Dark: #10101C
   Color get inputFillColor =>
       isDarkMode ? DarkThemeColors.inputFillColor : Colors.transparent;
 
-  /// Input field fill color for secondary container sections
-  Color get inputFillColorSecondary => secondaryContainer;
-
-  /// Search/picker fill color - Light: #FFFFFF, Dark: #B2C7BF
+  /// Search fill - Light: #FFFFFF, Dark: #B2C7BF
   Color get searchFillColor =>
       isDarkMode ? const Color(0xFFB2C7BF) : const Color(0xFFFFFFFF);
 
-  /// Search hint text color - Light: #9E9E9E (grey), Dark: #1E1E1E (black)
+  /// Search hint color - Light: #9E9E9E, Dark: #1E1E1E
   Color get searchHintColor =>
       isDarkMode ? const Color(0xFF1E1E1E) : const Color(0xFF9E9E9E);
 
-  /// Search icon color - Light: #1E1E1E (dark), Dark: #1E1E1E (black)
+  /// Search icon color - Both: #1E1E1E
   Color get searchIconColor => const Color(0xFF1E1E1E);
 
-  /// Search text color (typed text) - Dark in both themes: #1E1E1E
+  /// Search text color - Both: #1E1E1E
   Color get searchTextColor => const Color(0xFF1E1E1E);
 
-  /// Search hint text color - Light: #6C7072, Dark: #B2C7BF
+  /// Search hint text - Light: #6C7072, Dark: #B2C7BF
   Color get searchHintTextColor => isDarkMode
       ? DarkThemeColors.liteGreenContainerText
       : LightThemeColors.softGrey;
 
-  // ══════════════════════════════════════════════════════════════════════════
-  // CONTAINER COLORS
-  // ══════════════════════════════════════════════════════════════════════════
-
-  /// Service component and provider component color - Light: #F2F4F3, Dark: #2A2A2A
+  // ——— Custom Container Colors ———
+  /// Service/provider component - Light: #F2F4F3, Dark: #2A2A2A
   Color get serviceComponentColor => isDarkMode
       ? DarkThemeColors.serviceComponentColor
       : LightThemeColors.serviceComponentColor;
 
-  /// Provider info details container color - Light: #F2F4F3, Dark: #2A2A2A
+  /// Provider info container - Light: #F2F4F3, Dark: #2A2A2A
   Color get providerInfoDetailsContainerColor => isDarkMode
       ? DarkThemeColors.providerInfoDetailsContainer
       : LightThemeColors.providerInfoDetailsContainer;
 
-  /// Primary container for shaded green color - Both: #93C0AB
-  Color get shadedGreenContainer => primaryContainer;
+  // ——— Bottom Navigation Colors ———
+  /// Bottom nav inactive text - Both: #999999
+  Color get bottomNavTextInactive => const Color(0xFF999999);
 
-  /// On primary container for shaded green color - Light: #1E1E1E, Dark: #121212
-  Color get onShadedGreenContainer => onPrimaryContainer;
+  /// Bottom nav inactive icon - Both: #999999
+  Color get bottomNavIconInactive => const Color(0xFF999999);
 
-  /// Secondary container for complete light shaded green - Light: #E9F2EF, Dark: #101D1C
-  Color get lightShadedGreenContainer => secondaryContainer;
+  /// Bottom nav active text - Both: #2E6B4F
+  Color get bottomNavTextActive => LightThemeColors.primaryGreen;
 
-  // ══════════════════════════════════════════════════════════════════════════
-  // BOTTOM NAVIGATION COLORS
-  // ══════════════════════════════════════════════════════════════════════════
+  /// Bottom nav active icon - Both: #2E6B4F
+  Color get bottomNavIconActive => LightThemeColors.primaryGreen;
 
-  /// Bottom nav text color (inactive) - Both: #999999
-  Color get bottomNavTextInactive => isDarkMode
-      ? DarkThemeColors.bottomNavTextInactive
-      : LightThemeColors.bottomNavTextInactive;
-
-  /// Bottom nav icon color (inactive) - Both: #999999
-  Color get bottomNavIconInactive => isDarkMode
-      ? DarkThemeColors.bottomNavIconInactive
-      : LightThemeColors.bottomNavIconInactive;
-
-  /// Bottom nav text color (active) - Both: #2E6B4F
-  Color get bottomNavTextActive => isDarkMode
-      ? DarkThemeColors.bottomNavTextActive
-      : LightThemeColors.bottomNavTextActive;
-
-  /// Bottom nav icon color (active) - Both: #2E6B4F
-  Color get bottomNavIconActive => isDarkMode
-      ? DarkThemeColors.bottomNavIconActive
-      : LightThemeColors.bottomNavIconActive;
-
-  // ══════════════════════════════════════════════════════════════════════════
-  // SPECIAL COLORS
-  // ══════════════════════════════════════════════════════════════════════════
-
+  // ——— Special Colors ———
   /// Star color - Both: #FFC107
-  Color get starColor =>
-      isDarkMode ? DarkThemeColors.starColor : LightThemeColors.starColor;
+  Color get starColor => const Color(0xFFFFC107);
 
-  /// Primary color lite - Both: #65AE6A
-  Color get primaryLiteColor => isDarkMode
-      ? DarkThemeColors.primaryGreenLite
-      : LightThemeColors.primaryGreenLite;
+  /// Primary lite - Both: #65AE6A
+  Color get primaryLiteColor => const Color(0xFF65AE6A);
 
-  /// Dialog box background color - Light: #FFFFFF, Dark: #203325
+  /// Dialog background - Light: #FFFFFF, Dark: #203325
   Color get dialogBackgroundColor => isDarkMode
       ? DarkThemeColors.dialogBackground
       : LightThemeColors.dialogBackground;
@@ -250,33 +244,25 @@ extension ColorSchemeExtension on BuildContext {
       : LightThemeColors.bottomSheetBackground;
 
   // ══════════════════════════════════════════════════════════════════════════
-  // CONVENIENCE ALIASES
+  // CONVENIENCE HELPERS
   // ══════════════════════════════════════════════════════════════════════════
 
-  /// Access scaffold background
+  /// Scaffold background
   Color get scaffold => appTheme.scaffoldBackgroundColor;
 
-  /// Access card background
+  /// Card background
   Color get card => appTheme.cardTheme.color ?? surface;
 
-  // ——— Brightness Helpers ———
-
-  /// Returns the appropriate status bar icon brightness based on theme
-  /// Dark theme -> light icons, Light theme -> dark icons
+  /// Status bar brightness (for SystemUiOverlayStyle)
   Brightness get statusBarBrightness =>
       isDarkMode ? Brightness.light : Brightness.dark;
 
-  // ——— Legacy Aliases ———
+  // ══════════════════════════════════════════════════════════════════════════
+  // LEGACY ALIASES (For backward compatibility)
+  // ══════════════════════════════════════════════════════════════════════════
 
-  /// Fill color for input fields (legacy alias)
   Color get fillColor => inputFillColor;
-
-  /// Hint text color for input fields (legacy alias)
   Color get hintColor => hintTextColor;
-
-  /// Standard icon color (legacy alias)
   Color get icon => iconColor;
-
-  /// Standard divider (legacy alias)
   Color get divider => themeDividerColor;
 }

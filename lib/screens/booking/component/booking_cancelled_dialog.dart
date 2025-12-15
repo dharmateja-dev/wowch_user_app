@@ -7,6 +7,7 @@ import 'package:booking_system_flutter/utils/common.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
 import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/model_keys.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -44,11 +45,11 @@ class _BookingCancelledDialogState extends State<BookingCancelledDialog> {
                     Image.asset(ic_cancel_booking, height: 62),
                     32.height,
                     Text(language.bookingCancelled,
-                        style: boldTextStyle(size: 16)),
+                        style: context.boldTextStyle(size: 16)),
                     8.height,
                     Text(language.yourBookingHasBeen,
                         textAlign: TextAlign.center,
-                        style: primaryTextStyle(
+                        style: context.primaryTextStyle(
                             size: 12, color: appTextSecondaryColor)),
                     32.height,
                     Container(
@@ -60,7 +61,7 @@ class _BookingCancelledDialogState extends State<BookingCancelledDialog> {
                               : primaryLightColor,
                           borderRadius: BorderRadius.circular(4)),
                       child: Text(language.noteCheckYourBooking,
-                          style: boldTextStyle(
+                          style: context.boldTextStyle(
                               size: 12,
                               color: appStore.isDarkMode ? white : primaryColor,
                               fontStyle: FontStyle.italic)),
@@ -70,7 +71,7 @@ class _BookingCancelledDialogState extends State<BookingCancelledDialog> {
                       color: context.primary,
                       height: 40,
                       text: language.lblOk,
-                      textStyle: boldTextStyle(
+                      textStyle: context.boldTextStyle(
                           color: Colors.white,
                           weight: FontWeight.w600,
                           size: 12),

@@ -13,6 +13,7 @@ import 'package:booking_system_flutter/utils/constant.dart';
 import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/images.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -304,7 +305,7 @@ class ServiceComponentState extends State<ServiceComponent> {
                             directionMarguee: DirectionMarguee.oneDirection,
                             child: Text(
                               widget.serviceData.name.validate(),
-                              style: boldTextStyle(),
+                              style: context.boldTextStyle(),
                             ),
                           ),
                         ),
@@ -313,7 +314,7 @@ class ServiceComponentState extends State<ServiceComponent> {
                         4.width,
                         Text(
                           "${widget.serviceData.totalRating.validate().toStringAsFixed(1)}",
-                          style: boldTextStyle(size: 12),
+                          style: context.boldTextStyle(size: 12),
                         ),
                         // DisabledRatingBarWidget(
                         //     rating: widget.serviceData.totalRating.validate(),
@@ -324,7 +325,7 @@ class ServiceComponentState extends State<ServiceComponent> {
                     if (widget.serviceData.duration.validate().isNotEmpty)
                       Text(
                         'Duration (${widget.serviceData.duration.validate()})',
-                        style: primaryTextStyle(size: 10),
+                        style: context.primaryTextStyle(size: 10),
                       ).paddingSymmetric(horizontal: 8),
                     8.height,
                     Row(
@@ -339,7 +340,7 @@ class ServiceComponentState extends State<ServiceComponent> {
                           Expanded(
                             child: Text(
                               widget.serviceData.providerName.validate(),
-                              style: boldTextStyle(
+                              style: context.boldTextStyle(
                                   size: 12,
                                   color: appStore.isDarkMode
                                       ? Colors.white

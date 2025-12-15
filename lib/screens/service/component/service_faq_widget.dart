@@ -1,4 +1,5 @@
 import 'package:booking_system_flutter/model/service_detail_response.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -19,7 +20,7 @@ class ServiceFaqWidget extends StatelessWidget {
         clipBehavior: Clip.none,
         title: Text(
           serviceFaq.title.validate(),
-          style: boldTextStyle(),
+          style: context.boldTextStyle(),
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
         ),
@@ -29,7 +30,7 @@ class ServiceFaqWidget extends StatelessWidget {
             contentPadding: const EdgeInsets.only(left: 8),
             title: Text(
               serviceFaq.description.validate(),
-              style: primaryTextStyle(),
+              style: context.primaryTextStyle(),
               maxLines: 5,
               overflow: TextOverflow.ellipsis,
             ),

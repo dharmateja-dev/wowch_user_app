@@ -1,3 +1,4 @@
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -27,7 +28,7 @@ class JobRequestDashboardComponent3 extends StatelessWidget {
           14.height,
           Text(
             language.ifYouDidnTFind,
-            style: boldTextStyle(color: white, size: 16),
+            style: context.boldTextStyle(color: white, size: 16),
             textAlign: TextAlign.center,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
@@ -38,8 +39,13 @@ class JobRequestDashboardComponent3 extends StatelessWidget {
               if (appStore.isLoggedIn) {
                 MyPostRequestListScreen().launch(context);
               } else {
-                setStatusBarColor(transparentColor, delayInMilliSeconds: 100, statusBarIconBrightness: appStore.isDarkMode ? Brightness.light : Brightness.dark);
-                bool? res = await const SignInScreen(isFromDashboard: true).launch(context);
+                setStatusBarColor(transparentColor,
+                    delayInMilliSeconds: 100,
+                    statusBarIconBrightness: appStore.isDarkMode
+                        ? Brightness.light
+                        : Brightness.dark);
+                bool? res = await const SignInScreen(isFromDashboard: true)
+                    .launch(context);
 
                 if (res ?? false) {
                   MyPostRequestListScreen().launch(context);
@@ -48,7 +54,8 @@ class JobRequestDashboardComponent3 extends StatelessWidget {
             },
             child: Text(
               language.newRequest,
-              style: boldTextStyle(color: Colors.black, decoration: TextDecoration.underline),
+              style: context.boldTextStyle(
+                  color: Colors.black, decoration: TextDecoration.underline),
             ),
           ),
         ],

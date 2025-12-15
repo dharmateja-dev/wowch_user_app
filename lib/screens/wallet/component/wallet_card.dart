@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:booking_system_flutter/main.dart';
 import 'package:booking_system_flutter/utils/colors.dart';
 import 'package:booking_system_flutter/utils/images.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -44,7 +45,8 @@ class _WalletCardState extends State<WalletCard> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(language.availableBalance, style: boldTextStyle()),
+                    Text(language.availableBalance,
+                        style: context.boldTextStyle()),
                     FittedBox(
                       child: PriceWidget(
                           price: widget.availableBalance.validate(),
@@ -73,7 +75,7 @@ class _WalletCardState extends State<WalletCard> {
                   width: 16,
                   color: white,
                 ),
-                textStyle: boldTextStyle(color: whiteColor),
+                textStyle: context.boldTextStyle(color: whiteColor),
                 text: language.withdraw,
               ),
               TextIcon(
@@ -88,7 +90,7 @@ class _WalletCardState extends State<WalletCard> {
                   width: 16,
                   color: white,
                 ),
-                textStyle: boldTextStyle(color: whiteColor),
+                textStyle: context.boldTextStyle(color: whiteColor),
                 text: language.topUp,
               ),
             ],

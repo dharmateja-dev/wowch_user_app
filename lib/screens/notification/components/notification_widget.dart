@@ -1,6 +1,7 @@
 import 'package:booking_system_flutter/component/image_border_component.dart';
 import 'package:booking_system_flutter/model/notification_model.dart';
 import 'package:booking_system_flutter/utils/images.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -40,13 +41,16 @@ class NotificationWidget extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (data.profileImage.validate().isNotEmpty) ImageBorder(
-                  src: data.profileImage.validate(),
-                  height: 40,
-                ) else const ImageBorder(
-                  src: ic_notification_user,
-                  height: 40,
-                ),
+          if (data.profileImage.validate().isNotEmpty)
+            ImageBorder(
+              src: data.profileImage.validate(),
+              height: 40,
+            )
+          else
+            const ImageBorder(
+              src: ic_notification_user,
+              height: 40,
+            ),
           16.width,
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -54,20 +58,23 @@ class NotificationWidget extends StatelessWidget {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('${data.data!.type.validate().split('_').join(' ').capitalizeFirstLetter()}', style: boldTextStyle(size: 12)).expand(),
-                  Text(data.createdAt.validate(), style: secondaryTextStyle()),
+                  Text('${data.data!.type.validate().split('_').join(' ').capitalizeFirstLetter()}',
+                          style: context.boldTextStyle(size: 12))
+                      .expand(),
+                  Text(data.createdAt.validate(),
+                      style: context.secondaryTextStyle()),
                 ],
               ),
               4.height,
-              // Text(parseHtmlString(data.data!.message.validate()), style: secondaryTextStyle(), maxLines: 3, overflow: TextOverflow.ellipsis),
+              // Text(parseHtmlString(data.data!.message.validate()), style: context.secondaryTextStyle(), maxLines: 3, overflow: TextOverflow.ellipsis),
               ReadMoreText(
                 parseHtmlString(data.data!.message.validate()),
                 trimLines: 2,
                 trimMode: TrimMode.Line,
                 trimCollapsedText: ' Read more', //Todo:
-                trimExpandedText: ' Read less',//Todo:
-                style: secondaryTextStyle(),
-                      )
+                trimExpandedText: ' Read less', //Todo:
+                style: context.secondaryTextStyle(),
+              )
             ],
           ).expand(),
         ],

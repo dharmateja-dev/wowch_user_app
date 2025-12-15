@@ -1,5 +1,6 @@
 import 'package:booking_system_flutter/component/price_widget.dart';
 import 'package:booking_system_flutter/utils/context_extensions.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -122,7 +123,7 @@ class _ServiceComponentState extends State<RelatedServiceComponent> {
                             4.width,
                             Text(
                                 "${widget.serviceData.totalRating.validate().toStringAsFixed(1)}",
-                                style: boldTextStyle()),
+                                style: context.boldTextStyle()),
                           ],
                         ),
                       ),
@@ -131,7 +132,7 @@ class _ServiceComponentState extends State<RelatedServiceComponent> {
                   10.height,
                   Text(
                     widget.serviceData.name.validate(),
-                    style: primaryTextStyle(weight: FontWeight.bold),
+                    style: context.primaryTextStyle(weight: FontWeight.bold),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),

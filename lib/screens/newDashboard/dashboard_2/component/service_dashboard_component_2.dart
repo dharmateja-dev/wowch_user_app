@@ -1,5 +1,6 @@
 import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -195,7 +196,7 @@ class _ServiceDashboardComponent2State
                           4.width,
                           Text(
                               "${widget.serviceData.totalRating.validate().toStringAsFixed(1)}",
-                              style: boldTextStyle()),
+                              style: context.boldTextStyle()),
                         ],
                       ).paddingRight(16),
                     Container(
@@ -214,7 +215,7 @@ class _ServiceDashboardComponent2State
                         child: Text(
                           "${widget.serviceData.subCategoryName.validate().isNotEmpty ? widget.serviceData.subCategoryName.validate() : widget.serviceData.categoryName.validate()}"
                               .toUpperCase(),
-                          style: boldTextStyle(
+                          style: context.boldTextStyle(
                               color: appStore.isDarkMode ? white : primaryColor,
                               size: 12),
                         ).paddingSymmetric(horizontal: 8, vertical: 4),
@@ -225,7 +226,7 @@ class _ServiceDashboardComponent2State
                 12.height,
                 Text(
                   widget.serviceData.name.validate(),
-                  style: boldTextStyle(),
+                  style: context.boldTextStyle(),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ).paddingSymmetric(horizontal: 16),
@@ -274,7 +275,7 @@ class _ServiceDashboardComponent2State
                     if (widget.serviceData.providerName.validate().isNotEmpty)
                       Text(
                         widget.serviceData.providerName.validate(),
-                        style: secondaryTextStyle(
+                        style: context.secondaryTextStyle(
                             size: 12,
                             color: appStore.isDarkMode
                                 ? Colors.white
@@ -299,7 +300,7 @@ class _ServiceDashboardComponent2State
                   },
                   color: context.primaryColor,
                   child: Text(language.lblBookNow,
-                      style: boldTextStyle(color: white)),
+                      style: context.boldTextStyle(color: white)),
                   width: context.width(),
                   textColor: Colors.white,
                 ).paddingAll(16),

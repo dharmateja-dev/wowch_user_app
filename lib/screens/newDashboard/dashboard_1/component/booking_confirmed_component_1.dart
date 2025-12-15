@@ -1,5 +1,6 @@
 import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -45,7 +46,7 @@ class _BookingConfirmedComponent1State
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         16.height,
-        Text(language.yourBooking, style: boldTextStyle())
+        Text(language.yourBooking, style: context.boldTextStyle())
             .paddingSymmetric(horizontal: 16),
         16.height,
         Container(
@@ -107,7 +108,7 @@ class _BookingConfirmedComponent1State
                                     .validate(),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
-                                style: boldTextStyle(),
+                                style: context.boldTextStyle(),
                               ).expand(),
                               6.width,
                               SizedBox(
@@ -141,7 +142,7 @@ class _BookingConfirmedComponent1State
                                     formatDate(widget
                                         .upcomingConfirmedBooking!.date
                                         .validate()),
-                                    style: secondaryTextStyle(
+                                    style: context.secondaryTextStyle(
                                         color: appStore.isDarkMode
                                             ? textPrimaryColorGlobal
                                             : null),
@@ -159,7 +160,7 @@ class _BookingConfirmedComponent1State
                                         widget.upcomingConfirmedBooking!.date
                                             .validate(),
                                         isTime: true),
-                                    style: secondaryTextStyle(
+                                    style: context.secondaryTextStyle(
                                         color: appStore.isDarkMode
                                             ? textPrimaryColorGlobal
                                             : null),
@@ -188,7 +189,7 @@ class _BookingConfirmedComponent1State
                               '${language.bookingStatus}:',
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
-                              style: primaryTextStyle(size: 12),
+                              style: context.primaryTextStyle(size: 12),
                             ).expand(),
                             16.width,
                             Align(
@@ -199,7 +200,7 @@ class _BookingConfirmedComponent1State
                                     .toBookingStatus(),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
-                                style: boldTextStyle(
+                                style: context.boldTextStyle(
                                   color: widget.upcomingConfirmedBooking!.status
                                       .validate()
                                       .getPaymentStatusBackgroundColor,
@@ -216,7 +217,7 @@ class _BookingConfirmedComponent1State
                               '${language.paymentStatus}:',
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
-                              style: primaryTextStyle(size: 12),
+                              style: context.primaryTextStyle(size: 12),
                             ).expand(),
                             Align(
                               alignment: Alignment.topRight,
@@ -229,7 +230,7 @@ class _BookingConfirmedComponent1State
                                 ),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
-                                style: boldTextStyle(
+                                style: context.boldTextStyle(
                                   size: 12,
                                   color: widget.upcomingConfirmedBooking!
                                                   .paymentStatus ==

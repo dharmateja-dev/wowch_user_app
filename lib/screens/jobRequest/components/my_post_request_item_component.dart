@@ -4,6 +4,7 @@ import 'package:booking_system_flutter/model/get_my_post_job_list_response.dart'
 import 'package:booking_system_flutter/screens/jobRequest/my_post_detail_screen.dart';
 import 'package:booking_system_flutter/utils/common.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -103,7 +104,7 @@ class _MyPostRequestItemComponentState
                 Row(
                   children: [
                     Text(widget.data.title.validate(),
-                            style: boldTextStyle(size: 18),
+                            style: context.boldTextStyle(size: 18),
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis)
                         .expand(),
@@ -119,7 +120,7 @@ class _MyPostRequestItemComponentState
                       ),
                       child: Text(
                         widget.data.status.validate().toPostJobStatus(),
-                        style: boldTextStyle(
+                        style: context.boldTextStyle(
                             color:
                                 widget.data.status.validate().getJobStatusColor,
                             size: 10),
@@ -144,11 +145,11 @@ class _MyPostRequestItemComponentState
                     //     children: [
                     //       TextSpan(
                     //         text: '₹${widget.data.jobPrice.validate()}',
-                    //         style: secondaryTextStyle(size: 14),
+                    //         style: context.secondaryTextStyle(size: 14),
                     //       ),
                     //       TextSpan(
                     //         text: '/hr',
-                    //         style: secondaryTextStyle(size: 12),
+                    //         style: context.secondaryTextStyle(size: 12),
                     //       ),
                     //     ],
                     //   ),
@@ -160,7 +161,7 @@ class _MyPostRequestItemComponentState
                   children: [
                     Text(
                       formatDate(widget.data.createdAt.validate()),
-                      style: boldTextStyle(size: 14),
+                      style: context.boldTextStyle(size: 14),
                     ),
                     IconButton(
                       icon: ic_delete.iconImage(

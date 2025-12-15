@@ -8,6 +8,7 @@ import 'package:booking_system_flutter/screens/shop/component/shop_image_slider.
 import 'package:booking_system_flutter/utils/common.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
 import 'package:booking_system_flutter/utils/images.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:booking_system_flutter/network/rest_apis.dart';
@@ -96,7 +97,7 @@ class _ShopDetailScreenState extends State<ShopDetailScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   8.height,
-                  Text(shop.name, style: boldTextStyle(size: 18)),
+                  Text(shop.name, style: context.boldTextStyle(size: 18)),
                   8.height,
                   if ((shop.email.validate().isNotEmpty) ||
                       (shop.contactNumber.validate().isNotEmpty)) ...[
@@ -113,7 +114,7 @@ class _ShopDetailScreenState extends State<ShopDetailScreen> {
                                 ? Colors.white
                                 : context.primaryColor),
                         text: shop.email.validate(),
-                        textStyle: secondaryTextStyle(size: 14),
+                        textStyle: context.secondaryTextStyle(size: 14),
                         expandedText: true,
                       ),
                       6.height,
@@ -131,7 +132,7 @@ class _ShopDetailScreenState extends State<ShopDetailScreen> {
                                 ? Colors.white
                                 : context.primaryColor),
                         text: shop.contactNumber.validate(),
-                        textStyle: secondaryTextStyle(size: 14),
+                        textStyle: context.secondaryTextStyle(size: 14),
                         expandedText: true,
                       ),
                       6.height,
@@ -155,7 +156,7 @@ class _ShopDetailScreenState extends State<ShopDetailScreen> {
                           Marquee(
                             child: Text(
                                 "${shop.address}, ${shop.cityName}, ${shop.stateName}, ${shop.countryName}",
-                                style: secondaryTextStyle(size: 14)),
+                                style: context.secondaryTextStyle(size: 14)),
                           ).flexible(),
                         ],
                       ),
@@ -182,7 +183,7 @@ class _ShopDetailScreenState extends State<ShopDetailScreen> {
                               ? Colors.white
                               : context.primaryColor),
                       text: "${shop.shopStartTime} - ${shop.shopEndTime}",
-                      textStyle: secondaryTextStyle(size: 14),
+                      textStyle: context.secondaryTextStyle(size: 14),
                       expandedText: true,
                     ),
                     6.height,
@@ -257,12 +258,13 @@ class _ShopDetailScreenState extends State<ShopDetailScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(language.lblAboutProvider,
-                style: boldTextStyle(size: LABEL_TEXT_SIZE)),
+                style: context.boldTextStyle(size: LABEL_TEXT_SIZE)),
             TextButton(
               onPressed: () {
                 ProviderInfoScreen(providerId: data.id).launch(context);
               },
-              child: Text(language.viewDetail, style: secondaryTextStyle()),
+              child: Text(language.viewDetail,
+                  style: context.secondaryTextStyle()),
             )
           ],
         ),

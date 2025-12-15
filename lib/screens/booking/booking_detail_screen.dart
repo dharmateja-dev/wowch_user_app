@@ -43,6 +43,7 @@ import 'package:booking_system_flutter/utils/extensions/num_extenstions.dart';
 import 'package:booking_system_flutter/utils/images.dart';
 import 'package:booking_system_flutter/utils/model_keys.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
@@ -716,10 +717,11 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text("${language.cancelledReason}: ",
-                style: boldTextStyle(size: 12, color: black)),
+                style: context.boldTextStyle(size: 12, color: black)),
             Marquee(
                     child: Text(snap.bookingDetail!.reason.validate(),
-                        style: boldTextStyle(color: redColor, size: 12)))
+                        style:
+                            context.boldTextStyle(color: redColor, size: 12)))
                 .expand(),
           ],
         ),
@@ -731,7 +733,8 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
         color: Color(0xFFF8D7DA), // Light red background
         child: Text(
           "Waiting for Provider Approval",
-          style: boldTextStyle(color: Color(0xFFDC3545), size: 14), // Red text
+          style: context.boldTextStyle(
+              color: Color(0xFFDC3545), size: 14), // Red text
         ),
       );
     }
@@ -763,14 +766,14 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
         children: [
           Text(
             language.lblYouHaventRatedYet,
-            style: boldTextStyle(size: 16),
+            style: context.boldTextStyle(size: 16),
           ),
           12.height,
           SizedBox(
             width: double.infinity,
             child: AppButton(
               text: language.btnRateNow,
-              textStyle: boldTextStyle(color: Colors.white),
+              textStyle: context.boldTextStyle(color: Colors.white),
               color: context.primaryColor,
               padding: EdgeInsets.symmetric(vertical: 12),
               onTap: () {
@@ -807,11 +810,12 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
       children: [
         Text(
           language.lblBookingID,
-          style: boldTextStyle(size: LABEL_TEXT_SIZE, color: Colors.white),
+          style:
+              context.boldTextStyle(size: LABEL_TEXT_SIZE, color: Colors.white),
         ),
         Text(
           '#' + widget.bookingId.validate().toString(),
-          style: boldTextStyle(color: Colors.white, size: 16),
+          style: context.boldTextStyle(color: Colors.white, size: 16),
         ),
       ],
     );
@@ -887,7 +891,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
                     bookingDetail.isPackageBooking
                         ? bookingDetail.bookingPackage!.name.validate()
                         : bookingDetail.serviceName.validate(),
-                    style: boldTextStyle(size: 16),
+                    style: context.boldTextStyle(size: 16),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -897,13 +901,13 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
                     children: [
                       Text(
                         'Duration: ',
-                        style: primaryTextStyle(
+                        style: context.primaryTextStyle(
                           size: 12,
                         ),
                       ),
                       Text(
                         formatDate(bookingDetail.date.validate()),
-                        style: primaryTextStyle(
+                        style: context.primaryTextStyle(
                           size: 12,
                         ),
                       ),
@@ -915,13 +919,13 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
                     children: [
                       Text(
                         'Time: ',
-                        style: primaryTextStyle(
+                        style: context.primaryTextStyle(
                           size: 12,
                         ),
                       ),
                       Text(
                         buildTimeString(bookingDetail: bookingDetail),
-                        style: primaryTextStyle(
+                        style: context.primaryTextStyle(
                           size: 12,
                         ),
                       ),
@@ -960,7 +964,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
       children: [
         16.height,
         Text(language.lblServiceProof,
-            style: boldTextStyle(size: LABEL_TEXT_SIZE)),
+            style: context.boldTextStyle(size: LABEL_TEXT_SIZE)),
         16.height,
         Container(
           decoration: boxDecorationWithRoundedCorners(
@@ -1000,7 +1004,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
             children: [
               Text(
                 language.lblAboutHandyman,
-                style: boldTextStyle(size: LABEL_TEXT_SIZE),
+                style: context.boldTextStyle(size: LABEL_TEXT_SIZE),
               ),
               GestureDetector(
                 onTap: () {
@@ -1063,14 +1067,14 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
             children: [
               TextSpan(
                 text: language.lblAboutProvider,
-                style: boldTextStyle(),
+                style: context.boldTextStyle(),
               ),
               if (res.handymanData.validate().isNotEmpty &&
                   (res.providerData!.id ==
                       res.handymanData!.first.id.validate()))
                 TextSpan(
                   text: ' (${language.asHandyman})',
-                  style: primaryTextStyle(),
+                  style: context.primaryTextStyle(),
                 ),
             ],
           ),
@@ -1111,7 +1115,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
         children: [
           24.height,
           Text(language.refundPaymentDetails,
-              style: boldTextStyle(size: LABEL_TEXT_SIZE)),
+              style: context.boldTextStyle(size: LABEL_TEXT_SIZE)),
           16.height,
           Container(
             decoration: boxDecorationDefault(color: context.cardColor),
@@ -1122,14 +1126,14 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
                 Row(
                   children: [
                     Text('${language.refundOf} ${snap.bookingDetail!.refundAmount!.toPriceFormat()}',
-                            style: boldTextStyle(size: LABEL_TEXT_SIZE))
+                            style: context.boldTextStyle(size: LABEL_TEXT_SIZE))
                         .expand(),
                     16.width,
                     Text(
                         snap.bookingDetail!.refundStatus
                             .validate()
                             .toBookingStatus(),
-                        style: boldTextStyle(
+                        style: context.boldTextStyle(
                             size: 14,
                             color: snap.bookingDetail!.refundStatus
                                 .validate()
@@ -1140,9 +1144,10 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
                 Row(
                   children: [
                     Text('${language.paymentMethod}: ',
-                        style: secondaryTextStyle()),
+                        style: context.secondaryTextStyle()),
                     Text(language.wallet,
-                        style: boldTextStyle(size: 12, color: primaryColor)),
+                        style: context.boldTextStyle(
+                            size: 12, color: primaryColor)),
                   ],
                 ),
                 8.height,
@@ -1157,7 +1162,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Text(language.price,
-                                  style: secondaryTextStyle(size: 14))
+                                  style: context.secondaryTextStyle(size: 14))
                               .expand(),
                           16.width,
                           PriceWidget(
@@ -1171,7 +1176,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Text(language.advancedPayment,
-                                  style: secondaryTextStyle(size: 14))
+                                  style: context.secondaryTextStyle(size: 14))
                               .expand(),
                           16.width,
                           PriceWidget(
@@ -1185,7 +1190,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Text(language.cancellationFee,
-                                  style: secondaryTextStyle(size: 14))
+                                  style: context.secondaryTextStyle(size: 14))
                               .expand(),
                           16.width,
                           PriceWidget(
@@ -1200,7 +1205,8 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Text(language.refundAmount,
-                                  style: boldTextStyle(size: LABEL_TEXT_SIZE))
+                                  style: context.boldTextStyle(
+                                      size: LABEL_TEXT_SIZE))
                               .expand(),
                           16.width,
                           PriceWidget(
@@ -1238,7 +1244,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
       children: [
         24.height,
         Text(language.extraCharges,
-            style: boldTextStyle(size: LABEL_TEXT_SIZE)),
+            style: context.boldTextStyle(size: LABEL_TEXT_SIZE)),
         16.height,
         Container(
           decoration: boxDecorationWithRoundedCorners(
@@ -1259,13 +1265,13 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
                   Row(
                     children: [
                       Text(data.title.validate(),
-                              style: secondaryTextStyle(size: 14))
+                              style: context.secondaryTextStyle(size: 14))
                           .expand(),
                       16.width,
                       Row(
                         children: [
                           Text('${data.qty} * ${data.price.validate()} = ',
-                              style: secondaryTextStyle()),
+                              style: context.secondaryTextStyle()),
                           4.width,
                           PriceWidget(
                               price:
@@ -1306,9 +1312,10 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(language.lblId, style: secondaryTextStyle(size: 14)),
+                    Text(language.lblId,
+                        style: context.secondaryTextStyle(size: 14)),
                     Text("#" + bookingData.paymentId.toString(),
-                        style: boldTextStyle()),
+                        style: context.boldTextStyle()),
                   ],
                 ),
                 16.height,
@@ -1317,13 +1324,13 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(language.lblMethod,
-                          style: secondaryTextStyle(size: 14)),
+                          style: context.secondaryTextStyle(size: 14)),
                       Text(
                         (bookingData.paymentMethod != null
                                 ? bookingData.paymentMethod.toString()
                                 : language.notAvailable)
                             .capitalizeFirstLetter(),
-                        style: boldTextStyle(),
+                        style: context.boldTextStyle(),
                       ),
                     ],
                   ),
@@ -1332,11 +1339,11 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(language.lblStatus,
-                        style: secondaryTextStyle(size: 14)),
+                        style: context.secondaryTextStyle(size: 14)),
                     Text(
                       getPaymentStatusText(
                           bookingData.paymentStatus, bookingData.paymentMethod),
-                      style: boldTextStyle(),
+                      style: context.boldTextStyle(),
                     ),
                   ],
                 ),
@@ -1347,13 +1354,13 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
                   Row(
                     children: [
                       Text(language.transactionId,
-                          style: secondaryTextStyle(size: 14)),
+                          style: context.secondaryTextStyle(size: 14)),
                       8.width,
                       Row(
                         children: [
                           Text(bookingData.txnId.validate(),
                                   textAlign: TextAlign.right,
-                                  style: boldTextStyle(color: redColor),
+                                  style: context.boldTextStyle(color: redColor),
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis)
                               .expand(),
@@ -1403,7 +1410,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
         // Reviews heading with count and optional View All
         Text(
           '${language.review} (${bookingDetail.totalReview ?? allReviews.length})',
-          style: boldTextStyle(size: 16),
+          style: context.boldTextStyle(size: 16),
         ),
         16.height,
         // Customer's own review with edit/delete options
@@ -1512,16 +1519,16 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
               : res.providerData!.id != handymanList.first.id
                   ? language.handymanLocation
                   : language.providerLocation,
-          style: boldTextStyle(),
+          style: context.boldTextStyle(),
         ),
         8.height,
         Row(
           children: [
             Text("${language.lastUpdatedAt} ",
-                style: primaryTextStyle(size: 10)),
+                style: context.primaryTextStyle(size: 10)),
             Text(
               "${DateTime.parse(providerLocation?.data.datetime.toString() ?? DateTime.now().toString()).timeAgo}",
-              style: primaryTextStyle(size: 10),
+              style: context.primaryTextStyle(size: 10),
             ).visible(providerLocation?.data.datetime.isNotEmpty ?? false),
           ],
         ).visible(providerLocation?.data.datetime.isNotEmpty ?? false),
@@ -1645,7 +1652,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
         //       : res.providerData!.id != handymanList.first.id
         //           ? language.handymanReached
         //           : language.providerReached,
-        //   style: secondaryTextStyle(),
+        //   style: context.secondaryTextStyle(),
         // ),
       ],
     );
@@ -1662,15 +1669,15 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
   //       12.height,
   //       Text(
   //         "Shop Location",
-  //         style: boldTextStyle(),
+  //          style: context.boldTextStyle(),
   //       ),
   //       4.height,
   //       Row(
   //         children: [
-  //           Text("${language.lastUpdatedAt} ", style: secondaryTextStyle(size: 10)),
+  //           Text("${language.lastUpdatedAt} ", style: context.secondaryTextStyle(size: 10)),
   //           Text(
   //             "${DateTime.parse(providerLocation?.data.datetime.toString() ?? DateTime.now().toString()).timeAgo}",
-  //             style: primaryTextStyle(size: 10),
+  //             style: context.primaryTextStyle(size: 10),
   //           ).visible(providerLocation?.data.datetime.isNotEmpty ?? false),
   //         ],
   //       ).visible(providerLocation?.data.datetime.isNotEmpty ?? false),
@@ -1785,7 +1792,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         16.height,
-        Text(language.includedInThisPackage, style: boldTextStyle()),
+        Text(language.includedInThisPackage, style: context.boldTextStyle()),
         ListView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
@@ -1820,29 +1827,29 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(data.name.validate(),
-                          style: boldTextStyle(size: LABEL_TEXT_SIZE)),
+                          style: context.boldTextStyle(size: LABEL_TEXT_SIZE)),
                       4.height,
                       if (data.subCategoryName.validate().isNotEmpty)
                         Marquee(
                           child: Row(
                             children: [
                               Text('${data.categoryName}',
-                                  style: boldTextStyle(
+                                  style: context.boldTextStyle(
                                       size: 12,
                                       color: textSecondaryColorGlobal)),
                               Text('  >  ',
-                                  style: boldTextStyle(
+                                  style: context.boldTextStyle(
                                       size: 14,
                                       color: textSecondaryColorGlobal)),
                               Text('${data.subCategoryName}',
-                                  style: boldTextStyle(
+                                  style: context.boldTextStyle(
                                       size: 12, color: context.primaryColor)),
                             ],
                           ),
                         )
                       else
                         Text('${data.categoryName}',
-                            style: boldTextStyle(
+                            style: context.boldTextStyle(
                                 size: 12, color: context.primaryColor)),
                       4.height,
                       PriceWidget(
@@ -1872,7 +1879,8 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         24.height,
-        Text(language.myServices, style: boldTextStyle(size: LABEL_TEXT_SIZE)),
+        Text(language.myServices,
+            style: context.boldTextStyle(size: LABEL_TEXT_SIZE)),
         8.height,
         AnimatedListView(
           itemCount: serviceList.length,
@@ -1902,7 +1910,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
                   ),
                   16.width,
                   Text(data.name.validate(),
-                          style: primaryTextStyle(),
+                          style: context.primaryTextStyle(),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis)
                       .expand(),
@@ -1939,7 +1947,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
             RichText(
               text: TextSpan(
                 text: language.lblAboutShop,
-                style: boldTextStyle(size: LABEL_TEXT_SIZE),
+                style: context.boldTextStyle(size: LABEL_TEXT_SIZE),
               ),
             ),
             Spacer(),
@@ -1947,7 +1955,8 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
               onPressed: () {
                 ShopDetailScreen(shopId: shop.id).launch(context);
               },
-              child: Text(language.viewDetail, style: secondaryTextStyle()),
+              child: Text(language.viewDetail,
+                  style: context.secondaryTextStyle()),
             ),
           ],
         ),
@@ -1991,7 +2000,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(shop.name, style: boldTextStyle()),
+                      Text(shop.name, style: context.boldTextStyle()),
                       4.height,
                       if (shop.shopStartTime.isNotEmpty &&
                           shop.shopEndTime.isNotEmpty) ...[
@@ -2006,7 +2015,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
                                   shop.shopEndTime.isNotEmpty
                               ? '${shop.shopStartTime} - ${shop.shopEndTime}'
                               : '---',
-                          textStyle: secondaryTextStyle(size: 12),
+                          textStyle: context.secondaryTextStyle(size: 12),
                           expandedText: true,
                           edgeInsets: EdgeInsets.zero,
                         ),
@@ -2028,7 +2037,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
                         children: [
                           Text(
                             '${language.email}:',
-                            style: boldTextStyle(
+                            style: context.boldTextStyle(
                                 size: 12,
                                 color: appStore.isDarkMode
                                     ? textSecondaryColor
@@ -2043,7 +2052,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
                               },
                               child: Text(
                                 shop.email.validate(),
-                                style: boldTextStyle(
+                                style: context.boldTextStyle(
                                     size: 12,
                                     color: appStore.isDarkMode
                                         ? white
@@ -2063,7 +2072,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
                         children: [
                           Text(
                             language.mobile,
-                            style: boldTextStyle(
+                            style: context.boldTextStyle(
                                 size: 12,
                                 color: appStore.isDarkMode
                                     ? textSecondaryColor
@@ -2078,7 +2087,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
                               },
                               child: Text(
                                 shop.contactNumber.validate(),
-                                style: boldTextStyle(
+                                style: context.boldTextStyle(
                                     size: 12,
                                     color: appStore.isDarkMode
                                         ? white
@@ -2099,7 +2108,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
                       children: [
                         Text(
                           '${language.hintAddress}:',
-                          style: boldTextStyle(
+                          style: context.boldTextStyle(
                               size: 12,
                               color: appStore.isDarkMode
                                   ? textSecondaryColor
@@ -2121,7 +2130,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
                               child: Marquee(
                                 child: Text(
                                   "${shop.address}, ${shop.cityName}, ${shop.stateName}, ${shop.countryName}",
-                                  style: boldTextStyle(
+                                  style: context.boldTextStyle(
                                       size: 12,
                                       color: appStore.isDarkMode
                                           ? white
@@ -2333,7 +2342,8 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
           border: Border.all(color: context.primaryColor),
           borderRadius: BorderRadius.circular(8),
         ),
-        child: Text(language.lblWaitingForResponse, style: boldTextStyle()),
+        child: Text(language.lblWaitingForResponse,
+            style: context.boldTextStyle()),
       );
 
   Widget _payNowOrAdvanceButton(
@@ -2400,7 +2410,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
           borderRadius: BorderRadius.circular(8),
         ),
         child: Text(language.sentInvoiceText,
-                style: boldTextStyle(), textAlign: TextAlign.center)
+                style: context.boldTextStyle(), textAlign: TextAlign.center)
             .center(),
       );
 
@@ -2424,12 +2434,12 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
                   children: [
                     Text(
                       language.lblBookingID,
-                      style: boldTextStyle(color: grey, size: 14),
+                      style: context.boldTextStyle(color: grey, size: 14),
                     ),
                     const Spacer(),
                     Text(
                       '#' + widget.bookingId.validate().toString(),
-                      style: boldTextStyle(color: context.primaryColor),
+                      style: context.boldTextStyle(color: context.primaryColor),
                     ),
                     16.height,
                   ],
@@ -2506,12 +2516,12 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
                           children: [
                             Text(
                               language.lblBookingDescription,
-                              style: boldTextStyle(size: 16),
+                              style: context.boldTextStyle(size: 16),
                             ),
                             8.height,
                             Text(
                               snap.data!.bookingDetail!.description.validate(),
-                              style: primaryTextStyle(
+                              style: context.primaryTextStyle(
                                 size: 14,
                               ),
                             ),
@@ -3020,7 +3030,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
                       },
                       child: Text(
                         language.lblCheckStatus,
-                        style: boldTextStyle(color: white, size: 14),
+                        style: context.boldTextStyle(color: white, size: 14),
                       ),
                     ),
                   ],

@@ -1,6 +1,6 @@
 import 'package:booking_system_flutter/main.dart';
-import 'package:booking_system_flutter/utils/colors.dart';
 import 'package:booking_system_flutter/utils/context_extensions.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:booking_system_flutter/utils/theme_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -53,7 +53,7 @@ class BookingConfirmationBanner extends StatelessWidget {
                     8.width,
                     Text(
                       language.lblYourBookingIsConfirmed,
-                      style: boldTextStyle(
+                      style: context.boldTextStyle(
                         size: 13,
                         color: DarkThemeColors
                             .onPrimaryContainer, // #121212 always
@@ -69,11 +69,12 @@ class BookingConfirmationBanner extends StatelessWidget {
                   child: Container(
                     padding: EdgeInsets.all(2),
                     decoration: BoxDecoration(
-                      color: context.onPrimary,
+                      color: context.surface,
                       shape: BoxShape.circle,
                     ),
                     child: Icon(
                       Icons.close,
+                      color: context.onSurface,
                       size: 16,
                     ),
                   ),
@@ -89,12 +90,12 @@ class BookingConfirmationBanner extends StatelessWidget {
                   width: 35,
                   height: 35,
                   decoration: BoxDecoration(
-                    color: white,
+                    color: context.surface,
                     borderRadius: BorderRadius.circular(50),
                   ),
                   child: Icon(
                     Icons.mail_outline_rounded,
-                    color: context.icon,
+                    color: context.onSurface,
                     size: 20,
                   ),
                 ),
@@ -106,9 +107,10 @@ class BookingConfirmationBanner extends StatelessWidget {
                     children: [
                       Text(
                         serviceName,
-                        style: boldTextStyle(
+                        style: context.boldTextStyle(
                           size: 15,
-                          color: textPrimaryColorGlobal,
+                          color: DarkThemeColors
+                              .onPrimaryContainer, // #121212 always,
                         ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
@@ -117,8 +119,9 @@ class BookingConfirmationBanner extends StatelessWidget {
                       Text(
                         DateFormat('MMMM d, yyyy hh:mm a')
                             .format(bookingDateTime),
-                        style: primaryTextStyle(
+                        style: context.primaryTextStyle(
                           weight: FontWeight.bold,
+                          color: DarkThemeColors.onPrimaryContainer,
                           size: 12,
                         ),
                       ),
@@ -167,15 +170,18 @@ class RemoveConfirmationDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dialog(
+      insetPadding: const EdgeInsets.symmetric(
+        horizontal: 24,
+      ),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
       ),
       elevation: 0,
-      backgroundColor: Colors.transparent,
+      backgroundColor: context.dialogBackgroundColor,
       child: Container(
         padding: EdgeInsets.all(20),
         decoration: BoxDecoration(
-          color: context.cardColor,
+          color: context.dialogBackgroundColor,
           borderRadius: BorderRadius.circular(16),
         ),
         child: Column(
@@ -184,14 +190,20 @@ class RemoveConfirmationDialog extends StatelessWidget {
             // Title
             Text(
               language.lblRemoveItem,
-              style: boldTextStyle(size: 22, color: textPrimaryColorGlobal),
+              style: context.boldTextStyle(
+                size: 22,
+                color: context.onSurface,
+              ),
               textAlign: TextAlign.center,
             ),
             8.height,
             // Subtitle
             Text(
               language.lblRemoveItemConfirmation,
-              style: primaryTextStyle(size: 15, color: Colors.grey.shade600),
+              style: context.primaryTextStyle(
+                size: 15,
+                color: context.onSurfaceVariant,
+              ),
               textAlign: TextAlign.center,
             ),
             24.height,
@@ -199,7 +211,7 @@ class RemoveConfirmationDialog extends StatelessWidget {
             AppButton(
               text: language.lblSure,
               color: context.primary,
-              textColor: Colors.white,
+              textColor: context.onPrimary,
               width: double.infinity,
               height: 20,
               padding: EdgeInsets.symmetric(vertical: 11),
@@ -214,7 +226,7 @@ class RemoveConfirmationDialog extends StatelessWidget {
               onPressed: onCancel,
               child: Text(
                 language.lblNoThanks,
-                style: boldTextStyle(size: 12, color: primaryColor),
+                style: context.boldTextStyle(size: 14, color: context.primary),
               ),
             ),
           ],

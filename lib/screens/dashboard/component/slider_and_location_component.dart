@@ -9,6 +9,7 @@ import 'package:booking_system_flutter/utils/constant.dart';
 import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/images.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -98,7 +99,7 @@ class _SliderLocationComponentState extends State<SliderLocationComponent> {
                                   padding: const EdgeInsets.all(4),
                                   child: FittedBox(
                                     child: Text(appStore.unreadCount.toString(),
-                                        style: primaryTextStyle(
+                                        style: context.primaryTextStyle(
                                             size: 12, color: Colors.white)),
                                   ),
                                   decoration: boxDecorationDefault(
@@ -160,7 +161,7 @@ class _SliderLocationComponentState extends State<SliderLocationComponent> {
                                 appStore.isCurrentLocation
                                     ? getStringAsync(CURRENT_ADDRESS)
                                     : language.lblLocationOff,
-                                style: secondaryTextStyle(),
+                                style: context.secondaryTextStyle(),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                               ),

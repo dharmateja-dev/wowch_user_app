@@ -1,6 +1,7 @@
 import 'package:booking_system_flutter/main.dart';
 import 'package:booking_system_flutter/screens/booking_filter/components/filter_shop_list_component.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -24,7 +25,8 @@ class BookingFilterScreen extends StatefulWidget {
   final bool showProviderFilter;
   final bool showHandymanFilter;
 
-  BookingFilterScreen({this.showProviderFilter = false, this.showHandymanFilter = false});
+  BookingFilterScreen(
+      {this.showProviderFilter = false, this.showHandymanFilter = false});
 
   @override
   _BookingFilterScreenState createState() => _BookingFilterScreenState();
@@ -137,7 +139,8 @@ class _BookingFilterScreenState extends State<BookingFilterScreen> {
                 onPressed: () {
                   clearFilter();
                 },
-                child: Text(language.reset, style: boldTextStyle(color: Colors.white)),
+                child: Text(language.reset,
+                    style: context.boldTextStyle(color: Colors.white)),
               ).visible(filterStore.isAnyFilterApplied);
             },
           ),
@@ -146,7 +149,9 @@ class _BookingFilterScreenState extends State<BookingFilterScreen> {
           children: [
             DefaultTabController(
               length: filteredSectionList.length,
-              initialIndex: selectedIndex < filteredSectionList.length ? selectedIndex : 0,
+              initialIndex: selectedIndex < filteredSectionList.length
+                  ? selectedIndex
+                  : 0,
               child: Column(
                 children: [
                   16.height,
@@ -158,7 +163,8 @@ class _BookingFilterScreenState extends State<BookingFilterScreen> {
                       tabAlignment: TabAlignment.start,
                       padding: const EdgeInsets.only(left: 16),
                       labelPadding: const EdgeInsets.only(right: 16),
-                      overlayColor: const WidgetStatePropertyAll(WidgetStateColor.transparent),
+                      overlayColor: const WidgetStatePropertyAll(
+                          WidgetStateColor.transparent),
                       onTap: (i) {
                         selectedIndex = i;
                         setState(() {});
@@ -169,15 +175,21 @@ class _BookingFilterScreenState extends State<BookingFilterScreen> {
                         return Tab(
                           height: 30,
                           child: Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 16, vertical: 4),
                             decoration: boxDecorationWithRoundedCorners(
                               borderRadius: radius(18),
-                              border: Border.all(color: index == selectedIndex ? primaryColor : Colors.transparent),
-                              backgroundColor: index == selectedIndex ? lightPrimaryColor : context.cardColor,
+                              border: Border.all(
+                                  color: index == selectedIndex
+                                      ? primaryColor
+                                      : Colors.transparent),
+                              backgroundColor: index == selectedIndex
+                                  ? lightPrimaryColor
+                                  : context.cardColor,
                             ),
                             child: Text(
                               e.toBookingFilterSectionType(),
-                              style: boldTextStyle(
+                              style: context.boldTextStyle(
                                 color: index == selectedIndex
                                     ? primaryColor
                                     : appStore.isDarkMode
@@ -205,11 +217,14 @@ class _BookingFilterScreenState extends State<BookingFilterScreen> {
                       } else if (e == HANDYMAN) {
                         return FilterHandymanListComponent();
                       } else if (e == BOOKING_STATUS) {
-                        return FilterBookingStatusComponent(bookingStatusList: bookingStatusList);
+                        return FilterBookingStatusComponent(
+                            bookingStatusList: bookingStatusList);
                       } else if (e == PAYMENT_TYPE) {
-                        return PaymentTypeFilter(paymentTypeList: paymentTypeList);
+                        return PaymentTypeFilter(
+                            paymentTypeList: paymentTypeList);
                       } else if (e == PAYMENT_STATUS) {
-                        return PaymentStatusFilter(paymentStatusList: paymentStatusList);
+                        return PaymentStatusFilter(
+                            paymentStatusList: paymentStatusList);
                       } else {
                         return const Offstage();
                       }
@@ -224,7 +239,8 @@ class _BookingFilterScreenState extends State<BookingFilterScreen> {
               right: 0,
               child: Observer(
                 builder: (_) => Container(
-                  decoration: boxDecorationDefault(color: context.scaffoldBackgroundColor),
+                  decoration: boxDecorationDefault(
+                      color: context.scaffoldBackgroundColor),
                   width: context.width(),
                   padding: const EdgeInsets.all(16),
                   child: AppButton(
@@ -236,7 +252,8 @@ class _BookingFilterScreenState extends State<BookingFilterScreen> {
 
                       bookingStatusList.forEach((element) {
                         if (element.isSelected.validate()) {
-                          filterStore.addToBookingStatusList(bookingStatusList: element.value.validate());
+                          filterStore.addToBookingStatusList(
+                              bookingStatusList: element.value.validate());
                         }
                       });
 
@@ -244,7 +261,8 @@ class _BookingFilterScreenState extends State<BookingFilterScreen> {
 
                       paymentTypeList.forEach((element) {
                         if (element.isSelected.validate()) {
-                          filterStore.addToPaymentTypeList(paymentTypeList: element.type.validate());
+                          filterStore.addToPaymentTypeList(
+                              paymentTypeList: element.type.validate());
                         }
                       });
 
@@ -252,7 +270,8 @@ class _BookingFilterScreenState extends State<BookingFilterScreen> {
 
                       paymentStatusList.forEach((element) {
                         if (element.isSelected.validate()) {
-                          filterStore.addToPaymentStatusList(paymentStatusList: element.status.validate());
+                          filterStore.addToPaymentStatusList(
+                              paymentStatusList: element.status.validate());
                         }
                       });
 

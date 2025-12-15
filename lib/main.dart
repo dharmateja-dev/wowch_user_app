@@ -32,6 +32,7 @@ import 'package:booking_system_flutter/store/demo_mode_store.dart';
 import 'package:booking_system_flutter/utils/configs.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
 import 'package:booking_system_flutter/utils/firebase_messaging_utils.dart';
+import 'package:booking_system_flutter/utils/nb_utils_theme_config.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -145,9 +146,11 @@ void main() async {
     appStore.setDarkMode(brightness == Brightness.dark);
   }
 
-  defaultToastBackgroundColor =
-      appStore.isDarkMode ? Colors.white : Colors.black;
-  defaultToastTextColor = appStore.isDarkMode ? Colors.black : Colors.white;
+  // Configure nb_utils defaults (theme-independent settings)
+  configureNbUtilsDefaults();
+
+  // Configure nb_utils theme colors based on current theme
+  configureNbUtilsTheme(isDarkMode: appStore.isDarkMode);
 
   runApp(MyApp());
 }
@@ -180,10 +183,8 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
           WidgetsBinding.instance.platformDispatcher.platformBrightness;
       appStore.setDarkMode(brightness == Brightness.dark);
 
-      // Update toast colors
-      defaultToastBackgroundColor =
-          appStore.isDarkMode ? Colors.white : Colors.black;
-      defaultToastTextColor = appStore.isDarkMode ? Colors.black : Colors.white;
+      // Update nb_utils theme colors when system theme changes
+      configureNbUtilsTheme(isDarkMode: appStore.isDarkMode);
     }
   }
 

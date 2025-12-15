@@ -9,6 +9,7 @@ import 'package:booking_system_flutter/screens/wallet/user_wallet_balance_screen
 import 'package:booking_system_flutter/utils/colors.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
 import 'package:booking_system_flutter/utils/extensions/num_extenstions.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:intl/intl.dart';
@@ -602,7 +603,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
                         ),
                         32.height,
                         Text(language.lblChoosePaymentMethod,
-                            style: boldTextStyle(size: LABEL_TEXT_SIZE)),
+                            style:
+                                context.boldTextStyle(size: LABEL_TEXT_SIZE)),
                       ],
                     ).paddingAll(16),
                     SnapHelperWidget<List<PaymentSetting>>(
@@ -638,7 +640,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                 controlAffinity:
                                     ListTileControlAffinity.trailing,
                                 title: Text(value.title.validate(),
-                                    style: primaryTextStyle()),
+                                    style: context.primaryTextStyle()),
                               ),
                             );
                           },

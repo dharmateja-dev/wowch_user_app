@@ -2,6 +2,7 @@ import 'package:booking_system_flutter/component/base_scaffold_widget.dart';
 import 'package:booking_system_flutter/component/loader_widget.dart';
 import 'package:booking_system_flutter/store/filter_store.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -144,7 +145,7 @@ class _SearchServiceScreenState extends State<SearchServiceScreen> {
                         prefixIcon: ic_search
                             .iconImage(size: 10, context: context)
                             .paddingAll(14),
-                        hintStyle: secondaryTextStyle(),
+                        hintStyle: context.secondaryTextStyle(),
                       ),
                     ).expand(),
                     16.width,
@@ -211,7 +212,7 @@ class _SearchServiceScreenState extends State<SearchServiceScreen> {
                                 children: [
                                   16.height,
                                   Text(language.recommendedForYou,
-                                          style: boldTextStyle(
+                                          style: context.boldTextStyle(
                                               size: LABEL_TEXT_SIZE))
                                       .paddingSymmetric(horizontal: 16),
                                   AnimatedListView(

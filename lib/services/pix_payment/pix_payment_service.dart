@@ -1,5 +1,6 @@
 import 'package:booking_system_flutter/main.dart';
 import 'package:booking_system_flutter/utils/images.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -48,7 +49,12 @@ class _PixPayDialogState extends State<PixPayDialog> {
           certificate:
               'Basic ZXlKcFpDSTZJbUU1TW1Jek0yWXRNVGMxTmkwMElpd2lZMjlrYVdkdlVIVmliR2xqWVdSdmNpSTZNQ3dpWTI5a2FXZHZVMjltZEhkaGNtVWlPakUzTURjMUxDSnpaWEYxWlc1amFXRnNTVzV6ZEdGc1lXTmhieUk2TVgwOmV5SnBaQ0k2SWpSa09XUTBPREl0TlRVNU5DMDBaVE5sTFRnd01UY3RZbVZsT1RrME5EWmxObUpsWkROaU9HTXdOV1F0SWl3aVkyOWthV2R2VUhWaWJHbGpZV1J2Y2lJNk1Dd2lZMjlrYVdkdlUyOW1kSGRoY21VaU9qRTNNRGMxTENKelpYRjFaVzVqYVdGc1NXNXpkR0ZzWVdOaGJ5STZNU3dpYzJWeGRXVnVZMmxoYkVOeVpXUmxibU5wWVd3aU9qRXNJbUZ0WW1sbGJuUmxJam9pYUc5dGIyeHZaMkZqWVc4aUxDSnBZWFFpT2pFMk1qTTFNRGt4TWpJeE16Tjk=',
           appKey: 'd27b377903ffabc01368e17d80050c56b931a5bf',
-          permissions: [PixPermissions.cobRead, PixPermissions.cobWrite, PixPermissions.pixRead, PixPermissions.pixWrite],
+          permissions: [
+            PixPermissions.cobRead,
+            PixPermissions.cobWrite,
+            PixPermissions.pixRead,
+            PixPermissions.pixWrite
+          ],
           // Lista das permissoes, use PixPermissions,
           isBancoDoBrasil: true // Use true se estiver usando API do BB,
           // Se voce estiver usando um certificado P12, utilize desta forma:
@@ -84,11 +90,14 @@ class _PixPayDialogState extends State<PixPayDialog> {
                         Container(
                           width: 50,
                           height: 50,
-                          decoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.redAccent),
-                          child: const Icon(Icons.close_sharp, color: Colors.white),
+                          decoration: const BoxDecoration(
+                              shape: BoxShape.circle, color: Colors.redAccent),
+                          child: const Icon(Icons.close_sharp,
+                              color: Colors.white),
                         ),
                         10.height,
-                        Text(language.somethingWentWrong, style: boldTextStyle()),
+                        Text(language.somethingWentWrong,
+                            style: context.boldTextStyle()),
                       ],
                     ).paddingAll(16)
                   : isSuccess
@@ -96,9 +105,12 @@ class _PixPayDialogState extends State<PixPayDialog> {
                           children: [
                             CachedImageWidget(url: ic_verified, height: 60),
                             10.height,
-                            Text(language.paymentSuccess, style: boldTextStyle()),
+                            Text(language.paymentSuccess,
+                                style: context.boldTextStyle()),
                             16.height,
-                            Text(language.redirectingToBookings, textAlign: TextAlign.center, style: secondaryTextStyle()),
+                            Text(language.redirectingToBookings,
+                                textAlign: TextAlign.center,
+                                style: context.secondaryTextStyle()),
                           ],
                         ).paddingAll(16)
                       : isTxnInProgress
@@ -110,7 +122,8 @@ class _PixPayDialogState extends State<PixPayDialog> {
                                   width: 255,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
-                                    border: Border.all(color: Colors.black, width: 5),
+                                    border: Border.all(
+                                        color: Colors.black, width: 5),
                                   ),
                                   child: query != null
                                       ? QrImageView(
@@ -122,7 +135,9 @@ class _PixPayDialogState extends State<PixPayDialog> {
                                           child: Text(
                                             'Crie uma compra para que o QR apareça aqui',
                                             textAlign: TextAlign.center,
-                                            style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 16),
                                           ),
                                         ),
                                 ),
@@ -136,7 +151,8 @@ class _PixPayDialogState extends State<PixPayDialog> {
                                   width: 255,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
-                                    border: Border.all(color: Colors.black, width: 5),
+                                    border: Border.all(
+                                        color: Colors.black, width: 5),
                                   ),
                                   child: query != null
                                       ? QrImageView(
@@ -148,7 +164,9 @@ class _PixPayDialogState extends State<PixPayDialog> {
                                           child: Text(
                                             'Crie uma compra para que o QR apareça aqui',
                                             textAlign: TextAlign.center,
-                                            style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 16),
                                           ),
                                         ),
                                 ),
@@ -158,7 +176,9 @@ class _PixPayDialogState extends State<PixPayDialog> {
           ),
         ),
         Observer(
-          builder: (context) => LoaderWidget().withSize(height: 80, width: 80).visible(appStore.isLoading && !isTxnInProgress),
+          builder: (context) => LoaderWidget()
+              .withSize(height: 80, width: 80)
+              .visible(appStore.isLoading && !isTxnInProgress),
         )
       ],
     );
@@ -186,5 +206,4 @@ class _PixPayDialogState extends State<PixPayDialog> {
 
   //   query = payloadDinamico.getQRCode();
   // }
-
 }

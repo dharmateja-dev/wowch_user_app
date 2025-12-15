@@ -10,6 +10,7 @@ import 'package:nb_utils/nb_utils.dart';
 
 import '../network/rest_apis.dart';
 import '../utils/common.dart';
+import '../utils/nb_utils_theme_config.dart';
 
 part 'app_store.g.dart';
 
@@ -291,23 +292,17 @@ abstract class _AppStore with Store {
   Future<void> setDarkMode(bool val) async {
     isDarkMode = val;
 
+    // Configure nb_utils theme colors using the centralized helper
+    configureNbUtilsTheme(isDarkMode: isDarkMode);
+
+    // Set system UI overlay style
     if (isDarkMode) {
-      textPrimaryColorGlobal = DarkThemeColors.pureWhite;
-      textSecondaryColorGlobal = DarkThemeColors.softGray;
-      defaultLoaderBgColorGlobal = DarkThemeColors.charcoal;
-      appButtonBackgroundColorGlobal = DarkThemeColors.softCharcoal;
-      shadowColorGlobal = DarkThemeColors.shadowLight;
       SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
         systemNavigationBarColor: DarkThemeColors.richBlack,
         systemNavigationBarDividerColor: Colors.transparent,
         systemNavigationBarIconBrightness: Brightness.light,
       ));
     } else {
-      textPrimaryColorGlobal = LightThemeColors.deepBlack;
-      textSecondaryColorGlobal = LightThemeColors.softGrey;
-      defaultLoaderBgColorGlobal = LightThemeColors.pureWhite;
-      appButtonBackgroundColorGlobal = LightThemeColors.pureWhite;
-      shadowColorGlobal = LightThemeColors.shadowLight;
       SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
         systemNavigationBarColor: LightThemeColors.mediumGray,
         systemNavigationBarDividerColor: Colors.transparent,

@@ -33,6 +33,7 @@ import 'package:booking_system_flutter/utils/constant.dart';
 import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/images.dart';
 import 'package:booking_system_flutter/utils/model_keys.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
@@ -198,9 +199,9 @@ Future<void> logout(BuildContext context) async {
         children: [
           Image.asset(logout_image, width: context.width(), fit: BoxFit.cover),
           32.height,
-          Text(language.lblLogoutTitle, style: boldTextStyle(size: 18)),
+          Text(language.lblLogoutTitle, style: context.boldTextStyle(size: 18)),
           16.height,
-          Text(language.lblLogoutSubTitle, style: secondaryTextStyle()),
+          Text(language.lblLogoutSubTitle, style: context.secondaryTextStyle()),
           28.height,
           Row(
             children: [
@@ -210,15 +211,15 @@ Future<void> logout(BuildContext context) async {
                   borderRadius: radius(defaultAppButtonRadius),
                   side: BorderSide(color: viewLineColor),
                 ),
-                child: Text(language.lblNo, style: boldTextStyle()),
+                child: Text(language.lblNo, style: context.boldTextStyle()),
                 onTap: () {
                   finish(context);
                 },
               ).expand(),
               16.width,
               AppButton(
-                child:
-                    Text(language.lblYes, style: boldTextStyle(color: white)),
+                child: Text(language.lblYes,
+                    style: context.boldTextStyle(color: white)),
                 color: context.primary,
                 elevation: 0,
                 onTap: () async {

@@ -5,6 +5,7 @@ import 'package:booking_system_flutter/network/rest_apis.dart';
 import 'package:booking_system_flutter/utils/common.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -21,7 +22,8 @@ class StatusDropdownComponent extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _StatusDropdownComponentState createState() => _StatusDropdownComponentState();
+  _StatusDropdownComponentState createState() =>
+      _StatusDropdownComponentState();
 }
 
 class _StatusDropdownComponentState extends State<StatusDropdownComponent> {
@@ -53,7 +55,13 @@ class _StatusDropdownComponentState extends State<StatusDropdownComponent> {
       builder: (context, snap) {
         if (snap.hasData) {
           if (!snap.data!.any((element) => element.id == 0)) {
-            snap.data!.insert(0, BookingStatusResponse(label: BOOKING_TYPE_ALL, id: 0, status: 0, value: BOOKING_TYPE_ALL));
+            snap.data!.insert(
+                0,
+                BookingStatusResponse(
+                    label: BOOKING_TYPE_ALL,
+                    id: 0,
+                    status: 0,
+                    value: BOOKING_TYPE_ALL));
             selectedData = snap.data!.first;
           }
           return DropdownButtonFormField<BookingStatusResponse>(
@@ -77,14 +85,16 @@ class _StatusDropdownComponentState extends State<StatusDropdownComponent> {
                 BookingStatusResponse data = snap.data![index];
                 return DropdownMenuItem(
                   value: data,
-                  child: Text(data.value.validate().toBookingStatus(), style: primaryTextStyle()),
+                  child: Text(data.value.validate().toBookingStatus(),
+                      style: context.primaryTextStyle()),
                 );
               },
             ),
           );
         }
 
-        return snapWidgetHelper(snap, defaultErrorMessage: "", loadingWidget: Offstage());
+        return snapWidgetHelper(snap,
+            defaultErrorMessage: "", loadingWidget: Offstage());
       },
     );
   }

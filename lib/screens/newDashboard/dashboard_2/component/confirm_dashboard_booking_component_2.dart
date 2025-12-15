@@ -1,5 +1,6 @@
 import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -44,7 +45,7 @@ class _ConfirmDashboardBookingComponent2State
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         26.height,
-        Text(language.upcomingBooking, style: boldTextStyle())
+        Text(language.upcomingBooking, style: context.boldTextStyle())
             .paddingSymmetric(horizontal: 16),
         16.height,
         Stack(
@@ -74,7 +75,7 @@ class _ConfirmDashboardBookingComponent2State
                                       .validate(),
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
-                                  style: boldTextStyle(),
+                                  style: context.boldTextStyle(),
                                 ),
                                 8.height,
                                 Text(
@@ -82,7 +83,7 @@ class _ConfirmDashboardBookingComponent2State
                                       widget.upcomingConfirmedBooking!.date
                                           .validate(),
                                       showDateWithTime: true),
-                                  style: secondaryTextStyle(
+                                  style: context.secondaryTextStyle(
                                       color: appStore.isDarkMode
                                           ? textPrimaryColorGlobal
                                           : null),
@@ -146,7 +147,7 @@ class _ConfirmDashboardBookingComponent2State
                                   '${language.bookingStatus}',
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
-                                  style: primaryTextStyle(size: 10),
+                                  style: context.primaryTextStyle(size: 10),
                                 ),
                                 10.height,
                                 Text(
@@ -155,7 +156,7 @@ class _ConfirmDashboardBookingComponent2State
                                       .toBookingStatus(),
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
-                                  style: boldTextStyle(
+                                  style: context.boldTextStyle(
                                     color: widget
                                         .upcomingConfirmedBooking!.status
                                         .validate()
@@ -173,7 +174,7 @@ class _ConfirmDashboardBookingComponent2State
                                   language.paymentStatus,
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
-                                  style: primaryTextStyle(size: 10),
+                                  style: context.primaryTextStyle(size: 10),
                                 ),
                                 10.height,
                                 Text(
@@ -187,7 +188,7 @@ class _ConfirmDashboardBookingComponent2State
                                   ),
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
-                                  style: boldTextStyle(
+                                  style: context.boldTextStyle(
                                     size: 12,
                                     color: widget.upcomingConfirmedBooking!
                                                     .paymentStatus ==

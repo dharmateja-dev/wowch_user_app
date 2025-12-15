@@ -6,6 +6,7 @@ import 'package:booking_system_flutter/utils/colors.dart';
 import 'package:booking_system_flutter/utils/common.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
 import 'package:booking_system_flutter/utils/images.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -53,7 +54,7 @@ class ServiceHeaderComponent extends StatelessWidget {
                   Expanded(
                     child: Text(
                       serviceData.name.validate(),
-                      style: boldTextStyle(),
+                      style: context.boldTextStyle(),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -62,7 +63,7 @@ class ServiceHeaderComponent extends StatelessWidget {
                       (badgeText != null || badgeText?.isEmpty != true))
                     Text(
                       badgeText ?? language.speciallyAbled,
-                      style: boldTextStyle(
+                      style: context.boldTextStyle(
                         color: badgeColor ?? primaryColor,
                         size: 12,
                       ),
@@ -89,7 +90,7 @@ class ServiceHeaderComponent extends StatelessWidget {
                     6.width,
                     Text(
                       "(${serviceData.discount.validate()}% ${language.lblOff})",
-                      style: boldTextStyle(
+                      style: context.boldTextStyle(
                         color: defaultActivityStatus,
                         size: 12,
                       ),
@@ -104,12 +105,12 @@ class ServiceHeaderComponent extends StatelessWidget {
                 children: [
                   Text(
                     language.duration,
-                    style: primaryTextStyle(),
+                    style: context.primaryTextStyle(),
                   ),
                   4.width,
                   Text(
                     convertToHourMinute(serviceData.duration.validate()),
-                    style: boldTextStyle(color: primaryColor),
+                    style: context.boldTextStyle(color: primaryColor),
                   ),
                 ],
               ),
@@ -120,7 +121,7 @@ class ServiceHeaderComponent extends StatelessWidget {
                 children: [
                   Text(
                     language.lblRating,
-                    style: primaryTextStyle(size: 12),
+                    style: context.primaryTextStyle(size: 12),
                   ),
                   Spacer(),
                   Image.asset(
@@ -131,7 +132,7 @@ class ServiceHeaderComponent extends StatelessWidget {
                   4.width,
                   Text(
                     serviceData.totalRating.validate().toStringAsFixed(1),
-                    style: boldTextStyle(),
+                    style: context.boldTextStyle(),
                   ),
                 ],
               ),

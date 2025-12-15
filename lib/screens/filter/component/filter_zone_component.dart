@@ -2,6 +2,7 @@ import 'package:booking_system_flutter/component/loader_widget.dart';
 import 'package:booking_system_flutter/main.dart';
 import 'package:booking_system_flutter/model/zone_model.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -22,10 +23,12 @@ class FilterServiceZoneComponent extends StatefulWidget {
   });
 
   @override
-  State<FilterServiceZoneComponent> createState() => _FilterServiceZoneComponentState();
+  State<FilterServiceZoneComponent> createState() =>
+      _FilterServiceZoneComponentState();
 }
 
-class _FilterServiceZoneComponentState extends State<FilterServiceZoneComponent> {
+class _FilterServiceZoneComponentState
+    extends State<FilterServiceZoneComponent> {
   int? selectedZoneId;
 
   @override
@@ -50,7 +53,8 @@ class _FilterServiceZoneComponentState extends State<FilterServiceZoneComponent>
         imageWidget: const EmptyStateWidget(),
       );
     } else if (widget.showLoader) {
-      return Observer(builder: (_) => LoaderWidget().visible(appStore.isLoading));
+      return Observer(
+          builder: (_) => LoaderWidget().visible(appStore.isLoading));
     }
 
     return AnimatedListView(
@@ -65,18 +69,24 @@ class _FilterServiceZoneComponentState extends State<FilterServiceZoneComponent>
           padding: const EdgeInsets.all(8),
           margin: EdgeInsets.all(8),
           decoration: BoxDecoration(
-            color: selectedZoneId == data.id ? context.cardColor : context.scaffoldBackgroundColor,
+            color: selectedZoneId == data.id
+                ? context.cardColor
+                : context.scaffoldBackgroundColor,
             borderRadius: radius(8),
             border: Border.all(
-              color: selectedZoneId == data.id ? context.primaryColor : Colors.grey.withValues(alpha:0.3),
+              color: selectedZoneId == data.id
+                  ? context.primaryColor
+                  : Colors.grey.withValues(alpha: 0.3),
             ),
           ),
           child: Row(
             children: [
               Radio<int>(
                 value: data.id.validate(),
+                // ignore: deprecated_member_use
                 groupValue: selectedZoneId,
                 activeColor: context.primaryColor,
+                // ignore: deprecated_member_use
                 onChanged: (value) {
                   setState(() {
                     if (selectedZoneId == value) {
@@ -93,7 +103,7 @@ class _FilterServiceZoneComponentState extends State<FilterServiceZoneComponent>
               8.width,
               Text(
                 data.name.validate(),
-                style: primaryTextStyle(),
+                style: context.primaryTextStyle(),
               ).expand(),
             ],
           ),

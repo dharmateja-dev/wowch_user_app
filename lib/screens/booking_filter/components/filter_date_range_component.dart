@@ -1,4 +1,5 @@
 import 'package:booking_system_flutter/screens/booking_filter/components/date_component/custom_date_range_picker.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -10,7 +11,8 @@ import '../../../utils/constant.dart';
 
 class FilterDateRangeComponent extends StatefulWidget {
   @override
-  _FilterDateRangeComponentState createState() => _FilterDateRangeComponentState();
+  _FilterDateRangeComponentState createState() =>
+      _FilterDateRangeComponentState();
 }
 
 class _FilterDateRangeComponentState extends State<FilterDateRangeComponent> {
@@ -27,12 +29,17 @@ class _FilterDateRangeComponentState extends State<FilterDateRangeComponent> {
 
   void init() async {
     // Initialize the date range with stored values if available
-    startDate = filterStore.startDate.isNotEmpty ? parseDate(filterStore.startDate, format: DATE_FORMAT_7) : null;
-    endDate = filterStore.endDate.isNotEmpty ? parseDate(filterStore.endDate, format: DATE_FORMAT_7) : null;
+    startDate = filterStore.startDate.isNotEmpty
+        ? parseDate(filterStore.startDate, format: DATE_FORMAT_7)
+        : null;
+    endDate = filterStore.endDate.isNotEmpty
+        ? parseDate(filterStore.endDate, format: DATE_FORMAT_7)
+        : null;
 
     // Set the text in the controller if dates are already set
     if (startDate != null && endDate != null) {
-      dateRangeCont.text = '${formatBookingDate(startDate.toString(), format: DATE_FORMAT_7)} ${language.to} ${formatBookingDate(endDate.toString(), format: DATE_FORMAT_7)}';
+      dateRangeCont.text =
+          '${formatBookingDate(startDate.toString(), format: DATE_FORMAT_7)} ${language.to} ${formatBookingDate(endDate.toString(), format: DATE_FORMAT_7)}';
     } else {
       dateRangeCont.text = language.chooseYourDateRange;
     }
@@ -61,7 +68,7 @@ class _FilterDateRangeComponentState extends State<FilterDateRangeComponent> {
           16.height,
           AppTextField(
             title: language.dateRange,
-            textStyle: primaryTextStyle(size: 12),
+            textStyle: context.primaryTextStyle(size: 12),
             controller: dateRangeCont,
             textFieldType: TextFieldType.NAME,
             readOnly: true,
@@ -99,10 +106,14 @@ class _FilterDateRangeComponentState extends State<FilterDateRangeComponent> {
                 onApplyClick: (start, end) {
                   startDate = start;
                   endDate = end;
-                  filterStore.setStartDate(formatBookingDate(startDate.toString(), format: DATE_FORMAT_7));
-                  filterStore.setEndDate(formatBookingDate(endDate.toString(), format: DATE_FORMAT_7));
+                  filterStore.setStartDate(formatBookingDate(
+                      startDate.toString(),
+                      format: DATE_FORMAT_7));
+                  filterStore.setEndDate(formatBookingDate(endDate.toString(),
+                      format: DATE_FORMAT_7));
                   filterStore.isAnyFilterApplied = true;
-                  dateRangeCont.text = '${formatBookingDate(startDate.toString(), format: DATE_FORMAT_7)} to ${formatBookingDate(endDate.toString(), format: DATE_FORMAT_7)}';
+                  dateRangeCont.text =
+                      '${formatBookingDate(startDate.toString(), format: DATE_FORMAT_7)} to ${formatBookingDate(endDate.toString(), format: DATE_FORMAT_7)}';
                   setState(() {});
                 },
                 onCancelClick: () {

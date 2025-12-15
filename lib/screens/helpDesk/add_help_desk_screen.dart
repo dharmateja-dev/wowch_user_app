@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:booking_system_flutter/component/base_scaffold_widget.dart';
 import 'package:booking_system_flutter/main.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -100,7 +101,8 @@ class _AddHelpDeskScreenState extends State<AddHelpDeskScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(language.subject,
-                              style: boldTextStyle(size: LABEL_TEXT_SIZE)),
+                              style:
+                                  context.boldTextStyle(size: LABEL_TEXT_SIZE)),
                           8.height,
                           AppTextField(
                             controller: subjectCont,
@@ -119,7 +121,8 @@ class _AddHelpDeskScreenState extends State<AddHelpDeskScreen> {
                           ),
                           16.height,
                           Text(language.hintDescription,
-                              style: boldTextStyle(size: LABEL_TEXT_SIZE)),
+                              style:
+                                  context.boldTextStyle(size: LABEL_TEXT_SIZE)),
                           8.height,
                           AppTextField(
                             textFieldType: TextFieldType.MULTILINE,
@@ -133,7 +136,7 @@ class _AddHelpDeskScreenState extends State<AddHelpDeskScreen> {
                               hintText: language.writeHere,
                               fillColor: context.scaffoldBackgroundColor,
                               filled: true,
-                              hintStyle: primaryTextStyle(),
+                              hintStyle: context.primaryTextStyle(),
                             ),
                             testWithoutKeyChatGPT:
                                 appConfigurationStore.testWithoutKey,
@@ -179,7 +182,7 @@ class _AddHelpDeskScreenState extends State<AddHelpDeskScreen> {
                     color: appStore.isLoading
                         ? primaryColor.withValues(alpha: 0.5)
                         : primaryColor,
-                    textStyle: boldTextStyle(color: white),
+                    textStyle: context.boldTextStyle(color: white),
                     width: context.width() - context.navigationBarHeight,
                     onTap: appStore.isLoading
                         ? () {}

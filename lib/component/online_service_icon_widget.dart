@@ -1,4 +1,5 @@
 import 'package:booking_system_flutter/utils/string_extensions.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -28,7 +29,7 @@ class OnlineServiceIconWidget extends StatelessWidget {
           ),
           if (isShowText)
             Text(language.online,
-                    style: boldTextStyle(size: 12, color: Colors.green))
+                    style: context.boldTextStyle(size: 12, color: Colors.green))
                 .paddingRight(16),
         ],
       ),

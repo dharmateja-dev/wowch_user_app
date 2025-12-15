@@ -5,6 +5,7 @@ import 'package:booking_system_flutter/screens/auth/sign_up_screen.dart';
 import 'package:booking_system_flutter/utils/colors.dart';
 import 'package:booking_system_flutter/utils/common.dart';
 import 'package:booking_system_flutter/utils/context_extensions.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:country_picker/country_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -55,8 +56,9 @@ class _OTPLoginScreenState extends State<OTPLoginScreen> {
       countryListTheme: CountryListThemeData(
         borderRadius: BorderRadius.circular(0),
         bottomSheetHeight: 600,
-        textStyle: primaryTextStyle(),
-        searchTextStyle: primaryTextStyle(color: context.searchTextColor),
+        textStyle: context.primaryTextStyle(),
+        searchTextStyle:
+            context.primaryTextStyle(color: context.searchTextColor),
         backgroundColor: context.bottomSheetBackgroundColor,
         inputDecoration: InputDecoration(
           fillColor: context.searchFillColor,
@@ -77,7 +79,8 @@ class _OTPLoginScreenState extends State<OTPLoginScreen> {
             ),
           ),
           hintText: language.search,
-          hintStyle: primaryTextStyle(size: 14, color: context.searchHintColor),
+          hintStyle: context.primaryTextStyle(
+              size: 14, color: context.searchHintColor),
           prefixIcon: Icon(Icons.search, color: context.searchHintColor),
         ),
       ),
@@ -263,11 +266,12 @@ class _OTPLoginScreenState extends State<OTPLoginScreen> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            Text(language.confirmOTP, style: boldTextStyle(size: 24)).center(),
+            Text(language.confirmOTP, style: context.boldTextStyle(size: 24))
+                .center(),
             (context.height() * 0.10).toInt().height,
             OTPTextField(
               pinLength: OTP_TEXT_FIELD_LENGTH,
-              textStyle: primaryTextStyle(size: 30),
+              textStyle: context.primaryTextStyle(size: 30),
               decoration: inputDecoration(context).copyWith(
                 fillColor: Colors.transparent,
                 contentPadding:
@@ -318,7 +322,7 @@ class _OTPLoginScreenState extends State<OTPLoginScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(language.lblEnterPhnNumber,
-                  style: boldTextStyle(size: APP_BAR_TEXT_SIZE))
+                  style: context.boldTextStyle(size: APP_BAR_TEXT_SIZE))
               .center(),
           (context.height() * 0.08).toInt().height,
           Form(
@@ -356,7 +360,7 @@ class _OTPLoginScreenState extends State<OTPLoginScreen> {
                                   6.width,
                                   Text(
                                     "+${country.phoneCode}",
-                                    style: primaryTextStyle(size: 14),
+                                    style: context.primaryTextStyle(size: 14),
                                   ),
                                   4.width,
                                   Icon(
@@ -388,7 +392,8 @@ class _OTPLoginScreenState extends State<OTPLoginScreen> {
           16.height,
           GestureDetector(
             onTap: () => changeCountry(),
-            child: Text(language.selectCountry, style: boldTextStyle(size: 14))
+            child: Text(language.selectCountry,
+                    style: context.boldTextStyle(size: 14))
                 .center(),
           ),
         ],

@@ -12,6 +12,7 @@ import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/images.dart';
 import 'package:booking_system_flutter/utils/model_keys.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -77,7 +78,7 @@ class BookingDetailHandymanWidgetState
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(widget.handymanData.displayName.validate(),
-                              style: boldTextStyle())
+                              style: context.boldTextStyle())
                           .flexible(),
                       16.width,
                       GestureDetector(
@@ -122,8 +123,8 @@ class BookingDetailHandymanWidgetState
                             .validate()
                             .toStringAsFixed(1)
                             .toString(),
-                        style:
-                            boldTextStyle(color: textSecondaryColor, size: 14),
+                        style: context.boldTextStyle(
+                            color: textSecondaryColor, size: 14),
                       ),
                     ],
                   ),
@@ -146,7 +147,7 @@ class BookingDetailHandymanWidgetState
                           size: 18, color: Colors.white, context: context),
                       8.width,
                       Text(language.lblCall,
-                          style: boldTextStyle(color: white)),
+                          style: context.boldTextStyle(color: white)),
                     ],
                   ).fit(),
                   width: context.width(),
@@ -162,7 +163,7 @@ class BookingDetailHandymanWidgetState
                   children: [
                     ic_chat.iconImage(size: 18, context: context),
                     8.width,
-                    Text(language.lblChat, style: boldTextStyle()),
+                    Text(language.lblChat, style: context.boldTextStyle()),
                   ],
                 ).fit(),
                 width: context.width(),
@@ -202,7 +203,7 @@ class BookingDetailHandymanWidgetState
                   widget.handymanData.handymanReview != null
                       ? language.lblEditYourReview
                       : language.lblRateHandyman,
-                  style: boldTextStyle(color: primaryColor)),
+                  style: context.boldTextStyle(color: primaryColor)),
             ).center(),
         ],
       ),

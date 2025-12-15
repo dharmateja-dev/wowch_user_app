@@ -1,3 +1,4 @@
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -51,7 +52,10 @@ class _PaymentTypeFilterState extends State<PaymentTypeFilter> {
                         ? lightPrimaryColor
                         : context.cardColor,
                 borderRadius: radius(8),
-                border: Border.all(color: appStore.isDarkMode ? Colors.white54 : lightPrimaryColor),
+                border: Border.all(
+                    color: appStore.isDarkMode
+                        ? Colors.white54
+                        : lightPrimaryColor),
               ),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
@@ -60,11 +64,12 @@ class _PaymentTypeFilterState extends State<PaymentTypeFilter> {
                     Container(
                       padding: const EdgeInsets.all(2),
                       margin: const EdgeInsets.only(right: 1),
-                      child: Icon(Icons.done, size: 16, color: context.primaryColor),
+                      child: Icon(Icons.done,
+                          size: 16, color: context.primaryColor),
                     ),
                   Text(
                     res.title.validate(),
-                    style: primaryTextStyle(
+                    style: context.primaryTextStyle(
                         color: appStore.isDarkMode
                             ? res.isSelected
                                 ? context.primaryColor
@@ -81,9 +86,11 @@ class _PaymentTypeFilterState extends State<PaymentTypeFilter> {
                 res.isSelected = !res.isSelected;
 
                 if (res.isSelected) {
-                  filterStore.addToPaymentTypeList(paymentTypeList: res.type.validate());
+                  filterStore.addToPaymentTypeList(
+                      paymentTypeList: res.type.validate());
                 } else {
-                  filterStore.removeFromPaymentTypeList(paymentTypeList: res.type.validate());
+                  filterStore.removeFromPaymentTypeList(
+                      paymentTypeList: res.type.validate());
                 }
               });
             });

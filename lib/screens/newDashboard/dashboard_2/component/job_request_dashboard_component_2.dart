@@ -1,4 +1,5 @@
 import 'package:booking_system_flutter/utils/context_extensions.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -33,7 +34,7 @@ class JobRequestDashboardComponent2 extends StatelessWidget {
           16.height,
           Text(
             language.ifYouDidnTFind,
-            style: primaryTextStyle(size: 16, color: white),
+            style: context.primaryTextStyle(size: 16, color: white),
             textAlign: TextAlign.center,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
@@ -46,7 +47,7 @@ class JobRequestDashboardComponent2 extends StatelessWidget {
                 const Icon(Icons.add, color: Colors.white),
                 4.width,
                 Text(language.newRequest,
-                    style: boldTextStyle(color: Colors.white)),
+                    style: context.boldTextStyle(color: Colors.white)),
               ],
             ),
             color: context.primary,

@@ -1,5 +1,6 @@
 import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -126,9 +127,7 @@ class _ServiceDashboardComponent1State
                         child: Text(
                           "${widget.serviceData.subCategoryName.validate().isNotEmpty ? widget.serviceData.subCategoryName.validate() : widget.serviceData.categoryName.validate()}"
                               .toUpperCase(),
-                          style: boldTextStyle(
-                              color: appStore.isDarkMode ? white : Colors.black,
-                              size: 10),
+                          style: context.boldTextStyle(size: 10),
                         ).paddingSymmetric(horizontal: 8, vertical: 4),
                       ),
                     ),
@@ -217,7 +216,8 @@ class _ServiceDashboardComponent1State
                             widget.serviceData.totalRating
                                 .validate()
                                 .toString(),
-                            style: boldTextStyle(size: 12, color: Colors.black),
+                            style: context.boldTextStyle(
+                                size: 12, color: Colors.black),
                           ),
                         ],
                       ),
@@ -230,7 +230,7 @@ class _ServiceDashboardComponent1State
                 Marquee(
                   directionMarguee: DirectionMarguee.oneDirection,
                   child: Text(widget.serviceData.name.validate(),
-                      style: boldTextStyle()),
+                      style: context.boldTextStyle()),
                 ).paddingSymmetric(horizontal: 16),
                 16.height,
                 Marquee(
@@ -277,7 +277,7 @@ class _ServiceDashboardComponent1State
                     if (widget.serviceData.providerName.validate().isNotEmpty)
                       Text(
                         widget.serviceData.providerName.validate(),
-                        style: secondaryTextStyle(
+                        style: context.secondaryTextStyle(
                             size: 12,
                             color: appStore.isDarkMode
                                 ? Colors.white

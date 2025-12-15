@@ -1,4 +1,5 @@
 import 'package:booking_system_flutter/main.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -14,12 +15,20 @@ class MaintenanceModeScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Lottie.asset(
-            appStore.isDarkMode ? 'assets/lottie/maintenance_mode_dark.json' : 'assets/lottie/maintenance_mode_light.json',
+            appStore.isDarkMode
+                ? 'assets/lottie/maintenance_mode_dark.json'
+                : 'assets/lottie/maintenance_mode_light.json',
             height: 300,
           ),
-          Text(language.lblUnderMaintenance, style: boldTextStyle(size: 18), textAlign: TextAlign.center).center(),
+          Text(language.lblUnderMaintenance,
+                  style: context.boldTextStyle(size: 18),
+                  textAlign: TextAlign.center)
+              .center(),
           8.height,
-          Text(language.lblCatchUpAfterAWhile, style: secondaryTextStyle(), textAlign: TextAlign.center).center(),
+          Text(language.lblCatchUpAfterAWhile,
+                  style: context.secondaryTextStyle(),
+                  textAlign: TextAlign.center)
+              .center(),
           16.height,
           TextButton(
             onPressed: () async {

@@ -2,6 +2,7 @@ import 'package:booking_system_flutter/component/image_border_component.dart';
 import 'package:booking_system_flutter/main.dart';
 import 'package:booking_system_flutter/model/service_detail_response.dart';
 import 'package:booking_system_flutter/utils/common.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -52,7 +53,7 @@ class ReviewWidget extends StatelessWidget {
                             children: [
                               Text(
                                 data.customerName.validate(),
-                                style: boldTextStyle(
+                                style: context.boldTextStyle(
                                   color: textPrimaryColorGlobal,
                                 ),
                                 maxLines: 1,
@@ -62,7 +63,7 @@ class ReviewWidget extends StatelessWidget {
                               data.createdAt.validate().isNotEmpty
                                   ? Text(
                                       formatDate(data.createdAt.validate()),
-                                      style: secondaryTextStyle(
+                                      style: context.secondaryTextStyle(
                                         color: textSecondaryColorGlobal,
                                       ),
                                     )
@@ -85,7 +86,7 @@ class ReviewWidget extends StatelessWidget {
                                   .validate()
                                   .toStringAsFixed(1)
                                   .toString(),
-                              style: boldTextStyle(
+                              style: context.boldTextStyle(
                                 color: appStore.isDarkMode
                                     ? Colors.white
                                     : Color(0xFF1C1F34), // Dark gray
@@ -100,7 +101,7 @@ class ReviewWidget extends StatelessWidget {
                       8.height,
                       ReadMoreText(
                         data.review.validate(),
-                        style: primaryTextStyle(
+                        style: context.primaryTextStyle(
                           color: textSecondaryColorGlobal,
                         ),
                         trimLines: 3,

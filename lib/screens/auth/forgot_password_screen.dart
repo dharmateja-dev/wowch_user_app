@@ -2,6 +2,7 @@ import 'package:booking_system_flutter/network/rest_apis.dart';
 import 'package:booking_system_flutter/utils/common.dart';
 import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/model_keys.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -65,19 +66,20 @@ class ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             16.height,
-            Text(language.forgotPassword, style: boldTextStyle(size: 22))
+            Text(language.forgotPassword,
+                    style: context.boldTextStyle(size: 22))
                 .center(),
             Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text("${language.hintEmailAddressTxt}",
-                    style: primaryTextStyle(
+                    style: context.primaryTextStyle(
                       size: 14,
                     )),
                 6.height,
                 Text(language.lblForgotPwdSubtitle,
-                    style: primaryTextStyle(
+                    style: context.primaryTextStyle(
                       size: 12,
                       weight: FontWeight.w400,
                     )),
@@ -111,7 +113,7 @@ class ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               onTap: () => Navigator.of(context).pop(),
               child: Text(
                 language.lblCancel,
-                style: primaryTextStyle(
+                style: context.primaryTextStyle(
                     size: 14,
                     weight: FontWeight.bold,
                     color: context.primaryColor),

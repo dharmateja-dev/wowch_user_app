@@ -10,6 +10,7 @@ import 'package:booking_system_flutter/utils/common.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
 import 'package:booking_system_flutter/utils/extensions/int_extension.dart';
 import 'package:booking_system_flutter/utils/model_keys.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:booking_system_flutter/utils/widgets/horizontal_calender/date_item.dart';
 import 'package:booking_system_flutter/utils/widgets/horizontal_calender/date_picker_controller.dart';
 import 'package:booking_system_flutter/utils/widgets/horizontal_calender/horizontal_date_picker.dart';
@@ -25,7 +26,12 @@ class BookingSlotsComponent extends StatefulWidget {
   final ScrollController scrollController;
   final VoidCallback? onApplyClick;
 
-  BookingSlotsComponent({this.data, this.showAppbar = false, this.bookingData, required this.scrollController, this.onApplyClick});
+  BookingSlotsComponent(
+      {this.data,
+      this.showAppbar = false,
+      this.bookingData,
+      required this.scrollController,
+      this.onApplyClick});
 
   @override
   _BookingSlotsComponentState createState() => _BookingSlotsComponentState();
@@ -61,7 +67,8 @@ class _BookingSlotsComponentState extends State<BookingSlotsComponent> {
     isUpdate = widget.bookingData != null;
 
     if (widget.data!.serviceDetail!.bookingDate != null) {
-      selectedHorizontalDate = DateTime.parse(widget.data!.serviceDetail!.bookingDate.validate().toString());
+      selectedHorizontalDate = DateTime.parse(
+          widget.data!.serviceDetail!.bookingDate.validate().toString());
     }
 
     selectedSlot = widget.data!.serviceDetail!.bookingSlot.validate().isNotEmpty
@@ -71,13 +78,22 @@ class _BookingSlotsComponentState extends State<BookingSlotsComponent> {
             : null;
 
     if (isUpdate) {
-      selectedHorizontalDate = DateTime.parse(widget.bookingData!.date.validate().toString());
+      selectedHorizontalDate =
+          DateTime.parse(widget.bookingData!.date.validate().toString());
 
-      SlotData tempSlot = slotsList.firstWhere((element) => element.day.validate().toLowerCase() == selectedHorizontalDate.weekday.weekDayName.validate().toLowerCase());
+      SlotData tempSlot = slotsList.firstWhere((element) =>
+          element.day.validate().toLowerCase() ==
+          selectedHorizontalDate.weekday.weekDayName.validate().toLowerCase());
 
-      if (!tempSlot.slot.validate().contains(widget.bookingData!.bookingSlot.validate())) {
+      if (!tempSlot.slot
+          .validate()
+          .contains(widget.bookingData!.bookingSlot.validate())) {
         slotsList
-            .firstWhere((element) => element.day.validate().toLowerCase() == selectedHorizontalDate.weekday.weekDayName.validate().toLowerCase())
+            .firstWhere((element) =>
+                element.day.validate().toLowerCase() ==
+                selectedHorizontalDate.weekday.weekDayName
+                    .validate()
+                    .toLowerCase())
             .slot!
             .add(widget.bookingData!.bookingSlot.validate());
       }
@@ -97,7 +113,9 @@ class _BookingSlotsComponentState extends State<BookingSlotsComponent> {
     }
 
     if (isUpdate) {
-      if (widget.data!.serviceDetail!.bookingSlot.validate() == widget.bookingData!.bookingSlot.validate()) return toast(language.pleaseSelectDifferentSlotThenPrevious);
+      if (widget.data!.serviceDetail!.bookingSlot.validate() ==
+          widget.bookingData!.bookingSlot.validate())
+        return toast(language.pleaseSelectDifferentSlotThenPrevious);
 
       showConfirmDialogCustom(
         context,
@@ -111,9 +129,14 @@ class _BookingSlotsComponentState extends State<BookingSlotsComponent> {
     } else {
       if (widget.data!.serviceDetail!.bookingSlot.validate().isNotEmpty) {
         Fluttertoast.cancel();
-        widget.data!.serviceDetail!.bookingDate = formatBookingDate(selectedHorizontalDate.toString(), format: DATE_FORMAT_7);
-        widget.data!.serviceDetail!.bookingDay = selectedHorizontalDate.weekday.weekDayName.toLowerCase();
-        widget.data!.serviceDetail!.dateTimeVal = formatBookingDate(selectedHorizontalDate.toString(), format: DATE_FORMAT_3);
+        widget.data!.serviceDetail!.bookingDate = formatBookingDate(
+            selectedHorizontalDate.toString(),
+            format: DATE_FORMAT_7);
+        widget.data!.serviceDetail!.bookingDay =
+            selectedHorizontalDate.weekday.weekDayName.toLowerCase();
+        widget.data!.serviceDetail!.dateTimeVal = formatBookingDate(
+            selectedHorizontalDate.toString(),
+            format: DATE_FORMAT_3);
         log(selectedHorizontalDate.toString());
         finish(context, true);
         widget.onApplyClick?.call();
@@ -154,7 +177,13 @@ class _BookingSlotsComponentState extends State<BookingSlotsComponent> {
     List<String> temp = slotsList.validate().isNotEmpty
         ? slotsList
             .validate()
-            .firstWhere((element) => element.day!.toLowerCase() == DateFormat('E', 'en_US').format(selectedHorizontalDate).toLowerCase(), orElse: () => SlotData(slot: [], day: ''))
+            .firstWhere(
+                (element) =>
+                    element.day!.toLowerCase() ==
+                    DateFormat('E', 'en_US')
+                        .format(selectedHorizontalDate)
+                        .toLowerCase(),
+                orElse: () => SlotData(slot: [], day: ''))
             .slot
             .validate()
         : [];
@@ -163,7 +192,10 @@ class _BookingSlotsComponentState extends State<BookingSlotsComponent> {
         children: [
           Container(
             margin: EdgeInsets.only(top: context.height() * 0.04),
-            decoration: boxDecorationWithRoundedCorners(borderRadius: radiusOnly(topLeft: defaultRadius, topRight: defaultRadius), backgroundColor: context.cardColor),
+            decoration: boxDecorationWithRoundedCorners(
+                borderRadius:
+                    radiusOnly(topLeft: defaultRadius, topRight: defaultRadius),
+                backgroundColor: context.cardColor),
             padding: EdgeInsets.all(16),
             child: Column(
               children: [
@@ -173,7 +205,8 @@ class _BookingSlotsComponentState extends State<BookingSlotsComponent> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       8.height,
-                      Text(language.lblSelectDate, style: boldTextStyle(size: LABEL_TEXT_SIZE)),
+                      Text(language.lblSelectDate,
+                          style: context.boldTextStyle(size: LABEL_TEXT_SIZE)),
                       16.height,
                       HorizontalDatePickerWidget(
                         height: 90,
@@ -183,17 +216,26 @@ class _BookingSlotsComponentState extends State<BookingSlotsComponent> {
                         widgetWidth: context.width(),
                         locale: appStore.selectedLanguageCode,
                         selectedColor: primaryColor,
-                        dateItemComponentList: [DateItem.Month, DateItem.Day, DateItem.WeekDay],
+                        dateItemComponentList: [
+                          DateItem.Month,
+                          DateItem.Day,
+                          DateItem.WeekDay
+                        ],
                         dayFontSize: 20,
                         weekDayFontSize: 16,
                         datePickerController: _datePickerController,
                         onValueSelected: (date) {
                           setState(() {
                             selectedHorizontalDate = date;
-                            widget.data!.serviceDetail!.bookingSlot = widget.data!.serviceDetail!.bookingSlot.validate().isNotEmpty
-                                ? widget.data!.serviceDetail!.bookingSlot.validate()
+                            widget.data!.serviceDetail!.bookingSlot = widget
+                                    .data!.serviceDetail!.bookingSlot
+                                    .validate()
+                                    .isNotEmpty
+                                ? widget.data!.serviceDetail!.bookingSlot
+                                    .validate()
                                 : isUpdate
-                                    ? widget.data!.serviceDetail!.bookingSlot.validate()
+                                    ? widget.data!.serviceDetail!.bookingSlot
+                                        .validate()
                                     : null;
                             selectedSlot = null;
                             isSlotSelected = false;
@@ -205,7 +247,8 @@ class _BookingSlotsComponentState extends State<BookingSlotsComponent> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          Text(language.use24HourFormat, style: secondaryTextStyle(size: 14)),
+                          Text(language.use24HourFormat,
+                              style: context.secondaryTextStyle(size: 14)),
                           16.width,
                           Observer(builder: (context) {
                             return Transform.scale(
@@ -221,12 +264,16 @@ class _BookingSlotsComponentState extends State<BookingSlotsComponent> {
                         ],
                       ),
                       16.height,
-                      Text(language.availableSlots, style: boldTextStyle(size: LABEL_TEXT_SIZE)),
+                      Text(language.availableSlots,
+                          style: context.boldTextStyle(size: LABEL_TEXT_SIZE)),
                       16.height,
                       temp.isNotEmpty
                           ? AvailableSlotsComponent(
                               key: keyForTimeSlotWidget,
-                              selectedSlots: selectedSlot != null && selectedSlot!.isNotEmpty ? [selectedSlot.validate()] : [],
+                              selectedSlots: selectedSlot != null &&
+                                      selectedSlot!.isNotEmpty
+                                  ? [selectedSlot.validate()]
+                                  : [],
                               isProvider: false,
                               availableSlots: temp,
                               selectedDate: selectedHorizontalDate,
@@ -251,8 +298,11 @@ class _BookingSlotsComponentState extends State<BookingSlotsComponent> {
                   children: [
                     AppButton(
                       text: language.lblCancel,
-                      color: appStore.isDarkMode ? context.scaffoldBackgroundColor : white,
-                      textColor: appStore.isDarkMode ? white : context.primaryColor,
+                      color: appStore.isDarkMode
+                          ? context.scaffoldBackgroundColor
+                          : white,
+                      textColor:
+                          appStore.isDarkMode ? white : context.primaryColor,
                       onTap: () {
                         finish(context);
                       },

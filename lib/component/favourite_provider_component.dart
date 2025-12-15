@@ -1,5 +1,6 @@
 import 'package:booking_system_flutter/screens/booking/provider_info_screen.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -95,7 +96,7 @@ class _FavouriteProviderComponentState
               Marquee(
                 directionMarguee: DirectionMarguee.oneDirection,
                 child: Text(widget.data!.displayName.validate(),
-                    style: boldTextStyle(), maxLines: 1),
+                    style: context.boldTextStyle(), maxLines: 1),
               ).center(),
               //16.height,
 

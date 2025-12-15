@@ -5,6 +5,7 @@ import 'package:booking_system_flutter/screens/auth/sign_in_screen.dart';
 import 'package:booking_system_flutter/screens/chat/widget/user_item_widget.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
 import 'package:booking_system_flutter/utils/context_extensions.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_pagination/firebase_pagination.dart';
 import 'package:flutter/material.dart';
@@ -259,7 +260,7 @@ class _DummyUserItemWidget extends StatelessWidget {
                 color: context.primaryColor.withValues(alpha: 0.2),
                 child: Text(
                   userData.displayName.validate()[0].validate().toUpperCase(),
-                  style: boldTextStyle(color: context.primaryColor),
+                  style: context.boldTextStyle(color: context.primaryColor),
                 ).center().fit(),
               ).cornerRadiusWithClipRRect(50)
             else
@@ -280,7 +281,7 @@ class _DummyUserItemWidget extends StatelessWidget {
                       userData.firstName.validate() +
                           " " +
                           userData.lastName.validate(),
-                      style: boldTextStyle(),
+                      style: context.boldTextStyle(),
                       maxLines: 1,
                       textAlign: TextAlign.start,
                       overflow: TextOverflow.ellipsis,
@@ -296,7 +297,7 @@ class _DummyUserItemWidget extends StatelessWidget {
                         ),
                         child: Text(
                           '${(index % 5) + 1}',
-                          style: secondaryTextStyle(color: white),
+                          style: context.secondaryTextStyle(color: white),
                           textAlign: TextAlign.center,
                         ).center(),
                       ),
@@ -310,12 +311,12 @@ class _DummyUserItemWidget extends StatelessWidget {
                       _getDummyLastMessage(index),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: primaryTextStyle(size: 14),
+                      style: context.primaryTextStyle(size: 14),
                     ).expand(),
                     16.width,
                     Text(
                       _getDummyTime(index),
-                      style: primaryTextStyle(size: 10),
+                      style: context.primaryTextStyle(size: 10),
                     ),
                   ],
                 ).paddingTop(2),

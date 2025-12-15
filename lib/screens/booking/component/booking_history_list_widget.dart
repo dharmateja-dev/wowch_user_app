@@ -3,6 +3,7 @@ import 'package:booking_system_flutter/utils/common.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
 import 'package:booking_system_flutter/utils/dashed_rect.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -28,7 +29,8 @@ class BookingHistoryListWidget extends StatelessWidget {
           final activityData = data.activityData;
           if (activityData != null && activityData.contains('"label"')) {
             // Try to extract label from JSON
-            final match = RegExp(r'"label":\s*"([^"]+)"').firstMatch(activityData);
+            final match =
+                RegExp(r'"label":\s*"([^"]+)"').firstMatch(activityData);
             if (match != null) {
               return match.group(1) ?? 'Update Booking';
             }
@@ -42,7 +44,8 @@ class BookingHistoryListWidget extends StatelessWidget {
         try {
           final activityData = data.activityData;
           if (activityData != null && activityData.contains('"label"')) {
-            final match = RegExp(r'"label":\s*"([^"]+)"').firstMatch(activityData);
+            final match =
+                RegExp(r'"label":\s*"([^"]+)"').firstMatch(activityData);
             if (match != null) {
               return match.group(1) ?? 'Cancel Booking';
             }
@@ -71,7 +74,7 @@ class BookingHistoryListWidget extends StatelessWidget {
             data.datetime.validate().toString().isNotEmpty
                 ? Text(
                     formatDate(data.datetime..validate().toString()),
-                    style: primaryTextStyle(
+                    style: context.primaryTextStyle(
                       size: 12,
                     ),
                   )
@@ -81,7 +84,7 @@ class BookingHistoryListWidget extends StatelessWidget {
                 ? Text(
                     formatDate(data.datetime..validate().toString(),
                         isTime: true),
-                    style: primaryTextStyle(size: 12),
+                    style: context.primaryTextStyle(size: 12),
                   )
                 : const SizedBox(),
           ],
@@ -117,11 +120,11 @@ class BookingHistoryListWidget extends StatelessWidget {
           children: <Widget>[
             Text(
               _getActivityTypeLabel(data.activityType.validate()),
-              style: boldTextStyle(size: 14),
+              style: context.boldTextStyle(size: 14),
             ),
             Text(
               data.activityMessage.validate().replaceAll('_', ' '),
-              style: primaryTextStyle(size: 12),
+              style: context.primaryTextStyle(size: 12),
             ).paddingOnly(left: 4, bottom: 4),
           ],
         ).paddingOnly(bottom: 18).expand()

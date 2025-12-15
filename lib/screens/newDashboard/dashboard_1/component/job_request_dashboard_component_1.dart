@@ -1,4 +1,5 @@
 import 'package:booking_system_flutter/utils/context_extensions.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -26,7 +27,7 @@ class NewJobRequestDashboardComponent1 extends StatelessWidget {
           16.height,
           Text(
             language.postYourRequestAnd,
-            style: boldTextStyle(color: white, size: 16),
+            style: context.boldTextStyle(color: white, size: 16),
           ),
           20.height,
           AppButton(
@@ -36,7 +37,8 @@ class NewJobRequestDashboardComponent1 extends StatelessWidget {
                 const Icon(Icons.add, color: Colors.white),
                 4.width,
                 Text(language.newRequest,
-                    style: boldTextStyle(color: Colors.white, size: 14)),
+                    style:
+                        context.boldTextStyle(color: Colors.white, size: 14)),
               ],
             ),
             padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
