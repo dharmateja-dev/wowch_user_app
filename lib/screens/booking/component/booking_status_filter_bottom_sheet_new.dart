@@ -271,10 +271,10 @@ class _StatusChip extends StatelessWidget {
         duration: const Duration(milliseconds: 200),
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
         decoration: BoxDecoration(
-          color: Color(0xFFE8F3EC),
+          color: context.secondaryContainer,
           borderRadius: BorderRadius.circular(8),
           border: Border.all(
-            color: isSelected ? primaryColor : Color(0xFFE8F3EC),
+            color: isSelected ? primaryColor : context.secondaryContainer,
             width: 1,
           ),
         ),

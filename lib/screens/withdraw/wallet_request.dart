@@ -141,7 +141,7 @@ class _WithdrawRequestState extends State<WithdrawRequest> {
                   Container(
                     padding: const EdgeInsets.all(14),
                     decoration: BoxDecoration(
-                      color: Color(0xFFE8F3EC),
+                      color: context.secondaryContainer,
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Row(

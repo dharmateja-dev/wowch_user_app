@@ -3,6 +3,7 @@ import 'package:booking_system_flutter/component/loader_widget.dart';
 import 'package:booking_system_flutter/main.dart';
 import 'package:booking_system_flutter/model/user_data_model.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/images.dart';
 import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
@@ -47,7 +48,7 @@ class _FilterProviderComponentState extends State<FilterProviderComponent> {
         return Container(
           margin: const EdgeInsets.all(6),
           decoration: BoxDecoration(
-            color: Color(0xFFE8F3EC),
+            color: context.secondaryContainer,
             borderRadius: BorderRadius.circular(8),
           ),
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),

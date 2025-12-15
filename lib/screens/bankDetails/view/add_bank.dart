@@ -153,7 +153,7 @@ class _AddBankScreenState extends State<AddBankScreen> {
                     Container(
                       padding: const EdgeInsets.all(14),
                       decoration: BoxDecoration(
-                        color: Color(0xFFE8F3EC),
+                        color: context.secondaryContainer,
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: Row(
@@ -204,7 +204,6 @@ class _AddBankScreenState extends State<AddBankScreen> {
                         style: context.boldTextStyle(size: 14)),
                     8.height,
                     AppTextField(
-                  
                       textStyle: context.primaryTextStyle(),
                       textFieldType: TextFieldType.NAME,
                       controller: accNumberCont,

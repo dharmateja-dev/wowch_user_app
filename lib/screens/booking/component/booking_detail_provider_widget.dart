@@ -2,6 +2,7 @@ import 'package:booking_system_flutter/component/cached_image_widget.dart';
 import 'package:booking_system_flutter/main.dart';
 import 'package:booking_system_flutter/model/user_data_model.dart';
 import 'package:booking_system_flutter/utils/common.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/images.dart';
 import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
@@ -60,7 +61,7 @@ class BookingDetailProviderWidgetState
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Color(0xFFE8F3EC),
+        color: context.secondaryContainer,
         borderRadius: radius(8),
       ),
       padding: const EdgeInsets.all(16),
@@ -77,7 +78,7 @@ class BookingDetailProviderWidgetState
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: Color(0xFF2D2D2D),
-                  border: Border.all(color: Colors.white, width: 2),
+                  border: Border.all(color: context.onPrimary, width: 2),
                 ),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(30),
@@ -108,7 +109,7 @@ class BookingDetailProviderWidgetState
                         Icon(
                           Icons.info_outline,
                           size: 18,
-                          color: Colors.grey[500],
+                          color: context.taxIconColor,
                         ),
                       ],
                     ),
@@ -130,7 +131,7 @@ class BookingDetailProviderWidgetState
                               Icons.star,
                               size: 16,
                               color: isFilled
-                                  ? Color(0xFFFFB800)
+                                  ? context.starColor
                                   : Color(0xFFE0E0E0),
                             ),
                           );
@@ -143,11 +144,7 @@ class BookingDetailProviderWidgetState
             ],
           ),
           8.height,
-          Divider(
-            color: lightGray,
-            thickness: 2,
-            height: 6,
-          ),
+
           // Action buttons row - only show when showContactButtons is true
 
           if (widget.showContactButtons) ...[
@@ -170,11 +167,11 @@ class BookingDetailProviderWidgetState
                           style: context.boldTextStyle(size: 14)),
                     ],
                   ),
-                  color: Colors.white,
+                  color: context.onPrimary,
                   elevation: 0,
                   shapeBorder: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
-                    side: BorderSide(color: context.primaryColor),
+                    side: BorderSide(color: context.primary),
                   ),
                   onTap: () {
                     if (widget.providerData.contactNumber
@@ -201,7 +198,7 @@ class BookingDetailProviderWidgetState
                           style: context.boldTextStyle(size: 14)),
                     ],
                   ),
-                  color: Colors.white,
+                  color: context.onPrimary,
                   elevation: 0,
                   shapeBorder: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
@@ -239,11 +236,11 @@ class BookingDetailProviderWidgetState
                     height: 20,
                     width: 20,
                   ),
-                  color: Colors.white,
+                  color: context.onPrimary,
                   elevation: 0,
                   shapeBorder: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
-                    side: BorderSide(color: context.primaryColor),
+                    side: BorderSide(color: context.primary),
                   ),
                   onTap: () async {
                     String phoneNumber = "";

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -37,7 +38,7 @@ class CachedImageWidget extends StatelessWidget {
       return Container(
         height: height,
         width: width ?? height,
-        color: color ?? Color(0xFFE8F3EC),
+        color: color ?? context.secondaryContainer,
         alignment: alignment,
         //padding: EdgeInsets.all(10),
         //child: Image.asset(ic_no_photo, color: appStore.isDarkMode ? Colors.white : Colors.black),

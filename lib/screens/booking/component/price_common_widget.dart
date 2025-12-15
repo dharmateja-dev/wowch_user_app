@@ -50,7 +50,7 @@ class PriceCommonWidget extends StatelessWidget {
           padding: const EdgeInsets.all(12),
           width: context.width(),
           decoration: BoxDecoration(
-            color: Color(0xFFE8F3EC),
+            color: context.secondaryContainer,
             borderRadius: BorderRadius.circular(8),
           ),
           child: Column(

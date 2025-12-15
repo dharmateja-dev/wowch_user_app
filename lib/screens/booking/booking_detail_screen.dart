@@ -851,7 +851,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
         padding: EdgeInsets.all(12),
         decoration: BoxDecoration(
           borderRadius: radius(8),
-          color: Color(0xFFE8F3EC),
+          color: context.secondaryContainer,
         ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -2282,7 +2282,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
             AppButton(
               text: language.lblHold,
               textColor: textPrimaryColor,
-              color: Color(0xFFE8F3EC),
+              color: context.secondaryContainer,
               shapeBorder: RoundedRectangleBorder(
                 side: BorderSide(color: context.primaryColor),
                 borderRadius: BorderRadius.circular(8),
@@ -2307,7 +2307,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
           AppButton(
             text: language.lblCancel,
             textColor: textPrimaryColor,
-            color: Color(0xFFE8F3EC),
+            color: context.secondaryContainer,
             shapeBorder: RoundedRectangleBorder(
               side: BorderSide(color: context.primaryColor),
               borderRadius: BorderRadius.circular(8),
@@ -2338,7 +2338,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
         padding: const EdgeInsets.all(12),
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: Color(0xFFE8F3EC),
+          color: context.secondaryContainer,
           border: Border.all(color: context.primaryColor),
           borderRadius: BorderRadius.circular(8),
         ),

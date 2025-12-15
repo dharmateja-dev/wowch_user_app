@@ -2,6 +2,7 @@ import 'package:booking_system_flutter/component/cached_image_widget.dart';
 import 'package:booking_system_flutter/main.dart';
 import 'package:booking_system_flutter/screens/blog/model/blog_response_model.dart';
 import 'package:booking_system_flutter/screens/blog/view/blog_detail_screen.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -39,7 +40,7 @@ class _BlogItemComponentState extends State<BlogItemComponent> {
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: boxDecorationWithRoundedCorners(
           borderRadius: radius(12), // Rounded corners as shown in design
-          backgroundColor: Color(0xFFE8F3EC), // Light green background
+          backgroundColor: context.secondaryContainer, // Light green background
           border: appStore.isDarkMode
               ? Border.all(color: context.dividerColor)
               : null,

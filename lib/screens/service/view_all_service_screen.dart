@@ -273,7 +273,7 @@ class _ViewAllServiceScreenState extends State<ViewAllServiceScreen> {
                   width: 60,
                   height: 60,
                   decoration: BoxDecoration(
-                    color: Color(0xFFE8F3EC),
+                    color: context.secondaryContainer,
                     borderRadius: BorderRadius.circular(8),
                     border: isSelected
                         ? Border.all(color: context.primaryColor, width: 2)
@@ -393,7 +393,7 @@ class _ViewAllServiceScreenState extends State<ViewAllServiceScreen> {
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
       child: Container(
         decoration: BoxDecoration(
-          color: const Color(0xFFE8F3EC),
+          color: context.secondaryContainer,
           borderRadius: BorderRadius.circular(8),
         ),
         child: AppTextField(

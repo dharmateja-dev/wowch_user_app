@@ -1,4 +1,5 @@
 import 'package:booking_system_flutter/component/cached_image_widget.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -78,7 +79,7 @@ class CategoryDashboardComponent3 extends StatelessWidget {
                     padding: const EdgeInsets.all(14),
                     width: width ?? context.width() / 4 - 8,
                     decoration: BoxDecoration(
-                      color: Color(0xFFE8F3EC),
+                      color: context.secondaryContainer,
                       shape: BoxShape.rectangle,
                       borderRadius: radius(8),
                     ),

@@ -116,7 +116,7 @@ class ProfileFragmentState extends State<ProfileFragment> {
                       padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
                         borderRadius: radius(8),
-                        color: Color(0xFFE8F3EC),
+                        color: context.secondaryContainer,
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -179,7 +179,7 @@ class ProfileFragmentState extends State<ProfileFragment> {
                         headingDecoration: boxDecorationDefault(
                           borderRadius: const BorderRadiusDirectional.vertical(
                               top: Radius.circular(0)),
-                          color: Color(0xFFE8F3EC),
+                          color: context.secondaryContainer,
                         ),
                         divider: const Offstage(),
                         items: [
@@ -403,7 +403,7 @@ class ProfileFragmentState extends State<ProfileFragment> {
                     title: Text(language.lblAboutApp.toUpperCase(),
                         style: context.boldTextStyle()),
                     headingDecoration: boxDecorationDefault(
-                      color: Color(0xFFE8F3EC),
+                      color: context.secondaryContainer,
                       borderRadius: const BorderRadiusDirectional.vertical(
                           top: Radius.circular(0)),
                     ),

@@ -3,6 +3,7 @@ import 'package:booking_system_flutter/main.dart';
 import 'package:booking_system_flutter/model/category_model.dart';
 import 'package:booking_system_flutter/network/rest_apis.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -101,7 +102,7 @@ class _SubCategoryComponentState extends State<SubCategoryComponent> {
                                         height: CATEGORY_ICON_SIZE,
                                         width: CATEGORY_ICON_SIZE,
                                         decoration: BoxDecoration(
-                                          color: Color(0xFFE8F3EC),
+                                          color: context.secondaryContainer,
                                           shape: BoxShape.circle,
                                         ),
                                         alignment: Alignment.center,
@@ -117,7 +118,8 @@ class _SubCategoryComponentState extends State<SubCategoryComponent> {
                                               height: CATEGORY_ICON_SIZE,
                                               padding: const EdgeInsets.all(8),
                                               decoration: BoxDecoration(
-                                                  color: Color(0xFFE8F3EC),
+                                                  color: context
+                                                      .secondaryContainer,
                                                   shape: BoxShape.circle),
                                               child: SvgPicture.network(
                                                 data.categoryImage.validate(),
@@ -145,7 +147,8 @@ class _SubCategoryComponentState extends State<SubCategoryComponent> {
                                           : Container(
                                               padding: const EdgeInsets.all(12),
                                               decoration: BoxDecoration(
-                                                  color: Color(0xFFE8F3EC),
+                                                  color: context
+                                                      .secondaryContainer,
                                                   shape: BoxShape.circle),
                                               child: CachedImageWidget(
                                                 url: data.categoryImage

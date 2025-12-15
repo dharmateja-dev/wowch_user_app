@@ -1,6 +1,7 @@
 import 'package:booking_system_flutter/component/base_scaffold_widget.dart';
 import 'package:booking_system_flutter/main.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
 import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
@@ -186,7 +187,8 @@ class _CustomerRatingScreenState extends State<CustomerRatingScreen> {
                           width: context.width(),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(12),
-                            color: Color(0xFFE8F3EC), // Light green background
+                            color: context
+                                .secondaryContainer, // Light green background
                           ),
                           padding: const EdgeInsets.all(16),
                           child: Row(
@@ -247,7 +249,7 @@ class _CustomerRatingScreenState extends State<CustomerRatingScreen> {
                         Container(
                           width: context.width(),
                           decoration: BoxDecoration(
-                            color: Color(0xFFE8F3EC),
+                            color: context.secondaryContainer,
                             borderRadius: BorderRadius.circular(12),
                           ),
                           padding: const EdgeInsets.all(16),

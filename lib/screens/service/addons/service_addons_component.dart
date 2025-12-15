@@ -1,4 +1,5 @@
 import 'package:booking_system_flutter/component/cached_image_widget.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -81,11 +82,8 @@ class _AddonComponentState extends State<AddonComponent> {
       width: context.width(),
       padding: EdgeInsets.all(12),
       decoration: boxDecorationWithRoundedCorners(
-        border: appStore.isDarkMode
-            ? Border.all(color: context.dividerColor)
-            : null,
-        borderRadius: radius(8),
-        backgroundColor: Color(0xFFE8F3EC),
+        border: Border.all(style: BorderStyle.none),
+        backgroundColor: context.secondaryContainer,
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -203,7 +201,8 @@ class _AddonComponentState extends State<AddonComponent> {
                 10.height,
                 PriceWidget(
                   price: data.price.validate(),
-                  hourlyTextColor: Colors.white,
+                  hourlyTextColor: context.onSurface,
+                  isBoldText: false,
                   size: 12,
                 ),
                 12.width,
@@ -219,7 +218,7 @@ class _AddonComponentState extends State<AddonComponent> {
   Widget buildAddButton(Serviceaddon data) {
     return Container(
       decoration: BoxDecoration(
-        color: context.primaryColor,
+        color: context.primary,
         borderRadius: radius(50),
       ),
       padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
@@ -227,7 +226,7 @@ class _AddonComponentState extends State<AddonComponent> {
         data.isSelected ? ic_close : ic_add,
         height: 14,
         width: 14,
-        color: white,
+        color: context.onPrimary,
       ),
     ).onTap(() => handleAddRemove(data));
   }

@@ -6,6 +6,7 @@ import 'package:booking_system_flutter/model/booking_data_model.dart';
 import 'package:booking_system_flutter/screens/booking/component/edit_booking_service_dialog.dart';
 import 'package:booking_system_flutter/utils/common.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/images.dart';
 import 'package:booking_system_flutter/utils/model_keys.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
@@ -255,7 +256,7 @@ class _BookingItemComponentState extends State<BookingItemComponent> {
           Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: Color(0xFFE8F3EC),
+              color: context.secondaryContainer,
               borderRadius: BorderRadius.circular(8),
             ),
             child: Column(

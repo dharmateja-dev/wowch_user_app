@@ -1,4 +1,5 @@
 import 'package:booking_system_flutter/main.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -42,7 +43,7 @@ class _FilterRatingComponentState extends State<FilterRatingComponent> {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFE8F3EC),
+                  color: context.secondaryContainer,
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Row(

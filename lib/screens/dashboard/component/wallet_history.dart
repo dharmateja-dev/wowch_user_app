@@ -1,6 +1,7 @@
 import 'package:booking_system_flutter/component/back_widget.dart';
 import 'package:booking_system_flutter/main.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/extensions/num_extenstions.dart';
 import 'package:booking_system_flutter/utils/images.dart';
 import 'package:booking_system_flutter/utils/text_styles.dart';
@@ -308,7 +309,7 @@ class _UserWalletHistoryScreenState extends State<UserWalletHistoryScreen> {
                           margin: const EdgeInsets.symmetric(vertical: 5),
                           decoration: boxDecorationWithRoundedCorners(
                             borderRadius: BorderRadius.circular(8),
-                            backgroundColor: Color(0xFFE8F3EC),
+                            backgroundColor: context.secondaryContainer,
                           ),
                           width: context.width(),
                           child: Row(

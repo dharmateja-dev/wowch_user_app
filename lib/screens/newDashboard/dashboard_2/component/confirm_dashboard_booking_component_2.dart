@@ -56,7 +56,7 @@ class _ConfirmDashboardBookingComponent2State
               decoration: boxDecorationRoundedWithShadow(
                 defaultRadius.toInt(),
                 backgroundColor:
-                    appStore.isDarkMode ? Color(0xFFE8F3EC) : white,
+                    appStore.isDarkMode ? context.secondaryContainer : white,
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,

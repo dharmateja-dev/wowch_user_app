@@ -42,6 +42,8 @@ class _BidderItemComponentState extends State<BidderItemComponent> {
 
   Future<void> savePostJobReq() async {
     showConfirmDialogCustom(
+      height: 80,
+      width: 290,
       context,
       negativeText: language.lblNo,
       dialogType: DialogType.CONFIRMATION,

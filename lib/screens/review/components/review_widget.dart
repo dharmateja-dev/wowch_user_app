@@ -2,6 +2,7 @@ import 'package:booking_system_flutter/component/image_border_component.dart';
 import 'package:booking_system_flutter/main.dart';
 import 'package:booking_system_flutter/model/service_detail_response.dart';
 import 'package:booking_system_flutter/utils/common.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -24,7 +25,7 @@ class ReviewWidget extends StatelessWidget {
         borderRadius: radius(8),
         backgroundColor: appStore.isDarkMode
             ? context.cardColor
-            : Color(0xFFE8F3EC), // Light green/off-white background
+            : context.secondaryContainer, // Light green/off-white background
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

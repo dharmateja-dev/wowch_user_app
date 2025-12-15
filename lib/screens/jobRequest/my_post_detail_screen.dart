@@ -14,6 +14,7 @@ import 'package:booking_system_flutter/screens/booking/provider_info_screen.dart
 import 'package:booking_system_flutter/screens/jobRequest/book_post_job_request_screen.dart';
 import 'package:booking_system_flutter/screens/jobRequest/components/bidder_item_component.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/model_keys.dart';
 import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
@@ -96,7 +97,7 @@ class _MyPostDetailScreenState extends State<MyPostDetailScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(title.validate(), style: context.secondaryTextStyle()),
+        Text(title.validate(), style: context.boldTextStyle()),
         4.height,
         if (isReadMore)
           ReadMoreText(
@@ -105,7 +106,7 @@ class _MyPostDetailScreenState extends State<MyPostDetailScreen> {
             colorClickableText: context.primaryColor,
           )
         else
-          Text(detail.validate(), style: context.boldTextStyle(size: 12)),
+          Text(detail.validate(), style: context.primaryTextStyle()),
         20.height,
       ],
     );
@@ -116,8 +117,8 @@ class _MyPostDetailScreenState extends State<MyPostDetailScreen> {
       padding: const EdgeInsets.all(16),
       width: context.width(),
       decoration: boxDecorationWithRoundedCorners(
-          backgroundColor: context.cardColor,
-          borderRadius: const BorderRadius.all(Radius.circular(16))),
+          backgroundColor: context.secondaryContainer,
+          borderRadius: const BorderRadius.all(Radius.circular(8))),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -125,7 +126,7 @@ class _MyPostDetailScreenState extends State<MyPostDetailScreen> {
             titleWidget(
               title: language.postJobTitle,
               detail: data.title.validate(),
-              detailTextStyle: context.boldTextStyle(),
+              detailTextStyle: context.primaryTextStyle(),
             ),
           if (data.description.validate().isNotEmpty)
             titleWidget(
@@ -138,15 +139,16 @@ class _MyPostDetailScreenState extends State<MyPostDetailScreen> {
               data.status.validate() == JOB_REQUEST_STATUS_ASSIGNED
                   ? language.jobPrice
                   : language.estimatedPrice,
-              style: context.secondaryTextStyle()),
+              style: context.boldTextStyle()),
           4.height,
           PriceWidget(
             price: data.status.validate() == JOB_REQUEST_STATUS_ASSIGNED
                 ? data.jobPrice.validate()
                 : data.price.validate(),
             isHourlyService: false,
-            color: textPrimaryColorGlobal,
+            color: context.onSurface,
             isFreeService: false,
+            isBoldText: false,
             size: 14,
           ),
         ],
@@ -176,8 +178,8 @@ class _MyPostDetailScreenState extends State<MyPostDetailScreen> {
               margin: const EdgeInsets.all(8),
               padding: const EdgeInsets.all(8),
               decoration: boxDecorationWithRoundedCorners(
-                  backgroundColor: context.cardColor,
-                  borderRadius: const BorderRadius.all(Radius.circular(16))),
+                  backgroundColor: context.secondaryContainer,
+                  borderRadius: const BorderRadius.all(Radius.circular(8))),
               child: Row(
                 children: [
                   CachedImageWidget(

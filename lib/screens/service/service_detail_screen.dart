@@ -29,6 +29,7 @@ import 'package:booking_system_flutter/store/service_addon_store.dart';
 import 'package:booking_system_flutter/utils/colors.dart';
 import 'package:booking_system_flutter/utils/common.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
 import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
@@ -240,7 +241,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen>
                                   : Colors.black
                               : isSelected
                                   ? primaryColor
-                                  : Color(0xFFE8F3EC)),
+                                  : context.secondaryContainer),
                       child: Text(
                         value.name.validate(),
                         style: context.boldTextStyle(
@@ -297,7 +298,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen>
                                   : Colors.black
                               : isSelected
                                   ? primaryColor
-                                  : Color(0xFFE8F3EC)),
+                                  : context.secondaryContainer),
                       child: Text(
                         value.name.validate(),
                         style: context.boldTextStyle(
@@ -474,7 +475,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen>
       padding: const EdgeInsets.all(12),
       decoration: boxDecorationWithRoundedCorners(
         borderRadius: radius(8),
-        backgroundColor: Color(0xFFE8F3EC),
+        backgroundColor: context.secondaryContainer,
       ),
       child: Row(
         children: [
@@ -500,8 +501,9 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen>
                 PriceWidget(
                   price: data.price.validate(),
                   size: 14,
-                  color: textPrimaryColorGlobal,
+                  color: context.onSurface,
                   isFreeService: false,
+                  isBoldText: false,
                   currencySymbol: '₹',
                 ),
               ],
@@ -510,7 +512,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen>
           12.width,
           AppButton(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-            color: context.primaryColor,
+            color: context.primary,
             elevation: 0,
             shapeBorder: RoundedRectangleBorder(borderRadius: radius(8)),
             onTap: () {
@@ -519,7 +521,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen>
             },
             child: Text(language.buy,
                 style: context.boldTextStyle(
-                  color: white,
+                  color: context.onPrimary,
                 )),
           ),
         ],
@@ -641,20 +643,20 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen>
               padding: const EdgeInsets.all(8),
               decoration: boxDecorationWithShadow(
                 boxShape: BoxShape.circle,
-                backgroundColor: context.cardColor,
+                backgroundColor: context.secondaryContainer,
               ),
               child: snap.data!.serviceDetail!.isFavourite == 1
                   ? ic_fill_heart.iconImage(
-                      color: favouriteColor, size: 24, context: context)
+                      color: favouriteColor, size: 20, context: context)
                   : ic_heart.iconImage(
-                      color: unFavouriteColor, size: 24, context: context),
+                      color: unFavouriteColor, size: 20, context: context),
             ).onTap(() async {
               if (appStore.isLoggedIn) {
                 await _onTapFavourite(snap.data!.serviceDetail!);
                 setState(() {});
               } else {
                 push(const SignInScreen(returnExpected: true)).then((value) {
-                  setStatusBarColor(transparentColor,
+                  setStatusBarColor(Colors.transparent,
                       delayInMilliSeconds: 1000);
                   if (value) {
                     _onTapFavourite(snap.data!.serviceDetail!);

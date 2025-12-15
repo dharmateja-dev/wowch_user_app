@@ -497,7 +497,7 @@ class _BookServiceScreenState extends State<BookServiceScreen> {
         Text(language.landmark, style: context.boldTextStyle()),
         8.height,
         AppTextField(
-          textStyle: context.primaryTextStyle(),
+            textStyle: context.primaryTextStyle(),
             textFieldType: TextFieldType.MULTILINE,
             controller: addressCont,
             maxLines: 3,
@@ -575,7 +575,7 @@ class _BookServiceScreenState extends State<BookServiceScreen> {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: boxDecorationWithRoundedCorners(
-          borderRadius: radius(8), backgroundColor: Color(0xFFE8F3EC)),
+          borderRadius: radius(8), backgroundColor: context.secondaryContainer),
       width: context.width(),
       child: Row(
         children: [
@@ -660,7 +660,7 @@ class _BookServiceScreenState extends State<BookServiceScreen> {
                         padding: const EdgeInsets.symmetric(horizontal: 8),
                         decoration: boxDecorationWithRoundedCorners(
                           borderRadius: radius(4),
-                          backgroundColor: Color(0xFFE8F3EC),
+                          backgroundColor: context.secondaryContainer,
                           border: Border.all(
                             color: context.dividerColor,
                             width: 1,
@@ -721,7 +721,7 @@ class _BookServiceScreenState extends State<BookServiceScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
               decoration: boxDecorationWithRoundedCorners(
                 borderRadius: radius(8),
-                backgroundColor: Color(0xFFE8F3EC),
+                backgroundColor: context.secondaryContainer,
               ),
               child: Row(
                 children: [
@@ -790,7 +790,7 @@ class _BookServiceScreenState extends State<BookServiceScreen> {
           Container(
             padding: const EdgeInsets.all(12),
             width: context.width(),
-            decoration: boxDecorationDefault(color: Color(0xFFE8F3EC)),
+            decoration: boxDecorationDefault(color: context.secondaryContainer),
             child: Column(
               children: [
                 /// Service or Package Price
@@ -1146,7 +1146,7 @@ class _BookServiceScreenState extends State<BookServiceScreen> {
                   alignment: Alignment.topCenter,
                   decoration: boxDecorationWithShadow(
                       blurRadius: 0,
-                      backgroundColor: Color(0xFFE8F3EC),
+                      backgroundColor: context.secondaryContainer,
                       borderRadius: radius(8)),
                   child: Row(
                     children: [
@@ -1162,7 +1162,7 @@ class _BookServiceScreenState extends State<BookServiceScreen> {
                 padding: const EdgeInsets.all(12),
                 decoration: boxDecorationWithShadow(
                     blurRadius: 0,
-                    backgroundColor: Color(0xFFE8F3EC),
+                    backgroundColor: context.secondaryContainer,
                     borderRadius: radius(8)),
                 width: context.width(),
                 child: Row(

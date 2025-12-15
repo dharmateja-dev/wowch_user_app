@@ -81,8 +81,9 @@ class _UpcomingBookingDashboardComponent3State
             Container(
               decoration: boxDecorationRoundedWithShadow(
                 defaultRadius.toInt(),
-                backgroundColor:
-                    appStore.isDarkMode ? Color(0xFFE8F3EC) : primaryLightColor,
+                backgroundColor: appStore.isDarkMode
+                    ? context.secondaryContainer
+                    : primaryLightColor,
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,

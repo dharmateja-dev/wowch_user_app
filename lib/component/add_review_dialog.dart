@@ -2,6 +2,7 @@ import 'package:booking_system_flutter/component/loader_widget.dart';
 import 'package:booking_system_flutter/main.dart';
 import 'package:booking_system_flutter/model/service_detail_response.dart';
 import 'package:booking_system_flutter/network/rest_apis.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -155,7 +156,7 @@ class _AddReviewDialogState extends State<AddReviewDialog> {
                   margin: const EdgeInsets.symmetric(horizontal: 16),
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: Color(0xFFE8F3EC), // Light green background
+                    color: context.secondaryContainer, // Light green background
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Row(
@@ -189,7 +190,7 @@ class _AddReviewDialogState extends State<AddReviewDialog> {
                   margin: const EdgeInsets.symmetric(horizontal: 16),
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: Color(0xFFE8F3EC), // Light green background
+                    color: context.secondaryContainer, // Light green background
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: AppTextField(

@@ -336,7 +336,7 @@ class ProviderInfoScreenState extends State<ProviderInfoScreen> {
                   child: Container(
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      color: Color(0xFFE8F3EC),
+                      color: context.secondaryContainer,
                       shape: BoxShape.circle,
                     ),
                     child: Icon(
@@ -520,7 +520,7 @@ class ProviderInfoScreenState extends State<ProviderInfoScreen> {
             return Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
               decoration: BoxDecoration(
-                color: Color(0xFFE8F3EC),
+                color: context.secondaryContainer,
                 borderRadius: BorderRadius.circular(4),
               ),
               child: Text(
@@ -713,7 +713,7 @@ class ProviderInfoScreenState extends State<ProviderInfoScreen> {
       child: Container(
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: Color(0xFFE8F3EC),
+          color: context.secondaryContainer,
           borderRadius: BorderRadius.circular(8),
         ),
         child: Row(
