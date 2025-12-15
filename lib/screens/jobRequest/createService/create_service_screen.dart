@@ -208,17 +208,24 @@ class _CreateServiceScreenState extends State<CreateServiceScreen> {
         setState(() => formWidgetKey = UniqueKey());
       } else {
         showConfirmDialogCustom(
+          width: 290,
+          height: 80,
           context,
           title: language.confirmationRequestTxt,
           positiveText: language.lblYes,
           negativeText: language.lblNo,
-          primaryColor: primaryColor,
-          positiveTextColor: white,
-          negativeTextColor: context.primaryColor,
-          customCenterWidget: ic_warning.iconImage(
-              size: 70, color: context.primaryColor, context: context),
-          height: 80,
-          width: 290,
+          titleColor: context.dialogTitleColor,
+          backgroundColor: context.dialogBackgroundColor,
+          primaryColor: context.primary,
+          positiveTextColor: context.onPrimary,
+          negativeTextColor: context.dialogCancelColor,
+          customCenterWidget: Image.asset(
+            ic_warning,
+            color: context.dialogIconColor,
+            height: 70,
+            width: 70,
+            fit: BoxFit.cover,
+          ),
           shape: dialogShape(8),
           onAccept: (p0) async {
             await removeEnTranslations();
@@ -448,6 +455,7 @@ class _CreateServiceScreenState extends State<CreateServiceScreen> {
                         decoration: boxDecorationWithRoundedCorners(
                           backgroundColor: context.secondaryContainer,
                           borderRadius: radius(8),
+                          border: Border.all(color: context.greenBorderColor),
                         ),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -458,7 +466,8 @@ class _CreateServiceScreenState extends State<CreateServiceScreen> {
                                 color: primaryColor),
                             8.height,
                             Text(language.lblChooseImage,
-                                style: context.primaryTextStyle()),
+                                style: context.primaryTextStyle(
+                                    color: context.onSecondaryContainer)),
                           ],
                         ).onTap(() async {
                           _showImgPickDialog(context);
@@ -500,14 +509,21 @@ class _CreateServiceScreenState extends State<CreateServiceScreen> {
                                     height: 80,
                                     width: 290,
                                     shape: dialogShape(8),
-                                    positiveTextColor: white,
-                                    negativeTextColor: context.primaryColor,
+                                    positiveTextColor: context.onPrimary,
+                                    backgroundColor:
+                                        context.dialogBackgroundColor,
+                                    titleColor: context.dialogTitleColor,
+                                    negativeTextColor:
+                                        context.dialogCancelColor,
                                     title: language.lblDeleteImageConfirmation,
-                                    customCenterWidget: ic_warning.iconImage(
-                                        context: context,
-                                        size: 70,
-                                        color: context.primaryColor),
-                                    primaryColor: context.primaryColor,
+                                    customCenterWidget: Image.asset(
+                                      ic_warning,
+                                      color: context.dialogIconColor,
+                                      height: 70,
+                                      width: 70,
+                                      fit: BoxFit.cover,
+                                    ),
+                                    primaryColor: context.primary,
                                     onAccept: (p0) {
                                       if (attachmentsArray.any((element) =>
                                           element.url == imageFiles[i].path)) {
@@ -535,14 +551,20 @@ class _CreateServiceScreenState extends State<CreateServiceScreen> {
                                     height: 80,
                                     width: 290,
                                     shape: dialogShape(8),
-                                    positiveTextColor: white,
-                                    negativeTextColor: context.primaryColor,
+                                    positiveTextColor: context.onPrimary,
+                                    negativeTextColor: context.primary,
                                     title: language.lblDeleteImageConfirmation,
-                                    customCenterWidget: ic_warning.iconImage(
-                                        context: context,
-                                        size: 70,
-                                        color: context.primaryColor),
-                                    primaryColor: context.primaryColor,
+                                    customCenterWidget: Image.asset(
+                                      ic_warning,
+                                      color: context.dialogIconColor,
+                                      height: 70,
+                                      width: 70,
+                                      fit: BoxFit.cover,
+                                    ),
+                                    primaryColor: context.primary,
+                                    backgroundColor:
+                                        context.dialogBackgroundColor,
+                                    titleColor: context.dialogTitleColor,
                                     onAccept: (p0) {
                                       imageFiles.removeWhere((element) =>
                                           element.path == imageFiles[i].path);
@@ -566,6 +588,7 @@ class _CreateServiceScreenState extends State<CreateServiceScreen> {
                         decoration: inputDecoration(context,
                             hintText: language.lblEnterCategory,
                             fillColor: context.secondaryContainer,
+                            showBorder: false,
                             borderRadius: 8),
                         hint: Text(language.lblEnterCategory,
                             style: context.secondaryTextStyle()),
@@ -604,6 +627,7 @@ class _CreateServiceScreenState extends State<CreateServiceScreen> {
                         decoration: inputDecoration(context,
                             hintText: language.lblEnterServiceName,
                             fillColor: context.secondaryContainer,
+                            showBorder: false,
                             borderRadius: 8),
                       ),
                       16.height,
@@ -631,6 +655,7 @@ class _CreateServiceScreenState extends State<CreateServiceScreen> {
                         decoration: inputDecoration(context,
                             hintText: language.lblEnterServiceDescription,
                             fillColor: context.secondaryContainer,
+                            showBorder: false,
                             borderRadius: 8),
                         validator: (value) {
                           if (value!.isEmpty) return language.requiredText;

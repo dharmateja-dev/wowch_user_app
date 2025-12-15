@@ -239,17 +239,14 @@ class _CreatePostRequestScreenState extends State<CreatePostRequestScreen> {
                       ],
                     ).paddingAll(16),
                   ),
+                  16.height,
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(language.services,
                           style: context.boldTextStyle(size: LABEL_TEXT_SIZE)),
-                      TextButton(
-                        style: TextButton.styleFrom(
-                          foregroundColor: context.primaryColor,
-                          padding: EdgeInsets.zero,
-                        ),
-                        onPressed: () async {
+                      GestureDetector(
+                        onTap: () async {
                           hideKeyboard(context);
                           bool? res =
                               await CreateServiceScreen().launch(context);
@@ -261,6 +258,7 @@ class _CreatePostRequestScreenState extends State<CreatePostRequestScreen> {
                       ),
                     ],
                   ).paddingOnly(right: 8, left: 16),
+                  8.height,
                   if (myServiceList.isNotEmpty)
                     AnimatedListView(
                       itemCount: myServiceList.length,
@@ -277,7 +275,7 @@ class _CreatePostRequestScreenState extends State<CreatePostRequestScreen> {
                               horizontal: 8, vertical: 6),
                           width: context.width(),
                           decoration: boxDecorationWithRoundedCorners(
-                            backgroundColor: context.fillColor,
+                            backgroundColor: context.secondaryContainer,
                             borderRadius: radius(8),
                           ),
                           child: Row(
@@ -324,8 +322,7 @@ class _CreatePostRequestScreenState extends State<CreatePostRequestScreen> {
                                               side: BorderSide(
                                                 color: context.primaryColor,
                                               )),
-                                          color:
-                                              context.scaffoldBackgroundColor,
+                                          color: context.scaffold,
                                           elevation: 0,
                                           onTap: () {
                                             selectedServiceList.remove(data);
@@ -354,15 +351,29 @@ class _CreatePostRequestScreenState extends State<CreatePostRequestScreen> {
                                         ),
                                   //8.height,
                                   IconButton(
-                                    icon: ic_delete.iconImage(
-                                        size: 18, context: context),
+                                    icon: ic_trash.iconImage(
+                                        size: 20, context: context),
                                     visualDensity: VisualDensity.compact,
                                     onPressed: () {
                                       showConfirmDialogCustom(
+                                        width: 290,
+                                        height: 80,
                                         context,
                                         dialogType: DialogType.DELETE,
                                         positiveText: language.lblDelete,
                                         negativeText: language.lblCancel,
+                                        titleColor: context.dialogTitleColor,
+                                        backgroundColor:
+                                            context.dialogBackgroundColor,
+                                        primaryColor: context.primary,
+                                        negativeTextColor:
+                                            context.dialogCancelColor,
+                                        customCenterWidget: Image.asset(
+                                            ic_warning,
+                                            color: context.dialogIconColor,
+                                            height: 70,
+                                            width: 70,
+                                            fit: BoxFit.cover),
                                         onAccept: (p0) {
                                           deleteService(data);
                                         },
@@ -385,7 +396,8 @@ class _CreatePostRequestScreenState extends State<CreatePostRequestScreen> {
                   30.height,
                   AppButton(
                     child: Text(language.save,
-                        style: context.boldTextStyle(color: white, size: 18)),
+                        style: context.boldTextStyle(
+                            color: context.onPrimary, size: 18)),
                     color: context.primaryColor,
                     height: 52,
                     width: context.width(),
