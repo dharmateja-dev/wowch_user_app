@@ -397,6 +397,7 @@ class _ViewAllServiceScreenState extends State<ViewAllServiceScreen> {
           borderRadius: BorderRadius.circular(8),
         ),
         child: AppTextField(
+          textStyle: context.primaryTextStyle(),
           textFieldType: TextFieldType.OTHER,
           focus: myFocusNode,
           controller: searchCont,

@@ -105,6 +105,7 @@ class _AddHelpDeskScreenState extends State<AddHelpDeskScreen> {
                                   context.boldTextStyle(size: LABEL_TEXT_SIZE)),
                           8.height,
                           AppTextField(
+                            textStyle: context.primaryTextStyle(),
                             controller: subjectCont,
                             focus: subjectFocus,
                             nextFocus: descriptionFocus,
@@ -125,6 +126,7 @@ class _AddHelpDeskScreenState extends State<AddHelpDeskScreen> {
                                   context.boldTextStyle(size: LABEL_TEXT_SIZE)),
                           8.height,
                           AppTextField(
+                            textStyle: context.primaryTextStyle(),
                             textFieldType: TextFieldType.MULTILINE,
                             controller: descriptionCont,
                             focus: descriptionFocus,

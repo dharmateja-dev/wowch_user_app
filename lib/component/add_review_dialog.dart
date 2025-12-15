@@ -193,6 +193,7 @@ class _AddReviewDialogState extends State<AddReviewDialog> {
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: AppTextField(
+                    textStyle: context.primaryTextStyle(),
                     controller: reviewCont,
                     textFieldType: TextFieldType.OTHER,
                     minLines: 5,

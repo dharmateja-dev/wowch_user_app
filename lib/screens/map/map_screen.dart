@@ -237,13 +237,10 @@ class MapScreenState extends State<MapScreen> {
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     AppTextField(
+                      textStyle: context.primaryTextStyle(),  
                       textFieldType: TextFieldType.MULTILINE,
                       controller: destinationAddressController,
                       focus: destinationAddressFocusNode,
-                      textStyle: context.primaryTextStyle(
-                          color: appStore.isDarkMode
-                              ? Colors.white
-                              : Colors.black),
                       decoration: inputDecoration(context,
                               labelText: language.hintAddress)
                           .copyWith(

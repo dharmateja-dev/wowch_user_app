@@ -565,6 +565,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                       style: context.boldTextStyle(size: 14)),
                   8.height,
                   AppTextField(
+                    textStyle: context.primaryTextStyle(),
                     textFieldType: TextFieldType.NAME,
                     controller: fNameCont,
                     focus: fNameFocus,
@@ -584,6 +585,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                       style: context.boldTextStyle(size: 14)),
                   8.height,
                   AppTextField(
+                    textStyle: context.primaryTextStyle(),
                     textFieldType: TextFieldType.NAME,
                     controller: lNameCont,
                     focus: lNameFocus,
@@ -603,6 +605,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                       style: context.boldTextStyle(size: 14)),
                   8.height,
                   AppTextField(
+                    textStyle: context.primaryTextStyle(),
                     textFieldType: TextFieldType.NAME,
                     controller: userNameCont,
                     focus: userNameFocus,
@@ -622,6 +625,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                       style: context.boldTextStyle(size: 14)),
                   8.height,
                   AppTextField(
+                    textStyle: context.primaryTextStyle(),
                     textFieldType: TextFieldType.EMAIL_ENHANCED,
                     controller: emailCont,
                     focus: emailFocus,
@@ -673,6 +677,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                   // ).paddingSymmetric(vertical: 4),
                   10.height,
                   // AppTextField(
+                  //   textStyle: context.primaryTextStyle(),
                   //   textFieldType: isAndroid ? TextFieldType.PHONE : TextFieldType.NAME,
                   //   controller: mobileCont,
                   //   focus: mobileFocus,
@@ -699,6 +704,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                   8.height,
                   // Mobile number text field...
                   AppTextField(
+                    textStyle: context.primaryTextStyle(),
                     textFieldType:
                         isAndroid ? TextFieldType.PHONE : TextFieldType.NAME,
                     controller: mobileCont,
@@ -751,6 +757,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                       style: context.boldTextStyle(size: 14)),
                   8.height,
                   AppTextField(
+                    textStyle: context.primaryTextStyle(),
                     textFieldType: TextFieldType.NAME,
                     controller: countryCont,
                     focus: countryFocus,
@@ -766,6 +773,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                       style: context.boldTextStyle(size: 14)),
                   8.height,
                   AppTextField(
+                    textStyle: context.primaryTextStyle(),
                     textFieldType: TextFieldType.NAME,
                     controller: stateCont,
                     focus: stateFocus,
@@ -781,6 +789,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                       style: context.boldTextStyle(size: 14)),
                   8.height,
                   AppTextField(
+                    textStyle: context.primaryTextStyle(),
                     textFieldType: TextFieldType.NAME,
                     controller: cityCont,
                     focus: cityFocus,
@@ -795,6 +804,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                       style: context.boldTextStyle(size: 14)),
                   8.height,
                   AppTextField(
+                    textStyle: context.primaryTextStyle(),
                     controller: addressCont,
                     textFieldType: TextFieldType.MULTILINE,
                     maxLines: 3,

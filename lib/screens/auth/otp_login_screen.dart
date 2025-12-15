@@ -332,6 +332,7 @@ class _OTPLoginScreenState extends State<OTPLoginScreen> {
               children: [
                 // Mobile number text field...
                 AppTextField(
+                  textStyle: context.primaryTextStyle(),
                   textFieldType:
                       isAndroid ? TextFieldType.PHONE : TextFieldType.NAME,
                   controller: numberController,

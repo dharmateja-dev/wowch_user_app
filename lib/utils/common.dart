@@ -191,13 +191,27 @@ InputDecoration inputDecoration(
   bool? counter,
   String? counterText,
   Color? fillColor,
+  bool showBorder = true,
+  int? hintTextSize,
+  Color? hintTextColor,
 }) {
+  final borderSide = showBorder
+      ? BorderSide(color: context.inputBorderColor, width: 1.0)
+      : BorderSide.none;
+  final focusedBorderSide = showBorder
+      ? BorderSide(color: context.primary, width: 1.0)
+      : BorderSide.none;
+  final errorBorderSide = BorderSide(color: Colors.red, width: 1.0);
+
   return InputDecoration(
     contentPadding: EdgeInsets.only(left: 12, bottom: 8, top: 8, right: 10),
     labelText: labelText,
     labelStyle: context.primaryTextStyle(),
     hintText: hintText,
-    hintStyle: context.secondaryTextStyle(size: 14, color: context.hintColor),
+    hintStyle: context.secondaryTextStyle(
+      size: hintTextSize ?? 14,
+      color: hintTextColor ?? context.hintColor,
+    ),
     alignLabelWithHint: true,
     counterText: counter == false ? "" : counterText,
     prefixIcon: prefixIcon,
@@ -206,29 +220,29 @@ InputDecoration inputDecoration(
     prefix: prefix,
     enabledBorder: OutlineInputBorder(
       borderRadius: radius(borderRadius ?? defaultRadius),
-      borderSide: BorderSide(color: context.inputBorderColor, width: 1.0),
+      borderSide: borderSide,
     ),
     focusedErrorBorder: OutlineInputBorder(
       borderRadius: radius(borderRadius ?? defaultRadius),
-      borderSide: BorderSide(color: Colors.red, width: 1.0),
+      borderSide: errorBorderSide,
     ),
     errorBorder: OutlineInputBorder(
       borderRadius: radius(borderRadius ?? defaultRadius),
-      borderSide: BorderSide(color: Colors.red, width: 1.0),
+      borderSide: errorBorderSide,
     ),
     errorMaxLines: 2,
     border: OutlineInputBorder(
       borderRadius: radius(borderRadius ?? defaultRadius),
-      borderSide: BorderSide(color: context.inputBorderColor, width: 1.0),
+      borderSide: borderSide,
     ),
     disabledBorder: OutlineInputBorder(
       borderRadius: radius(borderRadius ?? defaultRadius),
-      borderSide: BorderSide(color: context.inputBorderColor, width: 1.0),
+      borderSide: borderSide,
     ),
     errorStyle: context.primaryTextStyle(color: Colors.red, size: 11),
     focusedBorder: OutlineInputBorder(
       borderRadius: radius(borderRadius ?? defaultRadius),
-      borderSide: BorderSide(color: context.primary, width: 1.0),
+      borderSide: focusedBorderSide,
     ),
     filled: true,
     fillColor: fillColor ?? context.fillColor,

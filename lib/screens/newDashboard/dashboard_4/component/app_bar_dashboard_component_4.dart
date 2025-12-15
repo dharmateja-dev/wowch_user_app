@@ -225,6 +225,7 @@ class _AppBarDashboardComponent4State extends State<AppBarDashboardComponent4> {
               width: context.width(),
               decoration: boxDecorationDefault(color: context.cardColor),
               child: AppTextField(
+                textStyle: context.primaryTextStyle(),
                 textFieldType: TextFieldType.NAME,
                 readOnly: true,
                 onTap: () {

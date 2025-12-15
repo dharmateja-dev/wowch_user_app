@@ -45,7 +45,7 @@ class AppScaffold extends StatelessWidget {
               leading: leading ??
                   (context.canPop
                       ? BackWidget(
-                          iconColor: context.onPrimary, 
+                          iconColor: context.onPrimary,
                         )
                       : null),
               actions: actions,

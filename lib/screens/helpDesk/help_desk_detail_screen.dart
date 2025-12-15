@@ -282,6 +282,7 @@ class _HelpDeskDetailScreenState extends State<HelpDeskDetailScreen> {
                                                   size: 12)),
                                           4.height,
                                           AppTextField(
+                                            textStyle: context.primaryTextStyle(),
                                             textFieldType:
                                                 TextFieldType.MULTILINE,
                                             controller: descriptionCont,

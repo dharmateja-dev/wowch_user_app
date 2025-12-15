@@ -47,6 +47,7 @@ class _ReasonDialogState extends State<ReasonDialog> {
                     key: formKey,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     child: AppTextField(
+                      textStyle: context.primaryTextStyle(),
                       controller: _textFieldReason,
                       textFieldType: TextFieldType.MULTILINE,
                       decoration: inputDecoration(context,

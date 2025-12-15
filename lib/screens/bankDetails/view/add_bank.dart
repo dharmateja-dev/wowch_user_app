@@ -188,6 +188,7 @@ class _AddBankScreenState extends State<AddBankScreen> {
                         style: context.boldTextStyle(size: 14)),
                     8.height,
                     AppTextField(
+                      textStyle: context.primaryTextStyle(),
                       textFieldType: TextFieldType.NAME,
                       controller: branchNameCont,
                       focus: branchNameFocus,
@@ -203,6 +204,8 @@ class _AddBankScreenState extends State<AddBankScreen> {
                         style: context.boldTextStyle(size: 14)),
                     8.height,
                     AppTextField(
+                  
+                      textStyle: context.primaryTextStyle(),
                       textFieldType: TextFieldType.NAME,
                       controller: accNumberCont,
                       focus: accNumberFocus,
@@ -220,6 +223,7 @@ class _AddBankScreenState extends State<AddBankScreen> {
                         style: context.boldTextStyle(size: 14)),
                     8.height,
                     AppTextField(
+                      textStyle: context.primaryTextStyle(),
                       textFieldType: TextFieldType.NAME,
                       controller: ifscCodeCont,
                       focus: ifscCodeFocus,

@@ -332,6 +332,7 @@ class _BookServiceScreenState extends State<BookServiceScreen> {
                   style: context.boldTextStyle()),
               8.height,
               AppTextField(
+                textStyle: context.primaryTextStyle(),
                 textFieldType: TextFieldType.MULTILINE,
                 controller: descriptionCont,
                 maxLines: 10,
@@ -342,7 +343,7 @@ class _BookServiceScreenState extends State<BookServiceScreen> {
                   context,
                   hintText: language.writeHere,
                   borderRadius: 8,
-                  fillColor: Color(0xFFE8F3EC),
+                  fillColor: context.secondaryContainer,
                 ),
                 testWithoutKeyChatGPT: appConfigurationStore.testWithoutKey,
                 loaderWidgetForChatGPT: const ChatGPTLoadingWidget(),
@@ -360,7 +361,7 @@ class _BookServiceScreenState extends State<BookServiceScreen> {
                   context,
                   hintText: language.writeHere,
                   borderRadius: 8,
-                  fillColor: Color(0xFFE8F3EC),
+                  fillColor: context.secondaryContainer,
                 ).copyWith(
                   enabledBorder:
                       OutlineInputBorder(borderSide: BorderSide.none),
@@ -496,6 +497,7 @@ class _BookServiceScreenState extends State<BookServiceScreen> {
         Text(language.landmark, style: context.boldTextStyle()),
         8.height,
         AppTextField(
+          textStyle: context.primaryTextStyle(),
             textFieldType: TextFieldType.MULTILINE,
             controller: addressCont,
             maxLines: 3,
@@ -506,7 +508,7 @@ class _BookServiceScreenState extends State<BookServiceScreen> {
             decoration: inputDecoration(context,
                 hintText: language.enterYourLocation,
                 borderRadius: 8,
-                fillColor: Color(0xFFE8F3EC),
+                fillColor: context.secondaryContainer,
                 prefixIcon: Align(
                   alignment: Alignment.topLeft,
                   widthFactor: 1.0,

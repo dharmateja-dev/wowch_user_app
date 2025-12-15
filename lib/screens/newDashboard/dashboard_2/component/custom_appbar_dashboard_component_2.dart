@@ -227,6 +227,7 @@ class _CustomAppbarDashboardComponent2State
                 width: context.width(),
                 decoration: boxDecorationDefault(color: context.cardColor),
                 child: AppTextField(
+                  textStyle: context.primaryTextStyle(),
                   textFieldType: TextFieldType.NAME,
                   readOnly: true,
                   onTap: () {

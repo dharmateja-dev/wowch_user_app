@@ -67,8 +67,8 @@ class _FilterDateRangeComponentState extends State<FilterDateRangeComponent> {
         children: [
           16.height,
           AppTextField(
+            textStyle: context.primaryTextStyle(),
             title: language.dateRange,
-            textStyle: context.primaryTextStyle(size: 12),
             controller: dateRangeCont,
             textFieldType: TextFieldType.NAME,
             readOnly: true,

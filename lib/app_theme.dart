@@ -10,7 +10,7 @@ class AppTheme {
 
   // ——— Enhanced brand colors ———
   static const Color primaryColor =
-      LightThemeColors.primaryGreenDark; // Using merged Green
+      LightThemeColors.primary; // Using merged Green
   static const Color onPrimary = Color(0xffffffff);
 
   // ignore: deprecated_member_use

@@ -7,6 +7,7 @@ import 'package:booking_system_flutter/network/rest_apis.dart';
 import 'package:booking_system_flutter/screens/jobRequest/createService/create_service_screen.dart';
 import 'package:booking_system_flutter/utils/common.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/images.dart';
 import 'package:booking_system_flutter/utils/model_keys.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
@@ -29,7 +30,6 @@ class _CreatePostRequestScreenState extends State<CreatePostRequestScreen> {
 
   // Toggle dummy data for UI showcase
   static const bool USE_DUMMY_DATA = true;
-  static const Color _fieldFill = Color(0xFFEAF3EE);
 
   TextEditingController postTitleCont = TextEditingController();
   TextEditingController descriptionCont = TextEditingController();
@@ -166,6 +166,7 @@ class _CreatePostRequestScreenState extends State<CreatePostRequestScreen> {
                             style: context.boldTextStyle()),
                         8.height,
                         AppTextField(
+                          textStyle: context.primaryTextStyle(),
                           controller: postTitleCont,
                           textFieldType: TextFieldType.NAME,
                           errorThisFieldRequired: language.requiredText,
@@ -173,8 +174,9 @@ class _CreatePostRequestScreenState extends State<CreatePostRequestScreen> {
                           decoration: inputDecoration(
                             context,
                             hintText: language.lblEnterJobTitle,
-                            fillColor: Color(0xFFE8F3EC),
+                            fillColor: context.secondaryContainer,
                             borderRadius: 8,
+                            showBorder: false,
                           ),
                         ),
                         //Post Description
@@ -183,6 +185,7 @@ class _CreatePostRequestScreenState extends State<CreatePostRequestScreen> {
                             style: context.boldTextStyle()),
                         8.height,
                         AppTextField(
+                          textStyle: context.primaryTextStyle(),
                           controller: descriptionCont,
                           textFieldType: TextFieldType.MULTILINE,
                           errorThisFieldRequired: language.requiredText,
@@ -193,7 +196,7 @@ class _CreatePostRequestScreenState extends State<CreatePostRequestScreen> {
                           promptFieldInputDecorationChatGPT:
                               inputDecoration(context).copyWith(
                             hintText: language.lblEnterJobDescription,
-                            fillColor: Color(0xFFE8F3EC),
+                            fillColor: context.secondaryContainer,
                             filled: true,
                           ),
                           testWithoutKeyChatGPT:
@@ -202,14 +205,16 @@ class _CreatePostRequestScreenState extends State<CreatePostRequestScreen> {
                           decoration: inputDecoration(
                             context,
                             hintText: language.lblEnterJobDescription,
-                            fillColor: Color(0xFFE8F3EC),
+                            fillColor: context.secondaryContainer,
                             borderRadius: 8,
+                            showBorder: false,
                           ),
                         ),
                         16.height,
                         Text(language.price, style: context.boldTextStyle()),
                         8.height,
                         AppTextField(
+                          textStyle: context.primaryTextStyle(),
                           textFieldType: TextFieldType.PHONE,
                           controller: priceCont,
                           focus: priceFocus,
@@ -217,8 +222,9 @@ class _CreatePostRequestScreenState extends State<CreatePostRequestScreen> {
                           decoration: inputDecoration(
                             context,
                             hintText: language.price,
-                            fillColor: Color(0xFFE8F3EC),
+                            fillColor: context.secondaryContainer,
                             borderRadius: 8,
+                            showBorder: false,
                           ),
                           keyboardType: const TextInputType.numberWithOptions(
                               decimal: true, signed: true),
@@ -271,7 +277,7 @@ class _CreatePostRequestScreenState extends State<CreatePostRequestScreen> {
                               horizontal: 8, vertical: 6),
                           width: context.width(),
                           decoration: boxDecorationWithRoundedCorners(
-                            backgroundColor: _fieldFill,
+                            backgroundColor: context.fillColor,
                             borderRadius: radius(8),
                           ),
                           child: Row(

@@ -120,6 +120,7 @@ class _AirtelMoneyDialogState extends State<AirtelMoneyDialog> {
                                   autovalidateMode:
                                       AutovalidateMode.onUserInteraction,
                                   child: AppTextField(
+                                    textStyle: context.primaryTextStyle(),
                                     controller: _textFieldMSISDN,
                                     textFieldType: TextFieldType.NAME,
                                     decoration: inputDecoration(context,

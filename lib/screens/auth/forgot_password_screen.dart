@@ -86,6 +86,7 @@ class ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 24.height,
                 Observer(
                   builder: (_) => AppTextField(
+                    textStyle: context.primaryTextStyle(),
                     textFieldType: TextFieldType.EMAIL_ENHANCED,
                     controller: emailCont,
                     autoFocus: true,

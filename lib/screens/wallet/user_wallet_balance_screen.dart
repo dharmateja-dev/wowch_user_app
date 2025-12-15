@@ -422,12 +422,11 @@ class _UserWalletBalanceScreenState extends State<UserWalletBalanceScreen> {
                         child: Column(
                           children: [
                             AppTextField(
+                              textStyle: context.primaryTextStyle(),
                               textFieldType: TextFieldType.NUMBER,
                               //  textAlign: TextAlign.center,
                               controller: walletAmountCont,
                               focus: walletAmountFocus,
-                              textStyle:
-                                  context.primaryTextStyle(color: Colors.white),
                               inputFormatters: [
                                 FilteringTextInputFormatter.digitsOnly
                               ],

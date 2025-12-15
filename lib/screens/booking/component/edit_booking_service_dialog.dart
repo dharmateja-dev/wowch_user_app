@@ -173,6 +173,7 @@ class _EditBookingServiceDialogState extends State<EditBookingServiceDialog> {
                         style: context.secondaryTextStyle()),
                     16.height,
                     AppTextField(
+                      textStyle: context.primaryTextStyle(),
                       textFieldType: TextFieldType.OTHER,
                       controller: dateTimeCont,
                       isValidationRequired: true,

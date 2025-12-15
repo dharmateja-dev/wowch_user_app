@@ -542,6 +542,7 @@ class _SignInScreenState extends State<SignInScreen> {
                               style: context.boldTextStyle(size: 14)),
                           8.height,
                           AppTextField(
+                            textStyle: context.primaryTextStyle(),
                             textFieldType: TextFieldType.EMAIL_ENHANCED,
                             controller: emailCont,
                             focus: emailFocus,
@@ -561,6 +562,8 @@ class _SignInScreenState extends State<SignInScreen> {
                               style: context.boldTextStyle(size: 14)),
                           8.height,
                           AppTextField(
+                            
+                            textStyle: context.primaryTextStyle(),
                             textFieldType: TextFieldType.PASSWORD,
                             controller: passwordCont,
                             focus: passwordFocus,

@@ -180,12 +180,17 @@ class _MyPostRequestItemComponentState
                             context,
                             dialogType: DialogType.DELETE,
                             title: language.lblDeletePostJob,
+                            titleColor: context.dialogTitleColor,
+                            backgroundColor: context.dialogBackgroundColor,
                             customCenterWidget: Image.asset(ic_warning,
-                                height: 70, width: 70, fit: BoxFit.cover),
+                                color: context.dialogIconColor,
+                                height: 70,
+                                width: 70,
+                                fit: BoxFit.cover),
                             positiveText: language.lblYes,
                             negativeText: language.lblNo,
                             primaryColor: context.primary,
-                            negativeTextColor: context.primary,
+                            negativeTextColor: context.dialogCancelColor,
                             onAccept: (p0) {
                               ifNotTester(() {
                                 deletePost(widget.data.id.validate());

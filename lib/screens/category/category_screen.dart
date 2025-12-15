@@ -223,6 +223,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
           borderRadius: BorderRadius.circular(8),
         ),
         child: AppTextField(
+          textStyle: context.primaryTextStyle(),
           textFieldType: TextFieldType.OTHER,
           controller: searchController,
           decoration: InputDecoration(

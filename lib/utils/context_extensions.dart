@@ -269,6 +269,17 @@ extension ColorSchemeExtension on BuildContext {
   Color get statusSuccessText =>
       isDarkMode ? const Color(0xFF101D1C) : const Color(0xFF073807);
 
+  // ——— Dialog Colors ———
+  /// Dialog icon color - Light: primary (#2E6B4F), Dark: #93C0AB
+  Color get dialogIconColor => isDarkMode ? primaryContainer : primary;
+
+  /// Dialog title color - Light: #1E1E1E, Dark: #FFFFFF (white)
+  Color get dialogTitleColor =>
+      isDarkMode ? const Color(0xFFE8F5F0) : const Color(0xFF1E1E1E);
+
+  /// Dialog cancel button border & text - Light: primary (#2E6B4F), Dark: #93C0AB
+  Color get dialogCancelColor => isDarkMode ? primaryContainer : primary;
+
   // ══════════════════════════════════════════════════════════════════════════
   // CONVENIENCE HELPERS
   // ══════════════════════════════════════════════════════════════════════════

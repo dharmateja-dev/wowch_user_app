@@ -158,9 +158,9 @@ class _SendFilePreviewScreenState extends State<SendFilePreviewScreen> {
     return Row(
       children: [
         AppTextField(
+          textStyle: context.primaryTextStyle(),
           textFieldType: TextFieldType.OTHER,
           controller: messageCont,
-          textStyle: context.primaryTextStyle(),
           minLines: 1,
           // onFieldSubmitted: (s) {},
           focus: messageFocus,

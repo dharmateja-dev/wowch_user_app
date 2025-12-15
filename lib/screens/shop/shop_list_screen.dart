@@ -129,6 +129,7 @@ class _ShopListScreenState extends State<ShopListScreen> {
             Row(
               children: [
                 AppTextField(
+                  textStyle: context.primaryTextStyle(),
                   textFieldType: TextFieldType.OTHER,
                   focus: searchFocusNode,
                   controller: searchCont,

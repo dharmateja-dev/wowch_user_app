@@ -109,6 +109,7 @@ class _InvoiceRequestDialogComponentState
                 20.height,
                 Observer(
                   builder: (_) => AppTextField(
+                    textStyle: context.primaryTextStyle(),
                     textFieldType: TextFieldType.EMAIL_ENHANCED,
                     controller: emailCont,
                     errorThisFieldRequired: language.requiredText,

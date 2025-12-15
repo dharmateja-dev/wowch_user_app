@@ -161,6 +161,7 @@ class _WithdrawRequestState extends State<WithdrawRequest> {
                       style: context.boldTextStyle(size: 14)),
                   8.height,
                   AppTextField(
+                    textStyle: context.primaryTextStyle(),
                     textFieldType: TextFieldType.NUMBER,
                     controller: amount,
                     focus: amountFocus,

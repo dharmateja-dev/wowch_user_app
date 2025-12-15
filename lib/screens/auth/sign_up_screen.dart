@@ -282,6 +282,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         8.height,
         //First Name
         AppTextField(
+          textStyle: context.primaryTextStyle(),
           textFieldType: TextFieldType.NAME,
           controller: fNameCont,
           focus: fNameFocus,
@@ -296,6 +297,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         8.height,
         //Last Name
         AppTextField(
+          textStyle: context.primaryTextStyle(),
           textFieldType: TextFieldType.NAME,
           controller: lNameCont,
           focus: lNameFocus,
@@ -309,6 +311,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         Text(language.lblUserName, style: context.boldTextStyle(size: 14)),
         8.height,
         AppTextField(
+          textStyle: context.primaryTextStyle(),
           textFieldType: TextFieldType.USERNAME,
           controller: userNameCont,
           focus: userNameFocus,
@@ -323,6 +326,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         Text(language.lblEmail, style: context.boldTextStyle(size: 14)),
         8.height,
         AppTextField(
+          textStyle: context.primaryTextStyle(),
           textFieldType: TextFieldType.EMAIL_ENHANCED,
           controller: emailCont,
           focus: emailFocus,
@@ -338,6 +342,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         8.height,
         // Mobile number text field...
         AppTextField(
+          textStyle: context.primaryTextStyle(),
           textFieldType: isAndroid ? TextFieldType.PHONE : TextFieldType.NAME,
           controller: mobileCont,
           focus: mobileFocus,
@@ -401,6 +406,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   style: context.boldTextStyle(size: 14)),
               8.height,
               AppTextField(
+                textStyle: context.primaryTextStyle(),
                 textFieldType: TextFieldType.PASSWORD,
                 controller: passwordCont,
                 focus: passwordFocus,

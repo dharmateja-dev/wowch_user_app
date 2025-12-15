@@ -43,8 +43,8 @@ class NewJobRequestComponent extends StatelessWidget {
               if (appStore.isLoggedIn) {
                 MyPostRequestListScreen().launch(context);
               } else {
-                setStatusBarColor(Colors.white,
-                    statusBarIconBrightness: Brightness.dark);
+                setStatusBarColor(Colors.transparent,
+                    statusBarIconBrightness: context.statusBarBrightness);
                 bool? res = await const SignInScreen(returnExpected: true)
                     .launch(context);
 

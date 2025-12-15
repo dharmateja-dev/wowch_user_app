@@ -595,6 +595,7 @@ class _CreateServiceScreenState extends State<CreateServiceScreen> {
                           style: context.boldTextStyle()),
                       8.height,
                       AppTextField(
+                        textStyle: context.primaryTextStyle(),
                         controller: serviceNameCont,
                         textFieldType: TextFieldType.NAME,
                         nextFocus: descriptionFocus,
@@ -610,6 +611,7 @@ class _CreateServiceScreenState extends State<CreateServiceScreen> {
                           style: context.boldTextStyle()),
                       8.height,
                       AppTextField(
+                        textStyle: context.primaryTextStyle(),
                         controller: descriptionCont,
                         textFieldType: TextFieldType.MULTILINE,
                         errorThisFieldRequired: language.requiredText,

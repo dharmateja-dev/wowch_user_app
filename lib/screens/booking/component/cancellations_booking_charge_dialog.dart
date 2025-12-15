@@ -120,6 +120,7 @@ class _CancellationsBookingChargeDialogState
                             autovalidateMode:
                                 AutovalidateMode.onUserInteraction,
                             child: AppTextField(
+                              textStyle: context.primaryTextStyle(),
                               controller: _textFieldReason,
                               textFieldType: TextFieldType.MULTILINE,
                               decoration: inputDecoration(context,

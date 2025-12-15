@@ -118,6 +118,7 @@ class _SearchServiceScreenState extends State<SearchServiceScreen> {
                 child: Row(
                   children: [
                     AppTextField(
+                      textStyle: context.primaryTextStyle(),
                       textFieldType: TextFieldType.OTHER,
                       focus: searchFocusNode,
                       controller: searchCont,

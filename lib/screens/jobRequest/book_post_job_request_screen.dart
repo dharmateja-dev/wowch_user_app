@@ -285,6 +285,7 @@ class _BookPostJobRequestScreenState extends State<BookPostJobRequestScreen> {
                           style: context.boldTextStyle(size: LABEL_TEXT_SIZE)),
                       8.height,
                       AppTextField(
+                        textStyle: context.primaryTextStyle(),
                         textFieldType: TextFieldType.OTHER,
                         controller: dateTimeCont,
                         isValidationRequired: true,
@@ -312,6 +313,7 @@ class _BookPostJobRequestScreenState extends State<BookPostJobRequestScreen> {
                           style: context.boldTextStyle(size: LABEL_TEXT_SIZE)),
                       8.height,
                       AppTextField(
+                        textStyle: context.primaryTextStyle(),
                         textFieldType: TextFieldType.MULTILINE,
                         controller: addressCont,
                         onChanged: (s) {

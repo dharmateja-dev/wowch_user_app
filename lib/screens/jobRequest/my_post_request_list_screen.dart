@@ -81,6 +81,97 @@ class _MyPostRequestListScreenState extends State<MyPostRequestListScreen> {
           ])
         ],
       ),
+      PostJobData(
+        id: 3,
+        title: 'Nurses',
+        price: 600,
+        jobPrice: 60,
+        status: JOB_REQUEST_STATUS_REQUESTED,
+        createdAt: '2025-06-10 09:15:00',
+        service: [
+          ServiceData(attachments: [
+            'https://images.pexels.com/photos/3985166/pexels-photo-3985166.jpeg?auto=compress&cs=tinysrgb&w=800'
+          ])
+        ],
+      ),
+      PostJobData(
+        id: 3,
+        title: 'Nurses',
+        price: 600,
+        jobPrice: 60,
+        status: JOB_REQUEST_STATUS_REQUESTED,
+        createdAt: '2025-06-10 09:15:00',
+        service: [
+          ServiceData(attachments: [
+            'https://images.pexels.com/photos/3985166/pexels-photo-3985166.jpeg?auto=compress&cs=tinysrgb&w=800'
+          ])
+        ],
+      ),
+      PostJobData(
+        id: 3,
+        title: 'Nurses',
+        price: 600,
+        jobPrice: 60,
+        status: JOB_REQUEST_STATUS_REQUESTED,
+        createdAt: '2025-06-10 09:15:00',
+        service: [
+          ServiceData(attachments: [
+            'https://images.pexels.com/photos/3985166/pexels-photo-3985166.jpeg?auto=compress&cs=tinysrgb&w=800'
+          ])
+        ],
+      ),
+      PostJobData(
+        id: 3,
+        title: 'Nurses',
+        price: 600,
+        jobPrice: 60,
+        status: JOB_REQUEST_STATUS_REQUESTED,
+        createdAt: '2025-06-10 09:15:00',
+        service: [
+          ServiceData(attachments: [
+            'https://images.pexels.com/photos/3985166/pexels-photo-3985166.jpeg?auto=compress&cs=tinysrgb&w=800'
+          ])
+        ],
+      ),
+      PostJobData(
+        id: 3,
+        title: 'Nurses',
+        price: 600,
+        jobPrice: 60,
+        status: JOB_REQUEST_STATUS_REQUESTED,
+        createdAt: '2025-06-10 09:15:00',
+        service: [
+          ServiceData(attachments: [
+            'https://images.pexels.com/photos/3985166/pexels-photo-3985166.jpeg?auto=compress&cs=tinysrgb&w=800'
+          ])
+        ],
+      ),
+      PostJobData(
+        id: 3,
+        title: 'Nurses',
+        price: 600,
+        jobPrice: 60,
+        status: JOB_REQUEST_STATUS_REQUESTED,
+        createdAt: '2025-06-10 09:15:00',
+        service: [
+          ServiceData(attachments: [
+            'https://images.pexels.com/photos/3985166/pexels-photo-3985166.jpeg?auto=compress&cs=tinysrgb&w=800'
+          ])
+        ],
+      ),
+      PostJobData(
+        id: 3,
+        title: 'Nurses',
+        price: 600,
+        jobPrice: 60,
+        status: JOB_REQUEST_STATUS_REQUESTED,
+        createdAt: '2025-06-10 09:15:00',
+        service: [
+          ServiceData(attachments: [
+            'https://images.pexels.com/photos/3985166/pexels-photo-3985166.jpeg?auto=compress&cs=tinysrgb&w=800'
+          ])
+        ],
+      ),
     ];
   }
 

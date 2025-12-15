@@ -94,6 +94,7 @@ class ChangePasswordScreenState extends State<ChangePasswordScreen> {
               Text(language.hintOldPasswordTxt, style: context.boldTextStyle()),
               8.height,
               AppTextField(
+                textStyle: context.primaryTextStyle(),
                 textFieldType: TextFieldType.PASSWORD,
                 controller: oldPasswordCont,
                 focus: oldPasswordFocus,
@@ -120,6 +121,7 @@ class ChangePasswordScreenState extends State<ChangePasswordScreen> {
               Text(language.hintNewPasswordTxt, style: context.boldTextStyle()),
               8.height,
               AppTextField(
+                textStyle: context.primaryTextStyle(),
                 textFieldType: TextFieldType.PASSWORD,
                 controller: newPasswordCont,
                 focus: newPasswordFocus,
@@ -147,6 +149,7 @@ class ChangePasswordScreenState extends State<ChangePasswordScreen> {
                   style: context.boldTextStyle()),
               8.height,
               AppTextField(
+                textStyle: context.primaryTextStyle(),
                 textFieldType: TextFieldType.PASSWORD,
                 controller: reenterPasswordCont,
                 obscureText: true,
