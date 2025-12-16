@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:booking_system_flutter/component/base_scaffold_widget.dart';
 import 'package:booking_system_flutter/main.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
 import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
@@ -184,7 +185,7 @@ class _AddHelpDeskScreenState extends State<AddHelpDeskScreen> {
                     color: appStore.isLoading
                         ? primaryColor.withValues(alpha: 0.5)
                         : primaryColor,
-                    textStyle: context.boldTextStyle(color: white),
+                    textStyle: context.boldTextStyle(color: context.onPrimary),
                     width: context.width() - context.navigationBarHeight,
                     onTap: appStore.isLoading
                         ? () {}

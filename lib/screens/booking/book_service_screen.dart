@@ -16,6 +16,7 @@ import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/images.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
 import 'package:booking_system_flutter/utils/text_styles.dart';
+import 'package:booking_system_flutter/utils/theme_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -306,8 +307,8 @@ class _BookServiceScreenState extends State<BookServiceScreen> {
         widget.selectedPackage == null
             ? language.bookTheService
             : language.bookPackage,
-        textColor: Colors.white,
-        color: context.primaryColor,
+        textColor: context.onPrimary,
+        color: context.primary,
         backWidget: BackWidget(),
       ),
       body: Body(
@@ -332,49 +333,39 @@ class _BookServiceScreenState extends State<BookServiceScreen> {
                   style: context.boldTextStyle()),
               8.height,
               AppTextField(
-                textStyle: context.primaryTextStyle(),
-                textFieldType: TextFieldType.MULTILINE,
-                controller: descriptionCont,
-                maxLines: 10,
-                minLines: 3,
-                isValidationRequired: false,
-                enableChatGPT: appConfigurationStore.chatGPTStatus,
-                promptFieldInputDecorationChatGPT: inputDecoration(
-                  context,
-                  hintText: language.writeHere,
-                  borderRadius: 8,
-                  fillColor: context.secondaryContainer,
-                ),
-                testWithoutKeyChatGPT: appConfigurationStore.testWithoutKey,
-                loaderWidgetForChatGPT: const ChatGPTLoadingWidget(),
-                onFieldSubmitted: (s) {
-                  widget.data.serviceDetail!.bookingDescription = s;
-                },
-                onChanged: (s) {
-                  widget.data.serviceDetail!.bookingDescription = s;
-                },
-                suffix: Icon(
-                  Icons.mode_edit_outline_outlined,
-                  size: 18,
-                ),
-                decoration: inputDecoration(
-                  context,
-                  hintText: language.writeHere,
-                  borderRadius: 8,
-                  fillColor: context.secondaryContainer,
-                ).copyWith(
-                  enabledBorder:
-                      OutlineInputBorder(borderSide: BorderSide.none),
-                  disabledBorder:
-                      OutlineInputBorder(borderSide: BorderSide.none),
-                  focusedBorder:
-                      OutlineInputBorder(borderSide: BorderSide.none),
-                  border: OutlineInputBorder(borderSide: BorderSide.none),
-                  errorBorder: OutlineInputBorder(borderSide: BorderSide.none),
-                  focusedErrorBorder:
-                      OutlineInputBorder(borderSide: BorderSide.none),
-                ),
-              ),
+                  textStyle: context.primaryTextStyle(),
+                  textFieldType: TextFieldType.MULTILINE,
+                  controller: descriptionCont,
+                  maxLines: 10,
+                  minLines: 3,
+                  isValidationRequired: false,
+                  enableChatGPT: appConfigurationStore.chatGPTStatus,
+                  promptFieldInputDecorationChatGPT: inputDecoration(
+                    context,
+                    hintText: language.writeHere,
+                    borderRadius: 8,
+                    fillColor: context.secondaryContainer,
+                  ),
+                  testWithoutKeyChatGPT: appConfigurationStore.testWithoutKey,
+                  loaderWidgetForChatGPT: const ChatGPTLoadingWidget(),
+                  onFieldSubmitted: (s) {
+                    widget.data.serviceDetail!.bookingDescription = s;
+                  },
+                  onChanged: (s) {
+                    widget.data.serviceDetail!.bookingDescription = s;
+                  },
+                  suffix: Icon(
+                    Icons.mode_edit_outline_outlined,
+                    size: 18,
+                  ),
+                  decoration: inputDecoration(
+                    context,
+                    hintText: language.writeHere,
+                    hintTextColor: context.onSecondaryContainer,
+                    borderRadius: 8,
+                    fillColor: context.secondaryContainer,
+                    showBorder: false,
+                  )),
 
               /// Only active status package display
               if (serviceAddonStore.selectedServiceAddon.validate().isNotEmpty)
@@ -424,7 +415,7 @@ class _BookServiceScreenState extends State<BookServiceScreen> {
                             widget.data.serviceDetail!.isFixedService
                         ? language.advancePayment
                         : language.confirm,
-                    textColor: Colors.white,
+                    textColor: context.onPrimary,
                     onTap: () {
                       if (widget.data.serviceDetail!.isOnSiteService &&
                           addressCont.text.isEmpty &&
@@ -507,8 +498,10 @@ class _BookServiceScreenState extends State<BookServiceScreen> {
             },
             decoration: inputDecoration(context,
                 hintText: language.enterYourLocation,
+                hintTextColor: context.onSecondaryContainer,
                 borderRadius: 8,
                 fillColor: context.secondaryContainer,
+                showBorder: false,
                 prefixIcon: Align(
                   alignment: Alignment.topLeft,
                   widthFactor: 1.0,
@@ -516,15 +509,7 @@ class _BookServiceScreenState extends State<BookServiceScreen> {
                   child: ic_location
                       .iconImage(context: context, size: 18)
                       .paddingAll(14),
-                )).copyWith(
-              enabledBorder: OutlineInputBorder(borderSide: BorderSide.none),
-              disabledBorder: OutlineInputBorder(borderSide: BorderSide.none),
-              focusedBorder: OutlineInputBorder(borderSide: BorderSide.none),
-              border: OutlineInputBorder(borderSide: BorderSide.none),
-              errorBorder: OutlineInputBorder(borderSide: BorderSide.none),
-              focusedErrorBorder:
-                  OutlineInputBorder(borderSide: BorderSide.none),
-            )),
+                ))),
         8.height,
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -599,7 +584,7 @@ class _BookServiceScreenState extends State<BookServiceScreen> {
                     Expanded(
                       child: Text(
                         widget.data.serviceDetail!.name.validate(),
-                        style: context.boldTextStyle(),
+                        style: context.boldTextStyle(size: 16),
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -607,7 +592,7 @@ class _BookServiceScreenState extends State<BookServiceScreen> {
                     Text(
                       language.speciallyAbled,
                       style: context.boldTextStyle(
-                          color: context.primary, size: 12),
+                          color: context.primary, size: 14),
                     ),
                   ],
                 ),
@@ -623,7 +608,7 @@ class _BookServiceScreenState extends State<BookServiceScreen> {
                       convertToHourMinute(
                           widget.data.serviceDetail!.duration.validate()),
                       style: context.boldTextStyle(
-                          color: context.primary, size: 14),
+                          color: context.primary, size: 16),
                     ),
                   ],
                 ),
@@ -634,6 +619,7 @@ class _BookServiceScreenState extends State<BookServiceScreen> {
                   children: [
                     PriceWidget(
                       price: widget.data.serviceDetail!.price.validate(),
+                      color: context.onSurface,
                       size: 14,
                     ),
                     if (widget.data.serviceDetail!.discount.validate() > 0) ...[
@@ -643,7 +629,7 @@ class _BookServiceScreenState extends State<BookServiceScreen> {
                             .validate(),
                         size: 12,
                         isLineThroughEnabled: true,
-                        color: textSecondaryColorGlobal,
+                        color: context.onSurface,
                       ),
                       6.width,
                       Text(
@@ -726,17 +712,17 @@ class _BookServiceScreenState extends State<BookServiceScreen> {
               child: Row(
                 children: [
                   Container(
-                    width: 24,
-                    height: 24,
+                    width: 25,
+                    height: 25,
                     decoration: BoxDecoration(
-                      color: Colors.lightGreen,
+                      color: LightThemeColors.primaryGreenLite,
                       shape: BoxShape.circle,
                     ),
                     child: Center(
                       child: Text(
                         '%',
                         style: context.boldTextStyle(
-                            color: Colors.white, size: 12),
+                            color: context.onPrimary, size: 12),
                       ),
                     ),
                   ),
@@ -747,19 +733,22 @@ class _BookServiceScreenState extends State<BookServiceScreen> {
                     onTap: () {
                       if (appliedCouponData != null) {
                         showConfirmDialogCustom(
-                          height: 75,
+                          height: 80,
                           width: 290,
                           context,
+                          backgroundColor: context.dialogBackgroundColor,
                           title: language.doYouWantTo,
                           positiveText: language.lblYes,
                           negativeText: language.lblNo,
                           dialogType: DialogType.DELETE,
-                          primaryColor: context.primaryColor,
-                          negativeTextColor: context.primaryColor,
+                          primaryColor: context.primary,
+                          titleColor: context.dialogTitleColor,
+                          negativeTextColor: context.dialogCancelColor,
                           customCenterWidget: Image.asset(
                             ic_warning,
                             height: 70,
                             width: 70,
+                            color: context.dialogIconColor,
                             fit: BoxFit.cover,
                           ),
                           onAccept: (p0) {
@@ -803,7 +792,7 @@ class _BookServiceScreenState extends State<BookServiceScreen> {
                     if (widget.selectedPackage != null)
                       PriceWidget(
                           price: bookingAmountModel.finalTotalServicePrice,
-                          color: textPrimaryColorGlobal,
+                          color: context.onSurface,
                           currencySymbol: "₹",
                           isBoldText: true)
                     else if (!widget.data.serviceDetail!.isHourlyService)
@@ -813,14 +802,14 @@ class _BookServiceScreenState extends State<BookServiceScreen> {
                             currencySymbol: "₹",
                             isBoldText: true,
                             price: bookingAmountModel.finalTotalServicePrice,
-                            color: textPrimaryColorGlobal),
+                            color: context.onSurface),
                       )
                     else
                       PriceWidget(
                           price: bookingAmountModel.finalTotalServicePrice,
                           size: 12,
                           currencySymbol: "₹",
-                          color: textPrimaryColorGlobal,
+                          color: context.onSurface,
                           isBoldText: true)
                   ],
                 ),
@@ -832,7 +821,7 @@ class _BookServiceScreenState extends State<BookServiceScreen> {
                     children: [
                       Divider(
                         height: 26,
-                        color: context.dividerColor,
+                        color: context.dividerOnSecondaryContainerColor,
                         thickness: 0.5,
                       ),
                       Row(
@@ -842,14 +831,14 @@ class _BookServiceScreenState extends State<BookServiceScreen> {
                           Text(
                             " (${widget.data.serviceDetail!.discount.validate()}% ${language.lblOff.toLowerCase()})",
                             style: context.boldTextStyle(
-                                color: Colors.green, size: 12),
+                                color: context.primary, size: 12),
                           ).expand(),
                           16.width,
                           PriceWidget(
                             size: 12,
                             currencySymbol: "₹",
                             price: bookingAmountModel.finalDiscountAmount,
-                            color: Colors.green,
+                            color: context.primary,
                             isBoldText: true,
                           ),
                         ],
@@ -864,7 +853,7 @@ class _BookServiceScreenState extends State<BookServiceScreen> {
                       if (appliedCouponData != null)
                         Divider(
                           height: 26,
-                          color: context.dividerColor,
+                          color: context.dividerOnSecondaryContainerColor,
                           thickness: 0.5,
                         ),
                       if (appliedCouponData != null)
@@ -891,7 +880,7 @@ class _BookServiceScreenState extends State<BookServiceScreen> {
                               currencySymbol: "₹",
                               price:
                                   bookingAmountModel.finalCouponDiscountAmount,
-                              color: Colors.green,
+                              color: context.primary,
                               isBoldText: true,
                             ),
                           ],
@@ -908,7 +897,7 @@ class _BookServiceScreenState extends State<BookServiceScreen> {
                     children: [
                       Divider(
                         height: 26,
-                        color: context.dividerColor,
+                        color: context.dividerOnSecondaryContainerColor,
                         thickness: 0.5,
                       ),
                       ...serviceAddonStore.selectedServiceAddon
@@ -923,7 +912,7 @@ class _BookServiceScreenState extends State<BookServiceScreen> {
                                   16.width,
                                   PriceWidget(
                                       price: a.price.validate(),
-                                      color: textPrimaryColorGlobal,
+                                      color: context.onSurface,
                                       isBoldText: false,
                                       size: 12,
                                       currencySymbol: "₹"),
@@ -940,7 +929,7 @@ class _BookServiceScreenState extends State<BookServiceScreen> {
                           16.width,
                           PriceWidget(
                             price: bookingAmountModel.finalServiceAddonAmount,
-                            color: textPrimaryColorGlobal,
+                            color: context.onSurface,
                             currencySymbol: "₹",
                             isBoldText: true,
                             size: 12,
@@ -956,7 +945,7 @@ class _BookServiceScreenState extends State<BookServiceScreen> {
                     children: [
                       Divider(
                         height: 26,
-                        color: context.dividerColor,
+                        color: context.dividerOnSecondaryContainerColor,
                         thickness: 0.5,
                       ),
                       Row(
@@ -968,7 +957,7 @@ class _BookServiceScreenState extends State<BookServiceScreen> {
                           16.width,
                           PriceWidget(
                             price: bookingAmountModel.finalSubTotal,
-                            color: textPrimaryColorGlobal,
+                            color: context.onSurface,
                             currencySymbol: "₹",
                             isBoldText: true,
                             size: 12,
@@ -983,7 +972,7 @@ class _BookServiceScreenState extends State<BookServiceScreen> {
                   children: [
                     Divider(
                       height: 26,
-                      color: context.dividerColor,
+                      color: context.dividerOnSecondaryContainerColor,
                       thickness: 0.5,
                     ),
                     Row(
@@ -999,6 +988,8 @@ class _BookServiceScreenState extends State<BookServiceScreen> {
                                   .onTap(
                                 () {
                                   showModalBottomSheet(
+                                    backgroundColor:
+                                        context.bottomSheetBackgroundColor,
                                     context: context,
                                     builder: (_) {
                                       return AppliedTaxListBottomSheet(
@@ -1014,7 +1005,7 @@ class _BookServiceScreenState extends State<BookServiceScreen> {
                         16.width,
                         PriceWidget(
                             price: bookingAmountModel.finalTotalTax,
-                            color: Colors.red,
+                            color: context.onSurface,
                             isBoldText: true,
                             size: 12,
                             currencySymbol: "₹"),
@@ -1028,7 +1019,7 @@ class _BookServiceScreenState extends State<BookServiceScreen> {
                   children: [
                     Divider(
                       height: 26,
-                      color: context.dividerColor,
+                      color: context.dividerOnSecondaryContainerColor,
                       thickness: 0.5,
                     ),
                     Row(
@@ -1057,7 +1048,7 @@ class _BookServiceScreenState extends State<BookServiceScreen> {
                     children: [
                       Divider(
                         height: 26,
-                        color: context.dividerColor,
+                        color: context.dividerOnSecondaryContainerColor,
                         thickness: 0.5,
                       ),
                       Row(
@@ -1069,7 +1060,7 @@ class _BookServiceScreenState extends State<BookServiceScreen> {
                               Text(
                                   " (${widget.data.serviceDetail!.advancePaymentPercentage.validate().toString()}%)  ",
                                   style: context.boldTextStyle(
-                                      color: Colors.green)),
+                                      color: context.primary)),
                             ],
                           ).expand(),
                           PriceWidget(
@@ -1151,7 +1142,9 @@ class _BookServiceScreenState extends State<BookServiceScreen> {
                   child: Row(
                     children: [
                       Text(language.chooseDateTime,
-                          style: context.secondaryTextStyle()),
+                          style: context.primaryTextStyle(
+                            color: context.onSecondaryContainer,
+                          )),
                       Spacer(),
                       ic_calendar.iconImage(size: 18, context: context),
                     ],
@@ -1217,7 +1210,7 @@ class _BookServiceScreenState extends State<BookServiceScreen> {
           16.height,
           Container(
             padding: const EdgeInsets.all(16),
-            decoration: boxDecorationDefault(color: context.cardColor),
+            decoration: boxDecorationDefault(color: context.secondaryContainer),
             width: context.width(),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -1286,9 +1279,8 @@ class _BookServiceScreenState extends State<BookServiceScreen> {
               onPressed: () async {
                 await showModalBottomSheet(
                   context: context,
-                  backgroundColor: context.scaffoldBackgroundColor,
-                  barrierColor:
-                      appStore.isDarkMode ? Colors.white10 : Colors.black26,
+                  backgroundColor: context.bottomSheetBackgroundColor,
+                  barrierColor: context.onSurface.withValues(alpha: 0.5),
                   showDragHandle: true,
                   constraints:
                       BoxConstraints(maxHeight: context.height() * 0.9),
@@ -1322,10 +1314,8 @@ class _BookServiceScreenState extends State<BookServiceScreen> {
         Container(
           padding: EdgeInsets.all(16),
           decoration: boxDecorationDefault(
-            color: context.cardColor,
-            border: appStore.isDarkMode
-                ? Border.all(color: context.dividerColor)
-                : null,
+            color: context.secondaryContainer,
+            border: Border.all(color: context.dividerOnSecondaryContainerColor),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -1338,7 +1328,7 @@ class _BookServiceScreenState extends State<BookServiceScreen> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
                       border: Border.all(
-                        color: primaryColor.withValues(alpha: 0.3),
+                        color: context.dividerOnSecondaryContainerColor,
                         width: 2,
                       ),
                     ),
@@ -1398,10 +1388,7 @@ class _BookServiceScreenState extends State<BookServiceScreen> {
                           Text(
                             '${language.email}:',
                             style: context.boldTextStyle(
-                                size: 12,
-                                color: appStore.isDarkMode
-                                    ? textSecondaryColor
-                                    : textPrimaryColor),
+                                size: 12, color: context.onSecondaryContainer),
                           ).expand(),
                           8.width,
                           Expanded(
@@ -1414,9 +1401,7 @@ class _BookServiceScreenState extends State<BookServiceScreen> {
                                 selectedShop!.email.validate(),
                                 style: context.boldTextStyle(
                                     size: 12,
-                                    color: appStore.isDarkMode
-                                        ? white
-                                        : textSecondaryColor,
+                                    color: context.onSecondaryContainer,
                                     weight: FontWeight.w400),
                               ),
                             ),
@@ -1433,10 +1418,7 @@ class _BookServiceScreenState extends State<BookServiceScreen> {
                           Text(
                             language.mobile,
                             style: context.boldTextStyle(
-                                size: 12,
-                                color: appStore.isDarkMode
-                                    ? textSecondaryColor
-                                    : textPrimaryColor),
+                                size: 12, color: context.onSecondaryContainer),
                           ).expand(),
                           8.width,
                           Expanded(
@@ -1450,9 +1432,7 @@ class _BookServiceScreenState extends State<BookServiceScreen> {
                                 selectedShop!.contactNumber.validate(),
                                 style: context.boldTextStyle(
                                     size: 12,
-                                    color: appStore.isDarkMode
-                                        ? white
-                                        : textSecondaryColor,
+                                    color: context.onSecondaryContainer,
                                     weight: FontWeight.w400),
                               ),
                             ),
@@ -1471,10 +1451,7 @@ class _BookServiceScreenState extends State<BookServiceScreen> {
                         Text(
                           '${language.hintAddress}:',
                           style: context.boldTextStyle(
-                              size: 12,
-                              color: appStore.isDarkMode
-                                  ? textSecondaryColor
-                                  : textPrimaryColor),
+                              size: 12, color: context.onSecondaryContainer),
                         ).expand(),
                         8.width,
                         Expanded(
@@ -1494,9 +1471,7 @@ class _BookServiceScreenState extends State<BookServiceScreen> {
                               "${selectedShop!.address}, ${selectedShop!.cityName}, ${selectedShop!.stateName}, ${selectedShop!.countryName}",
                               style: context.boldTextStyle(
                                   size: 12,
-                                  color: appStore.isDarkMode
-                                      ? white
-                                      : textSecondaryColor,
+                                  color: context.onSecondaryContainer,
                                   weight: FontWeight.w400),
                               softWrap: true,
                             ),

@@ -497,8 +497,8 @@ class _CreateServiceScreenState extends State<CreateServiceScreen> {
                                     backgroundColor: primaryColor),
                                 margin: const EdgeInsets.only(right: 8, top: 4),
                                 padding: const EdgeInsets.all(4),
-                                child: const Icon(Icons.close,
-                                    size: 16, color: white),
+                                child: Icon(Icons.close,
+                                    size: 16, color: context.primary),
                               ).onTap(() {
                                 if (imageFiles[i].path.startsWith("https")) {
                                   showConfirmDialogCustom(
@@ -626,6 +626,7 @@ class _CreateServiceScreenState extends State<CreateServiceScreen> {
                         isValidationRequired: checkValidationLanguage(),
                         decoration: inputDecoration(context,
                             hintText: language.lblEnterServiceName,
+                            hintTextColor: context.onSecondaryContainer,
                             fillColor: context.secondaryContainer,
                             showBorder: false,
                             borderRadius: 8),
@@ -654,6 +655,7 @@ class _CreateServiceScreenState extends State<CreateServiceScreen> {
                         loaderWidgetForChatGPT: const ChatGPTLoadingWidget(),
                         decoration: inputDecoration(context,
                             hintText: language.lblEnterServiceDescription,
+                            hintTextColor: context.onSecondaryContainer,
                             fillColor: context.secondaryContainer,
                             showBorder: false,
                             borderRadius: 8),

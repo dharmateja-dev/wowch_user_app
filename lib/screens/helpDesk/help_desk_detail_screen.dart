@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:booking_system_flutter/component/base_scaffold_widget.dart';
 import 'package:booking_system_flutter/component/loader_widget.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -282,7 +283,8 @@ class _HelpDeskDetailScreenState extends State<HelpDeskDetailScreen> {
                                                   size: 12)),
                                           4.height,
                                           AppTextField(
-                                            textStyle: context.primaryTextStyle(),
+                                            textStyle:
+                                                context.primaryTextStyle(),
                                             textFieldType:
                                                 TextFieldType.MULTILINE,
                                             controller: descriptionCont,
@@ -369,6 +371,10 @@ class _HelpDeskDetailScreenState extends State<HelpDeskDetailScreen> {
                                         horizontal: 16, vertical: 12),
                                     onTap: () {
                                       showConfirmDialogCustom(
+                                        height: 80,
+                                        width: 90,
+                                        backgroundColor:
+                                            context.dialogBackgroundColor,
                                         context,
                                         title:
                                             language.doYouWantClosedThisQuery,
@@ -377,6 +383,10 @@ class _HelpDeskDetailScreenState extends State<HelpDeskDetailScreen> {
                                         negativeText: language.lblNo,
                                         dialogType: DialogType.CONFIRMATION,
                                         primaryColor: primaryColor,
+                                        titleColor:
+                                            context.onSecondaryContainer,
+                                        negativeTextColor:
+                                            context.onSecondaryContainer,
                                         onAccept: (p0) async {
                                           appStore.setLoading(true);
                                           helpDeskClosed(

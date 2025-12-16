@@ -307,7 +307,7 @@ class ProviderInfoScreenState extends State<ProviderInfoScreen> {
             height: 200,
             width: context.width(),
             decoration: BoxDecoration(
-              color: context.primaryColor,
+              color: context.primary,
               borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(16),
                 bottomRight: Radius.circular(16),
@@ -318,7 +318,7 @@ class ProviderInfoScreenState extends State<ProviderInfoScreen> {
         margin: const EdgeInsets.all(16),
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: Color(0xffF2F4F3),
+          color: context.providerInfoDetailsContainerColor,
           borderRadius: BorderRadius.circular(8),
         ),
         child: Column(
@@ -341,7 +341,7 @@ class ProviderInfoScreenState extends State<ProviderInfoScreen> {
                     ),
                     child: Icon(
                       isFavorite ? Icons.favorite : Icons.favorite_border,
-                      color: isFavorite ? Colors.red : context.icon,
+                      color: isFavorite ? context.error : context.icon,
                       size: 20,
                     ),
                   ),
@@ -381,7 +381,7 @@ class ProviderInfoScreenState extends State<ProviderInfoScreen> {
               userData.designation.validate().isNotEmpty
                   ? userData.designation.validate()
                   : userData.providerType.validate(),
-              style: context.boldTextStyle(
+              style: context.primaryTextStyle(
                 size: 14,
               ),
             ),
@@ -392,16 +392,16 @@ class ProviderInfoScreenState extends State<ProviderInfoScreen> {
               children: [
                 Text(
                   language.lblMemberSince + " $memberSince",
-                  style: context.boldTextStyle(
+                  style: context.primaryTextStyle(
                     size: 12,
                   ),
                 ),
                 8.width,
-                Icon(Icons.star, color: Colors.amber, size: 16),
+                Icon(Icons.star, color: context.starColor, size: 15),
                 4.width,
                 Text(
                   userData.providersServiceRating.validate().toStringAsFixed(1),
-                  style: context.boldTextStyle(
+                  style: context.primaryTextStyle(
                     size: 12,
                   ),
                 ),
@@ -444,11 +444,11 @@ class ProviderInfoScreenState extends State<ProviderInfoScreen> {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      backgroundColor: Colors.transparent,
+      backgroundColor: context.bottomSheetBackgroundColor,
       builder: (context) {
         return Container(
           decoration: BoxDecoration(
-            color: context.cardColor,
+            color: context.bottomSheetBackgroundColor,
             borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(16),
               topRight: Radius.circular(16),
@@ -465,14 +465,14 @@ class ProviderInfoScreenState extends State<ProviderInfoScreen> {
                   width: 50,
                   height: 5,
                   decoration: BoxDecoration(
-                    color: lightGrey,
+                    color: context.inputBorderColor,
                     borderRadius: BorderRadius.circular(50),
                   ),
                 ),
               ),
               // Content
               Padding(
-                padding: const EdgeInsets.fromLTRB(24, 32, 24, 24),
+                padding: const EdgeInsets.fromLTRB(24, 30, 24, 24),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -486,6 +486,7 @@ class ProviderInfoScreenState extends State<ProviderInfoScreen> {
                     Text(
                       description,
                       style: context.primaryTextStyle(
+                        color: context.onSecondaryContainer,
                         size: 14,
                       ),
                     ),
@@ -566,7 +567,7 @@ class ProviderInfoScreenState extends State<ProviderInfoScreen> {
                     height: 45,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      border: Border.all(color: Colors.white, width: 2),
+                      border: Border.all(color: context.surface, width: 2),
                     ),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(22.5),
@@ -626,7 +627,8 @@ class ProviderInfoScreenState extends State<ProviderInfoScreen> {
             Expanded(
               child: Text(
                 userData.email.validate(),
-                style: context.primaryTextStyle(),
+                style: context.primaryTextStyle(
+                    color: context.onSecondaryContainer),
               ),
             ),
           ],
@@ -642,7 +644,8 @@ class ProviderInfoScreenState extends State<ProviderInfoScreen> {
             Expanded(
               child: Text(
                 userData.contactNumber.validate(),
-                style: context.primaryTextStyle(),
+                style: context.primaryTextStyle(
+                    color: context.onSecondaryContainer),
               ),
             ),
           ],
@@ -751,11 +754,11 @@ class ProviderInfoScreenState extends State<ProviderInfoScreen> {
                       ),
                       Row(
                         children: [
-                          Icon(Icons.star, color: Colors.amber, size: 18),
+                          Icon(Icons.star, color: context.starColor, size: 15),
                           2.width,
                           Text(
                             service.totalRating.validate().toStringAsFixed(1),
-                            style: context.boldTextStyle(),
+                            style: context.primaryTextStyle(),
                           ),
                         ],
                       ),
@@ -765,7 +768,9 @@ class ProviderInfoScreenState extends State<ProviderInfoScreen> {
                   // Description
                   Text(
                     service.description.validate(),
-                    style: context.primaryTextStyle(),
+                    style: context.primaryTextStyle(
+                      color: context.onSecondaryContainer,
+                    ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -780,7 +785,9 @@ class ProviderInfoScreenState extends State<ProviderInfoScreen> {
                     ),
                     child: Text(
                       "₹ ${service.price.validate().toStringAsFixed(0)}",
-                      style: context.boldTextStyle(color: white),
+                      style: context.boldTextStyle(
+                        color: context.onPrimary,
+                      ),
                     ),
                   ),
                 ],

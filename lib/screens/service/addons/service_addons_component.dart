@@ -121,7 +121,8 @@ class _AddonComponentState extends State<AddonComponent> {
                   price: addon.price.validate(),
                   currencySymbol: '₹',
                   size: 14,
-                  color: textPrimaryColorGlobal,
+                  isBoldText: false,
+                  color: context.onSurface,
                   isFreeService: false,
                 ),
               ],
@@ -164,11 +165,8 @@ class _AddonComponentState extends State<AddonComponent> {
       margin: EdgeInsets.only(right: 16),
       padding: EdgeInsets.all(16),
       decoration: boxDecorationWithRoundedCorners(
-        border: appStore.isDarkMode
-            ? Border.all(color: context.dividerColor)
-            : null,
-        borderRadius: radius(),
-        backgroundColor: context.cardColor,
+        borderRadius: radius(8),
+        backgroundColor: context.surfaceContainer,
       ),
       child: Row(
         children: [
@@ -201,6 +199,7 @@ class _AddonComponentState extends State<AddonComponent> {
                 10.height,
                 PriceWidget(
                   price: data.price.validate(),
+                  color: context.onSurface,
                   hourlyTextColor: context.onSurface,
                   isBoldText: false,
                   size: 12,

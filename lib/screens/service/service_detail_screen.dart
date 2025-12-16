@@ -105,7 +105,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen>
         customerName: 'Jorge Perez',
         rating: 5.0,
         review: 'Great experience, very caring and professional.',
-        createdAt: '2025-09-29',
+        createdAt: '2025-09-29 10:30:00',
         profileImage: demoImage,
       ),
     ];
@@ -235,19 +235,15 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen>
                           vertical: 8.0, horizontal: 8),
                       decoration: boxDecorationDefault(
                           borderRadius: radius(8),
-                          color: appStore.isDarkMode
-                              ? isSelected
-                                  ? primaryColor
-                                  : Colors.black
-                              : isSelected
-                                  ? primaryColor
-                                  : context.secondaryContainer),
+                          color: isSelected
+                              ? context.primary
+                              : context.secondaryContainer),
                       child: Text(
                         value.name.validate(),
                         style: context.boldTextStyle(
                             color: isSelected
-                                ? Colors.white
-                                : textPrimaryColorGlobal),
+                                ? context.onPrimary
+                                : context.onSurface),
                       ),
                     ),
                   );
@@ -455,9 +451,10 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen>
               crossAxisCount: 2,
               crossAxisSpacing: 12,
               mainAxisSpacing: 12,
-              childAspectRatio: 0.69,
+              childAspectRatio: 0.68,
             ),
             itemBuilder: (_, index) => ServiceComponent(
+              imageHeight: 150,
               serviceData: serviceList[index],
               width: appConfigurationStore.userDashboardType ==
                       DEFAULT_USER_DASHBOARD
@@ -538,8 +535,9 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen>
           serviceDetailResponse.shops.validate().length > 1) {
         await showModalBottomSheet(
           context: context,
-          backgroundColor: context.scaffoldBackgroundColor,
-          barrierColor: appStore.isDarkMode ? Colors.white10 : Colors.black26,
+          backgroundColor: context.bottomSheetBackgroundColor,
+          barrierColor:
+              context.bottomSheetBackgroundColor.withValues(alpha: 0.5),
           showDragHandle: true,
           isScrollControlled: true,
           constraints: BoxConstraints(maxHeight: context.height() * 0.9),
@@ -823,11 +821,11 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen>
                     selectedPackage = null;
                     bookNow(snap.data!);
                   },
-                  color: context.primaryColor,
+                  color: context.primary,
                   child: Text(language.lblBookNow,
-                      style: context.boldTextStyle(color: white)),
+                      style: context.boldTextStyle(color: context.onPrimary)),
                   width: context.width(),
-                  textColor: Colors.white,
+                  textColor: context.onPrimary,
                 ).paddingSymmetric(horizontal: 16.0, vertical: 10.0)
               ],
             ),

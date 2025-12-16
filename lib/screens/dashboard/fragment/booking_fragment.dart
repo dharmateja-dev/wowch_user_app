@@ -8,6 +8,7 @@ import 'package:booking_system_flutter/screens/booking/component/booking_item_co
 import 'package:booking_system_flutter/screens/booking/component/booking_status_filter_bottom_sheet_new.dart';
 import 'package:booking_system_flutter/screens/booking/shimmer/booking_shimmer.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/images.dart';
 import 'package:booking_system_flutter/utils/model_keys.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
@@ -115,7 +116,7 @@ class _BookingFragmentState extends State<BookingFragment> {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      backgroundColor: Colors.transparent,
+      backgroundColor: context.bottomSheetBackgroundColor,
       builder: (context) => BookingStatusFilterBottomSheetNew(
         selectedStatuses: selectedStatusFilters,
         onApply: (selectedStatuses) {
@@ -520,7 +521,7 @@ class _BookingFragmentState extends State<BookingFragment> {
       appBar: appBarWidget(
         center: true,
         language.booking,
-        textColor: white,
+        textColor: context.onPrimary,
         showBack: false,
         textSize: APP_BAR_TEXT_SIZE,
         elevation: 3.0,
@@ -534,7 +535,7 @@ class _BookingFragmentState extends State<BookingFragment> {
                 children: [
                   IconButton(
                     icon: ic_filter.iconImage(
-                        size: 20, context: context, color: Colors.white),
+                        size: 20, context: context, color: context.onPrimary),
                     onPressed: _showFilterBottomSheet,
                   ),
                   if (filterCount > 0)
@@ -544,14 +545,14 @@ class _BookingFragmentState extends State<BookingFragment> {
                       child: Container(
                         padding: const EdgeInsets.all(5),
                         decoration: boxDecorationDefault(
-                          color: Colors.red,
+                          color: context.error,
                           shape: BoxShape.circle,
                         ),
                         child: FittedBox(
                           child: Text(
                             '$filterCount',
-                            style: const TextStyle(
-                              color: white,
+                            style: TextStyle(
+                              color: context.onPrimary,
                               fontSize: 10,
                               fontWeight: FontWeight.bold,
                             ),

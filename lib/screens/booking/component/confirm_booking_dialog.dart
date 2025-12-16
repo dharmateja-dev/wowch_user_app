@@ -4,8 +4,7 @@ import 'package:booking_system_flutter/model/package_data_model.dart';
 import 'package:booking_system_flutter/model/service_detail_response.dart';
 import 'package:booking_system_flutter/network/rest_apis.dart';
 import 'package:booking_system_flutter/screens/service/service_detail_screen.dart';
-import 'package:booking_system_flutter/utils/colors.dart';
-import 'package:booking_system_flutter/utils/extensions/num_extenstions.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/model_keys.dart';
 import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/gestures.dart';
@@ -269,12 +268,15 @@ class _ConfirmBookingDialogState extends State<ConfirmBookingDialog> {
               icVerifiedCheck,
               height: 90,
               width: 90,
+              // ignore: deprecated_member_use
+              color: context.dialogIconColor,
             ),
             16.height,
             // Title
             Text(
               language.lblConfirmBooking,
-              style: context.boldTextStyle(size: 24),
+              style: context.boldTextStyle(
+                  size: 24, color: context.dialogTitleColor),
               textAlign: TextAlign.center,
             ),
             12.height,
@@ -283,6 +285,7 @@ class _ConfirmBookingDialogState extends State<ConfirmBookingDialog> {
               language.doYouWantToConfirmBooking,
               style: context.primaryTextStyle(
                 size: 16,
+                color: context.onSecondaryContainer,
               ),
               textAlign: TextAlign.center,
             ),
@@ -293,13 +296,13 @@ class _ConfirmBookingDialogState extends State<ConfirmBookingDialog> {
               padding: EdgeInsets.all(12),
               decoration: boxDecorationWithRoundedCorners(
                 borderRadius: BorderRadius.circular(8),
-                backgroundColor: cancellationsBgColor,
+                backgroundColor: context.onPrimary,
               ),
               child: Text(
                 '* ${language.a} ${appConfigurationStore.cancellationChargeAmount}% ${language.feeAppliesForCancellations} ${appConfigurationStore.cancellationChargeHours} ${language.hoursOfTheScheduled}',
                 style: context.secondaryTextStyle(
                     size: 10,
-                    color: redColor,
+                    color: context.error,
                     fontStyle: FontStyle.italic,
                     weight: FontWeight.w600),
               ),
@@ -314,9 +317,13 @@ class _ConfirmBookingDialogState extends State<ConfirmBookingDialog> {
                   width: 24,
                   height: 24,
                   child: Checkbox(
-                    shape: RoundedRectangleBorder(borderRadius: radius(2)),
-                    activeColor: context.primaryColor,
-                    checkColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: radius(2),
+                    ),
+                    activeColor: context.primary,
+                    checkColor: context.onPrimary,
+                    side:
+                        BorderSide(color: context.dialogIconColor, width: 2.0),
                     value: isSelected,
                     onChanged: (val) {
                       isSelected = !isSelected;
@@ -336,7 +343,7 @@ class _ConfirmBookingDialogState extends State<ConfirmBookingDialog> {
                         TextSpan(
                           text: language.termsAndPrivacy,
                           style: context.boldTextStyle(
-                              color: context.primaryColor, size: 14),
+                              color: context.dialogCancelColor, size: 14),
                           recognizer: TapGestureRecognizer()
                             ..onTap = () {
                               checkIfLink(
@@ -369,7 +376,7 @@ class _ConfirmBookingDialogState extends State<ConfirmBookingDialog> {
                     child: Text(
                       language.lblCancel,
                       style: context.boldTextStyle(
-                          color: context.primaryColor, size: 16),
+                          color: context.dialogCancelColor, size: 16),
                     ),
                   ),
                 ),
@@ -378,12 +385,14 @@ class _ConfirmBookingDialogState extends State<ConfirmBookingDialog> {
                 Expanded(
                   child: AppButton(
                     textStyle: context.boldTextStyle(
-                        size: 16, color: isSelected ? Colors.white : darkGray),
+                        size: 16,
+                        color: isSelected
+                            ? context.onPrimary
+                            : context.dialogCancelColor),
                     padding: EdgeInsets.symmetric(vertical: 12),
                     text: language.confirm,
-                    color: isSelected
-                        ? context.primaryColor
-                        : context.dividerColor,
+                    color:
+                        isSelected ? context.primaryColor : context.accentColor,
                     shapeBorder: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),
@@ -408,21 +417,19 @@ class _ConfirmBookingDialogState extends State<ConfirmBookingDialog> {
   }
 }
 
-Widget serviceDetailsWidget(
-    String title, String value, bool isPrice, BuildContext context) {
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.start,
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Text(title,
-              style: context.secondaryTextStyle(
-                  size: 12,
-                  color:
-                      appStore.isDarkMode ? darkGray : appTextSecondaryColor))
-          .expand(flex: 2),
-      Text(isPrice ? num.parse(value).toPriceFormat() : value,
-              style: context.boldTextStyle(size: 12))
-          .expand(flex: 3),
-    ],
-  ).paddingBottom(6.0);
-}
+// Widget serviceDetailsWidget(
+//     String title, String value, bool isPrice, BuildContext context) {
+//   return Row(
+//     mainAxisAlignment: MainAxisAlignment.start,
+//     crossAxisAlignment: CrossAxisAlignment.start,
+//     children: [
+//       Text(title,
+//               style: context.secondaryTextStyle(
+//                   size: 12, color: context.onSurfaceVariant))
+//           .expand(flex: 2),
+//       Text(isPrice ? num.parse(value).toPriceFormat() : value,
+//               style: context.boldTextStyle(size: 12))
+//           .expand(flex: 3),
+//     ],
+//   ).paddingBottom(6.0);
+// }

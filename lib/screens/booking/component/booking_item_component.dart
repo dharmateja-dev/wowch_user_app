@@ -153,7 +153,7 @@ class _BookingItemComponentState extends State<BookingItemComponent> {
       margin: const EdgeInsets.only(bottom: 16),
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
-        border: Border.all(color: darkGrey, width: 1.5),
+        border: Border.all(color: context.inputBorderColor, width: 1.5),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Column(
@@ -231,10 +231,11 @@ class _BookingItemComponentState extends State<BookingItemComponent> {
                       children: [
                         PriceWidget(
                             currencySymbol: '₹',
+                            isBoldText: false,
                             isFreeService:
                                 widget.bookingData.type == SERVICE_TYPE_FREE,
                             price: widget.bookingData.totalAmount.validate(),
-                            color: textPrimaryColorGlobal),
+                            color: context.onSurface),
                         if (widget.bookingData.isHourlyService) ...[
                           6.width,
                           Text(

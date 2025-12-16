@@ -1,5 +1,4 @@
 import 'package:booking_system_flutter/component/image_border_component.dart';
-import 'package:booking_system_flutter/main.dart';
 import 'package:booking_system_flutter/model/service_detail_response.dart';
 import 'package:booking_system_flutter/utils/common.dart';
 import 'package:booking_system_flutter/utils/context_extensions.dart';
@@ -23,15 +22,13 @@ class ReviewWidget extends StatelessWidget {
       width: context.width(),
       decoration: boxDecorationWithRoundedCorners(
         borderRadius: radius(8),
-        backgroundColor: appStore.isDarkMode
-            ? context.cardColor
-            : context.secondaryContainer, // Light green/off-white background
+        backgroundColor: context.secondaryContainer,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               ImageBorder(
                 src: isCustomer
@@ -54,24 +51,26 @@ class ReviewWidget extends StatelessWidget {
                             children: [
                               Text(
                                 data.customerName.validate(),
-                                style: context.boldTextStyle(
-                                  color: textPrimaryColorGlobal,
-                                ),
+                                style: context.boldTextStyle(size: 20),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                               ),
                               4.height,
                               data.createdAt.validate().isNotEmpty
                                   ? Text(
-                                      formatDate(data.createdAt.validate()),
+                                      formatBookingDate(
+                                        data.createdAt.validate(),
+                                        format: 'MMMM d, yyyy',
+                                      ),
                                       style: context.secondaryTextStyle(
-                                        color: textSecondaryColorGlobal,
+                                        size: 14,
                                       ),
                                     )
                                   : const SizedBox(),
                             ],
                           ),
                         ),
+                        //Rating
                         Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
@@ -79,7 +78,7 @@ class ReviewWidget extends StatelessWidget {
                               ic_star_fill,
                               height: 16,
                               width: 16,
-                              color: Colors.amber, // Yellow star
+                              color: context.starColor,
                             ),
                             4.width,
                             Text(
@@ -88,22 +87,20 @@ class ReviewWidget extends StatelessWidget {
                                   .toStringAsFixed(1)
                                   .toString(),
                               style: context.boldTextStyle(
-                                color: appStore.isDarkMode
-                                    ? Colors.white
-                                    : Color(0xFF1C1F34), // Dark gray
-                                size: 14,
+                                size: 16,
                               ),
                             ),
                           ],
                         ),
                       ],
                     ),
+                    //read more
                     if (data.review.validate().isNotEmpty) ...[
                       8.height,
                       ReadMoreText(
                         data.review.validate(),
-                        style: context.primaryTextStyle(
-                          color: textSecondaryColorGlobal,
+                        style: context.secondaryTextStyle(
+                          size: 14,
                         ),
                         trimLines: 3,
                         trimMode: TrimMode.Line,

@@ -107,9 +107,9 @@ class BookingDetailProviderWidgetState
                         ),
                         8.width,
                         Icon(
-                          Icons.info_outline,
+                          Icons.info_outline_rounded,
                           size: 18,
-                          color: context.taxIconColor,
+                          color: context.onSurface,
                         ),
                       ],
                     ),

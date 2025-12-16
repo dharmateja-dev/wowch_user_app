@@ -292,7 +292,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     isRemember = !isRemember;
                     setState(() {});
                   },
-                  activeColor: context.primaryColor,
+                  activeColor: context.primary,
                   checkColor: context.onPrimary,
                   side: BorderSide(color: context.primary, width: 2.0),
                   shape: RoundedRectangleBorder(
@@ -562,7 +562,6 @@ class _SignInScreenState extends State<SignInScreen> {
                               style: context.boldTextStyle(size: 14)),
                           8.height,
                           AppTextField(
-                            
                             textStyle: context.primaryTextStyle(),
                             textFieldType: TextFieldType.PASSWORD,
                             controller: passwordCont,

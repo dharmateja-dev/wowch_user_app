@@ -121,7 +121,7 @@ class _BookingStatusFilterBottomSheetNewState
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: context.cardColor,
+        color: context.bottomSheetBackgroundColor,
         borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(16),
           topRight: Radius.circular(16),
@@ -138,7 +138,7 @@ class _BookingStatusFilterBottomSheetNewState
               width: 45,
               height: 5,
               decoration: BoxDecoration(
-                color: Colors.grey.withValues(alpha: 0.3),
+                color: context.inputBorderColor,
                 borderRadius: BorderRadius.circular(50),
               ),
             ),
@@ -168,7 +168,7 @@ class _BookingStatusFilterBottomSheetNewState
 
           // Divider
           Divider(
-            color: grey,
+            color: context.dividerOnSecondaryContainerColor,
             height: 1,
             thickness: 1.5,
           ),
@@ -217,11 +217,12 @@ class _BookingStatusFilterBottomSheetNewState
                 // Clear Filter Button
                 AppButton(
                   height: 15,
+                  color: context.bottomSheetBackgroundColor,
                   padding: EdgeInsets.all(8),
                   text: language.clearFilter,
-                  textColor: context.primaryColor,
+                  textColor: context.onSurface,
                   shapeBorder: RoundedRectangleBorder(
-                    side: BorderSide(color: context.primaryColor),
+                    side: BorderSide(color: context.primary),
                     borderRadius: radius(4),
                   ),
                   onTap: _clearFilters,
@@ -235,8 +236,8 @@ class _BookingStatusFilterBottomSheetNewState
                     borderRadius: radius(4),
                   ),
                   text: language.lblApply,
-                  textColor: Colors.white,
-                  color: context.primaryColor,
+                  textColor: context.onPrimary,
+                  color: context.primary,
                   onTap: _applyFilters,
                 ).expand(),
               ],
@@ -281,6 +282,7 @@ class _StatusChip extends StatelessWidget {
         child: Text(
           label,
           style: context.boldTextStyle(
+            color: context.onSecondaryContainer,
             size: 13,
           ),
         ),

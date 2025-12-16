@@ -1,4 +1,5 @@
 import 'package:booking_system_flutter/model/service_detail_response.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -14,6 +15,8 @@ class ServiceFaqWidget extends StatelessWidget {
     return Theme(
       data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
       child: ExpansionTile(
+        trailing: Icon(Icons.keyboard_arrow_down_outlined,
+            size: 30, color: context.icon),
         backgroundColor: Colors.transparent,
         collapsedBackgroundColor: Colors.transparent,
         splashColor: Colors.transparent,

@@ -1,5 +1,6 @@
 import 'package:booking_system_flutter/model/package_data_model.dart';
 import 'package:booking_system_flutter/screens/booking/booking_detail_screen.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -49,12 +50,12 @@ class _BookingConfirmationDialogState extends State<BookingConfirmationDialog> {
       return Text(
           formatBookingDate(widget.data.serviceDetail!.bookingDate.validate(),
               format: DATE_FORMAT_2),
-          style: context.boldTextStyle(size: 14, color: context.primaryColor));
+          style: context.boldTextStyle(size: 14, color: context.onSurface));
     }
     return Text(
         formatBookingDate(widget.data.serviceDetail!.dateTimeVal.validate(),
             format: DATE_FORMAT_2),
-        style: context.boldTextStyle(size: 14, color: context.primaryColor));
+        style: context.boldTextStyle(size: 14, color: context.onSurface));
   }
 
   Widget buildTimeWidget() {
@@ -62,7 +63,7 @@ class _BookingConfirmationDialogState extends State<BookingConfirmationDialog> {
       return Text(
           formatBookingDate(widget.data.serviceDetail!.dateTimeVal.validate(),
               format: HOUR_12_FORMAT),
-          style: context.boldTextStyle(size: 14, color: context.primaryColor),
+          style: context.boldTextStyle(size: 14, color: context.onSurface),
           textAlign: TextAlign.end);
     }
     return Text(
@@ -80,7 +81,7 @@ class _BookingConfirmationDialogState extends State<BookingConfirmationDialog> {
             .last
             .toInt(),
       ).format(context),
-      style: context.boldTextStyle(size: 14, color: context.primaryColor),
+      style: context.boldTextStyle(size: 14, color: context.onSurface),
       textAlign: TextAlign.end,
     );
   }
@@ -95,7 +96,7 @@ class _BookingConfirmationDialogState extends State<BookingConfirmationDialog> {
     return Container(
       width: context.width(),
       decoration: BoxDecoration(
-        color: context.cardColor,
+        color: context.dialogBackgroundColor,
         borderRadius: radius(12),
       ),
       padding: const EdgeInsets.all(20),
@@ -105,27 +106,31 @@ class _BookingConfirmationDialogState extends State<BookingConfirmationDialog> {
           // Verified check icon
           SvgPicture.asset(
             icVerifiedCheck,
-            height: 80,
-            width: 80,
+            height: 100,
+            width: 100,
+            // ignore: deprecated_member_use
+            color: context.dialogIconColor,
           ),
-          20.height,
+          16.height,
           // Thank You title
           Text(
             language.thankYou,
-            style: context.boldTextStyle(size: 22),
+            style: context.boldTextStyle(
+                size: 22, color: context.dialogTitleColor),
             textAlign: TextAlign.center,
           ),
           8.height,
           // Booking confirmed message
           Text(
             language.bookingConfirmedMsg,
-            style: context.primaryTextStyle(size: 14),
+            style: context.primaryTextStyle(
+                size: 14, color: context.onSecondaryContainer),
             textAlign: TextAlign.center,
           ),
           24.height,
           // Date and Time container with dashed border
           DottedBorderWidget(
-            color: context.primaryColor.withValues(alpha: 0.7),
+            color: context.greenBorderColor,
             strokeWidth: 1,
             gap: 2,
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -137,7 +142,9 @@ class _BookingConfirmationDialogState extends State<BookingConfirmationDialog> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(language.lblDate, style: context.primaryTextStyle()),
+                      Text(language.lblDate,
+                          style: context.primaryTextStyle(
+                              color: context.onSecondaryContainer)),
                       4.height,
                       buildDateWidget(),
                     ],
@@ -147,7 +154,10 @@ class _BookingConfirmationDialogState extends State<BookingConfirmationDialog> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    Text(language.lblTime, style: context.primaryTextStyle()),
+                    Text(language.lblTime,
+                        style: context.primaryTextStyle(
+                          color: context.onSecondaryContainer,
+                        )),
                     4.height,
                     buildTimeWidget(),
                   ],
@@ -179,7 +189,7 @@ class _BookingConfirmationDialogState extends State<BookingConfirmationDialog> {
                   child: Text(
                     language.goToReview,
                     style: context.boldTextStyle(
-                        color: context.primaryColor, size: 14),
+                        color: context.dialogCancelColor, size: 14),
                   ),
                 ),
               ),
@@ -190,8 +200,8 @@ class _BookingConfirmationDialogState extends State<BookingConfirmationDialog> {
                   padding: EdgeInsets.symmetric(vertical: 14),
                   text: language.goToHome,
                   textStyle:
-                      context.boldTextStyle(size: 14, color: Colors.white),
-                  color: context.primaryColor,
+                      context.boldTextStyle(size: 14, color: context.onPrimary),
+                  color: context.primary,
                   shapeBorder: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),

@@ -174,6 +174,7 @@ class _CreatePostRequestScreenState extends State<CreatePostRequestScreen> {
                           decoration: inputDecoration(
                             context,
                             hintText: language.lblEnterJobTitle,
+                            hintTextColor: context.onSecondaryContainer,
                             fillColor: context.secondaryContainer,
                             borderRadius: 8,
                             showBorder: false,
@@ -205,6 +206,7 @@ class _CreatePostRequestScreenState extends State<CreatePostRequestScreen> {
                           decoration: inputDecoration(
                             context,
                             hintText: language.lblEnterJobDescription,
+                            hintTextColor: context.onSecondaryContainer,
                             fillColor: context.secondaryContainer,
                             borderRadius: 8,
                             showBorder: false,
@@ -222,6 +224,7 @@ class _CreatePostRequestScreenState extends State<CreatePostRequestScreen> {
                           decoration: inputDecoration(
                             context,
                             hintText: language.price,
+                            hintTextColor: context.onSecondaryContainer,
                             fillColor: context.secondaryContainer,
                             borderRadius: 8,
                             showBorder: false,
@@ -357,7 +360,7 @@ class _CreatePostRequestScreenState extends State<CreatePostRequestScreen> {
                                     onPressed: () {
                                       showConfirmDialogCustom(
                                         width: 290,
-                                        height: 80,
+                                        height: 90,
                                         context,
                                         dialogType: DialogType.DELETE,
                                         positiveText: language.lblDelete,
