@@ -3,6 +3,7 @@ import 'package:booking_system_flutter/model/chat_message_model.dart';
 import 'package:booking_system_flutter/utils/colors.dart';
 import 'package:booking_system_flutter/utils/common.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/extensions/string_extentions.dart';
 import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
@@ -101,7 +102,7 @@ class _ChatItemWidgetState extends State<ChatItemWidget> {
               children: [
                 Text(
                   widget.chatItemData.message!,
-                  style: context.primaryTextStyle(),
+                  style: context.primaryTextStyle(color: context.onSurface),
                   maxLines: null,
                 ),
                 1.height,
@@ -111,17 +112,16 @@ class _ChatItemWidgetState extends State<ChatItemWidget> {
                     Text(
                       time,
                       style: context.primaryTextStyle(
-                        color: Colors.blueGrey.withValues(alpha: 0.6),
+                        color: context.textGrey,
                         size: 10,
                       ),
                     ),
                     4.width,
                     if (widget.chatItemData.isMe.validate())
                       !widget.chatItemData.isMessageRead.validate()
-                          ? const Icon(Icons.done,
-                              size: 12, color: Colors.blueGrey)
-                          : const Icon(Icons.done_all,
-                              size: 12, color: Colors.blueGrey)
+                          ? Icon(Icons.done, size: 12, color: context.textGrey)
+                          : Icon(Icons.done_all,
+                              size: 12, color: context.textGrey)
                     else
                       const Offstage()
                   ],
@@ -138,7 +138,7 @@ class _ChatItemWidgetState extends State<ChatItemWidget> {
                     ...filesComponent(),
                     Text(
                       widget.chatItemData.message!,
-                      style: context.primaryTextStyle(),
+                      style: context.primaryTextStyle(color: context.onSurface),
                       maxLines: null,
                     ).paddingTop(2).visible(
                         widget.chatItemData.message!.trim().isNotEmpty),
@@ -149,17 +149,17 @@ class _ChatItemWidgetState extends State<ChatItemWidget> {
                         Text(
                           time,
                           style: context.primaryTextStyle(
-                            color: Colors.blueGrey.withValues(alpha: 0.6),
+                            color: context.textGrey,
                             size: 10,
                           ),
                         ),
                         2.width,
                         if (widget.chatItemData.isMe.validate())
                           !widget.chatItemData.isMessageRead.validate()
-                              ? const Icon(Icons.done,
-                                  size: 12, color: Colors.blueGrey)
-                              : const Icon(Icons.done_all,
-                                  size: 12, color: Colors.blueGrey)
+                              ? Icon(Icons.done,
+                                  size: 12, color: context.textGrey)
+                              : Icon(Icons.done_all,
+                                  size: 12, color: context.textGrey)
                         else
                           const Offstage()
                       ],
@@ -250,8 +250,8 @@ class _ChatItemWidgetState extends State<ChatItemWidget> {
                       spreadRadius: 0.2), //BoxShadow
                 ],
                 color: widget.chatItemData.isMe.validate()
-                    ? lightPrimaryColor
-                    : context.cardColor,
+                    ? context.secondaryContainer
+                    : context.surface,
                 borderRadius: widget.chatItemData.isMe.validate()
                     ? radiusOnly(
                         bottomLeft: 12,
@@ -317,8 +317,8 @@ class _ChatItemWidgetState extends State<ChatItemWidget> {
                                 defaultRadius.toInt(),
                                 backgroundColor:
                                     widget.chatItemData.isMe.validate()
-                                        ? lightPrimaryColor
-                                        : context.cardColor),
+                                        ? context.secondaryContainer
+                                        : context.surface),
                             child: CommonPdfPlaceHolder(
                               text: "${file.getChatFileName}",
                               fileExt: file.getFileExtension,

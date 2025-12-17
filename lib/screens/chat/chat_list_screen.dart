@@ -220,6 +220,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
       separatorBuilder: (_, i) => Divider(
         height: 0,
         indent: 0,
+        thickness: 0.75,
         color: context.dividerColor,
       ),
       itemBuilder: (context, index) {
@@ -257,10 +258,10 @@ class _DummyUserItemWidget extends StatelessWidget {
                 height: 40,
                 width: 40,
                 padding: const EdgeInsets.all(6),
-                color: context.primaryColor.withValues(alpha: 0.2),
+                color: context.secondaryContainer,
                 child: Text(
                   userData.displayName.validate()[0].validate().toUpperCase(),
-                  style: context.boldTextStyle(color: context.primaryColor),
+                  style: context.boldTextStyle(color: context.primary),
                 ).center().fit(),
               ).cornerRadiusWithClipRRect(50)
             else
@@ -297,7 +298,8 @@ class _DummyUserItemWidget extends StatelessWidget {
                         ),
                         child: Text(
                           '${(index % 5) + 1}',
-                          style: context.secondaryTextStyle(color: white),
+                          style: context.secondaryTextStyle(
+                              color: context.onPrimary),
                           textAlign: TextAlign.center,
                         ).center(),
                       ),
@@ -311,12 +313,12 @@ class _DummyUserItemWidget extends StatelessWidget {
                       _getDummyLastMessage(index),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: context.primaryTextStyle(size: 14),
+                      style: context.primaryTextStyle(size: 12),
                     ).expand(),
                     16.width,
                     Text(
                       _getDummyTime(index),
-                      style: context.primaryTextStyle(size: 10),
+                      style: context.primaryTextStyle(size: 11),
                     ),
                   ],
                 ).paddingTop(2),

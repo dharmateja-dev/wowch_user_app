@@ -1,3 +1,4 @@
+import 'package:booking_system_flutter/component/back_widget.dart';
 import 'package:booking_system_flutter/component/cached_image_widget.dart';
 import 'package:booking_system_flutter/component/loader_widget.dart';
 import 'package:booking_system_flutter/main.dart';
@@ -46,7 +47,7 @@ class ProfileFragmentState extends State<ProfileFragment> {
     init();
     afterBuildCreated(() {
       appStore.setLoading(false);
-      setStatusBarColor(context.primaryColor);
+      setStatusBarColor(context.primary);
     });
   }
 
@@ -82,7 +83,7 @@ class ProfileFragmentState extends State<ProfileFragment> {
         textColor: context.scaffoldBackgroundColor,
         textSize: APP_BAR_TEXT_SIZE,
         elevation: 0.0,
-        color: context.primaryColor,
+        color: context.primary,
         showBack: false,
         actions: [
           IconButton(
@@ -188,7 +189,7 @@ class ProfileFragmentState extends State<ProfileFragment> {
                                   demoModeStore.isDemoMode))
                             SettingItemWidget(
                               decoration: boxDecorationDefault(
-                                  color: context.cardColor,
+                                  color: context.scaffold,
                                   borderRadius:
                                       const BorderRadiusDirectional.vertical(
                                           bottom: Radius.circular(0))),
@@ -217,7 +218,7 @@ class ProfileFragmentState extends State<ProfileFragment> {
                                   demoModeStore.isDemoMode))
                             SettingItemWidget(
                               decoration: boxDecorationDefault(
-                                  color: context.cardColor,
+                                  color: context.scaffold,
                                   borderRadius:
                                       const BorderRadiusDirectional.vertical(
                                           bottom: Radius.circular(0))),
@@ -236,7 +237,7 @@ class ProfileFragmentState extends State<ProfileFragment> {
                           //     rolesAndPermissionStore.bankList)
                           //   SettingItemWidget(
                           //     decoration: boxDecorationDefault(
-                          //         color: context.cardColor,
+                          //         color: context.scaffold,
                           //         borderRadius:
                           //             const BorderRadiusDirectional.vertical(
                           //                 bottom: Radius.circular(0))),
@@ -253,7 +254,7 @@ class ProfileFragmentState extends State<ProfileFragment> {
                           //favourite services
                           SettingItemWidget(
                             decoration: boxDecorationDefault(
-                                color: context.cardColor,
+                                color: context.scaffold,
                                 borderRadius:
                                     const BorderRadiusDirectional.vertical(
                                         bottom: Radius.circular(0))),
@@ -271,7 +272,7 @@ class ProfileFragmentState extends State<ProfileFragment> {
                           //favourite providers
                           SettingItemWidget(
                             decoration: boxDecorationDefault(
-                                color: context.cardColor,
+                                color: context.scaffold,
                                 borderRadius:
                                     const BorderRadiusDirectional.vertical(
                                         bottom: Radius.circular(0))),
@@ -305,7 +306,7 @@ class ProfileFragmentState extends State<ProfileFragment> {
                           //blog
                           SettingItemWidget(
                             decoration: boxDecorationDefault(
-                                color: context.cardColor,
+                                color: context.scaffold,
                                 borderRadius:
                                     const BorderRadiusDirectional.vertical(
                                         bottom: Radius.circular(0))),
@@ -323,7 +324,7 @@ class ProfileFragmentState extends State<ProfileFragment> {
                           //rate us
                           SettingItemWidget(
                             decoration: boxDecorationDefault(
-                                color: context.cardColor,
+                                color: context.scaffold,
                                 borderRadius:
                                     const BorderRadiusDirectional.vertical(
                                         bottom: Radius.circular(0))),
@@ -366,7 +367,7 @@ class ProfileFragmentState extends State<ProfileFragment> {
                           if (appStore.isLoggedIn)
                             SettingItemWidget(
                               decoration: boxDecorationDefault(
-                                  color: context.cardColor,
+                                  color: context.scaffold,
                                   borderRadius:
                                       const BorderRadiusDirectional.vertical(
                                           bottom: Radius.circular(0))),
@@ -385,7 +386,7 @@ class ProfileFragmentState extends State<ProfileFragment> {
                           //toggle after help desk feature is enabled
                           // SettingItemWidget(
                           //   decoration: boxDecorationDefault(
-                          //       color: context.cardColor,
+                          //       color: context.scaffold,
                           //       borderRadius:
                           //           const BorderRadiusDirectional.vertical(
                           //               bottom: Radius.circular(16))),
@@ -412,7 +413,7 @@ class ProfileFragmentState extends State<ProfileFragment> {
                       8.height,
                       SettingItemWidget(
                         decoration: boxDecorationDefault(
-                            color: context.cardColor,
+                            color: context.scaffold,
                             borderRadius:
                                 const BorderRadiusDirectional.vertical(
                                     bottom: Radius.circular(0))),
@@ -428,7 +429,7 @@ class ProfileFragmentState extends State<ProfileFragment> {
                           rolesAndPermissionStore.aboutUs),
                       SettingItemWidget(
                         decoration: boxDecorationDefault(
-                            color: context.cardColor,
+                            color: context.scaffold,
                             borderRadius:
                                 const BorderRadiusDirectional.vertical(
                                     bottom: Radius.circular(0))),
@@ -445,7 +446,7 @@ class ProfileFragmentState extends State<ProfileFragment> {
                           rolesAndPermissionStore.privacyPolicy),
                       SettingItemWidget(
                         decoration: boxDecorationDefault(
-                            color: context.cardColor,
+                            color: context.scaffold,
                             borderRadius:
                                 const BorderRadiusDirectional.vertical(
                                     bottom: Radius.circular(0))),
@@ -462,7 +463,7 @@ class ProfileFragmentState extends State<ProfileFragment> {
                           rolesAndPermissionStore.termCondition),
                       SettingItemWidget(
                         decoration: boxDecorationDefault(
-                            color: context.cardColor,
+                            color: context.scaffold,
                             borderRadius:
                                 const BorderRadiusDirectional.vertical(
                                     bottom: Radius.circular(0))),
@@ -480,7 +481,7 @@ class ProfileFragmentState extends State<ProfileFragment> {
 
                       SettingItemWidget(
                         decoration: boxDecorationDefault(
-                            color: context.cardColor,
+                            color: context.scaffold,
                             borderRadius:
                                 const BorderRadiusDirectional.vertical(
                                     bottom: Radius.circular(0))),
@@ -505,7 +506,7 @@ class ProfileFragmentState extends State<ProfileFragment> {
 
                       // SettingItemWidget(
                       //   decoration: boxDecorationDefault(
-                      //       color: context.cardColor,
+                      //       color: context.scaffold,
                       //       borderRadius:
                       //           const BorderRadiusDirectional.vertical(
                       //               bottom: Radius.circular(0))),
@@ -526,12 +527,12 @@ class ProfileFragmentState extends State<ProfileFragment> {
                         SettingItemWidget(
                           decoration: !appStore.isLoggedIn
                               ? boxDecorationDefault(
-                                  color: context.cardColor,
+                                  color: context.scaffold,
                                   borderRadius:
                                       const BorderRadiusDirectional.vertical(
                                           bottom: Radius.circular(0)))
                               : boxDecorationDefault(
-                                  color: context.cardColor,
+                                  color: context.scaffold,
                                   borderRadius:
                                       const BorderRadiusDirectional.vertical(
                                           bottom: Radius.circular(16))),
@@ -551,14 +552,15 @@ class ProfileFragmentState extends State<ProfileFragment> {
                       SettingItemWidget(
                         decoration: !appStore.isLoggedIn
                             ? boxDecorationDefault(
-                                color: context.cardColor,
+                                color: context.scaffold,
                                 borderRadius:
                                     const BorderRadiusDirectional.vertical(
                                         bottom: Radius.circular(16)))
-                            : boxDecorationDefault(color: context.cardColor),
+                            : boxDecorationDefault(color: context.scaffold),
                         leading: Icon(
                           MaterialCommunityIcons.logout,
                           size: SETTING_ICON_SIZE,
+                          color: context.primary,
                         ),
                         trailing: trailing(context),
                         title: language.signIn,
@@ -570,7 +572,7 @@ class ProfileFragmentState extends State<ProfileFragment> {
 
                       SettingItemWidget(
                         decoration: boxDecorationDefault(
-                            color: context.cardColor,
+                            color: context.scaffold,
                             borderRadius:
                                 const BorderRadiusDirectional.vertical(
                                     bottom: Radius.circular(16))),
@@ -592,10 +594,18 @@ class ProfileFragmentState extends State<ProfileFragment> {
                             subTitle: language.lblDeleteAccountConformation,
                             negativeText: language.lblCancel,
                             positiveText: language.lblDelete,
-                            primaryColor: context.primaryColor,
-                            negativeTextColor: context.primaryColor,
-                            customCenterWidget: Image.asset(ic_warning,
-                                height: 70, width: 70, fit: BoxFit.cover),
+                            titleColor: context.dialogTitleColor,
+                            backgroundColor: context.dialogBackgroundColor,
+                            primaryColor: context.primary,
+                            positiveTextColor: context.onPrimary,
+                            negativeTextColor: context.dialogCancelColor,
+                            customCenterWidget: Image.asset(
+                              ic_warning,
+                              color: context.dialogIconColor,
+                              height: 70,
+                              width: 70,
+                              fit: BoxFit.cover,
+                            ),
                             onAccept: (_) {
                               ifNotTester(() {
                                 appStore.setLoading(true);
@@ -639,12 +649,21 @@ class ProfileFragmentState extends State<ProfileFragment> {
                               shape: dialogShape(16),
                               title: language.logout,
                               subTitle: language.lblLogoutConfirmation,
+                              subTitleColor: context.dialogSubTitleColor,
                               negativeText: language.lblNo,
                               positiveText: language.lblYes,
-                              primaryColor: context.primaryColor,
-                              negativeTextColor: context.primaryColor,
-                              customCenterWidget: Image.asset(ic_warning,
-                                  height: 70, width: 70, fit: BoxFit.cover),
+                              titleColor: context.dialogTitleColor,
+                              backgroundColor: context.dialogBackgroundColor,
+                              primaryColor: context.primary,
+                              positiveTextColor: context.onPrimary,
+                              negativeTextColor: context.dialogCancelColor,
+                              customCenterWidget: Image.asset(
+                                ic_warning,
+                                color: context.dialogIconColor,
+                                height: 70,
+                                width: 70,
+                                fit: BoxFit.cover,
+                              ),
                               onAccept: (_) async {
                                 if (await isNetworkAvailable()) {
                                   appStore.setLoading(true);

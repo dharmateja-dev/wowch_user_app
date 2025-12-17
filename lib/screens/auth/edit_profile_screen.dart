@@ -400,7 +400,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
       builder: (BuildContext context) {
         return Container(
           decoration: BoxDecoration(
-            color: context.scaffoldBackgroundColor,
+            color: context.bottomSheetBackgroundColor,
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(20),
               topRight: Radius.circular(20),
@@ -414,7 +414,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                 width: 40,
                 height: 4,
                 decoration: BoxDecoration(
-                  color: Colors.grey.shade300,
+                  color: context.mainBorderColor,
                   borderRadius: BorderRadius.circular(2),
                 ),
               ),
@@ -462,19 +462,36 @@ class EditProfileScreenState extends State<EditProfileScreen> {
     showCountryPicker(
       context: context,
       countryListTheme: CountryListThemeData(
-        textStyle: context.secondaryTextStyle(color: textSecondaryColorGlobal),
-        searchTextStyle: context.primaryTextStyle(),
+        borderRadius: BorderRadius.circular(0),
+        bottomSheetHeight: 600,
+        textStyle: context.primaryTextStyle(),
+        searchTextStyle:
+            context.primaryTextStyle(color: context.searchTextColor),
+        backgroundColor: context.bottomSheetBackgroundColor,
         inputDecoration: InputDecoration(
-          labelText: language.search,
-          prefixIcon: const Icon(Icons.search),
+          fillColor: context.searchFillColor,
+          filled: true,
           border: OutlineInputBorder(
             borderSide: BorderSide(
-              color: const Color(0xFF8C98A8).withValues(alpha: 0.2),
+              color: Colors.transparent,
             ),
           ),
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.transparent,
+            ),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.transparent,
+            ),
+          ),
+          hintText: language.search,
+          hintStyle: context.primaryTextStyle(
+              size: 14, color: context.searchHintColor),
+          prefixIcon: Icon(Icons.search, color: context.searchHintColor),
         ),
       ),
-
       showPhoneCode:
           true, // optional. Shows phone code before the country name.
       onSelect: (Country country) {
@@ -499,7 +516,9 @@ class EditProfileScreenState extends State<EditProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
-      leading: BackWidget(),
+      leading: BackWidget(
+        iconColor: context.onPrimary,
+      ),
       showLoader: false,
       isLoading: Observable(appStore.isLoading),
       appBarTitle: language.editProfile,
@@ -818,7 +837,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                   AppButton(
                     text: language.save,
                     color: context.primary,
-                    textColor: white,
+                    textColor: context.onPrimary,
                     width: context.width() - context.navigationBarHeight,
                     onTap: () {
                       ifNotTester(() {

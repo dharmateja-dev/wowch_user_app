@@ -8,7 +8,6 @@ import 'package:booking_system_flutter/model/chat_message_model.dart';
 import 'package:booking_system_flutter/model/user_data_model.dart';
 import 'package:booking_system_flutter/screens/chat/widget/chat_item_widget.dart';
 import 'package:booking_system_flutter/services/notification_services.dart';
-import 'package:booking_system_flutter/utils/colors.dart';
 import 'package:booking_system_flutter/utils/common.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
 import 'package:booking_system_flutter/utils/context_extensions.dart';
@@ -135,7 +134,7 @@ class _UserChatScreenState extends State<UserChatScreen>
           focus: messageFocus,
           cursorHeight: 20,
           maxLines: 5,
-          cursorColor: appStore.isDarkMode ? context.onPrimary : Colors.black,
+          cursorColor: context.onSurface,
           textCapitalization: TextCapitalization.sentences,
           keyboardType: TextInputType.multiline,
           suffix: Row(
@@ -161,14 +160,19 @@ class _UserChatScreenState extends State<UserChatScreen>
               ),
             ],
           ),
-          decoration: inputDecoration(context).copyWith(
-              hintText: language.message,
-              hintStyle: context.primaryTextStyle()),
+          decoration: inputDecoration(
+            context,
+            fillColor: context.inputFillColorSecondary,
+            showBorder: false,
+            hintText: language.message,
+            hintTextColor: context.searchHintTextColor,
+          ).copyWith(hintStyle: context.primaryTextStyle()),
         ).expand(),
         8.width,
         IconButton(
           icon: ic_send_message.iconImage(
             context: context,
+            color: context.onSurface,
             size: 32,
           ),
           onPressed: () {
@@ -582,11 +586,19 @@ class _UserChatScreenState extends State<UserChatScreen>
                     width: 290,
                     positiveText: language.lblYes,
                     negativeText: language.lblNo,
-                    primaryColor: primaryColor,
-                    negativeTextColor: primaryColor,
+                    titleColor: context.dialogTitleColor,
+                    backgroundColor: context.dialogBackgroundColor,
+                    primaryColor: context.primary,
+                    positiveTextColor: context.onPrimary,
+                    negativeTextColor: context.dialogCancelColor,
                     title: language.clearChatMessage,
-                    customCenterWidget: Image.asset(ic_warning,
-                        height: 70, width: 70, fit: BoxFit.cover),
+                    customCenterWidget: Image.asset(
+                      ic_warning,
+                      color: context.dialogIconColor,
+                      height: 70,
+                      width: 70,
+                      fit: BoxFit.cover,
+                    ),
                     onAccept: (c) async {
                       if (USE_DUMMY_DATA) {
                         // Clear dummy messages
@@ -750,8 +762,9 @@ class _UserChatScreenState extends State<UserChatScreen>
     if (dummyMessages.isEmpty) {
       return NoDataWidget(
         title: language.noConversation,
+        titleTextStyle: context.boldTextStyle(size: 16),
         imageWidget: Image.asset(no_conversation,
-            height: 300, width: 300, fit: BoxFit.contain),
+            height: 250, width: 250, fit: BoxFit.contain),
       );
     }
 

@@ -288,6 +288,10 @@ extension ColorSchemeExtension on BuildContext {
   /// Dialog cancel button border & text - Light: primary (#2E6B4F), Dark: #93C0AB
   Color get dialogCancelColor => isDarkMode ? primaryContainer : primary;
 
+  /// Dialog subtitle color - Light: #72777A, Dark: #B2C7BF
+  Color get dialogSubTitleColor =>
+      isDarkMode ? const Color(0xFFB2C7BF) : const Color(0xFF72777A);
+
   // ══════════════════════════════════════════════════════════════════════════
   // CONVENIENCE HELPERS
   // ══════════════════════════════════════════════════════════════════════════
