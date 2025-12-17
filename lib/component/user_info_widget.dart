@@ -120,7 +120,7 @@ class _UserInfoWidgetState extends State<UserInfoWidget> {
                       width: 38,
                       height: 38,
                       decoration: BoxDecoration(
-                        color: context.cardColor,
+                        color: context.secondaryContainer,
                         shape: BoxShape.circle,
                         boxShadow: [
                           BoxShadow(
@@ -159,7 +159,7 @@ class _UserInfoWidgetState extends State<UserInfoWidget> {
                   top: 15,
                   child: Container(
                     decoration: BoxDecoration(
-                        color: context.cardColor,
+                        color: context.secondaryContainer,
                         borderRadius:
                             const BorderRadius.all(Radius.circular(20))),
                     padding:
@@ -183,7 +183,7 @@ class _UserInfoWidgetState extends State<UserInfoWidget> {
                   bottom: 16,
                   child: Container(
                     decoration: BoxDecoration(
-                        color: context.cardColor, borderRadius: radius(20)),
+                        color: context.secondaryContainer, borderRadius: radius(20)),
                     padding:
                         const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                     margin: const EdgeInsets.symmetric(horizontal: 16),

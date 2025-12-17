@@ -188,7 +188,7 @@ class _UpcomingBookingDashboardComponent3State
                       ),
                       Container(
                         decoration: boxDecorationDefault(
-                          color: context.cardColor,
+                          color: context.secondaryContainer,
                           shape: BoxShape.rectangle,
                           borderRadius: BorderRadius.circular(defaultRadius),
                         ),

@@ -22,7 +22,7 @@ class CommonPdfPlaceHolder extends StatelessWidget {
       width: width,
       height: height,
       decoration: BoxDecoration(
-        color: context.cardColor,
+        color: context.secondaryContainer,
         borderRadius: BorderRadius.circular(defaultRadius),
       ),
       child: Column(

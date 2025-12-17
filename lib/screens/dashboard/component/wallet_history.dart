@@ -241,7 +241,9 @@ class _UserWalletHistoryScreenState extends State<UserWalletHistoryScreen> {
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
-        leading: BackWidget(),
+        leading: BackWidget(
+          iconColor: context.onPrimary,
+        ),
         appBarTitle: language.walletHistory,
         showLoader: false,
         child: Stack(
@@ -265,7 +267,7 @@ class _UserWalletHistoryScreenState extends State<UserWalletHistoryScreen> {
                     ),
                     32.height,
                     Text(language.lastTransaction,
-                        style: context.boldTextStyle(size: 20)),
+                        style: context.boldTextStyle(size: 18)),
                     16.height,
                     AnimatedListView(
                       physics: const NeverScrollableScrollPhysics(),
@@ -322,10 +324,12 @@ class _UserWalletHistoryScreenState extends State<UserWalletHistoryScreen> {
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
                                   color: isDebit
-                                      ? Colors.red.shade50
-                                      : Colors.green.shade50,
+                                      ? context.error.withValues(alpha: 0.1)
+                                      : context.primary.withValues(alpha: 0.1),
                                   border: Border.all(
-                                    color: isDebit ? Colors.red : Colors.green,
+                                    color: isDebit
+                                        ? context.error
+                                        : context.primaryLiteColor,
                                     width: 1.5,
                                   ),
                                 ),
@@ -336,7 +340,9 @@ class _UserWalletHistoryScreenState extends State<UserWalletHistoryScreen> {
                                         : ic_diagonal_left_down_arrow,
                                     height: 18,
                                     width: 18,
-                                    color: isDebit ? Colors.red : Colors.green,
+                                    color: isDebit
+                                        ? context.error
+                                        : context.primaryLiteColor,
                                   ),
                                 ),
                               ),
@@ -374,7 +380,7 @@ class _UserWalletHistoryScreenState extends State<UserWalletHistoryScreen> {
                                   // Date on top
                                   Text(
                                     formattedDate,
-                                    style: context.boldTextStyle(size: 12),
+                                    style: context.primaryTextStyle(size: 12),
                                   ),
                                   8.height,
                                   // Amount below date
@@ -385,8 +391,9 @@ class _UserWalletHistoryScreenState extends State<UserWalletHistoryScreen> {
                                         .toPriceFormat(),
                                     style: context.boldTextStyle(
                                       size: 14,
-                                      color:
-                                          isDebit ? Colors.red : Colors.green,
+                                      color: isDebit
+                                          ? context.error
+                                          : context.primaryLiteColor,
                                     ),
                                   ),
                                 ],

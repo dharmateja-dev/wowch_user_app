@@ -78,7 +78,7 @@ class _FavouriteProviderComponentState
           width: widget.width,
           decoration: boxDecorationWithRoundedCorners(
             borderRadius: radius(),
-            backgroundColor: context.onSurface.withValues(alpha: 0.1),
+            backgroundColor: context.secondaryContainer,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

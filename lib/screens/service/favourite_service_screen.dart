@@ -5,6 +5,7 @@ import 'package:booking_system_flutter/model/service_data_model.dart';
 import 'package:booking_system_flutter/network/rest_apis.dart';
 import 'package:booking_system_flutter/screens/service/component/service_component.dart';
 import 'package:booking_system_flutter/screens/service/shimmer/favourite_service_shimmer.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -126,9 +127,11 @@ class _FavouriteServiceScreenState extends State<FavouriteServiceScreen> {
       appBar: appBarWidget(
         center: true,
         language.lblFavorite,
-        color: context.primaryColor,
-        textColor: white,
-        backWidget: BackWidget(),
+        color: context.primary,
+        textColor: context.onPrimary,
+        backWidget: BackWidget(
+          iconColor: context.onPrimary,
+        ),
         textSize: APP_BAR_TEXT_SIZE,
       ),
       body: Stack(
@@ -250,7 +253,7 @@ class _FavouriteServiceScreenState extends State<FavouriteServiceScreen> {
           crossAxisCount: 2,
           crossAxisSpacing: 14,
           mainAxisSpacing: 14,
-          childAspectRatio: 0.69,
+          childAspectRatio: 0.61,
         ),
         itemCount: dummyServices.length,
         physics: const AlwaysScrollableScrollPhysics(),

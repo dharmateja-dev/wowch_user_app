@@ -82,7 +82,7 @@ class _PackageDetailScreenState extends State<PackageDetailScreen> {
                         right: 20,
                         child: Container(
                           decoration: BoxDecoration(
-                            color: context.cardColor,
+                            color: context.secondaryContainer,
                             borderRadius:
                                 const BorderRadius.all(Radius.circular(20)),
                           ),

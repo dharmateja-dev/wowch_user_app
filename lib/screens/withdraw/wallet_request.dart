@@ -129,7 +129,9 @@ class _WithdrawRequestState extends State<WithdrawRequest> {
     return GestureDetector(
       onTap: () => hideKeyboard(context),
       child: AppScaffold(
-        leading: BackWidget(),
+        leading: BackWidget(
+          iconColor: context.onPrimary,
+        ),
         appBarTitle: language.withdrawRequest,
         child: Stack(
           children: [
@@ -151,14 +153,13 @@ class _WithdrawRequestState extends State<WithdrawRequest> {
                             style: context.boldTextStyle(size: 14)),
                         PriceWidget(
                             price: widget.availableBalance.validate(),
-                            color: context.primaryColor,
+                            color: context.primary,
                             isBoldText: true),
                       ],
                     ),
                   ),
                   (context.height() * 0.05).toInt().height,
-                  Text(language.lblEnterAmount,
-                      style: context.boldTextStyle(size: 14)),
+                  Text(language.lblEnterAmount, style: context.boldTextStyle()),
                   8.height,
                   AppTextField(
                     textStyle: context.primaryTextStyle(),
@@ -168,8 +169,9 @@ class _WithdrawRequestState extends State<WithdrawRequest> {
                     nextFocus: chooseBankFocus,
                     decoration: inputDecoration(context,
                         hintText: language.eg3000,
+                        hintTextColor: context.searchHintTextColor,
                         borderRadius: 8,
-                        fillColor: Colors.transparent),
+                        fillColor: context.inputFillColor),
                     inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                     isValidationRequired: true,
                     validator: (value) {
@@ -219,20 +221,25 @@ class _WithdrawRequestState extends State<WithdrawRequest> {
                         child: Text(
                           language.addBank,
                           style: context.boldTextStyle(
-                              size: 14, color: primaryColor),
+                              size: 14, color: context.primary),
                         ),
                       ),
                     ],
                   ),
                   16.height,
                   DropdownButtonFormField<BankHistory>(
-                    decoration: inputDecoration(context),
+                    decoration: inputDecoration(
+                      context,
+                      fillColor: context.inputFillColor,
+                      borderRadius: 8,
+                      hintTextColor: context.searchHintTextColor,
+                    ),
                     isExpanded: true,
                     menuMaxHeight: 300,
                     initialValue: selectedBank,
                     hint: Text(
                       language.egCentralNationalBank,
-                      style: context.secondaryTextStyle(size: 12),
+                      style: context.primaryTextStyle(size: 14),
                     ),
                     icon: ic_down_arrow.iconImage(size: 16, context: context),
                     dropdownColor: context.cardColor,
@@ -259,7 +266,7 @@ class _WithdrawRequestState extends State<WithdrawRequest> {
                     text: language.withdraw,
                     height: 40,
                     color: context.primary,
-                    textStyle: context.boldTextStyle(color: white),
+                    textStyle: context.boldTextStyle(color: context.onPrimary),
                     width: context.width() - context.navigationBarHeight,
                     onTap: () {
                       if (formKey.currentState!.validate()) {

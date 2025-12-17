@@ -69,7 +69,7 @@ class _WalkThroughScreenState extends State<WalkThroughScreen> {
                 decoration: boxDecorationDefault(
                   shape: BoxShape.circle,
                   boxShadow: defaultBoxShadow(blurRadius: 0, spreadRadius: 0),
-                  color: context.cardColor,
+                  color: context.secondaryContainer,
                 ),
               ),
             ),

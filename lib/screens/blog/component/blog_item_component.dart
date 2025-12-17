@@ -41,9 +41,6 @@ class _BlogItemComponentState extends State<BlogItemComponent> {
         decoration: boxDecorationWithRoundedCorners(
           borderRadius: radius(12), // Rounded corners as shown in design
           backgroundColor: context.secondaryContainer, // Light green background
-          border: appStore.isDarkMode
-              ? Border.all(color: context.dividerColor)
-              : null,
         ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -104,7 +101,8 @@ class _BlogItemComponentState extends State<BlogItemComponent> {
                           ),
                           Text(
                             widget.blogData!.publishDate.validate(),
-                            style: context.secondaryTextStyle(size: 11),
+                            style: context.primaryTextStyle(
+                                size: 12, color: context.textGrey),
                           ),
                         ],
                       ),

@@ -146,7 +146,8 @@ class _AppBarDashboardComponent4State extends State<AppBarDashboardComponent4> {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 16, vertical: 10),
                       decoration: boxDecorationDefault(
-                          color: context.cardColor, borderRadius: radius(36)),
+                          color: context.secondaryContainer,
+                          borderRadius: radius(36)),
                       child: Row(
                         children: [
                           ic_location.iconImage(context: context),

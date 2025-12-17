@@ -67,6 +67,7 @@ class CustomLanguageListWidgetState extends State<CustomLanguageListWidget> {
             data.languageCode.validate();
 
         return SettingItemWidget(
+          titleTextColor: context.onSurface,
           padding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
           title: getNativeName(data),
           subTitle: data.subTitle,

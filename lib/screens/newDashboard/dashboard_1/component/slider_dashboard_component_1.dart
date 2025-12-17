@@ -122,7 +122,7 @@ class _SliderDashboardComponent1State extends State<SliderDashboardComponent1> {
               right: 16,
               child: Container(
                 decoration: boxDecorationDefault(
-                    color: context.cardColor, shape: BoxShape.circle),
+                    color: context.secondaryContainer, shape: BoxShape.circle),
                 height: 36,
                 padding: const EdgeInsets.all(8),
                 width: 36,
@@ -164,7 +164,7 @@ class _SliderDashboardComponent1State extends State<SliderDashboardComponent1> {
 
   Decoration get commonDecoration {
     return boxDecorationDefault(
-      color: context.cardColor,
+      color: context.secondaryContainer,
     );
   }
 

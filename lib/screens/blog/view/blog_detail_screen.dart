@@ -157,7 +157,9 @@ class _BlogDetailScreenState extends State<BlogDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
-      leading: BackWidget(),
+      leading: BackWidget(
+        iconColor: context.onPrimary,
+      ),
       appBarTitle: language.blogs,
       child: SnapHelperWidget<BlogDetailResponse>(
         future: future,
@@ -203,7 +205,7 @@ class _BlogDetailScreenState extends State<BlogDetailScreen> {
                     child: Container(
                       width: context.width(),
                       decoration: BoxDecoration(
-                        color: context.cardColor,
+                        color: context.scaffold,
                         borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(20),
                           topRight: Radius.circular(20),
@@ -252,8 +254,8 @@ class _BlogDetailScreenState extends State<BlogDetailScreen> {
                                   4.height,
                                   Text(
                                     data.blogDetail!.publishDate.validate(),
-                                    style: context.secondaryTextStyle(
-                                        size: 12, color: Colors.grey),
+                                    style: context.primaryTextStyle(
+                                        size: 12, color: context.textGrey),
                                   ),
                                 ],
                               ),
@@ -268,14 +270,13 @@ class _BlogDetailScreenState extends State<BlogDetailScreen> {
                             style: {
                               "div": Style(
                                 margin: Margins.zero,
+                                color: context.scaffold,
                               ),
                               "p": Style(
                                 fontSize: FontSize(16),
                                 lineHeight: LineHeight(1.6),
                                 margin: Margins.only(bottom: 16),
-                                color: appStore.isDarkMode
-                                    ? context.onPrimary
-                                    : Color(0xFF333333),
+                                color: context.onSurface,
                               ),
                             },
                           ).paddingSymmetric(horizontal: 16),
@@ -303,6 +304,7 @@ class _BlogDetailScreenState extends State<BlogDetailScreen> {
                                     width: 130,
                                     margin: EdgeInsets.only(right: 12),
                                     decoration: boxDecorationWithRoundedCorners(
+                                      backgroundColor: Colors.transparent,
                                       borderRadius: radius(8),
                                     ),
                                     child: GestureDetector(
@@ -343,9 +345,8 @@ class _BlogDetailScreenState extends State<BlogDetailScreen> {
                                             child: Text(
                                               blog.title.validate(),
                                               style: context.boldTextStyle(
-                                                  size: 14,
-                                                  color:
-                                                      textPrimaryColorGlobal),
+                                                size: 14,
+                                              ),
                                               maxLines: 2,
                                               overflow: TextOverflow.ellipsis,
                                             ),
@@ -357,7 +358,8 @@ class _BlogDetailScreenState extends State<BlogDetailScreen> {
                                                 horizontal: 8),
                                             child: Text(
                                               blog.publishDate.validate(),
-                                              style: context.secondaryTextStyle(
+                                              style: context.primaryTextStyle(
+                                                  color: context.textGrey,
                                                   size: 12),
                                             ),
                                           ),

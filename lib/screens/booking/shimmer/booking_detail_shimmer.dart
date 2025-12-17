@@ -11,7 +11,10 @@ class BookingDetailShimmer extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ShimmerWidget(height: 100, width: context.width(), backgroundColor: context.cardColor.withValues(alpha:0.7)),
+          ShimmerWidget(
+              height: 100,
+              width: context.width(),
+              backgroundColor: context.cardColor.withValues(alpha: 0.7)),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
             child: Column(
@@ -19,7 +22,7 @@ class BookingDetailShimmer extends StatelessWidget {
                 /// Booking Id Detail
                 Container(
                   decoration: boxDecorationDefault(
-                    color: context.cardColor,
+                    color: context.secondaryContainer,
                     borderRadius: radius(8),
                   ),
                   child: Column(
@@ -32,12 +35,12 @@ class BookingDetailShimmer extends StatelessWidget {
                           height: 36,
                           width: context.width(),
                           decoration: boxDecorationDefault(
-                            color: context.cardColor,
+                            color: context.secondaryContainer,
                             borderRadius: radiusOnly(topLeft: 8, topRight: 8),
                           ),
                         ),
                       ),
-                      
+
                       /// Service Detail
                       Row(
                         children: [
@@ -55,11 +58,15 @@ class BookingDetailShimmer extends StatelessWidget {
                       ).paddingAll(16),
                       Container(
                         decoration: boxDecorationWithRoundedCorners(
-                          backgroundColor: appStore.isDarkMode ? context.cardColor : whiteColor,
-                          borderRadius: const BorderRadius.all(Radius.circular(8)),
+                          backgroundColor: appStore.isDarkMode
+                              ? context.cardColor
+                              : whiteColor,
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(8)),
                         ),
                         width: context.width(),
-                        margin: const EdgeInsets.only(left: 16, bottom: 16, right: 16),
+                        margin: const EdgeInsets.only(
+                            left: 16, bottom: 16, right: 16),
                         child: Column(
                           children: [
                             Row(
@@ -97,7 +104,8 @@ class BookingDetailShimmer extends StatelessWidget {
                         ).paddingAll(16),
                       ),
                       Align(
-                        child: ShimmerWidget(height: 20, width: context.width() * 0.2),
+                        child: ShimmerWidget(
+                            height: 20, width: context.width() * 0.2),
                       ),
                       16.height,
                     ],
@@ -121,15 +129,21 @@ class BookingDetailShimmer extends StatelessWidget {
                           width: context.width(),
                           margin: const EdgeInsets.symmetric(vertical: 8),
                           padding: const EdgeInsets.all(8),
-                          decoration: boxDecorationWithRoundedCorners(backgroundColor: context.cardColor, borderRadius: BorderRadius.all(Radius.circular(defaultRadius))),
+                          decoration: boxDecorationWithRoundedCorners(
+                              backgroundColor: context.cardColor,
+                              borderRadius: BorderRadius.all(
+                                  Radius.circular(defaultRadius))),
                           child: Row(
                             children: [
                               Container(
-                                decoration: BoxDecoration(borderRadius: radius()),
+                                decoration:
+                                    BoxDecoration(borderRadius: radius()),
                                 child: ShimmerWidget(height: 50, width: 50),
                               ),
                               16.width,
-                              ShimmerWidget(height: 10, width: context.width() * 0.12).expand(),
+                              ShimmerWidget(
+                                      height: 10, width: context.width() * 0.12)
+                                  .expand(),
                             ],
                           ),
                         );
@@ -156,13 +170,16 @@ class BookingDetailShimmer extends StatelessWidget {
                           decoration: boxDecorationWithRoundedCorners(
                             borderRadius: radius(),
                             backgroundColor: context.cardColor,
-                            border: appStore.isDarkMode ? Border.all(color: context.dividerColor) : null,
+                            border: appStore.isDarkMode
+                                ? Border.all(color: context.dividerColor)
+                                : null,
                           ),
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Container(
-                                decoration: BoxDecoration(borderRadius: radius()),
+                                decoration:
+                                    BoxDecoration(borderRadius: radius()),
                                 child: ShimmerWidget(height: 70, width: 70),
                               ),
                               16.width,
@@ -170,11 +187,17 @@ class BookingDetailShimmer extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   4.height,
-                                  ShimmerWidget(height: 10, width: context.width() * 0.35),
+                                  ShimmerWidget(
+                                      height: 10,
+                                      width: context.width() * 0.35),
                                   4.height,
-                                  ShimmerWidget(height: 10, width: context.width() * 0.12),
+                                  ShimmerWidget(
+                                      height: 10,
+                                      width: context.width() * 0.12),
                                   4.height,
-                                  ShimmerWidget(height: 10, width: context.width() * 0.12),
+                                  ShimmerWidget(
+                                      height: 10,
+                                      width: context.width() * 0.12),
                                 ],
                               ).flexible()
                             ],
@@ -195,14 +218,16 @@ class BookingDetailShimmer extends StatelessWidget {
                     Container(
                       decoration: boxDecorationWithRoundedCorners(
                         backgroundColor: context.cardColor,
-                        borderRadius: const BorderRadius.all(Radius.circular(16)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(16)),
                       ),
                       child: ListView.separated(
                         itemCount: 2,
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
                         separatorBuilder: (BuildContext context, int index) {
-                          return Divider(height: 0, color: context.dividerColor);
+                          return Divider(
+                              height: 0, color: context.dividerColor);
                         },
                         itemBuilder: (context, index) {
                           return Container(
@@ -210,9 +235,11 @@ class BookingDetailShimmer extends StatelessWidget {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                ShimmerWidget(height: 10, width: context.width()),
+                                ShimmerWidget(
+                                    height: 10, width: context.width()),
                                 8.height,
-                                ShimmerWidget(height: 10, width: context.width()),
+                                ShimmerWidget(
+                                    height: 10, width: context.width()),
                                 16.height,
                                 HorizontalList(
                                   crossAxisAlignment: WrapCrossAlignment.start,
@@ -220,9 +247,13 @@ class BookingDetailShimmer extends StatelessWidget {
                                   padding: EdgeInsets.zero,
                                   itemBuilder: (_, i) {
                                     return Container(
-                                      decoration: boxDecorationRoundedWithShadow(10, backgroundColor: context.cardColor),
+                                      decoration:
+                                          boxDecorationRoundedWithShadow(10,
+                                              backgroundColor:
+                                                  context.cardColor),
                                       clipBehavior: Clip.antiAliasWithSaveLayer,
-                                      child: ShimmerWidget(height: 50, width: 50),
+                                      child:
+                                          ShimmerWidget(height: 50, width: 50),
                                     );
                                   },
                                 ),
@@ -244,28 +275,41 @@ class BookingDetailShimmer extends StatelessWidget {
                     16.height,
                     Container(
                       padding: const EdgeInsets.all(16),
-                      decoration: boxDecorationDefault(color: context.cardColor),
+                      decoration:
+                          boxDecorationDefault(color: context.cardColor),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Row(
                             children: [
                               Container(
-                                decoration: BoxDecoration(border: Border.all(color: context.dividerColor), shape: BoxShape.circle),
-                                child: ShimmerWidget(height: 70, width: 70).cornerRadiusWithClipRRect(35),
+                                decoration: BoxDecoration(
+                                    border:
+                                        Border.all(color: context.dividerColor),
+                                    shape: BoxShape.circle),
+                                child: ShimmerWidget(height: 70, width: 70)
+                                    .cornerRadiusWithClipRRect(35),
                               ),
                               16.width,
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
-                                      ShimmerWidget(height: 10, width: context.width()).flexible(),
+                                      ShimmerWidget(
+                                              height: 10,
+                                              width: context.width())
+                                          .flexible(),
                                       16.width,
                                       Container(
-                                        decoration: BoxDecoration(border: Border.all(color: context.dividerColor), shape: BoxShape.circle),
-                                        child: ShimmerWidget(height: 22, width: 22),
+                                        decoration: BoxDecoration(
+                                            border: Border.all(
+                                                color: context.dividerColor),
+                                            shape: BoxShape.circle),
+                                        child: ShimmerWidget(
+                                            height: 22, width: 22),
                                       ),
                                     ],
                                   ),
@@ -290,28 +334,41 @@ class BookingDetailShimmer extends StatelessWidget {
                     16.height,
                     Container(
                       padding: const EdgeInsets.all(16),
-                      decoration: boxDecorationDefault(color: context.cardColor),
+                      decoration:
+                          boxDecorationDefault(color: context.cardColor),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Row(
                             children: [
                               Container(
-                                decoration: BoxDecoration(border: Border.all(color: context.dividerColor), shape: BoxShape.circle),
-                                child: ShimmerWidget(height: 70, width: 70).cornerRadiusWithClipRRect(35),
+                                decoration: BoxDecoration(
+                                    border:
+                                        Border.all(color: context.dividerColor),
+                                    shape: BoxShape.circle),
+                                child: ShimmerWidget(height: 70, width: 70)
+                                    .cornerRadiusWithClipRRect(35),
                               ),
                               16.width,
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
-                                      ShimmerWidget(height: 10, width: context.width()).flexible(),
+                                      ShimmerWidget(
+                                              height: 10,
+                                              width: context.width())
+                                          .flexible(),
                                       16.width,
                                       Container(
-                                        decoration: BoxDecoration(border: Border.all(color: context.dividerColor), shape: BoxShape.circle),
-                                        child: ShimmerWidget(height: 22, width: 22),
+                                        decoration: BoxDecoration(
+                                            border: Border.all(
+                                                color: context.dividerColor),
+                                            shape: BoxShape.circle),
+                                        child: ShimmerWidget(
+                                            height: 22, width: 22),
                                       ),
                                     ],
                                   ),
@@ -335,7 +392,9 @@ class BookingDetailShimmer extends StatelessWidget {
                     ShimmerWidget(height: 10, width: context.width() * 0.25),
                     16.height,
                     Container(
-                      decoration: boxDecorationWithRoundedCorners(backgroundColor: context.cardColor, borderRadius: radius()),
+                      decoration: boxDecorationWithRoundedCorners(
+                          backgroundColor: context.cardColor,
+                          borderRadius: radius()),
                       padding: const EdgeInsets.all(16),
                       child: ListView.builder(
                         itemCount: 2,
@@ -348,13 +407,19 @@ class BookingDetailShimmer extends StatelessWidget {
                             children: [
                               Row(
                                 children: [
-                                  ShimmerWidget(height: 10, width: context.width()).expand(),
+                                  ShimmerWidget(
+                                          height: 10, width: context.width())
+                                      .expand(),
                                   16.width,
                                   Row(
                                     children: [
-                                      ShimmerWidget(height: 10, width: context.width() * 0.12),
+                                      ShimmerWidget(
+                                          height: 10,
+                                          width: context.width() * 0.12),
                                       4.width,
-                                      ShimmerWidget(height: 10, width: context.width() * 0.12),
+                                      ShimmerWidget(
+                                          height: 10,
+                                          width: context.width() * 0.12),
                                     ],
                                   ),
                                 ],
@@ -377,15 +442,19 @@ class BookingDetailShimmer extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.all(16),
                       width: context.width(),
-                      decoration: boxDecorationDefault(color: context.cardColor),
+                      decoration:
+                          boxDecorationDefault(color: context.cardColor),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Row(
                             children: [
-                              ShimmerWidget(height: 10, width: context.width() * 0.15).expand(),
+                              ShimmerWidget(
+                                      height: 10, width: context.width() * 0.15)
+                                  .expand(),
                               16.width,
-                              ShimmerWidget(height: 10, width: context.width() * 0.12),
+                              ShimmerWidget(
+                                  height: 10, width: context.width() * 0.12),
                             ],
                           ),
                           Column(
@@ -393,10 +462,17 @@ class BookingDetailShimmer extends StatelessWidget {
                             children: [
                               Divider(height: 26, color: context.dividerColor),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                  ShimmerWidget(height: 10, width: context.width() * 0.15).flexible(fit: FlexFit.loose),
-                                  ShimmerWidget(height: 10, width: context.width() * 0.12).flexible(flex: 2),
+                                  ShimmerWidget(
+                                          height: 10,
+                                          width: context.width() * 0.15)
+                                      .flexible(fit: FlexFit.loose),
+                                  ShimmerWidget(
+                                          height: 10,
+                                          width: context.width() * 0.12)
+                                      .flexible(flex: 2),
                                 ],
                               ),
                             ],
@@ -405,11 +481,16 @@ class BookingDetailShimmer extends StatelessWidget {
                             children: [
                               Divider(height: 26, color: context.dividerColor),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                  ShimmerWidget(height: 10, width: context.width() * 0.15),
+                                  ShimmerWidget(
+                                      height: 10,
+                                      width: context.width() * 0.15),
                                   16.width,
-                                  ShimmerWidget(height: 10, width: context.width() * 0.12),
+                                  ShimmerWidget(
+                                      height: 10,
+                                      width: context.width() * 0.12),
                                 ],
                               ),
                             ],
@@ -418,11 +499,17 @@ class BookingDetailShimmer extends StatelessWidget {
                             children: [
                               Divider(height: 26, color: context.dividerColor),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                  ShimmerWidget(height: 10, width: context.width() * 0.15).expand(),
+                                  ShimmerWidget(
+                                          height: 10,
+                                          width: context.width() * 0.15)
+                                      .expand(),
                                   16.width,
-                                  ShimmerWidget(height: 10, width: context.width() * 0.12),
+                                  ShimmerWidget(
+                                      height: 10,
+                                      width: context.width() * 0.12),
                                 ],
                               ),
                             ],
@@ -432,10 +519,17 @@ class BookingDetailShimmer extends StatelessWidget {
                               Divider(height: 26, color: context.dividerColor),
                               Row(
                                 children: [
-                                  ShimmerWidget(height: 10, width: context.width() * 0.15),
-                                  ShimmerWidget(height: 10, width: context.width() * 0.14).expand(),
+                                  ShimmerWidget(
+                                      height: 10,
+                                      width: context.width() * 0.15),
+                                  ShimmerWidget(
+                                          height: 10,
+                                          width: context.width() * 0.14)
+                                      .expand(),
                                   16.width,
-                                  ShimmerWidget(height: 10, width: context.width() * 0.12),
+                                  ShimmerWidget(
+                                      height: 10,
+                                      width: context.width() * 0.12),
                                 ],
                               ),
                             ],
@@ -443,8 +537,11 @@ class BookingDetailShimmer extends StatelessWidget {
                           Divider(height: 26, color: context.dividerColor),
                           Row(
                             children: [
-                              ShimmerWidget(height: 10, width: context.width() * 0.15).expand(),
-                              ShimmerWidget(height: 10, width: context.width() * 0.12),
+                              ShimmerWidget(
+                                      height: 10, width: context.width() * 0.15)
+                                  .expand(),
+                              ShimmerWidget(
+                                  height: 10, width: context.width() * 0.12),
                             ],
                           ),
                         ],
@@ -463,17 +560,21 @@ class BookingDetailShimmer extends StatelessWidget {
                     Container(
                       decoration: boxDecorationWithRoundedCorners(
                         backgroundColor: context.cardColor,
-                        borderRadius: const BorderRadius.all(Radius.circular(16)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(16)),
                       ),
-                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 16),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              ShimmerWidget(height: 10, width: context.width() * 0.15),
-                              ShimmerWidget(height: 10, width: context.width() * 0.12),
+                              ShimmerWidget(
+                                  height: 10, width: context.width() * 0.15),
+                              ShimmerWidget(
+                                  height: 10, width: context.width() * 0.12),
                             ],
                           ),
                           4.height,
@@ -482,8 +583,10 @@ class BookingDetailShimmer extends StatelessWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              ShimmerWidget(height: 10, width: context.width() * 0.15),
-                              ShimmerWidget(height: 10, width: context.width() * 0.12),
+                              ShimmerWidget(
+                                  height: 10, width: context.width() * 0.15),
+                              ShimmerWidget(
+                                  height: 10, width: context.width() * 0.12),
                             ],
                           ),
                           4.height,
@@ -492,8 +595,10 @@ class BookingDetailShimmer extends StatelessWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              ShimmerWidget(height: 10, width: context.width() * 0.15),
-                              ShimmerWidget(height: 10, width: context.width() * 0.12),
+                              ShimmerWidget(
+                                  height: 10, width: context.width() * 0.15),
+                              ShimmerWidget(
+                                  height: 10, width: context.width() * 0.12),
                             ],
                           ),
                         ],
@@ -518,7 +623,8 @@ class BookingDetailShimmer extends StatelessWidget {
                           margin: const EdgeInsets.only(bottom: 8),
                           padding: const EdgeInsets.all(16),
                           width: context.width(),
-                          decoration: boxDecorationDefault(color: context.cardColor),
+                          decoration:
+                              boxDecorationDefault(color: context.cardColor),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -526,19 +632,27 @@ class BookingDetailShimmer extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Container(
-                                    decoration: BoxDecoration(border: Border.all(color: context.dividerColor), shape: BoxShape.circle),
-                                    child: ShimmerWidget(height: 50, width: 50).cornerRadiusWithClipRRect(35),
+                                    decoration: BoxDecoration(
+                                        border: Border.all(
+                                            color: context.dividerColor),
+                                        shape: BoxShape.circle),
+                                    child: ShimmerWidget(height: 50, width: 50)
+                                        .cornerRadiusWithClipRRect(35),
                                   ),
                                   16.width,
                                   Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       4.height,
-                                      ShimmerWidget(height: 10, width: context.width()),
+                                      ShimmerWidget(
+                                          height: 10, width: context.width()),
                                       4.height,
-                                      ShimmerWidget(height: 10, width: context.width()),
+                                      ShimmerWidget(
+                                          height: 10, width: context.width()),
                                       4.height,
-                                      ShimmerWidget(height: 10, width: context.width()),
+                                      ShimmerWidget(
+                                          height: 10, width: context.width()),
                                     ],
                                   ).flexible(),
                                 ],

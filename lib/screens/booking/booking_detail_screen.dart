@@ -1974,7 +1974,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
         Container(
           padding: EdgeInsets.all(16),
           decoration: boxDecorationDefault(
-            color: context.cardColor,
+            color: context.secondaryContainer,
             border: appStore.isDarkMode
                 ? Border.all(color: context.dividerColor)
                 : null,

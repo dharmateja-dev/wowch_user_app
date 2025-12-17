@@ -1,6 +1,7 @@
 import 'package:booking_system_flutter/component/shimmer_widget.dart';
 import 'package:booking_system_flutter/main.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -18,7 +19,7 @@ class DashboardShimmer extends StatelessWidget {
                 Container(
                   height: 325,
                   width: context.width(),
-                  color: context.cardColor,
+                  color: context.secondaryContainer,
                 ),
                 Positioned(
                   bottom: -24,
@@ -27,7 +28,10 @@ class DashboardShimmer extends StatelessWidget {
                   child: Container(
                     height: 60,
                     width: context.width(),
-                    decoration: boxDecorationWithRoundedCorners(backgroundColor: appStore.isDarkMode ? Colors.black12 : Colors.white30),
+                    decoration: boxDecorationWithRoundedCorners(
+                        backgroundColor: appStore.isDarkMode
+                            ? Colors.black12
+                            : Colors.white30),
                   ),
                 ),
               ],
@@ -36,7 +40,8 @@ class DashboardShimmer extends StatelessWidget {
           30.height,
 
           /// Upcoming Booking UI
-          ShimmerWidget(height: 130, width: context.width()).paddingSymmetric(vertical: 16, horizontal: 16),
+          ShimmerWidget(height: 130, width: context.width())
+              .paddingSymmetric(vertical: 16, horizontal: 16),
 
           /// Category UI
           Column(
@@ -63,13 +68,16 @@ class DashboardShimmer extends StatelessWidget {
                             width: CATEGORY_ICON_SIZE,
                             height: CATEGORY_ICON_SIZE,
                             padding: const EdgeInsets.all(8),
-                            decoration: BoxDecoration(color: context.cardColor, shape: BoxShape.circle),
+                            decoration: BoxDecoration(
+                                color: context.secondaryContainer,
+                                shape: BoxShape.circle),
                           ),
                           4.height,
                           Container(
                             width: 60,
                             height: 10,
-                            decoration: boxDecorationWithRoundedCorners(backgroundColor: context.cardColor),
+                            decoration: boxDecorationWithRoundedCorners(
+                                backgroundColor: context.cardColor),
                           ),
                         ],
                       ),
@@ -94,13 +102,16 @@ class DashboardShimmer extends StatelessWidget {
               HorizontalList(
                 itemCount: 10,
                 spacing: 16,
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                 itemBuilder: (context, index) {
                   return Container(
                     decoration: boxDecorationWithRoundedCorners(
                       borderRadius: radius(),
                       backgroundColor: context.cardColor,
-                      border: appStore.isDarkMode ? Border.all(color: context.dividerColor) : null,
+                      border: appStore.isDarkMode
+                          ? Border.all(color: context.dividerColor)
+                          : null,
                     ),
                     child: ShimmerWidget(width: 280, height: 200),
                   );
@@ -129,22 +140,32 @@ class DashboardShimmer extends StatelessWidget {
                     decoration: boxDecorationWithRoundedCorners(
                       borderRadius: radius(),
                       backgroundColor: context.cardColor,
-                      border: appStore.isDarkMode ? Border.all(color: context.dividerColor) : null,
+                      border: appStore.isDarkMode
+                          ? Border.all(color: context.dividerColor)
+                          : null,
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        ShimmerWidget(height: 205, width: context.width() / 2 - 26),
+                        ShimmerWidget(
+                            height: 205, width: context.width() / 2 - 26),
                         16.height,
-                        ShimmerWidget(height: 10, width: context.width() * 0.5).paddingSymmetric(horizontal: 16),
+                        ShimmerWidget(height: 10, width: context.width() * 0.5)
+                            .paddingSymmetric(horizontal: 16),
                         16.height,
                         Row(
                           children: [
                             ShimmerWidget(
-                              child: Container(height: 30, width: 30, decoration: boxDecorationDefault(shape: BoxShape.circle, color: context.cardColor)),
+                              child: Container(
+                                  height: 30,
+                                  width: 30,
+                                  decoration: boxDecorationDefault(
+                                      shape: BoxShape.circle,
+                                      color: context.cardColor)),
                             ),
                             8.width,
-                            ShimmerWidget(height: 10, width: context.width()).expand(),
+                            ShimmerWidget(height: 10, width: context.width())
+                                .expand(),
                           ],
                         ).paddingSymmetric(horizontal: 16),
                         16.height,
@@ -177,7 +198,9 @@ class DashboardShimmer extends StatelessWidget {
                     decoration: boxDecorationWithRoundedCorners(
                       borderRadius: radius(),
                       backgroundColor: context.cardColor,
-                      border: appStore.isDarkMode ? Border.all(color: context.dividerColor) : null,
+                      border: appStore.isDarkMode
+                          ? Border.all(color: context.dividerColor)
+                          : null,
                     ),
                     padding: EdgeInsets.all(16),
                     child: Column(
@@ -190,7 +213,9 @@ class DashboardShimmer extends StatelessWidget {
                               child: Container(
                                 height: 56,
                                 width: 56,
-                                decoration: boxDecorationDefault(shape: BoxShape.circle, color: context.cardColor),
+                                decoration: boxDecorationDefault(
+                                    shape: BoxShape.circle,
+                                    color: context.cardColor),
                               ),
                             ),
                             12.width,
@@ -198,13 +223,17 @@ class DashboardShimmer extends StatelessWidget {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  ShimmerWidget(height: 18, width: context.width() * 0.4),
+                                  ShimmerWidget(
+                                      height: 18, width: context.width() * 0.4),
                                   8.height,
                                   Row(
                                     children: [
                                       ShimmerWidget(height: 16, width: 16),
                                       6.width,
-                                      Expanded(child: ShimmerWidget(height: 12, width: double.infinity)),
+                                      Expanded(
+                                          child: ShimmerWidget(
+                                              height: 12,
+                                              width: double.infinity)),
                                     ],
                                   ),
                                   6.height,
@@ -212,7 +241,9 @@ class DashboardShimmer extends StatelessWidget {
                                     children: [
                                       ShimmerWidget(height: 16, width: 16),
                                       6.width,
-                                      ShimmerWidget(height: 12, width: context.width() * 0.25),
+                                      ShimmerWidget(
+                                          height: 12,
+                                          width: context.width() * 0.25),
                                     ],
                                   ),
                                 ],
@@ -229,12 +260,14 @@ class DashboardShimmer extends StatelessWidget {
                           children: List.generate(3, (i) {
                             return ShimmerWidget(
                               child: Container(
-                                padding: EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 14, vertical: 8),
                                 decoration: boxDecorationWithRoundedCorners(
                                   borderRadius: radius(20),
                                   backgroundColor: context.cardColor,
                                 ),
-                                child: ShimmerWidget(height: 12, width: 50 + (i * 12)),
+                                child: ShimmerWidget(
+                                    height: 12, width: 50 + (i * 12)),
                               ),
                             );
                           }),
@@ -257,7 +290,9 @@ class DashboardShimmer extends StatelessWidget {
               width: context.width(),
               decoration: boxDecorationWithRoundedCorners(
                 backgroundColor: context.cardColor,
-                borderRadius: BorderRadius.only(topLeft: Radius.circular(defaultRadius), topRight: Radius.circular(defaultRadius)),
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(defaultRadius),
+                    topRight: Radius.circular(defaultRadius)),
               ),
             ),
           ),

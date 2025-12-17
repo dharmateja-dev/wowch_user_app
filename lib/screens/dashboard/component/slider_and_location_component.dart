@@ -78,7 +78,7 @@ class _SliderLocationComponentState extends State<SliderLocationComponent> {
               right: 16,
               child: Container(
                 decoration: boxDecorationDefault(
-                    color: context.cardColor, shape: BoxShape.circle),
+                    color: context.secondaryContainer, shape: BoxShape.circle),
                 height: 36,
                 padding: const EdgeInsets.all(8),
                 width: 36,
@@ -124,7 +124,7 @@ class _SliderLocationComponentState extends State<SliderLocationComponent> {
 
   Decoration get commonDecoration {
     return boxDecorationDefault(
-      color: context.cardColor,
+      color: context.secondaryContainer,
       boxShadow: [
         BoxShadow(color: shadowColorGlobal, offset: const Offset(1, 0)),
         BoxShadow(color: shadowColorGlobal, offset: const Offset(0, 1)),

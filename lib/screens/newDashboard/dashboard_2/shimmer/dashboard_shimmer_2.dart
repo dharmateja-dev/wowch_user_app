@@ -1,3 +1,4 @@
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -17,7 +18,7 @@ class DashboardShimmer2 extends StatelessWidget {
             child: Container(
               width: context.width(),
               height: context.height() * 0.22,
-              color: context.cardColor,
+              color: context.secondaryContainer,
             ).cornerRadiusWithClipRRectOnly(bottomLeft: 30, bottomRight: 30),
           ),
           16.height,
@@ -29,7 +30,8 @@ class DashboardShimmer2 extends StatelessWidget {
                 child: Container(
                   width: context.width(),
                   height: 200,
-                  decoration: boxDecorationDefault(borderRadius: radius(8), color: context.cardColor),
+                  decoration: boxDecorationDefault(
+                      borderRadius: radius(8), color: context.cardColor),
                 ),
               );
             }),
@@ -45,8 +47,10 @@ class DashboardShimmer2 extends StatelessWidget {
           26.height,
 
           /// Upcoming Booking UI
-          ShimmerWidget(height: 16, width: context.width() * 0.5).paddingLeft(16),
-          ShimmerWidget(height: 200, width: context.width()).paddingSymmetric(vertical: 16, horizontal: 16),
+          ShimmerWidget(height: 16, width: context.width() * 0.5)
+              .paddingLeft(16),
+          ShimmerWidget(height: 200, width: context.width())
+              .paddingSymmetric(vertical: 16, horizontal: 16),
           16.height,
 
           /// Category UI
@@ -62,7 +66,8 @@ class DashboardShimmer2 extends StatelessWidget {
               HorizontalList(
                 itemCount: 10,
                 spacing: 16,
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                 itemBuilder: (context, index) {
                   return ShimmerWidget(
                     child: Container(
@@ -70,8 +75,10 @@ class DashboardShimmer2 extends StatelessWidget {
                       padding: const EdgeInsets.all(18),
                       decoration: boxDecorationDefault(
                         borderRadius: BorderRadius.circular(defaultRadius + 16),
-                        color: context.cardColor,
-                        border: appStore.isDarkMode ? Border.all(color: context.dividerColor) : null,
+                        color: context.secondaryContainer,
+                        border: appStore.isDarkMode
+                            ? Border.all(color: context.dividerColor)
+                            : null,
                       ),
                     ),
                   );
@@ -94,7 +101,8 @@ class DashboardShimmer2 extends StatelessWidget {
               HorizontalList(
                 itemCount: 10,
                 spacing: 16,
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                 itemBuilder: (context, index) {
                   return ShimmerWidget(
                     child: Container(
@@ -103,7 +111,9 @@ class DashboardShimmer2 extends StatelessWidget {
                       decoration: boxDecorationWithRoundedCorners(
                         borderRadius: radius(),
                         backgroundColor: context.cardColor,
-                        border: appStore.isDarkMode ? Border.all(color: context.dividerColor) : null,
+                        border: appStore.isDarkMode
+                            ? Border.all(color: context.dividerColor)
+                            : null,
                       ),
                     ),
                   );
@@ -125,7 +135,8 @@ class DashboardShimmer2 extends StatelessWidget {
               HorizontalList(
                 itemCount: 10,
                 spacing: 16,
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                 itemBuilder: (context, index) {
                   return ShimmerWidget(
                     child: Container(
@@ -134,7 +145,9 @@ class DashboardShimmer2 extends StatelessWidget {
                       decoration: boxDecorationWithRoundedCorners(
                         borderRadius: radius(),
                         backgroundColor: context.cardColor,
-                        border: appStore.isDarkMode ? Border.all(color: context.dividerColor) : null,
+                        border: appStore.isDarkMode
+                            ? Border.all(color: context.dividerColor)
+                            : null,
                       ),
                     ),
                   );
@@ -149,7 +162,7 @@ class DashboardShimmer2 extends StatelessWidget {
             child: Container(
               height: 160,
               width: context.width(),
-              color: context.cardColor,
+              color: context.secondaryContainer,
             ),
           ),
         ],

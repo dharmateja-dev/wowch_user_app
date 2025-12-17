@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:booking_system_flutter/main.dart';
 import 'package:booking_system_flutter/utils/colors.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/images.dart';
 import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +30,7 @@ class _WalletCardState extends State<WalletCard> {
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       width: context.width(),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10), color: primaryColor),
+          borderRadius: BorderRadius.circular(10), color: context.primary),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -38,7 +39,7 @@ class _WalletCardState extends State<WalletCard> {
             height: 70,
             width: context.width(),
             child: Card(
-              color: context.scaffoldBackgroundColor,
+              color: context.secondaryContainer,
               child: Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
@@ -51,7 +52,7 @@ class _WalletCardState extends State<WalletCard> {
                       child: PriceWidget(
                           price: widget.availableBalance.validate(),
                           size: 18,
-                          color: context.primaryColor,
+                          color: context.primary,
                           isBoldText: true),
                     ),
                   ],
@@ -69,13 +70,13 @@ class _WalletCardState extends State<WalletCard> {
                     availableBalance: widget.availableBalance,
                   ).launch(context).then(widget.callback!);
                 },
-                suffix: const CachedImageWidget(
+                suffix: CachedImageWidget(
                   url: ic_plus,
                   height: 16,
                   width: 16,
-                  color: white,
+                  color: context.onPrimary,
                 ),
-                textStyle: context.boldTextStyle(color: whiteColor),
+                textStyle: context.boldTextStyle(color: context.onPrimary),
                 text: language.withdraw,
               ),
               TextIcon(
@@ -84,13 +85,13 @@ class _WalletCardState extends State<WalletCard> {
                       .launch(context)
                       .then(widget.callback!);
                 },
-                suffix: const CachedImageWidget(
+                suffix: CachedImageWidget(
                   url: ic_plus,
                   height: 16,
                   width: 16,
-                  color: white,
+                  color: context.onPrimary,
                 ),
-                textStyle: context.boldTextStyle(color: whiteColor),
+                textStyle: context.boldTextStyle(color: context.onPrimary),
                 text: language.topUp,
               ),
             ],

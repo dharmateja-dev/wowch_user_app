@@ -34,7 +34,7 @@ class CategoryDashboardComponent4 extends StatelessWidget {
                   height: 85,
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: context.cardColor,
+                    color: context.secondaryContainer,
                     shape: BoxShape.rectangle,
                     borderRadius: radius(8),
                   ),

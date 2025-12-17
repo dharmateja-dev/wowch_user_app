@@ -178,7 +178,7 @@ class _BookingConfirmedComponent1State
                   Container(
                     decoration: boxDecorationDefault(
                       shape: BoxShape.rectangle,
-                      color: context.cardColor,
+                      color: context.secondaryContainer,
                       borderRadius: BorderRadius.circular(defaultRadius),
                     ),
                     padding: const EdgeInsets.all(16),

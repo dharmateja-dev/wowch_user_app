@@ -80,7 +80,7 @@ class ProfileFragmentState extends State<ProfileFragment> {
       appBar: appBarWidget(
         language.profile,
         center: true,
-        textColor: context.scaffoldBackgroundColor,
+        textColor: context.onPrimary,
         textSize: APP_BAR_TEXT_SIZE,
         elevation: 0.0,
         color: context.primary,
@@ -289,7 +289,7 @@ class ProfileFragmentState extends State<ProfileFragment> {
                           ),
                           // TODO: Uncomment this when shop favorite feature is enabled
                           // SettingItemWidget(
-                          //   decoration: boxDecorationDefault(color: context.cardColor,borderRadius: BorderRadiusDirectional.vertical(bottom: Radius.circular(0))),
+                          //   decoration: boxDecorationDefault(color: context.secondaryContainer,borderRadius: BorderRadiusDirectional.vertical(bottom: Radius.circular(0))),
                           //   leading: Icon(Icons.store_outlined, size: SETTING_ICON_SIZE, ),
                           //   title: language.lblFavoriteShops,
                           //   titleTextStyle:context.boldTextStyle(size: 14),
@@ -592,6 +592,7 @@ class ProfileFragmentState extends State<ProfileFragment> {
                             shape: dialogShape(16),
                             title: language.lblDeleteAccountQuestion,
                             subTitle: language.lblDeleteAccountConformation,
+                            subTitleColor: context.dialogSubTitleColor,
                             negativeText: language.lblCancel,
                             positiveText: language.lblDelete,
                             titleColor: context.dialogTitleColor,

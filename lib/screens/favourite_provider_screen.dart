@@ -2,6 +2,7 @@ import 'package:booking_system_flutter/component/back_widget.dart';
 import 'package:booking_system_flutter/component/loader_widget.dart';
 import 'package:booking_system_flutter/main.dart';
 import 'package:booking_system_flutter/model/user_data_model.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -141,13 +142,13 @@ class _FavouriteProviderScreenState extends State<FavouriteProviderScreen> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: context.cardColor,
+      backgroundColor: context.scaffold,
       appBar: appBarWidget(
         center: true,
         language.favouriteProvider,
         textSize: APP_BAR_TEXT_SIZE,
-        color: context.primaryColor,
-        textColor: white,
+        color: context.primary,
+        textColor: context.onPrimary,
         backWidget: BackWidget(),
       ),
       body: Stack(

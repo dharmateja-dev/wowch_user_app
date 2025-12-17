@@ -324,7 +324,8 @@ class _HelpDeskDetailScreenState extends State<HelpDeskDetailScreen> {
                                                     const EdgeInsets.symmetric(
                                                         horizontal: 16,
                                                         vertical: 12),
-                                                color: context.cardColor,
+                                                color:
+                                                    context.secondaryContainer,
                                                 onTap: () {
                                                   isReplyBtnClick = false;
                                                   imageFiles.clear();

@@ -6,6 +6,7 @@ import 'package:booking_system_flutter/model/service_data_model.dart';
 import 'package:booking_system_flutter/screens/auth/sign_in_screen.dart';
 import 'package:booking_system_flutter/utils/colors.dart';
 import 'package:booking_system_flutter/utils/common.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/images.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
 import 'package:flutter/material.dart';
@@ -140,7 +141,7 @@ class _ServiceDetailHeaderComponentState
               child: Center(
                 child: Container(
                   decoration: BoxDecoration(
-                    color: context.cardColor,
+                    color: context.secondaryContainer,
                     borderRadius: const BorderRadius.all(Radius.circular(15)),
                   ),
                   padding: const EdgeInsets.symmetric(horizontal: 10),

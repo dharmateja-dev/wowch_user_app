@@ -26,7 +26,6 @@ import '../../services/razorpay_service_new.dart';
 import '../../services/sadad_services_new.dart';
 import '../../services/stripe_service_new.dart';
 import '../../utils/app_configuration.dart';
-import '../../utils/colors.dart';
 import '../../utils/configs.dart';
 import '../../utils/constant.dart';
 import '../../utils/images.dart';
@@ -387,19 +386,19 @@ class _UserWalletBalanceScreenState extends State<UserWalletBalanceScreen> {
                   Container(
                     width: context.width(),
                     padding: const EdgeInsets.all(16),
-                    color: context.cardColor,
+                    color: context.secondaryContainer,
                     child: Row(
                       children: [
                         Text(language.balance,
                                 style: context.boldTextStyle(
-                                    color: context.primaryColor))
+                                    color: context.primary))
                             .expand(),
                         Observer(
                             builder: (context) => PriceWidget(
                                 price: appStore.userWalletAmount,
                                 size: 16,
                                 isBoldText: true,
-                                color: Colors.green)),
+                                color: context.primary)),
                       ],
                     ),
                   ),
@@ -411,13 +410,13 @@ class _UserWalletBalanceScreenState extends State<UserWalletBalanceScreen> {
                           style: context.boldTextStyle(size: LABEL_TEXT_SIZE)),
                       8.height,
                       Text(language.topUpAmountQuestion,
-                          style: context.secondaryTextStyle()),
+                          style: context.primaryTextStyle()),
                       Container(
                         width: context.width(),
                         margin: const EdgeInsets.symmetric(vertical: 16),
                         padding: const EdgeInsets.all(16),
                         decoration: boxDecorationDefault(
-                          color: walletCardColor,
+                          color: context.secondaryContainer,
                           borderRadius: radius(8),
                         ),
                         child: Column(
@@ -440,6 +439,7 @@ class _UserWalletBalanceScreenState extends State<UserWalletBalanceScreen> {
                                 }
                               },
                               decoration: InputDecoration(
+                                fillColor: context.inputFillColor,
                                 prefixText: isCurrencyPositionLeft
                                     ? appConfigurationStore.currencySymbol + " "
                                     : '',
@@ -462,32 +462,34 @@ class _UserWalletBalanceScreenState extends State<UserWalletBalanceScreen> {
                               alignment: WrapAlignment.center,
                               children:
                                   List.generate(defaultAmounts.length, (index) {
+                                final isSelected =
+                                    defaultAmounts[index].toString() ==
+                                        walletAmountCont.text;
                                 return Container(
                                   padding: const EdgeInsets.symmetric(
                                       vertical: 8, horizontal: 16),
                                   decoration: boxDecorationDefault(
-                                    color: defaultAmounts[index].toString() ==
-                                            walletAmountCont.text
-                                        ? white
-                                        : Colors.white12,
+                                    color: isSelected
+                                        ? context.primaryContainer
+                                        : context.secondaryContainer,
                                     borderRadius: radius(8),
                                     border: Border.all(
-                                        color:
-                                            defaultAmounts[index].toString() ==
-                                                    walletAmountCont.text
-                                                ? context.primaryColor
-                                                : Colors.white12),
+                                        color: isSelected
+                                            ? Colors.transparent
+                                            : context.primary),
                                   ),
                                   child: Text(
                                     defaultAmounts[index]
                                         .toString()
                                         .formatNumberWithComma(),
                                     style: context.primaryTextStyle(
-                                        color:
-                                            defaultAmounts[index].toString() ==
-                                                    walletAmountCont.text
-                                                ? context.primaryColor
-                                                : context.onPrimary),
+                                        weight: isSelected
+                                            ? FontWeight.bold
+                                            : FontWeight.normal,
+                                        color: isSelected
+                                            ? context.primary
+                                            : context.onSurface
+                                                .withOpacity(0.7)),
                                   ),
                                 ).onTap(() {
                                   walletAmountCont.text =
@@ -504,8 +506,8 @@ class _UserWalletBalanceScreenState extends State<UserWalletBalanceScreen> {
                           style: context.boldTextStyle(size: LABEL_TEXT_SIZE)),
                       4.height,
                       Text(language.selectYourPaymentMethodToAddBalance,
-                          style: context.secondaryTextStyle()),
-                      4.height,
+                          style: context.primaryTextStyle()),
+                      16.height,
                       SnapHelperWidget<List<PaymentSetting>>(
                         future: future,
                         onSuccess: (list) {
@@ -540,7 +542,8 @@ class _UserWalletBalanceScreenState extends State<UserWalletBalanceScreen> {
                                           vertical: 8, horizontal: 8),
                                       decoration: boxDecorationDefault(
                                         borderRadius: radius(8),
-                                        border: Border.all(color: primaryColor),
+                                        border:
+                                            Border.all(color: context.primary),
                                       ),
                                       alignment: Alignment.center,
                                       child: icon.isNotEmpty
@@ -562,7 +565,7 @@ class _UserWalletBalanceScreenState extends State<UserWalletBalanceScreen> {
                                           ? const EdgeInsets.all(2)
                                           : EdgeInsets.zero,
                                       decoration: boxDecorationDefault(
-                                          color: context.primaryColor),
+                                          color: context.primary),
                                       child: currentPaymentMethod == value
                                           ? Icon(Icons.done,
                                               size: 16,
@@ -590,9 +593,9 @@ class _UserWalletBalanceScreenState extends State<UserWalletBalanceScreen> {
             child: AppButton(
               width: context.width(),
               height: 16,
-              color: context.primaryColor,
+              color: context.primary,
               text: language.proceedToTopUp,
-              textStyle: context.boldTextStyle(color: white),
+              textStyle: context.boldTextStyle(color: context.onPrimary),
               onTap: () async {
                 hideKeyboard(context);
                 _handleClick();

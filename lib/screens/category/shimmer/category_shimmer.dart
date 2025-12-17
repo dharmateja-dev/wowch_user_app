@@ -1,4 +1,5 @@
 import 'package:booking_system_flutter/component/shimmer_widget.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -16,7 +17,8 @@ class CategoryShimmer extends StatelessWidget {
         spacing: 16,
         itemCount: 16,
         listAnimationType: ListAnimationType.None,
-        scaleConfiguration: ScaleConfiguration(duration: 300.milliseconds, delay: 50.milliseconds),
+        scaleConfiguration: ScaleConfiguration(
+            duration: 300.milliseconds, delay: 50.milliseconds),
         itemBuilder: (_, index) {
           return ShimmerWidget(
             child: SizedBox(
@@ -27,13 +29,16 @@ class CategoryShimmer extends StatelessWidget {
                     width: CATEGORY_ICON_SIZE,
                     height: CATEGORY_ICON_SIZE,
                     padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(color: context.cardColor, shape: BoxShape.circle),
+                    decoration: BoxDecoration(
+                        color: context.secondaryContainer,
+                        shape: BoxShape.circle),
                   ),
                   4.height,
                   Container(
                     width: 60,
                     height: 10,
-                    decoration: boxDecorationWithRoundedCorners(backgroundColor: context.cardColor),
+                    decoration: boxDecorationWithRoundedCorners(
+                        backgroundColor: context.cardColor),
                   ),
                 ],
               ),

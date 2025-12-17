@@ -136,7 +136,9 @@ class _AddBankScreenState extends State<AddBankScreen> {
     return GestureDetector(
       onTap: () => hideKeyboard(context),
       child: AppScaffold(
-        leading: BackWidget(),
+        leading: BackWidget(
+          iconColor: context.onPrimary,
+        ),
         appBarTitle: language.addBank,
         child: Stack(
           children: [
@@ -163,7 +165,7 @@ class _AddBankScreenState extends State<AddBankScreen> {
                               style: context.boldTextStyle(size: 14)),
                           PriceWidget(
                               price: widget.availableBalance.validate(),
-                              color: context.primaryColor,
+                              color: context.primary,
                               isBoldText: true),
                         ],
                       ),
@@ -179,8 +181,10 @@ class _AddBankScreenState extends State<AddBankScreen> {
                       nextFocus: branchNameFocus,
                       decoration: inputDecoration(context,
                           hintText: language.bankName,
+                          
+                          hintTextColor: context.searchHintTextColor,
                           borderRadius: 8,
-                          fillColor: Colors.transparent),
+                          fillColor: context.inputFillColor),
                       //suffix: ic_piggy_bank.iconImage(size: 10).paddingAll(14),
                     ),
                     16.height,
@@ -195,8 +199,9 @@ class _AddBankScreenState extends State<AddBankScreen> {
                       nextFocus: accNumberFocus,
                       decoration: inputDecoration(context,
                           hintText: language.hintEnterFullName,
+                          hintTextColor: context.searchHintTextColor,
                           borderRadius: 8,
-                          fillColor: Colors.transparent),
+                          fillColor: context.inputFillColor),
                       //suffix: ic_piggy_bank.iconImage(size: 10).paddingAll(14),
                     ),
                     16.height,
@@ -211,8 +216,9 @@ class _AddBankScreenState extends State<AddBankScreen> {
                       nextFocus: ifscCodeFocus,
                       decoration: inputDecoration(context,
                           hintText: language.hintEnterAccountNumber,
+                          hintTextColor: context.searchHintTextColor,
                           borderRadius: 8,
-                          fillColor: Colors.transparent),
+                          fillColor: context.inputFillColor),
                       // suffix: ic_password
                       //     .iconImage(size: 10, fit: BoxFit.contain)
                       //     .paddingAll(14),
@@ -229,9 +235,10 @@ class _AddBankScreenState extends State<AddBankScreen> {
                       nextFocus: contactNumberFocus,
                       decoration: inputDecoration(context,
                           hintText: language.hintEnterIFSCCode,
+                          hintTextColor: context.searchHintTextColor,
                           counter: false,
                           borderRadius: 8,
-                          fillColor: Colors.transparent),
+                          fillColor: context.inputFillColor),
                       //suffix: ic_profile2.iconImage(size: 10).paddingAll(14),
                       isValidationRequired: false,
                     ),
@@ -254,8 +261,9 @@ class _AddBankScreenState extends State<AddBankScreen> {
                       }).toList(),
                       decoration: inputDecoration(context,
                           hintText: language.lblStatus,
+                          hintTextColor: context.searchHintTextColor,
                           borderRadius: 8,
-                          fillColor: Colors.transparent),
+                          fillColor: context.inputFillColor),
                       onChanged: (StaticDataModel? value) async {
                         bankStatus = value!.key.validate();
                         setState(() {});

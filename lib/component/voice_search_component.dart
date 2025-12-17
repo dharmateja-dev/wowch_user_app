@@ -26,7 +26,7 @@ class VoiceSearchComponentState extends State<VoiceSearchComponent> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: context.cardColor,
+      color: context.secondaryContainer,
       width: context.width(),
       height: 120,
       alignment: Alignment.center,
@@ -35,7 +35,8 @@ class VoiceSearchComponentState extends State<VoiceSearchComponent> {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Lottie.asset('assets/lottie/speech.json', fit: BoxFit.cover, height: 60, width: 120),
+          Lottie.asset('assets/lottie/speech.json',
+              fit: BoxFit.cover, height: 60, width: 120),
         ],
       ),
     );

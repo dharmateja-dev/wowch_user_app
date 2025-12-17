@@ -58,7 +58,7 @@ class ShopComponent extends StatelessWidget {
         width: width ?? context.width(),
         padding: EdgeInsets.all(16),
         decoration: boxDecorationDefault(
-          color: context.cardColor,
+          color: context.secondaryContainer,
           border: isSelected ? Border.all(color: primaryColor) : null,
         ),
         child: Column(

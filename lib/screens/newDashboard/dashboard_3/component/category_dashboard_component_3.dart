@@ -39,7 +39,7 @@ class CategoryDashboardComponent3 extends StatelessWidget {
                     height: CATEGORY_ICON_SIZE,
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      color: context.cardColor,
+                      color: context.secondaryContainer,
                       shape: BoxShape.rectangle,
                       borderRadius: radius(8),
                     ),

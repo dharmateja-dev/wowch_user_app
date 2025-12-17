@@ -35,7 +35,7 @@ class HandymanStaffMembersComponent extends StatelessWidget {
               ),
               child: Container(
                 decoration: BoxDecoration(
-                    color: context.cardColor, borderRadius: radius()),
+                    color: context.secondaryContainer, borderRadius: radius()),
                 padding:
                     const EdgeInsets.symmetric(horizontal: 12.0, vertical: 7),
                 child: Row(

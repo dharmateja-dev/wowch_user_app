@@ -383,7 +383,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen>
             return Container(
               padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 5),
               decoration: boxDecorationDefault(
-                color: context.cardColor,
+                color: context.secondaryContainer,
                 border: appStore.isDarkMode
                     ? Border.all(color: context.dividerColor)
                     : null,

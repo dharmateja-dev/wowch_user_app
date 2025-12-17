@@ -1,5 +1,6 @@
 import 'package:booking_system_flutter/component/cached_image_widget.dart';
 import 'package:booking_system_flutter/main.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/images.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
 import 'package:booking_system_flutter/utils/text_styles.dart';
@@ -62,7 +63,7 @@ class _AppbarDashboardComponent3State extends State<AppbarDashboardComponent3> {
           padding: EdgeInsets.symmetric(
               horizontal: 12, vertical: appStore.unreadCount > 0 ? 10 : 8),
           decoration: boxDecorationDefault(
-            color: context.cardColor,
+            color: context.secondaryContainer,
             borderRadius: radius(28),
           ),
           child: Row(

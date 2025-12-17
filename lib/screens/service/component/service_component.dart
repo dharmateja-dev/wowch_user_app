@@ -278,7 +278,7 @@ class ServiceComponentState extends State<ServiceComponent> {
                         //       backgroundColor: primaryColor,
                         //       borderRadius: radius(24),
                         //       border: Border.all(
-                        //           color: context.cardColor, width: 2),
+                        //           color: context.secondaryContainer, width: 2),
                         //     ),
                         //     child: PriceWidget(
                         //       price: widget.serviceData.price.validate(),
