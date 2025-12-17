@@ -59,7 +59,7 @@ class BookingDetailHandymanWidgetState
   Widget build(BuildContext context) {
     return Container(
       decoration: boxDecorationWithRoundedCorners(
-          backgroundColor: context.cardColor, borderRadius: radius()),
+          backgroundColor: context.secondaryContainer, borderRadius: radius()),
       padding: EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -123,8 +123,7 @@ class BookingDetailHandymanWidgetState
                             .validate()
                             .toStringAsFixed(1)
                             .toString(),
-                        style: context.boldTextStyle(
-                            color: textSecondaryColor, size: 14),
+                        style: context.boldTextStyle(size: 14),
                       ),
                     ],
                   ),
@@ -133,7 +132,7 @@ class BookingDetailHandymanWidgetState
             ],
           ),
           8.height,
-          Divider(color: context.dividerColor),
+          Divider(color: context.dividerOnSecondaryContainerColor),
           8.height,
           Row(
             children: [
@@ -147,7 +146,8 @@ class BookingDetailHandymanWidgetState
                           size: 18, color: context.onPrimary, context: context),
                       8.width,
                       Text(language.lblCall,
-                          style: context.boldTextStyle(color: white)),
+                          style:
+                              context.boldTextStyle(color: context.onPrimary)),
                     ],
                   ).fit(),
                   width: context.width(),

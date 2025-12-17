@@ -1,5 +1,6 @@
 import 'package:booking_system_flutter/component/base_scaffold_widget.dart';
 import 'package:booking_system_flutter/store/filter_store.dart';
+import 'package:booking_system_flutter/utils/common.dart';
 import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
 import 'package:booking_system_flutter/utils/text_styles.dart';
@@ -401,13 +402,17 @@ class _ViewAllServiceScreenState extends State<ViewAllServiceScreen> {
           textFieldType: TextFieldType.OTHER,
           focus: myFocusNode,
           controller: searchCont,
-          decoration: InputDecoration(
+          decoration: inputDecoration(
+            hintTextColor: context.searchHintTextColor,
+            showBorder: false,
+            context,
             hintText: "${language.lblSearchFor} $setSearchString",
             prefixIcon:
                 ic_search.iconImage(size: 16, context: context).paddingAll(14),
-            suffixIcon: ic_filter
-                .iconImage(size: 16, context: context)
-                .paddingAll(14)
+          ).copyWith(
+            suffixIcon: ic_searchFilter
+                .iconImage(size: 12, context: context)
+                .paddingAll(16)
                 .onTap(
               () {
                 hideKeyboard(context);
@@ -424,7 +429,6 @@ class _ViewAllServiceScreenState extends State<ViewAllServiceScreen> {
                 });
               },
             ),
-            border: InputBorder.none,
             contentPadding:
                 const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
           ),

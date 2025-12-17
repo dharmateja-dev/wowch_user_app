@@ -8,7 +8,9 @@ import 'package:booking_system_flutter/screens/booking/component/price_common_wi
 import 'package:booking_system_flutter/screens/wallet/user_wallet_balance_screen.dart';
 import 'package:booking_system_flutter/utils/colors.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/extensions/num_extenstions.dart';
+import 'package:booking_system_flutter/utils/images.dart';
 import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -670,12 +672,26 @@ class _PaymentScreenState extends State<PaymentScreen> {
                               if (walletBalance >= totalAmount) {
                                 showConfirmDialogCustom(
                                   context,
+                                  width: 290,
+                                  height: 80,
                                   dialogType: DialogType.CONFIRMATION,
                                   title:
                                       "${language.lblPayWith} ${currentPaymentMethod!.title.validate()}?",
-                                  primaryColor: primaryColor,
+                                  titleColor: context.dialogTitleColor,
+                                  backgroundColor:
+                                      context.dialogBackgroundColor,
+                                  primaryColor: context.primary,
+                                  positiveTextColor: context.onPrimary,
+                                  negativeTextColor: context.dialogCancelColor,
                                   positiveText: language.lblYes,
                                   negativeText: language.lblCancel,
+                                  customCenterWidget: Image.asset(
+                                    ic_warning,
+                                    color: context.dialogIconColor,
+                                    height: 70,
+                                    width: 70,
+                                    fit: BoxFit.cover,
+                                  ),
                                   onAccept: (p0) {
                                     _handleClick();
                                   },
@@ -686,12 +702,27 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                 if (appConfigurationStore.onlinePaymentStatus) {
                                   showConfirmDialogCustom(
                                     context,
+                                    width: 290,
+                                    height: 80,
                                     dialogType: DialogType.CONFIRMATION,
                                     title: language.doYouWantToTopUpYourWallet,
+                                    titleColor: context.dialogTitleColor,
+                                    backgroundColor:
+                                        context.dialogBackgroundColor,
+                                    primaryColor: context.primary,
+                                    positiveTextColor: context.onPrimary,
+                                    negativeTextColor:
+                                        context.dialogCancelColor,
                                     positiveText: language.lblYes,
                                     negativeText: language.lblNo,
                                     cancelable: false,
-                                    primaryColor: context.primaryColor,
+                                    customCenterWidget: Image.asset(
+                                      ic_warning,
+                                      color: context.dialogIconColor,
+                                      height: 70,
+                                      width: 70,
+                                      fit: BoxFit.cover,
+                                    ),
                                     onAccept: (p0) {
                                       pop();
                                       push(UserWalletBalanceScreen());
@@ -705,12 +736,25 @@ class _PaymentScreenState extends State<PaymentScreen> {
                             } else {
                               showConfirmDialogCustom(
                                 context,
+                                width: 290,
+                                height: 80,
                                 dialogType: DialogType.CONFIRMATION,
                                 title:
                                     "${language.lblPayWith} ${currentPaymentMethod!.title.validate()}?",
-                                primaryColor: primaryColor,
+                                titleColor: context.dialogTitleColor,
+                                backgroundColor: context.dialogBackgroundColor,
+                                primaryColor: context.primary,
+                                positiveTextColor: context.onPrimary,
+                                negativeTextColor: context.dialogCancelColor,
                                 positiveText: language.lblYes,
                                 negativeText: language.lblCancel,
+                                customCenterWidget: Image.asset(
+                                  ic_warning,
+                                  color: context.dialogIconColor,
+                                  height: 70,
+                                  width: 70,
+                                  fit: BoxFit.cover,
+                                ),
                                 onAccept: (p0) async {
                                   Navigator.of(context).pop();
                                   await 100.milliseconds.delay;

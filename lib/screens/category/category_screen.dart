@@ -5,6 +5,7 @@ import 'package:booking_system_flutter/main.dart';
 import 'package:booking_system_flutter/model/category_model.dart';
 import 'package:booking_system_flutter/model/service_data_model.dart';
 import 'package:booking_system_flutter/screens/service/component/service_component.dart';
+import 'package:booking_system_flutter/utils/common.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
 import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/images.dart';
@@ -226,14 +227,19 @@ class _CategoryScreenState extends State<CategoryScreen> {
           textStyle: context.primaryTextStyle(),
           textFieldType: TextFieldType.OTHER,
           controller: searchController,
-          decoration: InputDecoration(
+          decoration: inputDecoration(
+            hintTextColor: context.searchHintTextColor,
+            context,
+            showBorder: false,
+            fillColor: context.inputFillColorSecondary,
             hintText:
                 "${language.lblSearchFor} ${dummyCategories[selectedCategoryIndex].name}",
             prefixIcon:
                 ic_search.iconImage(size: 16, context: context).paddingAll(14),
-            suffixIcon: ic_filter
-                .iconImage(size: 16, context: context)
-                .paddingAll(14)
+          ).copyWith(
+            suffixIcon: ic_searchFilter
+                .iconImage(size: 12, context: context)
+                .paddingAll(16)
                 .onTap(
               () {
                 FilterScreen(
@@ -247,7 +253,6 @@ class _CategoryScreenState extends State<CategoryScreen> {
                 });
               },
             ),
-            border: InputBorder.none,
             contentPadding:
                 const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
           ),

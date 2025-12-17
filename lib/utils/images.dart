@@ -57,6 +57,7 @@ const ic_info = 'assets/icons/ic_info.png';
 const ic_arrow_right = 'assets/icons/ic_arrow_right.png';
 const ic_arrow_left = 'assets/icons/ic_arrow_left.png';
 const ic_category = 'assets/icons/ic_category.png';
+const ic_searchFilter = 'assets/icons/ic_searchFilter.png';
 const ic_document = 'assets/icons/ic_document.png';
 const ic_heart = 'assets/icons/ic_heart.png';
 const ic_lock = 'assets/icons/ic_lock.png';

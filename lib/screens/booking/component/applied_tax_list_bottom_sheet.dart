@@ -1,6 +1,7 @@
 import 'package:booking_system_flutter/component/price_widget.dart';
 import 'package:booking_system_flutter/model/service_detail_response.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -54,7 +55,7 @@ class AppliedTaxListBottomSheet extends StatelessWidget {
                               4.width,
                               Text("(${data.value.validate()}%)",
                                   style: context.primaryTextStyle(
-                                      color: context.primaryColor)),
+                                      color: context.primary)),
                             ],
                           ).expand()
                         : Text(data.title.validate(),

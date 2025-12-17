@@ -147,7 +147,9 @@ class _FilterScreenState extends State<FilterScreen> {
       padding: const EdgeInsets.fromLTRB(24, 20, 20, 20),
       width: context.width(),
       decoration: boxDecorationDefault(
-        color: isSelected ? context.cardColor : context.scaffoldBackgroundColor,
+        color: isSelected
+            ? context.secondaryContainer
+            : context.scaffoldBackgroundColor,
         borderRadius: radius(0),
       ),
       child: Text(name, style: context.boldTextStyle(size: 12)),
@@ -248,10 +250,10 @@ class _FilterScreenState extends State<FilterScreen> {
                         filterStore.ratingId.validate().isNotEmpty)
                       AppButton(
                         text: language.lblClearFilter,
-                        textColor: context.primaryColor,
+                        textColor: context.onPrimary,
                         shapeBorder: RoundedRectangleBorder(
-                          side: BorderSide(color: context.primaryColor),
-                          borderRadius: radius(),
+                          side: BorderSide(color: context.primary),
+                          borderRadius: radius(8),
                         ),
                         onTap: () {
                           clearFilter();
@@ -261,7 +263,7 @@ class _FilterScreenState extends State<FilterScreen> {
                     AppButton(
                       text: language.lblApply,
                       textColor: context.onPrimary,
-                      color: context.primaryColor,
+                      color: context.primary,
                       onTap: () {
                         filterStore.providerId = [];
                         providerList.forEach((element) {

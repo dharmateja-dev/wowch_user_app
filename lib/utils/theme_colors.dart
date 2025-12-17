@@ -303,7 +303,7 @@ class AppColors {
   static const Color lineText = Color(0xFF6C757D);
   static const Color jobRequestComponent = Color(0xFFE4BB97);
   static const Color dashboard3Card = Color(0xFFF6F7F9);
-  static const Color cancellationsBg = Color(0xFFFFE5E5);
+  static const Color cancellationsBg = Color(0xFFEBA5A5);
   static const Color shop = Color(0xFF1C1E33);
   static const Color grey = Color(0xFFBDBDBD);
   static const Color grey300 = Color(0xFFE0E0E0);

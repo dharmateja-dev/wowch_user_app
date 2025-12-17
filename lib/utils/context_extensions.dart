@@ -137,6 +137,10 @@ extension ColorSchemeExtension on BuildContext {
   Color get subtitleTextColor =>
       isDarkMode ? const Color(0xFFB2C7BF) : const Color(0xFF72777A);
 
+  /// Grey text color - Both: #9E9E9E
+  /// Use for muted labels, secondary info that should stay grey in both themes
+  Color get textGrey => const Color(0xFF9E9E9E);
+
   /// Secondary container hint text - Light: #4F4F4F, Dark: #B2C78F
   Color get secondaryContainerHintColor => isDarkMode
       ? DarkThemeColors.secondaryContainerHint
@@ -147,14 +151,18 @@ extension ColorSchemeExtension on BuildContext {
       ? DarkThemeColors.liteGreenContainerText
       : LightThemeColors.liteGreenContainerText;
 
+  /// Description text color - Light: #4F4F4F, Dark: #B2C7BF
+  /// Use for description/body text that needs good contrast in both themes
+  Color get descriptionTextColor =>
+      isDarkMode ? const Color(0xFFB2C7BF) : const Color(0xFF4F4F4F);
+
   // ——— Custom Icon Colors ———
   /// Icon primary green - Both: #2E6B4F
   Color get iconPrimaryGreen => LightThemeColors.iconPrimaryGreen;
 
   /// Icon background - Light: #FFFFFF, Dark: #F2F4F3
-  Color get iconBackgroundColor => isDarkMode
-      ? DarkThemeColors.iconBackgroundColor
-      : LightThemeColors.iconBackgroundColor;
+  Color get iconBackgroundColor =>
+      isDarkMode ? Color(0xFFB2C7BF) : Color(0xFF4F4F4F);
 
   /// Icon on primary container - Both: #FFFFFF
   Color get iconOnPrimaryContainer => LightThemeColors.iconOnPrimaryContainer;

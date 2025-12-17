@@ -109,7 +109,7 @@ class BookingDetailProviderWidgetState
                         Icon(
                           Icons.info_outline_rounded,
                           size: 18,
-                          color: context.onSurface,
+                          color: context.iconMuted,
                         ),
                       ],
                     ),
@@ -132,7 +132,7 @@ class BookingDetailProviderWidgetState
                               size: 16,
                               color: isFilled
                                   ? context.starColor
-                                  : Color(0xFFE0E0E0),
+                                  : context.iconMuted,
                             ),
                           );
                         },
@@ -149,6 +149,10 @@ class BookingDetailProviderWidgetState
 
           if (widget.showContactButtons) ...[
             16.height,
+            Divider(
+              color: context.textGrey,
+              thickness: 0.75,
+            ),
             Row(
               children: [
                 // Call button
@@ -158,16 +162,18 @@ class BookingDetailProviderWidgetState
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(
-                        Icons.call_outlined,
-                        size: 18,
+                      Image.asset(
+                        ic_call,
+                        color: context.onSurface,
+                        height: 18,
+                        width: 18,
                       ),
                       8.width,
                       Text(language.lblCall,
                           style: context.boldTextStyle(size: 14)),
                     ],
                   ),
-                  color: context.onPrimary,
+                  color: context.secondaryContainer,
                   elevation: 0,
                   shapeBorder: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
@@ -189,20 +195,22 @@ class BookingDetailProviderWidgetState
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(
-                        Icons.chat_bubble_outline,
-                        size: 18,
+                      Image.asset(
+                        ic_chat,
+                        color: context.onSurface,
+                        height: 18,
+                        width: 18,
                       ),
                       8.width,
                       Text(language.lblChat,
                           style: context.boldTextStyle(size: 14)),
                     ],
                   ),
-                  color: context.onPrimary,
+                  color: context.secondaryContainer,
                   elevation: 0,
                   shapeBorder: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
-                    side: BorderSide(color: context.primaryColor),
+                    side: BorderSide(color: context.primary),
                   ),
                   onTap: () async {
                     toast(language.pleaseWaitWhileWeLoadChatDetails);
@@ -236,7 +244,7 @@ class BookingDetailProviderWidgetState
                     height: 20,
                     width: 20,
                   ),
-                  color: context.onPrimary,
+                  color: context.secondaryContainer,
                   elevation: 0,
                   shapeBorder: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),

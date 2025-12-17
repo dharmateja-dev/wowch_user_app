@@ -1,6 +1,7 @@
 import 'package:booking_system_flutter/main.dart';
 import 'package:booking_system_flutter/model/booking_detail_model.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/model_keys.dart';
 import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
@@ -114,7 +115,7 @@ class _CountdownWidgetState extends State<CountdownWidget> {
           Text(widget.text ?? '${language.lblServiceTotalTime}: ',
               style: context.primaryTextStyle(size: 12)),
           Text(calculateTime(value),
-              style: context.boldTextStyle(color: Colors.red, size: 14)),
+              style: context.boldTextStyle(color: context.error, size: 14)),
         ],
       ),
     ).withWidth(context.width());

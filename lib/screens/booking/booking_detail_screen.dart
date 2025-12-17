@@ -720,8 +720,8 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
                 style: context.boldTextStyle(size: 12, color: black)),
             Marquee(
                     child: Text(snap.bookingDetail!.reason.validate(),
-                        style:
-                            context.boldTextStyle(color: redColor, size: 12)))
+                        style: context.boldTextStyle(
+                            color: Color(0xFF97000B), size: 12)))
                 .expand(),
           ],
         ),
@@ -730,11 +730,11 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
       return Container(
         padding: const EdgeInsets.all(14),
         width: context.width(),
-        color: Color(0xFFF8D7DA), // Light red background
+        color: Color(0xFFEBA5A5), // Light red background
         child: Text(
           "Waiting for Provider Approval",
           style: context.boldTextStyle(
-              color: Color(0xFFDC3545), size: 14), // Red text
+              color: Color(0xFF97000B), size: 14), // Red text
         ),
       );
     }
@@ -822,16 +822,20 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
   }
 
   String buildTimeString({required BookingData bookingDetail}) {
-    if (bookingDetail.bookingSlot == null) {
-      return formatDate(bookingDetail.date.validate(), isTime: true);
-    }
-    return formatDate(
-      getSlotWithDate(
+    try {
+      if (bookingDetail.bookingSlot == null) {
+        return bookingDetail.date.validate().isNotEmpty
+            ? formatBookingDate(bookingDetail.date, format: 'hh:mm a')
+            : '';
+      }
+      final slotDate = getSlotWithDate(
         date: bookingDetail.date.validate(),
         slotTime: bookingDetail.bookingSlot.validate(),
-      ),
-      isTime: true,
-    );
+      );
+      return formatBookingDate(slotDate, format: 'hh:mm a');
+    } catch (e) {
+      return bookingDetail.bookingSlot.validate();
+    }
   }
 
   //completed
@@ -906,7 +910,10 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
                         ),
                       ),
                       Text(
-                        formatDate(bookingDetail.date.validate()),
+                        bookingDetail.date.validate().isNotEmpty
+                            ? formatBookingDate(bookingDetail.date,
+                                format: 'MMMM d, yyyy')
+                            : '',
                         style: context.primaryTextStyle(
                           size: 12,
                         ),
@@ -968,7 +975,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
         16.height,
         Container(
           decoration: boxDecorationWithRoundedCorners(
-            backgroundColor: context.cardColor,
+            backgroundColor: context.secondaryContainer,
             borderRadius: const BorderRadius.all(Radius.circular(16)),
           ),
           child: ListView.separated(
@@ -1014,11 +1021,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
                 },
                 child: Text(
                   language.viewDetail,
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                    color: context.primary, // Adjust color as needed
-                  ),
+                  style: context.primaryTextStyle(),
                 ),
               ),
             ],
@@ -1166,9 +1169,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
                               .expand(),
                           16.width,
                           PriceWidget(
-                              price: snap.service!.price!,
-                            
-                              isBoldText: true),
+                              price: snap.service!.price!, isBoldText: true),
                         ],
                       ),
                       16.height,
@@ -1181,7 +1182,6 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
                           16.width,
                           PriceWidget(
                               price: getAdvancePaymentAmount(bookingInfo: snap),
-                            
                               isBoldText: true),
                         ],
                       ),
@@ -1196,7 +1196,6 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
                           PriceWidget(
                               price:
                                   snap.bookingDetail!.cancellationChargeAmount!,
-                              
                               isBoldText: true),
                         ],
                       ),
@@ -1277,7 +1276,6 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
                               price:
                                   '${data.price.validate() * data.qty.validate()}'
                                       .toDouble(),
-                              
                               isBoldText: true),
                         ],
                       ),
@@ -1448,20 +1446,34 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
                           color: context.onPrimary,
                           shape: BoxShape.circle,
                         ),
-                        child: Icon(Icons.edit,
-                            size: 16, color: context.primaryColor),
+                        child:
+                            Icon(Icons.edit, size: 16, color: context.primary),
                       ),
                     ),
                     8.width,
                     GestureDetector(
                       onTap: () {
                         showConfirmDialogCustom(
+                          width: 290,
+                          height: 80,
                           context,
                           title: language.lblDeleteReview,
                           subTitle: language.lblConfirmReviewSubTitle,
                           positiveText: language.lblYes,
                           negativeText: language.lblNo,
                           dialogType: DialogType.DELETE,
+                          titleColor: context.dialogTitleColor,
+                          backgroundColor: context.dialogBackgroundColor,
+                          primaryColor: context.primary,
+                          positiveTextColor: context.onPrimary,
+                          negativeTextColor: context.dialogCancelColor,
+                          customCenterWidget: Image.asset(
+                            ic_warning,
+                            color: context.dialogIconColor,
+                            height: 70,
+                            width: 70,
+                            fit: BoxFit.cover,
+                          ),
                           onAccept: (p0) async {
                             appStore.setLoading(true);
                             await deleteReview(id: customerReview.id.validate())
@@ -1482,7 +1494,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
                           shape: BoxShape.circle,
                         ),
                         child: Icon(Icons.delete_outline,
-                            size: 16, color: Colors.red),
+                            size: 16, color: context.error),
                       ),
                     ),
                   ],
@@ -1602,8 +1614,8 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
               },
               padding: const EdgeInsets.only(top: 0, left: 8, right: 8),
               height: 42,
-              color: context.primaryColor,
-              textColor: white,
+              color: context.primary,
+              textColor: context.onPrimary,
               text: language.track,
             ).expand(),
             16.width,
@@ -1612,11 +1624,12 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
               height: 42,
               padding: const EdgeInsets.all(12),
               decoration: boxDecorationDefault(
+                color: context.secondaryContainer,
                 borderRadius: const BorderRadius.all(Radius.circular(8)),
               ),
               child: CachedImageWidget(
                 url: ic_refresh,
-                color: context.icon,
+                color: context.onSecondaryContainer,
                 height: 42,
               ),
             ).onTap(() {
@@ -1628,14 +1641,14 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
               height: 42,
               padding: const EdgeInsets.all(12),
               decoration: boxDecorationDefault(
-                color: context.onPrimary,
+                color: context.secondaryContainer,
                 borderRadius: const BorderRadius.all(
                   Radius.circular(8),
                 ),
               ),
               child: CachedImageWidget(
                 url: ic_share,
-                color: context.icon,
+                color: context.onSecondaryContainer,
                 height: 22,
               ),
             ).onTap(
@@ -1805,7 +1818,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
               margin: const EdgeInsets.symmetric(vertical: 8),
               decoration: boxDecorationWithRoundedCorners(
                 borderRadius: radius(),
-                backgroundColor: context.cardColor,
+                backgroundColor: context.secondaryContainer,
                 border: appStore.isDarkMode
                     ? Border.all(color: context.dividerColor)
                     : null,
@@ -1835,22 +1848,20 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
                             children: [
                               Text('${data.categoryName}',
                                   style: context.boldTextStyle(
-                                      size: 12,
-                                      color: textSecondaryColorGlobal)),
+                                      size: 12, color: context.onSurface)),
                               Text('  >  ',
                                   style: context.boldTextStyle(
-                                      size: 14,
-                                      color: textSecondaryColorGlobal)),
+                                      size: 14, color: context.onSurface)),
                               Text('${data.subCategoryName}',
                                   style: context.boldTextStyle(
-                                      size: 12, color: context.primaryColor)),
+                                      size: 12, color: context.primary)),
                             ],
                           ),
                         )
                       else
                         Text('${data.categoryName}',
                             style: context.boldTextStyle(
-                                size: 12, color: context.primaryColor)),
+                                size: 12, color: context.primary)),
                       4.height,
                       PriceWidget(
                         price: data.price.validate(),
@@ -1894,7 +1905,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
               margin: const EdgeInsets.symmetric(vertical: 8),
               padding: const EdgeInsets.all(8),
               decoration: boxDecorationWithRoundedCorners(
-                  backgroundColor: context.cardColor,
+                  backgroundColor: context.secondaryContainer,
                   borderRadius:
                       BorderRadius.all(Radius.circular(defaultRadius))),
               child: Row(
@@ -2038,10 +2049,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
                           Text(
                             '${language.email}:',
                             style: context.boldTextStyle(
-                                size: 12,
-                                color: appStore.isDarkMode
-                                    ? textSecondaryColor
-                                    : textPrimaryColor),
+                                size: 12, color: context.onSurface),
                           ).expand(),
                           8.width,
                           Expanded(
@@ -2054,9 +2062,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
                                 shop.email.validate(),
                                 style: context.boldTextStyle(
                                     size: 12,
-                                    color: appStore.isDarkMode
-                                        ? white
-                                        : textSecondaryColor,
+                                    color: context.onSurface,
                                     weight: FontWeight.w400),
                               ),
                             ),
@@ -2073,10 +2079,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
                           Text(
                             language.mobile,
                             style: context.boldTextStyle(
-                                size: 12,
-                                color: appStore.isDarkMode
-                                    ? textSecondaryColor
-                                    : textPrimaryColor),
+                                size: 12, color: context.onSurface),
                           ).expand(),
                           8.width,
                           Expanded(
@@ -2089,9 +2092,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
                                 shop.contactNumber.validate(),
                                 style: context.boldTextStyle(
                                     size: 12,
-                                    color: appStore.isDarkMode
-                                        ? white
-                                        : textSecondaryColor,
+                                    color: context.onSurface,
                                     weight: FontWeight.w400),
                               ),
                             ),
@@ -2109,10 +2110,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
                         Text(
                           '${language.hintAddress}:',
                           style: context.boldTextStyle(
-                              size: 12,
-                              color: appStore.isDarkMode
-                                  ? textSecondaryColor
-                                  : textPrimaryColor),
+                              size: 12, color: context.onSurface),
                         ).expand(),
                         8.width,
                         Expanded(
@@ -2132,9 +2130,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
                                   "${shop.address}, ${shop.cityName}, ${shop.stateName}, ${shop.countryName}",
                                   style: context.boldTextStyle(
                                       size: 12,
-                                      color: appStore.isDarkMode
-                                          ? white
-                                          : textSecondaryColor,
+                                      color: context.onSurface,
                                       weight: FontWeight.w400),
                                   softWrap: true,
                                 ),
@@ -2281,10 +2277,10 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
           if (!(bookingResponse.service?.isOnlineService ?? true))
             AppButton(
               text: language.lblHold,
-              textColor: textPrimaryColor,
+              textColor: context.onSurface,
               color: context.secondaryContainer,
               shapeBorder: RoundedRectangleBorder(
-                side: BorderSide(color: context.primaryColor),
+                side: BorderSide(color: context.primary),
                 borderRadius: BorderRadius.circular(8),
               ),
               onTap: () => _handleHoldClick(status: bookingResponse),
@@ -2306,10 +2302,10 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
         children: [
           AppButton(
             text: language.lblCancel,
-            textColor: textPrimaryColor,
+            textColor: context.onSurface,
             color: context.secondaryContainer,
             shapeBorder: RoundedRectangleBorder(
-              side: BorderSide(color: context.primaryColor),
+              side: BorderSide(color: context.primary),
               borderRadius: BorderRadius.circular(8),
             ),
             onTap: () => _handleCancelClick(
@@ -2339,7 +2335,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
         alignment: Alignment.center,
         decoration: BoxDecoration(
           color: context.secondaryContainer,
-          border: Border.all(color: context.primaryColor),
+          border: Border.all(color: context.primary),
           borderRadius: BorderRadius.circular(8),
         ),
         child: Text(language.lblWaitingForResponse,
@@ -2379,7 +2375,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
       AppButton(
         text: language.requestInvoice,
         textColor: context.onPrimary,
-        color: context.primaryColor,
+        color: context.primary,
         shapeBorder: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
         ),
@@ -2434,18 +2430,19 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
                   children: [
                     Text(
                       language.lblBookingID,
-                      style: context.boldTextStyle(color: grey, size: 14),
+                      style: context.boldTextStyle(
+                          size: 14, color: context.textGrey),
                     ),
                     const Spacer(),
                     Text(
                       '#' + widget.bookingId.validate().toString(),
-                      style: context.boldTextStyle(color: context.primaryColor),
+                      style: context.boldTextStyle(color: context.primary),
                     ),
                     16.height,
                   ],
                 ).paddingSymmetric(horizontal: 12, vertical: 12),
                 Divider(
-                  color: lightGray,
+                  color: context.textGrey,
                   thickness: 1,
                   height: 2,
                 ).paddingSymmetric(horizontal: 12),
@@ -2522,6 +2519,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
                             Text(
                               snap.data!.bookingDetail!.description.validate(),
                               style: context.primaryTextStyle(
+                                color: context.descriptionTextColor,
                                 size: 14,
                               ),
                             ),
@@ -2661,9 +2659,18 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
       width: 290,
       negativeText: language.lblNo,
       dialogType: DialogType.CONFIRMATION,
-      primaryColor: context.primaryColor,
-      customCenterWidget: ic_warning.iconImage(
-          size: 70, color: context.primary, context: context),
+      titleColor: context.dialogTitleColor,
+      backgroundColor: context.dialogBackgroundColor,
+      primaryColor: context.primary,
+      positiveTextColor: context.onPrimary,
+      negativeTextColor: context.dialogCancelColor,
+      customCenterWidget: Image.asset(
+        ic_warning,
+        color: context.dialogIconColor,
+        height: 70,
+        width: 70,
+        fit: BoxFit.cover,
+      ),
       title: isAnyServiceAddonUnCompleted
           ? language.confirmation
           : language.lblEndServicesMsg,
@@ -2781,11 +2788,24 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
   void _handleStartClick({required BookingDetailResponse status}) {
     showConfirmDialogCustom(
       context,
+      width: 290,
+      height: 80,
       title: language.confirmationRequestTxt,
       dialogType: DialogType.CONFIRMATION,
-      primaryColor: context.primaryColor,
+      titleColor: context.dialogTitleColor,
+      backgroundColor: context.dialogBackgroundColor,
+      primaryColor: context.primary,
+      positiveTextColor: context.onPrimary,
+      negativeTextColor: context.dialogCancelColor,
       negativeText: language.lblNo,
       positiveText: language.lblYes,
+      customCenterWidget: Image.asset(
+        ic_warning,
+        color: context.dialogIconColor,
+        height: 70,
+        width: 70,
+        fit: BoxFit.cover,
+      ),
       onAccept: (c) {
         startClick(status: status);
       },
@@ -2798,11 +2818,20 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
       height: 80,
       width: 290,
       dialogType: DialogType.CONFIRMATION,
-      primaryColor: context.primaryColor,
+      titleColor: context.dialogTitleColor,
+      backgroundColor: context.dialogBackgroundColor,
+      primaryColor: context.primary,
+      positiveTextColor: context.onPrimary,
+      negativeTextColor: context.dialogCancelColor,
       negativeText: language.lblNo,
       positiveText: language.lblYes,
-      customCenterWidget: ic_warning.iconImage(
-          size: 70, color: context.primary, context: context),
+      customCenterWidget: Image.asset(
+        ic_warning,
+        color: context.dialogIconColor,
+        height: 70,
+        width: 70,
+        fit: BoxFit.cover,
+      ),
       title: language.lblConFirmResumeService,
       onAccept: (c) async {
         Map request = {
@@ -2995,7 +3024,6 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
                 onRefresh: () async {
                   init();
                   setState(() {});
-
                   return await 2.seconds.delay;
                 },
                 child: AppScaffold(
@@ -3030,7 +3058,8 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
                       },
                       child: Text(
                         language.lblCheckStatus,
-                        style: context.boldTextStyle(color: white, size: 14),
+                        style: context.boldTextStyle(
+                            color: context.onPrimary, size: 14),
                       ),
                     ),
                   ],

@@ -73,7 +73,7 @@ class BookingHistoryListWidget extends StatelessWidget {
           children: [
             data.datetime.validate().toString().isNotEmpty
                 ? Text(
-                    formatDate(data.datetime..validate().toString()),
+                    formatBookingDate(data.datetime, format: 'MMM d, yyyy'),
                     style: context.primaryTextStyle(
                       size: 12,
                     ),
@@ -82,13 +82,12 @@ class BookingHistoryListWidget extends StatelessWidget {
             8.height,
             data.datetime.validate().toString().isNotEmpty
                 ? Text(
-                    formatDate(data.datetime..validate().toString(),
-                        isTime: true),
+                    formatBookingDate(data.datetime, format: 'hh:mm a'),
                     style: context.primaryTextStyle(size: 12),
                   )
                 : const SizedBox(),
           ],
-        ).withWidth(70),
+        ).withWidth(80),
         16.width,
         Column(
           crossAxisAlignment: CrossAxisAlignment.center,

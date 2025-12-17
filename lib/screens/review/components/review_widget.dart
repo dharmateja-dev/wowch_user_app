@@ -63,6 +63,7 @@ class ReviewWidget extends StatelessWidget {
                                         format: 'MMMM d, yyyy',
                                       ),
                                       style: context.secondaryTextStyle(
+                                        color: context.textGrey,
                                         size: 14,
                                       ),
                                     )
@@ -76,8 +77,8 @@ class ReviewWidget extends StatelessWidget {
                           children: [
                             Image.asset(
                               ic_star_fill,
-                              height: 16,
-                              width: 16,
+                              height: 15,
+                              width: 15,
                               color: context.starColor,
                             ),
                             4.width,
@@ -87,7 +88,7 @@ class ReviewWidget extends StatelessWidget {
                                   .toStringAsFixed(1)
                                   .toString(),
                               style: context.boldTextStyle(
-                                size: 16,
+                                size: 15,
                               ),
                             ),
                           ],
@@ -100,13 +101,14 @@ class ReviewWidget extends StatelessWidget {
                       ReadMoreText(
                         data.review.validate(),
                         style: context.secondaryTextStyle(
+                          color: context.textGrey,
                           size: 14,
                         ),
                         trimLines: 3,
                         trimMode: TrimMode.Line,
                         trimCollapsedText: ' Read more',
                         trimExpandedText: ' Read less',
-                        colorClickableText: context.primaryColor,
+                        colorClickableText: context.primary,
                       ),
                     ],
                   ],

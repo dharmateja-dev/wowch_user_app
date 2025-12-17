@@ -83,7 +83,7 @@ class _InvoiceRequestDialogComponentState
               padding: EdgeInsets.all(16),
               width: context.width(),
               decoration: boxDecorationDefault(
-                  color: context.primaryColor,
+                  color: context.primary,
                   borderRadius: radiusOnly(
                       topRight: defaultRadius, topLeft: defaultRadius)),
               child: Row(
@@ -114,7 +114,10 @@ class _InvoiceRequestDialogComponentState
                     controller: emailCont,
                     errorThisFieldRequired: language.requiredText,
                     decoration: inputDecoration(context,
-                        labelText: language.hintEmailTxt),
+                        hintText: language.lblEmail,
+                        borderRadius: 8,
+                        showBorder: true,
+                        fillColor: context.fillColor),
                   ).visible(!appStore.isLoading, defaultWidget: Loader()),
                 ),
                 30.height,
@@ -122,7 +125,7 @@ class _InvoiceRequestDialogComponentState
                   text: language.send,
                   height: 40,
                   color: context.primary,
-                  textStyle: context.primaryTextStyle(color: white),
+                  textStyle: context.primaryTextStyle(color: context.onPrimary),
                   width: context.width() - context.navigationBarHeight,
                   onTap: () {
                     sentMail();

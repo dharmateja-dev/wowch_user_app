@@ -57,8 +57,8 @@ class _FilterRatingComponentState extends State<FilterRatingComponent> {
                                 ? Icons.star_rounded
                                 : Icons.star_border_rounded,
                             color: starIndex < ratingValue
-                                ? Colors.amber
-                                : lightGrey,
+                                ? context.starColor
+                                : context.iconMuted,
                             size: 24,
                           );
                         }),
@@ -78,13 +78,11 @@ class _FilterRatingComponentState extends State<FilterRatingComponent> {
                         shape: BoxShape.circle,
                         border: Border.all(
                           color: isSelected
-                              ? context.primaryColor
-                              : Colors.grey.shade400,
+                              ? context.primary
+                              : context.mainBorderColor,
                           width: 2,
                         ),
-                        color: isSelected
-                            ? context.primaryColor
-                            : context.onPrimary,
+                        color: isSelected ? context.primary : context.onPrimary,
                       ),
                       child: isSelected
                           ? Icon(Icons.circle,

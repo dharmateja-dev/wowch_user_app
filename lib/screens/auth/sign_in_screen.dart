@@ -396,10 +396,10 @@ class _SignInScreenState extends State<SignInScreen> {
           height: 50,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: Color(0xffffffff),
+            color: context.onPrimary,
             border: Border.all(color: context.mainBorderColor, width: 2.0),
           ),
-          child: Icon(Icons.phone, size: 20, color: primaryColor),
+          child: Icon(Icons.phone, size: 20, color: context.primary),
         ),
       ),
     );
@@ -415,12 +415,12 @@ class _SignInScreenState extends State<SignInScreen> {
           height: 50,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: Color(0xffffffff),
-            border: Border.all(color: grey300Color, width: 2.0),
+            color: context.onPrimary,
+            border: Border.all(color: context.mainBorderColor, width: 2.0),
           ),
           child: Icon(
             Icons.apple,
-            color: Color(0xff000000),
+            color: context.primary,
             size: 20,
           ),
         ),
@@ -438,8 +438,8 @@ class _SignInScreenState extends State<SignInScreen> {
           height: 50,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: Color(0xffffffff),
-            border: Border.all(color: grey300Color, width: 2.0),
+            color: context.onPrimary,
+            border: Border.all(color: context.mainBorderColor, width: 2.0),
           ),
           child: CachedNetworkImage(
             imageUrl:

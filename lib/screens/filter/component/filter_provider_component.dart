@@ -62,7 +62,7 @@ class _FilterProviderComponentState extends State<FilterProviderComponent> {
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: Colors.black,
-                  border: Border.all(color: context.primaryColor, width: 1),
+                  border: Border.all(color: context.primary, width: 1),
                 ),
                 child: data.profileImage.validate().isNotEmpty
                     ? ImageBorder(
@@ -99,7 +99,7 @@ class _FilterProviderComponentState extends State<FilterProviderComponent> {
                               ic_star_fill,
                               height: 10,
                               width: 10,
-                              color: Colors.amber,
+                              color: context.starColor,
                             ),
                             4.width,
                             Text(
@@ -119,13 +119,15 @@ class _FilterProviderComponentState extends State<FilterProviderComponent> {
                     Text(
                       DateFormat('MMMM dd, yyyy')
                           .format(DateTime.parse(data.createdAt.validate())),
-                      style: context.secondaryTextStyle(size: 12),
+                      style: context.primaryTextStyle(
+                          size: 12, color: context.textGrey),
                     ),
                     6.height,
                     // Services Member Since
                     Text(
                       'Services\nMember Since ${DateFormat(YEAR).format(DateTime.parse(data.createdAt.validate()))}',
-                      style: context.secondaryTextStyle(size: 11),
+                      style: context.primaryTextStyle(
+                          size: 11, color: context.textGrey),
                     ),
                   ],
                 ),
@@ -138,11 +140,11 @@ class _FilterProviderComponentState extends State<FilterProviderComponent> {
                   shape: BoxShape.circle,
                   border: Border.all(
                     color: data.isSelected
-                        ? context.primaryColor
-                        : Colors.grey.shade400,
+                        ? context.primary
+                        : context.mainBorderColor,
                     width: 2,
                   ),
-                  color: data.isSelected ? context.primaryColor : white,
+                  color: data.isSelected ? context.primary : context.onPrimary,
                 ),
                 child: data.isSelected
                     ? Icon(Icons.circle, size: 12, color: context.onPrimary)

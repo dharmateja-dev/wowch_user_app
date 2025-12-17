@@ -1,7 +1,7 @@
 import 'package:booking_system_flutter/main.dart';
 import 'package:booking_system_flutter/model/booking_detail_model.dart';
 import 'package:booking_system_flutter/screens/booking/component/booking_history_list_widget.dart';
-import 'package:booking_system_flutter/utils/colors.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -38,27 +38,31 @@ class BookingHistoryComponentState extends State<BookingHistoryComponent> {
       decoration: boxDecorationWithRoundedCorners(
           borderRadius:
               radiusOnly(topLeft: defaultRadius, topRight: defaultRadius),
-          backgroundColor: context.cardColor),
+          backgroundColor: context.bottomSheetBackgroundColor),
       child: SingleChildScrollView(
         controller: widget.scrollController,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.max,
           children: [
-            Container(width: 50, height: 4, color: gray.withValues(alpha: 0.3))
-                .center()
-                .paddingSymmetric(vertical: 16),
+            16.height,
+            Container(
+              width: 50,
+              height: 4,
+              decoration: boxDecorationDefault(color: context.mainBorderColor),
+            ).center().paddingSymmetric(vertical: 16),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(language.bookingHistory, style: context.boldTextStyle()),
                 if (widget.data.validate().isNotEmpty)
                   Text(' #' + widget.data[0].bookingId.validate().toString(),
-                      style: context.boldTextStyle(color: primaryColor))
+                      style: context.boldTextStyle(
+                          color: context.dialogCancelColor))
               ],
             ).paddingSymmetric(horizontal: 12),
             8.height,
-            Divider(color: context.primaryColor, thickness: 0.8),
+            Divider(color: context.primary, thickness: 0.8),
             8.height,
             widget.data.isNotEmpty
                 ? AnimatedListView(

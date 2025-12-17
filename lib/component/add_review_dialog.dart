@@ -3,6 +3,7 @@ import 'package:booking_system_flutter/main.dart';
 import 'package:booking_system_flutter/model/service_detail_response.dart';
 import 'package:booking_system_flutter/network/rest_apis.dart';
 import 'package:booking_system_flutter/utils/context_extensions.dart';
+import 'package:booking_system_flutter/utils/images.dart';
 import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -135,7 +136,7 @@ class _AddReviewDialogState extends State<AddReviewDialog> {
         SingleChildScrollView(
           child: Container(
             decoration: BoxDecoration(
-              color: context.cardColor,
+              color: context.secondaryContainer,
               borderRadius: BorderRadius.circular(12),
             ),
             child: Column(
@@ -174,8 +175,8 @@ class _AddReviewDialogState extends State<AddReviewDialog> {
                           selectedRating = rating;
                           setState(() {});
                         },
-                        activeColor: Color(0xFFFFC107), // Yellow stars
-                        inActiveColor: Colors.grey[300]!,
+                        activeColor: context.starColor,
+                        inActiveColor: context.iconMuted,
                         rating: selectedRating,
                         size: 18,
                       ),
@@ -200,9 +201,7 @@ class _AddReviewDialogState extends State<AddReviewDialog> {
                     enableChatGPT: appConfigurationStore.chatGPTStatus,
                     promptFieldInputDecorationChatGPT: InputDecoration(
                       hintText: 'Enter Your Review (Optional)',
-                      hintStyle: context.secondaryTextStyle(
-                        color: textSecondaryColorGlobal,
-                      ),
+                      hintStyle: context.secondaryTextStyle(),
                       border: InputBorder.none,
                       contentPadding: EdgeInsets.zero,
                     ),
@@ -211,9 +210,7 @@ class _AddReviewDialogState extends State<AddReviewDialog> {
                     textCapitalization: TextCapitalization.sentences,
                     decoration: InputDecoration(
                       hintText: 'Enter Your Review (Optional)',
-                      hintStyle: context.secondaryTextStyle(
-                        color: textSecondaryColorGlobal,
-                      ),
+                      hintStyle: context.secondaryTextStyle(),
                       border: InputBorder.none,
                       contentPadding: EdgeInsets.zero,
                     ),
@@ -231,11 +228,24 @@ class _AddReviewDialogState extends State<AddReviewDialog> {
                           onPressed: () {
                             if (isHandymanUpdate) {
                               showConfirmDialogCustom(
+                                width: 290,
+                                height: 80,
                                 context,
-                                primaryColor: context.primaryColor,
+                                primaryColor: context.primary,
                                 title: language.lblDeleteRatingMsg,
+                                titleColor: context.dialogTitleColor,
                                 positiveText: language.lblYes,
                                 negativeText: language.lblCancel,
+                                backgroundColor: context.dialogBackgroundColor,
+                                positiveTextColor: context.onPrimary,
+                                negativeTextColor: context.dialogCancelColor,
+                                customCenterWidget: Image.asset(
+                                  ic_warning,
+                                  color: context.dialogIconColor,
+                                  height: 70,
+                                  width: 70,
+                                  fit: BoxFit.cover,
+                                ),
                                 onAccept: (c) async {
                                   appStore.setLoading(true);
 
@@ -272,7 +282,7 @@ class _AddReviewDialogState extends State<AddReviewDialog> {
                             style: context.boldTextStyle(
                               size: 14,
                               color: isHandymanUpdate
-                                  ? Colors.red
+                                  ? context.error
                                   : context.primaryColor, // Dark green text
                             ),
                           ),
@@ -284,7 +294,7 @@ class _AddReviewDialogState extends State<AddReviewDialog> {
                         child: AppButton(
                           textColor: context.onPrimary,
                           text: language.btnSubmit,
-                          color: context.primaryColor, // Dark green background
+                          color: context.primary, // Dark green background
                           shapeBorder: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8),
                           ),

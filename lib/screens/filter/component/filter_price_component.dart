@@ -1,4 +1,5 @@
 import 'package:booking_system_flutter/main.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -42,7 +43,7 @@ class _FilterPriceComponentState extends State<FilterPriceComponent> {
   Widget build(BuildContext context) {
     return Container(
       width: context.width(),
-      decoration: boxDecorationDefault(color: context.cardColor),
+      decoration: boxDecorationDefault(color: context.scaffold),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -55,6 +56,7 @@ class _FilterPriceComponentState extends State<FilterPriceComponent> {
                   currencySymbol: "₹",
                   price: rangeValues.start.toInt(),
                   isBoldText: true,
+                  color: context.onSurface,
                   decimalPoint: 0,
                 ),
                 Text(" - ", style: context.boldTextStyle()),
@@ -62,29 +64,40 @@ class _FilterPriceComponentState extends State<FilterPriceComponent> {
                   currencySymbol: "₹",
                   price: rangeValues.end.toInt(),
                   isBoldText: true,
+                  color: context.onSurface,
                   decimalPoint: 0,
                 ),
               ],
             ),
           ).paddingSymmetric(horizontal: 16),
-          RangeSlider(
-            min: widget.min.toDouble(),
-            max: widget.max.toDouble(),
-            divisions: (widget.max - widget.min).toInt() > 0
-                ? (widget.max - widget.min).toInt()
-                : null,
-            labels: RangeLabels(
-              rangeValues.start.toInt().toString(),
-              rangeValues.end.toInt().toString(),
+          SliderTheme(
+            data: SliderThemeData(
+              thumbColor: context.primary,
+              activeTrackColor: context.primary,
+              inactiveTrackColor: context.mainBorderColor,
+              overlayColor: context.primary.withOpacity(0.2),
+              thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 10),
+              trackHeight: 4,
             ),
-            values: rangeValues,
-            onChanged: (values) {
-              setState(() {
-                rangeValues = values;
-                filterStore.setMinPrice(values.start.toInt().toString());
-                filterStore.setMaxPrice(values.end.toInt().toString());
-              });
-            },
+            child: RangeSlider(
+              min: widget.min.toDouble(),
+              max: widget.max.toDouble(),
+              divisions: (widget.max - widget.min).toInt() > 0
+                  ? (widget.max - widget.min).toInt()
+                  : null,
+              labels: RangeLabels(
+                rangeValues.start.toInt().toString(),
+                rangeValues.end.toInt().toString(),
+              ),
+              values: rangeValues,
+              onChanged: (values) {
+                setState(() {
+                  rangeValues = values;
+                  filterStore.setMinPrice(values.start.toInt().toString());
+                  filterStore.setMaxPrice(values.end.toInt().toString());
+                });
+              },
+            ),
           ),
           16.height,
         ],
