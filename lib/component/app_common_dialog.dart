@@ -1,3 +1,4 @@
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -23,9 +24,10 @@ class AppCommonDialog extends StatelessWidget {
           ),
           child: Row(
             children: [
-              Text(title, style: context.boldTextStyle(color: Colors.white))
+              Text(title,
+                      style: context.boldTextStyle(color: context.onPrimary))
                   .expand(),
-              const CloseButton(color: Colors.white),
+              CloseButton(color: context.onPrimary),
             ],
           ),
         ),

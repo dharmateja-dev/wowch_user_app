@@ -148,7 +148,6 @@ class _AddReviewDialogState extends State<AddReviewDialog> {
                   child: Text(language.yourReview,
                       style: context.boldTextStyle(
                         size: 18,
-                        color: textPrimaryColorGlobal,
                       )).center(),
                 ),
                 // Your Rating Section - Light green background
@@ -166,7 +165,6 @@ class _AddReviewDialogState extends State<AddReviewDialog> {
                         language.lblYourRating,
                         style: context.primaryTextStyle(
                           size: 14,
-                          color: textPrimaryColorGlobal,
                         ),
                       ),
                       8.width,
@@ -284,7 +282,7 @@ class _AddReviewDialogState extends State<AddReviewDialog> {
                       // Submit Button - Solid dark green background with white text
                       Expanded(
                         child: AppButton(
-                          textColor: Colors.white,
+                          textColor: context.onPrimary,
                           text: language.btnSubmit,
                           color: context.primaryColor, // Dark green background
                           shapeBorder: RoundedRectangleBorder(

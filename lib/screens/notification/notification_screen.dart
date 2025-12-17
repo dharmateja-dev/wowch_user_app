@@ -9,6 +9,7 @@ import 'package:booking_system_flutter/screens/jobRequest/my_post_detail_screen.
 import 'package:booking_system_flutter/screens/notification/components/notification_widget.dart';
 import 'package:booking_system_flutter/screens/wallet/user_wallet_balance_screen.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/model_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -49,7 +50,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
       appBarTitle: language.lblNotification,
       actions: [
         IconButton(
-          icon: const Icon(Icons.clear_all_rounded, color: Colors.white),
+          icon: Icon(Icons.clear_all_rounded, color: context.onPrimary),
           onPressed: () async {
             appStore.setLoading(true);
 

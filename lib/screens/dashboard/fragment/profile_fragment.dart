@@ -144,8 +144,8 @@ class ProfileFragmentState extends State<ProfileFragment> {
                                         //appStore.userFullName,
                                         'Abdul Kader',
                                         style: context.boldTextStyle(
-                                            size: 16,
-                                            color: textPrimaryColorGlobal),
+                                          size: 16,
+                                        ),
                                       ),
                                     ),
                                     Marquee(

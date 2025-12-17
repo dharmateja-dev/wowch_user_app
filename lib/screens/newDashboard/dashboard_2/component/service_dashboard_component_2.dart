@@ -278,7 +278,7 @@ class _ServiceDashboardComponent2State
                         style: context.secondaryTextStyle(
                             size: 12,
                             color: appStore.isDarkMode
-                                ? Colors.white
+                                ? context.onPrimary
                                 : appTextSecondaryColor),
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
@@ -302,7 +302,7 @@ class _ServiceDashboardComponent2State
                   child: Text(language.lblBookNow,
                       style: context.boldTextStyle(color: white)),
                   width: context.width(),
-                  textColor: Colors.white,
+                  textColor: context.onPrimary,
                 ).paddingAll(16),
               ],
             ),

@@ -1,3 +1,4 @@
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
 import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
@@ -119,9 +120,7 @@ class _HelpDeskActivityComponentState extends State<HelpDeskActivityComponent> {
                       padding: const EdgeInsets.all(16),
                       decoration: boxDecorationWithRoundedCorners(
                         borderRadius: radius(8),
-                        backgroundColor: appStore.isDarkMode
-                            ? appButtonColorDark
-                            : Colors.white,
+                        backgroundColor: context.buttonBackgroundAlt,
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,

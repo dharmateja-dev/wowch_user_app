@@ -1,5 +1,6 @@
 import 'package:booking_system_flutter/main.dart';
 import 'package:booking_system_flutter/screens/booking_filter/components/filter_shop_list_component.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
 import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
@@ -140,7 +141,7 @@ class _BookingFilterScreenState extends State<BookingFilterScreen> {
                   clearFilter();
                 },
                 child: Text(language.reset,
-                    style: context.boldTextStyle(color: Colors.white)),
+                    style: context.boldTextStyle(color: context.onPrimary)),
               ).visible(filterStore.isAnyFilterApplied);
             },
           ),
@@ -193,7 +194,7 @@ class _BookingFilterScreenState extends State<BookingFilterScreen> {
                                 color: index == selectedIndex
                                     ? primaryColor
                                     : appStore.isDarkMode
-                                        ? Colors.white
+                                        ? context.onPrimary
                                         : appTextPrimaryColor,
                               ),
                             ).center(),
@@ -245,7 +246,7 @@ class _BookingFilterScreenState extends State<BookingFilterScreen> {
                   padding: const EdgeInsets.all(16),
                   child: AppButton(
                     text: language.lblApply,
-                    textColor: Colors.white,
+                    textColor: context.onPrimary,
                     color: context.primaryColor,
                     onTap: () {
                       filterStore.bookingStatus = [];

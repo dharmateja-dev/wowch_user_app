@@ -79,7 +79,7 @@ class CustomLanguageListWidgetState extends State<CustomLanguageListWidget> {
               widget.onLanguageChange?.call(data);
             },
             activeColor: context.primary,
-            checkColor: Colors.white,
+            checkColor: context.onPrimary,
             side: BorderSide(color: context.primary, width: 2.0),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(2),

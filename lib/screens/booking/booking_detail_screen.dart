@@ -744,7 +744,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
   /// ---------------- REUSABLE BUTTONS ----------------
   Widget _cancelButton(BookingDetailResponse bookingResponse) => AppButton(
         text: language.lblCancelBooking,
-        textColor: Colors.white,
+        textColor: context.onPrimary,
         color: context.primary,
         shapeBorder: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
@@ -773,7 +773,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
             width: double.infinity,
             child: AppButton(
               text: language.btnRateNow,
-              textStyle: context.boldTextStyle(color: Colors.white),
+              textStyle: context.boldTextStyle(color: context.onPrimary),
               color: context.primaryColor,
               padding: EdgeInsets.symmetric(vertical: 12),
               onTap: () {
@@ -810,12 +810,12 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
       children: [
         Text(
           language.lblBookingID,
-          style:
-              context.boldTextStyle(size: LABEL_TEXT_SIZE, color: Colors.white),
+          style: context.boldTextStyle(
+              size: LABEL_TEXT_SIZE, color: context.onPrimary),
         ),
         Text(
           '#' + widget.bookingId.validate().toString(),
-          style: context.boldTextStyle(color: Colors.white, size: 16),
+          style: context.boldTextStyle(color: context.onPrimary, size: 16),
         ),
       ],
     );
@@ -1153,7 +1153,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
                 8.height,
                 Container(
                   decoration: boxDecorationDefault(
-                      color: appStore.isDarkMode ? black : Colors.white),
+                      color: appStore.isDarkMode ? black : context.onPrimary),
                   padding: const EdgeInsets.all(16),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -1167,7 +1167,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
                           16.width,
                           PriceWidget(
                               price: snap.service!.price!,
-                              color: textPrimaryColorGlobal,
+                            
                               isBoldText: true),
                         ],
                       ),
@@ -1181,7 +1181,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
                           16.width,
                           PriceWidget(
                               price: getAdvancePaymentAmount(bookingInfo: snap),
-                              color: textPrimaryColorGlobal,
+                            
                               isBoldText: true),
                         ],
                       ),
@@ -1196,7 +1196,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
                           PriceWidget(
                               price:
                                   snap.bookingDetail!.cancellationChargeAmount!,
-                              color: textPrimaryColorGlobal,
+                              
                               isBoldText: true),
                         ],
                       ),
@@ -1277,7 +1277,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
                               price:
                                   '${data.price.validate() * data.qty.validate()}'
                                       .toDouble(),
-                              color: textPrimaryColorGlobal,
+                              
                               isBoldText: true),
                         ],
                       ),
@@ -1445,7 +1445,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
                       child: Container(
                         padding: EdgeInsets.all(6),
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: context.onPrimary,
                           shape: BoxShape.circle,
                         ),
                         child: Icon(Icons.edit,
@@ -1478,7 +1478,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
                       child: Container(
                         padding: EdgeInsets.all(6),
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: context.onPrimary,
                           shape: BoxShape.circle,
                         ),
                         child: Icon(Icons.delete_outline,
@@ -1628,7 +1628,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
               height: 42,
               padding: const EdgeInsets.all(12),
               decoration: boxDecorationDefault(
-                color: Colors.white,
+                color: context.onPrimary,
                 borderRadius: const BorderRadius.all(
                   Radius.circular(8),
                 ),
@@ -1748,7 +1748,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
   //             height: 42,
   //             padding: const EdgeInsets.all(12),
   //             decoration: boxDecorationDefault(
-  //               color: Colors.white,
+  //               color: context.onPrimary,
   //               borderRadius: const BorderRadius.all(Radius.circular(6)),
   //             ),
   //             child: const CachedImageWidget(
@@ -1765,7 +1765,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
   //             height: 42,
   //             padding: const EdgeInsets.all(12),
   //             decoration: boxDecorationDefault(
-  //               color: Colors.white,
+  //               color: context.onPrimary,
   //               borderRadius: const BorderRadius.all(
   //                 Radius.circular(6),
   //               ),
@@ -1854,7 +1854,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
                       4.height,
                       PriceWidget(
                         price: data.price.validate(),
-                        hourlyTextColor: Colors.white,
+                        hourlyTextColor: context.onPrimary,
                       ),
                     ],
                   ).flexible()
@@ -2268,7 +2268,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
 
   Widget _startButton(BookingDetailResponse bookingResponse) => AppButton(
         text: language.lblStart,
-        textColor: Colors.white,
+        textColor: context.onPrimary,
         color: context.primary,
         shapeBorder: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
@@ -2292,7 +2292,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
           if (!(bookingResponse.service?.isOnlineService ?? true)) 12.width,
           AppButton(
             text: language.done,
-            textColor: Colors.white,
+            textColor: context.onPrimary,
             color: context.primary,
             shapeBorder: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8),
@@ -2323,7 +2323,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
           12.width,
           AppButton(
             text: language.lblResume,
-            textColor: Colors.white,
+            textColor: context.onPrimary,
             color: context.primary,
             shapeBorder: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8),
@@ -2353,7 +2353,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
                 detail.status == BookingStatusKeys.complete
             ? language.lblPayNow
             : language.payAdvance,
-        textColor: Colors.white,
+        textColor: context.onPrimary,
         color: context.primary, // Dark green
         shapeBorder: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
@@ -2365,7 +2365,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
 
   Widget _payNowButton(BookingDetailResponse bookingResponse) => AppButton(
         text: language.lblPayNow,
-        textColor: Colors.white,
+        textColor: context.onPrimary,
         color: context.primary, // Dark green
         shapeBorder: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
@@ -2378,7 +2378,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen>
   Widget _requestInvoiceButton(BookingDetailResponse bookingResponse) =>
       AppButton(
         text: language.requestInvoice,
-        textColor: Colors.white,
+        textColor: context.onPrimary,
         color: context.primaryColor,
         shapeBorder: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),

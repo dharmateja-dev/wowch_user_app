@@ -82,11 +82,13 @@ class _FilterRatingComponentState extends State<FilterRatingComponent> {
                               : Colors.grey.shade400,
                           width: 2,
                         ),
-                        color: isSelected ? context.primaryColor : Colors.white,
+                        color: isSelected
+                            ? context.primaryColor
+                            : context.onPrimary,
                       ),
                       child: isSelected
-                          ? const Icon(Icons.circle,
-                              size: 10, color: Colors.white)
+                          ? Icon(Icons.circle,
+                              size: 10, color: context.onPrimary)
                           : null,
                     ),
                   ],

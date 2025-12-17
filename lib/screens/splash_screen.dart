@@ -3,6 +3,7 @@ import 'package:booking_system_flutter/screens/dashboard/dashboard_screen.dart';
 import 'package:booking_system_flutter/screens/maintenance_mode_screen.dart';
 import 'package:booking_system_flutter/utils/configs.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/images.dart';
 import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
@@ -138,7 +139,9 @@ class _SplashScreenState extends State<SplashScreen> {
               Text(APP_NAME,
                   style: context.boldTextStyle(
                       size: 26,
-                      color: appStore.isDarkMode ? Colors.white : Colors.black),
+                      color: appStore.isDarkMode
+                          ? context.onPrimary
+                          : Colors.black),
                   textAlign: TextAlign.center),
               16.height,
               if (appNotSynced)

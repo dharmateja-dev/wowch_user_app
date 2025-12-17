@@ -133,7 +133,8 @@ class _HelpDeskItemComponentState extends State<HelpDeskItemComponent> {
                 ),
                 child: Text(
                   widget.helpDeskData.status.validate().toHelpDeskStatus(),
-                  style: context.boldTextStyle(color: Colors.white, size: 12),
+                  style:
+                      context.boldTextStyle(color: context.onPrimary, size: 12),
                 ),
               ),
             ),

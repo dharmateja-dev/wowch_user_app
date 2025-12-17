@@ -1,4 +1,5 @@
 import 'package:booking_system_flutter/utils/colors.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -8,7 +9,8 @@ class SelectedItemWidget extends StatelessWidget {
   double itemSize;
   bool isSelected;
 
-  SelectedItemWidget({this.decoration, this.itemSize = 12.0, required this.isSelected});
+  SelectedItemWidget(
+      {this.decoration, this.itemSize = 12.0, required this.isSelected});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +24,9 @@ class SelectedItemWidget extends StatelessWidget {
             border: Border.all(color: primaryColor),
             shape: BoxShape.circle,
           ),
-      child: isSelected ? Icon(Icons.check, color: Colors.white, size: itemSize) : const Offstage(),
+      child: isSelected
+          ? Icon(Icons.check, color: context.onPrimary, size: itemSize)
+          : const Offstage(),
     );
   }
 }

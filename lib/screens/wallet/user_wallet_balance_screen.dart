@@ -2,6 +2,7 @@
 
 import 'package:booking_system_flutter/component/price_widget.dart';
 import 'package:booking_system_flutter/services/flutter_wave_service_new.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/extensions/num_extenstions.dart';
 import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
@@ -443,12 +444,12 @@ class _UserWalletBalanceScreenState extends State<UserWalletBalanceScreen> {
                                     ? appConfigurationStore.currencySymbol + " "
                                     : '',
                                 prefixStyle: context.primaryTextStyle(
-                                    color: Colors.white),
+                                    color: context.onPrimary),
                                 suffixText: isCurrencyPositionRight
                                     ? appConfigurationStore.currencySymbol + " "
                                     : '',
                                 suffixStyle: context.primaryTextStyle(
-                                    color: Colors.white),
+                                    color: context.onPrimary),
                               ),
                               onChanged: (p0) {
                                 //
@@ -486,7 +487,7 @@ class _UserWalletBalanceScreenState extends State<UserWalletBalanceScreen> {
                                             defaultAmounts[index].toString() ==
                                                     walletAmountCont.text
                                                 ? context.primaryColor
-                                                : Colors.white),
+                                                : context.onPrimary),
                                   ),
                                 ).onTap(() {
                                   walletAmountCont.text =
@@ -563,8 +564,9 @@ class _UserWalletBalanceScreenState extends State<UserWalletBalanceScreen> {
                                       decoration: boxDecorationDefault(
                                           color: context.primaryColor),
                                       child: currentPaymentMethod == value
-                                          ? const Icon(Icons.done,
-                                              size: 16, color: Colors.white)
+                                          ? Icon(Icons.done,
+                                              size: 16,
+                                              color: context.onPrimary)
                                           : const Offstage(),
                                     ),
                                   ),

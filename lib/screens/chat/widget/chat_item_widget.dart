@@ -101,8 +101,7 @@ class _ChatItemWidgetState extends State<ChatItemWidget> {
               children: [
                 Text(
                   widget.chatItemData.message!,
-                  style:
-                      context.primaryTextStyle(color: textPrimaryColorGlobal),
+                  style: context.primaryTextStyle(),
                   maxLines: null,
                 ),
                 1.height,
@@ -139,8 +138,7 @@ class _ChatItemWidgetState extends State<ChatItemWidget> {
                     ...filesComponent(),
                     Text(
                       widget.chatItemData.message!,
-                      style: context.primaryTextStyle(
-                          color: textPrimaryColorGlobal),
+                      style: context.primaryTextStyle(),
                       maxLines: null,
                     ).paddingTop(2).visible(
                         widget.chatItemData.message!.trim().isNotEmpty),

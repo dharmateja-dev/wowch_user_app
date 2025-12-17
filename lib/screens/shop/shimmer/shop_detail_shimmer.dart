@@ -4,13 +4,17 @@ import 'package:flutter/material.dart';
 class ShopDetailsShimmer extends StatelessWidget {
   const ShopDetailsShimmer({super.key});
 
-  Widget shimmerBox({double? height, double? width, double radius = 8}) {
+  Widget shimmerBox(
+      {double? height,
+      double? width,
+      double radius = 8,
+      required dynamic context}) {
     return ShimmerWidget(
       child: Container(
         height: height,
         width: width,
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: context.onPrimary,
           borderRadius: BorderRadius.circular(radius),
         ),
       ),
@@ -25,19 +29,19 @@ class ShopDetailsShimmer extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Top Shop Image
-          shimmerBox(height: 200, width: double.infinity, radius: 16),
+          shimmerBox(height: 200, width: double.infinity, radius: 16, context: context),
           const SizedBox(height: 16),
 
           // Shop Name
-          shimmerBox(height: 20, width: 150),
+          shimmerBox(height: 20, width: 150, context: context),
           const SizedBox(height: 12),
 
           // Address Row
           Row(
             children: [
-              shimmerBox(height: 16, width: 16, radius: 4),
+              shimmerBox(height: 16, width: 16, radius: 4, context: context),
               const SizedBox(width: 8),
-              shimmerBox(height: 14, width: 200),
+              shimmerBox(height: 14, width: 200, context: context),
             ],
           ),
           const SizedBox(height: 10),
@@ -45,9 +49,9 @@ class ShopDetailsShimmer extends StatelessWidget {
           // Email Row
           Row(
             children: [
-              shimmerBox(height: 16, width: 16, radius: 4),
+              shimmerBox(height: 16, width: 16, radius: 4, context: context),
               const SizedBox(width: 8),
-              shimmerBox(height: 14, width: 180),
+              shimmerBox(height: 14, width: 180, context: context),
             ],
           ),
           const SizedBox(height: 10),
@@ -55,9 +59,9 @@ class ShopDetailsShimmer extends StatelessWidget {
           // Phone Row
           Row(
             children: [
-              shimmerBox(height: 16, width: 16, radius: 4),
+              shimmerBox(height: 16, width: 16, radius: 4, context: context),
               const SizedBox(width: 8),
-              shimmerBox(height: 14, width: 140),
+              shimmerBox(height: 14, width: 140, context: context),
             ],
           ),
           const SizedBox(height: 10),
@@ -65,15 +69,15 @@ class ShopDetailsShimmer extends StatelessWidget {
           // Time Row
           Row(
             children: [
-              shimmerBox(height: 16, width: 16, radius: 4),
+              shimmerBox(height: 16, width: 16, radius: 4, context: context),
               const SizedBox(width: 8),
-              shimmerBox(height: 14, width: 160),
+              shimmerBox(height: 14, width: 160, context: context),
             ],
           ),
           const SizedBox(height: 20),
 
           // Services Title
-          shimmerBox(height: 18, width: 100),
+          shimmerBox(height: 18, width: 100, context: context),
           const SizedBox(height: 16),
 
           // Horizontal service list
@@ -88,27 +92,27 @@ class ShopDetailsShimmer extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       // Service Image
-                      shimmerBox(height: 140, width: 180, radius: 16),
+                      shimmerBox(height: 140, width: 180, radius: 16, context: context),
                       const SizedBox(height: 8),
 
                       // Price Tag
-                      shimmerBox(height: 20, width: 50, radius: 12),
+                      shimmerBox(height: 20, width: 50, radius: 12, context: context),
                       const SizedBox(height: 8),
 
                       // Rating Stars
-                      shimmerBox(height: 14, width: 80),
+                      shimmerBox(height: 14, width: 80, context: context),
                       const SizedBox(height: 8),
 
                       // Service Title
-                      shimmerBox(height: 16, width: 120),
+                      shimmerBox(height: 16, width: 120, context: context),
                       const SizedBox(height: 8),
 
                       // Provider Row
                       Row(
                         children: [
-                          shimmerBox(height: 24, width: 24, radius: 12),
+                          shimmerBox(height: 24, width: 24, radius: 12, context: context),
                           const SizedBox(width: 8),
-                          shimmerBox(height: 14, width: 80),
+                          shimmerBox(height: 14, width: 80, context: context),
                         ],
                       ),
                     ],

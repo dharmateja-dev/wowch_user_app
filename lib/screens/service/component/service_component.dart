@@ -225,7 +225,7 @@ class ServiceComponentState extends State<ServiceComponent> {
                               margin: const EdgeInsets.only(right: 8),
                               decoration: boxDecorationWithShadow(
                                   boxShape: BoxShape.circle,
-                                  backgroundColor: Colors.white),
+                                  backgroundColor: context.onPrimary),
                               child: widget.serviceData.isFavourite == 1
                                   ? ic_fill_heart.iconImage(
                                       color: context.error,
@@ -284,8 +284,8 @@ class ServiceComponentState extends State<ServiceComponent> {
                         //       price: widget.serviceData.price.validate(),
                         //       isHourlyService:
                         //           widget.serviceData.isHourlyService,
-                        //       color: Colors.white,
-                        //       hourlyTextColor: Colors.white,
+                        //       color: context.onPrimary,
+                        //       hourlyTextColor: context.onPrimary,
                         //       size: 14,
                         //       isFreeService:
                         //           widget.serviceData.type.validate() ==

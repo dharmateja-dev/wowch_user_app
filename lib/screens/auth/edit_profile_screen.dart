@@ -550,10 +550,10 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                           decoration: boxDecorationWithRoundedCorners(
                             boxShape: BoxShape.circle,
                             backgroundColor: primaryColor,
-                            border: Border.all(color: Colors.white),
+                            border: Border.all(color: context.onPrimary),
                           ),
-                          child: const Icon(AntDesign.camera,
-                              color: Colors.white, size: 12),
+                          child: Icon(AntDesign.camera,
+                              color: context.onPrimary, size: 12),
                         ).onTap(() async {
                           _showImgPickDialog(context);
                         }),

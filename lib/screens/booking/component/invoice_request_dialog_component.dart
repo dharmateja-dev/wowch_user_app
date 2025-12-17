@@ -90,12 +90,12 @@ class _InvoiceRequestDialogComponentState
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(language.requestInvoice,
-                      style: context.boldTextStyle(color: Colors.white)),
+                      style: context.boldTextStyle(color: context.onPrimary)),
                   IconButton(
                     onPressed: () {
                       finish(context);
                     },
-                    icon: Icon(Icons.clear, color: Colors.white, size: 20),
+                    icon: Icon(Icons.clear, color: context.onPrimary, size: 20),
                   )
                 ],
               ),

@@ -51,7 +51,7 @@ class CategoryDashboardComponent3 extends StatelessWidget {
                           width: CATEGORY_ICON_SIZE,
                           colorFilter: ColorFilter.mode(
                             appStore.isDarkMode
-                                ? Colors.white
+                                ? context.onPrimary
                                 : categoryData.color
                                     .validate(value: '000')
                                     .toColor(),

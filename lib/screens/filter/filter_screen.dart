@@ -4,6 +4,7 @@ import 'package:booking_system_flutter/model/user_data_model.dart';
 import 'package:booking_system_flutter/screens/filter/component/filter_price_component.dart';
 import 'package:booking_system_flutter/screens/filter/component/filter_provider_component.dart';
 import 'package:booking_system_flutter/screens/filter/component/filter_rating_component.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -259,7 +260,7 @@ class _FilterScreenState extends State<FilterScreen> {
                     16.width,
                     AppButton(
                       text: language.lblApply,
-                      textColor: Colors.white,
+                      textColor: context.onPrimary,
                       color: context.primaryColor,
                       onTap: () {
                         filterStore.providerId = [];

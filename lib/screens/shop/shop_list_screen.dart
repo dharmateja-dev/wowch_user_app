@@ -11,6 +11,7 @@ import 'package:booking_system_flutter/screens/shop/component/shop_component.dar
 import 'package:booking_system_flutter/screens/shop/shimmer/shop_shimmer.dart';
 import 'package:booking_system_flutter/screens/shop/shop_detail_screen.dart';
 import 'package:booking_system_flutter/utils/common.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/images.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
 import 'package:booking_system_flutter/utils/text_styles.dart';
@@ -162,7 +163,7 @@ class _ShopListScreenState extends State<ShopListScreen> {
                       url: ic_filter,
                       height: 26,
                       width: 26,
-                      color: Colors.white,
+                      color: context.onPrimary,
                     ),
                   ).onTap(() {
                     hideKeyboard(context);
@@ -265,7 +266,7 @@ class _ShopListScreenState extends State<ShopListScreen> {
               width: context.width() - context.navigationBarHeight,
               text: language.lblSelectShop,
               color: context.primaryColor,
-              textColor: Colors.white,
+              textColor: context.onPrimary,
               onTap: () {
                 if (selectedShop.id > 0) finish(context, selectedShop);
               },

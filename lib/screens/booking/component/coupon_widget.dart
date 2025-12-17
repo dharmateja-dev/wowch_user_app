@@ -167,7 +167,7 @@ class _CouponWidgetState extends State<CouponWidget> {
                 },
                 text: language.lblCancel,
                 textColor: widget.couponData.isEmpty
-                    ? Colors.white
+                    ? context.onPrimary
                     : textPrimaryColorGlobal,
               ).expand(),
               if (widget.couponData.isNotEmpty) 16.width,

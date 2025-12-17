@@ -136,7 +136,8 @@ class _ServiceDashboardComponent4State
               right: isRTL ? 16 : 0,
               child: Text(
                 widget.serviceData.name.validate(),
-                style: context.boldTextStyle(size: 14, color: Colors.white),
+                style:
+                    context.boldTextStyle(size: 14, color: context.onPrimary),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
@@ -155,7 +156,7 @@ class _ServiceDashboardComponent4State
                     Text(
                       widget.serviceData.providerName.validate(),
                       style: context.secondaryTextStyle(
-                          size: 12, color: Colors.white),
+                          size: 12, color: context.onPrimary),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ).expand()
@@ -235,8 +236,8 @@ class _ServiceDashboardComponent4State
                         PriceWidget(
                           price: discountedAmount,
                           isHourlyService: widget.serviceData.isHourlyService,
-                          color: Colors.white,
-                          hourlyTextColor: Colors.white,
+                          color: context.onPrimary,
+                          hourlyTextColor: context.onPrimary,
                           isFreeService: widget.serviceData.type.validate() ==
                               SERVICE_TYPE_FREE,
                         ).paddingRight(8),
@@ -245,8 +246,8 @@ class _ServiceDashboardComponent4State
                         isLineThroughEnabled:
                             widget.serviceData.discount != 0 ? true : false,
                         isHourlyService: widget.serviceData.isHourlyService,
-                        color: Colors.white,
-                        hourlyTextColor: Colors.white,
+                        color: context.onPrimary,
+                        hourlyTextColor: context.onPrimary,
                         size: widget.serviceData.discount != 0 ? 12 : 16,
                         isFreeService: widget.serviceData.type.validate() ==
                             SERVICE_TYPE_FREE,

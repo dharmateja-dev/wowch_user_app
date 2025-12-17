@@ -1,6 +1,7 @@
 import 'package:booking_system_flutter/component/base_scaffold_widget.dart';
 import 'package:booking_system_flutter/screens/helpDesk/model/help_desk_status_model.dart';
 import 'package:booking_system_flutter/screens/helpDesk/shimmer/help_desk_list_shimmer.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
 import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
@@ -136,9 +137,7 @@ class _HelpDeskListScreenState extends State<HelpDeskListScreen> {
                                 size: 12,
                                 color: selectedTab.status == filterStatus.status
                                     ? primaryColor
-                                    : appStore.isDarkMode
-                                        ? Colors.white
-                                        : appTextPrimaryColor,
+                                    : context.onSurface,
                               ),
                             ),
                             selected: false,

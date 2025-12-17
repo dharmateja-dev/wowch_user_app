@@ -127,7 +127,7 @@ class _SubCategoryComponentState extends State<SubCategoryComponent> {
                                                 width: CATEGORY_ICON_SIZE,
                                                 colorFilter: ColorFilter.mode(
                                                   appStore.isDarkMode
-                                                      ? Colors.white
+                                                      ? context.onPrimary
                                                       : data.color
                                                           .validate(
                                                               value: '000')
@@ -180,8 +180,8 @@ class _SubCategoryComponentState extends State<SubCategoryComponent> {
                                     padding: const EdgeInsets.all(2),
                                     decoration: boxDecorationDefault(
                                         color: context.primaryColor),
-                                    child: const Icon(Icons.done,
-                                        size: 16, color: Colors.white),
+                                    child: Icon(Icons.done,
+                                        size: 16, color: context.onPrimary),
                                   ).visible(isSelected),
                                 ),
                               ],

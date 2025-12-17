@@ -143,7 +143,7 @@ class _SliderDashboardComponent1State extends State<SliderDashboardComponent1> {
                                 child: FittedBox(
                                   child: Text(appStore.unreadCount.toString(),
                                       style: context.primaryTextStyle(
-                                          size: 12, color: Colors.white)),
+                                          size: 12, color: context.onPrimary)),
                                 ),
                                 decoration: boxDecorationDefault(
                                     color: Colors.red, shape: BoxShape.circle),
@@ -189,7 +189,7 @@ class _SliderDashboardComponent1State extends State<SliderDashboardComponent1> {
                 Row(
                   children: [
                     Icon(Icons.location_on_outlined,
-                        color: Colors.white, size: 20),
+                        color: context.onPrimary, size: 20),
                     8.width,
                     Expanded(
                       child: Observer(
@@ -202,7 +202,7 @@ class _SliderDashboardComponent1State extends State<SliderDashboardComponent1> {
                                     ? 'Current Location'
                                     : language.lblLocationOff,
                                 style: context.boldTextStyle(
-                                    color: Colors.white, size: 14),
+                                    color: context.onPrimary, size: 14),
                               ),
                               2.height,
                               Text(
@@ -222,7 +222,7 @@ class _SliderDashboardComponent1State extends State<SliderDashboardComponent1> {
                     if (appStore.isLoggedIn)
                       Container(
                         decoration: boxDecorationDefault(
-                          color: Colors.white.withValues(alpha: 0.15),
+                          color: context.onPrimary.withValues(alpha: 0.15),
                           shape: BoxShape.circle,
                         ),
                         height: 40,
@@ -231,7 +231,7 @@ class _SliderDashboardComponent1State extends State<SliderDashboardComponent1> {
                           clipBehavior: Clip.none,
                           children: [
                             Icon(Icons.notifications_outlined,
-                                    color: Colors.white, size: 22)
+                                    color: context.onPrimary, size: 22)
                                 .center(),
                             Observer(builder: (context) {
                               return Positioned(
@@ -244,7 +244,8 @@ class _SliderDashboardComponent1State extends State<SliderDashboardComponent1> {
                                           child: Text(
                                             appStore.unreadCount.toString(),
                                             style: context.primaryTextStyle(
-                                                size: 10, color: Colors.white),
+                                                size: 10,
+                                                color: context.onPrimary),
                                           ),
                                         ),
                                         decoration: boxDecorationDefault(
@@ -277,7 +278,7 @@ class _SliderDashboardComponent1State extends State<SliderDashboardComponent1> {
                     padding: const EdgeInsets.symmetric(
                         horizontal: 16, vertical: 14),
                     decoration: boxDecorationDefault(
-                      color: Colors.white,
+                      color: context.onPrimary,
                       borderRadius: radius(12),
                     ),
                     child: Row(

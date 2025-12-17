@@ -9,6 +9,7 @@ import 'package:booking_system_flutter/screens/map/map_screen.dart';
 import 'package:booking_system_flutter/services/location_service.dart';
 import 'package:booking_system_flutter/utils/common.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/images.dart';
 import 'package:booking_system_flutter/utils/model_keys.dart';
 import 'package:booking_system_flutter/utils/permissions.dart';
@@ -187,7 +188,7 @@ class _BookPostJobRequestScreenState extends State<BookPostJobRequestScreen> {
                       16.width,
                       AppButton(
                         text: language.confirm,
-                        textColor: Colors.white,
+                        textColor: context.onPrimary,
                         color: context.primaryColor,
                         onTap: () {
                           hideKeyboard(context);

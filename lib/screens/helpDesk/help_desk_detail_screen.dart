@@ -243,7 +243,7 @@ class _HelpDeskDetailScreenState extends State<HelpDeskDetailScreen> {
                                         borderRadius: radius(),
                                         backgroundColor: appStore.isDarkMode
                                             ? appButtonColorDark
-                                            : Colors.white,
+                                            : context.onPrimary,
                                       ),
                                       child: Column(
                                         crossAxisAlignment:

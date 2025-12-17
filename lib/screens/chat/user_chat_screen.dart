@@ -11,6 +11,7 @@ import 'package:booking_system_flutter/services/notification_services.dart';
 import 'package:booking_system_flutter/utils/colors.dart';
 import 'package:booking_system_flutter/utils/common.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
@@ -134,7 +135,7 @@ class _UserChatScreenState extends State<UserChatScreen>
           focus: messageFocus,
           cursorHeight: 20,
           maxLines: 5,
-          cursorColor: appStore.isDarkMode ? Colors.white : Colors.black,
+          cursorColor: appStore.isDarkMode ? context.onPrimary : Colors.black,
           textCapitalization: TextCapitalization.sentences,
           keyboardType: TextInputType.multiline,
           suffix: Row(
@@ -611,8 +612,8 @@ class _UserChatScreenState extends State<UserChatScreen>
                   );
                 }
               },
-              color: context.cardColor,
-              icon: const Icon(Icons.more_vert_sharp, color: Colors.white),
+              color: context.secondaryContainer,
+              icon: Icon(Icons.more_vert_sharp, color: context.onPrimary),
               itemBuilder: (context) {
                 List<PopupMenuItem> list = [];
                 list.add(

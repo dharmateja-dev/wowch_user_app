@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:booking_system_flutter/main.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -17,7 +18,8 @@ class SliderDashboardComponent4 extends StatefulWidget {
   SliderDashboardComponent4({required this.sliderList});
 
   @override
-  _SliderDashboardComponent4State createState() => _SliderDashboardComponent4State();
+  _SliderDashboardComponent4State createState() =>
+      _SliderDashboardComponent4State();
 }
 
 class _SliderDashboardComponent4State extends State<SliderDashboardComponent4> {
@@ -33,14 +35,18 @@ class _SliderDashboardComponent4State extends State<SliderDashboardComponent4> {
   }
 
   void init() async {
-    if (getBoolAsync(AUTO_SLIDER_STATUS, defaultValue: true) && widget.sliderList.length >= 2) {
-      _timer = Timer.periodic(const Duration(seconds: DASHBOARD_AUTO_SLIDER_SECOND), (Timer timer) {
+    if (getBoolAsync(AUTO_SLIDER_STATUS, defaultValue: true) &&
+        widget.sliderList.length >= 2) {
+      _timer = Timer.periodic(
+          const Duration(seconds: DASHBOARD_AUTO_SLIDER_SECOND), (Timer timer) {
         if (_currentPage < widget.sliderList.length - 1) {
           _currentPage++;
         } else {
           _currentPage = 0;
         }
-        sliderPageController.animateToPage(_currentPage, duration: const Duration(milliseconds: 950), curve: Curves.easeOutQuart);
+        sliderPageController.animateToPage(_currentPage,
+            duration: const Duration(milliseconds: 950),
+            curve: Curves.easeOutQuart);
       });
 
       sliderPageController.addListener(() {
@@ -64,29 +70,34 @@ class _SliderDashboardComponent4State extends State<SliderDashboardComponent4> {
       child: Stack(
         clipBehavior: Clip.none,
         children: [
-          if (widget.sliderList.isNotEmpty) PageView(
-                  controller: sliderPageController,
-                  physics: const ClampingScrollPhysics(),
-                  children: List.generate(
-                    widget.sliderList.length,
-                    (index) {
-                      SliderModel data = widget.sliderList[index];
-                      return CachedImageWidget(
-                        url: data.sliderImage.validate(),
-                        height: 190,
-                        width: context.width() - 32,
-                        fit: BoxFit.cover,
-                      ).onTap(() {
-                        if (data.type == SERVICE) {
-                          ServiceDetailScreen(serviceId: data.typeId.validate().toInt()).launch(
-                            context,
-                            pageRouteAnimation: PageRouteAnimation.Fade,
-                          );
-                        }
-                      });
-                    },
-                  ),
-                ) else CachedImageWidget(url: '', height: 175, width: context.width()),
+          if (widget.sliderList.isNotEmpty)
+            PageView(
+              controller: sliderPageController,
+              physics: const ClampingScrollPhysics(),
+              children: List.generate(
+                widget.sliderList.length,
+                (index) {
+                  SliderModel data = widget.sliderList[index];
+                  return CachedImageWidget(
+                    url: data.sliderImage.validate(),
+                    height: 190,
+                    width: context.width() - 32,
+                    fit: BoxFit.cover,
+                  ).onTap(() {
+                    if (data.type == SERVICE) {
+                      ServiceDetailScreen(
+                              serviceId: data.typeId.validate().toInt())
+                          .launch(
+                        context,
+                        pageRouteAnimation: PageRouteAnimation.Fade,
+                      );
+                    }
+                  });
+                },
+              ),
+            )
+          else
+            CachedImageWidget(url: '', height: 175, width: context.width()),
           if (widget.sliderList.length.validate() > 1)
             Positioned(
               bottom: -25,
@@ -96,7 +107,8 @@ class _SliderDashboardComponent4State extends State<SliderDashboardComponent4> {
                 pageController: sliderPageController,
                 pages: widget.sliderList,
                 indicatorColor: primaryColor,
-                unselectedIndicatorColor: appStore.isDarkMode ? context.cardColor : Colors.white,
+                unselectedIndicatorColor:
+                    appStore.isDarkMode ? context.cardColor : context.onPrimary,
                 currentBoxShape: BoxShape.rectangle,
                 boxShape: BoxShape.rectangle,
                 borderRadius: radius(2),

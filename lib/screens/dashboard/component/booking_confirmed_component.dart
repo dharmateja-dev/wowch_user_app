@@ -1,5 +1,6 @@
 import 'package:booking_system_flutter/main.dart';
 import 'package:booking_system_flutter/screens/booking/booking_detail_screen.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -52,7 +53,8 @@ class _PendingBookingComponentState extends State<PendingBookingComponent> {
                       width: 3,
                       decoration: boxDecorationRoundedWithShadow(
                           defaultRadius.toInt(),
-                          backgroundColor: Colors.white.withValues(alpha: 0.6)),
+                          backgroundColor:
+                              context.onPrimary.withValues(alpha: 0.6)),
                     ),
                     8.width,
                     Expanded(
@@ -61,7 +63,7 @@ class _PendingBookingComponentState extends State<PendingBookingComponent> {
                         child: Text(
                           language.bookingConfirmedMsg,
                           style: context.primaryTextStyle(
-                              color: Colors.white,
+                              color: context.onPrimary,
                               size: LABEL_TEXT_SIZE,
                               fontStyle: FontStyle.italic),
                         ),
@@ -75,7 +77,7 @@ class _PendingBookingComponentState extends State<PendingBookingComponent> {
                 height: 22,
                 child: IconButton(
                   icon: Icon(Icons.cancel,
-                      color: Colors.white.withValues(alpha: 0.6)),
+                      color: context.onPrimary.withValues(alpha: 0.6)),
                   visualDensity: VisualDensity.compact,
                   onPressed: () async {
                     await setValue(
@@ -94,23 +96,23 @@ class _PendingBookingComponentState extends State<PendingBookingComponent> {
                 height: 42,
                 width: 42,
                 decoration: boxDecorationRoundedWithShadow(21,
-                    backgroundColor: Colors.white.withValues(alpha: 0.2)),
-                child: const Icon(Icons.library_add_check_outlined,
-                    size: 18, color: Colors.white),
+                    backgroundColor: context.onPrimary.withValues(alpha: 0.2)),
+                child: Icon(Icons.library_add_check_outlined,
+                    size: 18, color: context.onPrimary),
               ),
               8.width,
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(widget.upcomingConfirmedBooking!.serviceName.validate(),
-                      style: context.boldTextStyle(color: Colors.white)),
+                      style: context.boldTextStyle(color: context.onPrimary)),
                   2.height,
                   Text(
                       formatDate(
                           widget.upcomingConfirmedBooking!.date.validate(),
                           showDateWithTime: true),
                       style: context.primaryTextStyle(
-                          color: Colors.white, size: 14)),
+                          color: context.onPrimary, size: 14)),
                 ],
               ).flexible(),
             ],

@@ -73,8 +73,8 @@ class _AirtelMoneyDialogState extends State<AirtelMoneyDialog> {
                           height: 50,
                           decoration: const BoxDecoration(
                               shape: BoxShape.circle, color: Colors.redAccent),
-                          child: const Icon(Icons.close_sharp,
-                              color: Colors.white),
+                          child:
+                              Icon(Icons.close_sharp, color: context.onPrimary),
                         ),
                         10.height,
                         Text(getAirtelMoneyReasonTextFromCode(responseCode).$1,
@@ -134,7 +134,7 @@ class _AirtelMoneyDialogState extends State<AirtelMoneyDialog> {
                                   height: 40,
                                   text: language.btnSubmit,
                                   textStyle: context.boldTextStyle(
-                                      color: Colors.white),
+                                      color: context.onPrimary),
                                   width: context.width() -
                                       context.navigationBarHeight,
                                   onTap: () {

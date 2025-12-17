@@ -295,7 +295,7 @@ class _UpcomingBookingDashboardComponent3State
                                   bookingData: widget.upcomingBookingData!);
                             },
                             color: context.primary,
-                            textColor: Colors.white,
+                            textColor: context.onPrimary,
                             text: language.lblCancel,
                           ).paddingAll(16)
                         : (widget.upcomingBookingData!.status ==
@@ -306,7 +306,7 @@ class _UpcomingBookingDashboardComponent3State
                                   // Service is already accepted, no action needed
                                 },
                                 color: Colors.green,
-                                textColor: Colors.white,
+                                textColor: context.onPrimary,
                                 text: language.accepted,
                               ).paddingAll(16)
                             : const Offstage(),

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/extensions/string_extentions.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
 import 'package:booking_system_flutter/utils/text_styles.dart';
@@ -134,7 +135,7 @@ class _SendFilePreviewScreenState extends State<SendFilePreviewScreen> {
             Row(
               children: [
                 AppButton(
-                  textColor: Colors.white,
+                  textColor: context.onPrimary,
                   text: language.btnSubmit,
                   color: context.primaryColor,
                   onTap: () {
@@ -166,7 +167,7 @@ class _SendFilePreviewScreenState extends State<SendFilePreviewScreen> {
           focus: messageFocus,
           cursorHeight: 20,
           maxLines: 5,
-          cursorColor: appStore.isDarkMode ? Colors.white : Colors.black,
+          cursorColor: appStore.isDarkMode ? context.onPrimary : Colors.black,
           textCapitalization: TextCapitalization.sentences,
           keyboardType: TextInputType.multiline,
           decoration: inputDecoration(context).copyWith(

@@ -7,6 +7,7 @@ import 'package:booking_system_flutter/screens/service/view_all_service_screen.d
 import 'package:booking_system_flutter/screens/shop/component/shop_image_slider.dart';
 import 'package:booking_system_flutter/utils/common.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/images.dart';
 import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
@@ -111,7 +112,7 @@ class _ShopDetailScreenState extends State<ShopDetailScreen> {
                             width: 16,
                             height: 16,
                             color: appStore.isDarkMode
-                                ? Colors.white
+                                ? context.onPrimary
                                 : context.primaryColor),
                         text: shop.email.validate(),
                         textStyle: context.secondaryTextStyle(size: 14),
@@ -129,7 +130,7 @@ class _ShopDetailScreenState extends State<ShopDetailScreen> {
                             width: 16,
                             height: 16,
                             color: appStore.isDarkMode
-                                ? Colors.white
+                                ? context.onPrimary
                                 : context.primaryColor),
                         text: shop.contactNumber.validate(),
                         textStyle: context.secondaryTextStyle(size: 14),
@@ -149,7 +150,7 @@ class _ShopDetailScreenState extends State<ShopDetailScreen> {
                             width: 18,
                             height: 18,
                             color: appStore.isDarkMode
-                                ? Colors.white
+                                ? context.onPrimary
                                 : context.primaryColor,
                           ),
                           10.width,
@@ -180,7 +181,7 @@ class _ShopDetailScreenState extends State<ShopDetailScreen> {
                           width: 16,
                           height: 16,
                           color: appStore.isDarkMode
-                              ? Colors.white
+                              ? context.onPrimary
                               : context.primaryColor),
                       text: "${shop.shopStartTime} - ${shop.shopEndTime}",
                       textStyle: context.secondaryTextStyle(size: 14),

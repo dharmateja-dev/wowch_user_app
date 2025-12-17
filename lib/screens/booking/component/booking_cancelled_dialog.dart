@@ -72,7 +72,7 @@ class _BookingCancelledDialogState extends State<BookingCancelledDialog> {
                       height: 40,
                       text: language.lblOk,
                       textStyle: context.boldTextStyle(
-                          color: Colors.white,
+                          color: context.onPrimary,
                           weight: FontWeight.w600,
                           size: 12),
                       width: context.width() - context.navigationBarHeight,

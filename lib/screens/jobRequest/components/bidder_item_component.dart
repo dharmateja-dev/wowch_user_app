@@ -146,7 +146,6 @@ class _BidderItemComponentState extends State<BidderItemComponent> {
                     PriceWidget(
                       price: widget.data.price.validate(),
                       isHourlyService: false,
-                      color: textPrimaryColorGlobal,
                       isFreeService: false,
                       size: 14,
                     ),

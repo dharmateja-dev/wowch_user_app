@@ -115,7 +115,7 @@ void checkIfLink(BuildContext context, String value, {String? title}) {
 
   String temp = parseHtmlString(value.validate());
   if (temp.startsWith("https") || temp.startsWith("http")) {
-    launchUrlCustomTab(temp.validate());
+    launchUrlCustomTab(temp.validate(), context);
   } else if (temp.validateEmail()) {
     launchMail(temp);
   } else if (temp.validatePhone() || temp.startsWith('+')) {
@@ -125,7 +125,7 @@ void checkIfLink(BuildContext context, String value, {String? title}) {
   }
 }
 
-void launchUrlCustomTab(String? url) {
+void launchUrlCustomTab(String? url, BuildContext context) {
   if (url.validate().isNotEmpty) {
     custom_tabs.launchUrl(
       Uri.parse(url!),
@@ -136,7 +136,7 @@ void launchUrlCustomTab(String? url) {
       ),
       safariVCOptions: custom_tabs.SafariViewControllerOptions(
         preferredBarTintColor: primaryColor,
-        preferredControlTintColor: Colors.white,
+        preferredControlTintColor: context.onPrimary,
         barCollapsingEnabled: true,
         entersReaderIfAvailable: true,
         dismissButtonStyle:
@@ -708,7 +708,7 @@ Widget mobileNumberInfoWidget(BuildContext context) {
         style: context.boldTextStyle(size: 12, color: primaryColor),
         recognizer: TapGestureRecognizer()
           ..onTap = () {
-            launchUrlCustomTab("https://countrycode.org/");
+            launchUrlCustomTab("https://countrycode.org/", context);
           },
       ),
     ],

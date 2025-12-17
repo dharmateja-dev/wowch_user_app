@@ -2,6 +2,7 @@ library flutter_image_stack;
 
 import 'dart:math';
 
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -30,10 +31,10 @@ class FlutterImageStack extends StatelessWidget {
   final Color? itemBorderColor;
 
   /// The text style to apply if there is any extra count to be shown
-  final TextStyle extraCountTextStyle;
+  final TextStyle? extraCountTextStyle;
 
   /// Set the background color of the circle
-  final Color backgroundColor;
+  final Color? backgroundColor;
 
   /// Enum to define the image source.
   ///
@@ -64,14 +65,11 @@ class FlutterImageStack extends StatelessWidget {
     this.itemCount = 3,
     required this.totalCount,
     this.itemBorderWidth = 2,
-    Color this.itemBorderColor = Colors.grey,
+    this.itemBorderColor,
     this.imageSource = ImageSource.network,
     this.showTotalCount = true,
-    this.extraCountTextStyle = const TextStyle(
-      color: Colors.black,
-      fontWeight: FontWeight.w600,
-    ),
-    this.backgroundColor = Colors.white,
+    this.extraCountTextStyle,
+    this.backgroundColor,
     this.onCallBack,
   })  : children = [],
         providers = [],
@@ -87,13 +85,10 @@ class FlutterImageStack extends StatelessWidget {
     this.itemCount = 3,
     required this.totalCount,
     this.itemBorderWidth = 2,
-    Color this.itemBorderColor = Colors.grey,
+    this.itemBorderColor,
     this.showTotalCount = true,
-    this.extraCountTextStyle = const TextStyle(
-      color: Colors.black,
-      fontWeight: FontWeight.w600,
-    ),
-    this.backgroundColor = Colors.white,
+    this.extraCountTextStyle,
+    this.backgroundColor,
     this.onCallBack,
   })  : imageList = [],
         providers = [],
@@ -110,18 +105,29 @@ class FlutterImageStack extends StatelessWidget {
     this.itemCount = 3,
     required this.totalCount,
     this.itemBorderWidth = 2,
-    Color this.itemBorderColor = Colors.grey,
+    this.itemBorderColor,
     this.showTotalCount = true,
-    this.extraCountTextStyle = const TextStyle(
-      color: Colors.black,
-      fontWeight: FontWeight.w600,
-    ),
-    this.backgroundColor = Colors.white,
+    this.extraCountTextStyle,
+    this.backgroundColor,
     this.onCallBack,
   })  : imageList = [],
         children = [],
         imageSource = null,
         super(key: key);
+
+  // Helper methods to get theme-aware colors
+  Color _getBorderColor(BuildContext context) =>
+      itemBorderColor ?? context.outline;
+
+  Color _getBackgroundColor(BuildContext context) =>
+      backgroundColor ?? context.surface;
+
+  TextStyle _getExtraCountTextStyle(BuildContext context) =>
+      extraCountTextStyle ??
+      TextStyle(
+        color: context.onSurface,
+        fontWeight: FontWeight.w600,
+      );
 
   @override
   Widget build(BuildContext context) {
@@ -132,12 +138,15 @@ class FlutterImageStack extends StatelessWidget {
     var widgetList = items
         .sublist(0, size)
         .asMap()
-        .map((index, value) => MapEntry(
+        .map(
+          (index, value) => MapEntry(
             index,
             Padding(
               padding: EdgeInsets.only(left: 0.7 * itemRadius! * index),
-              child: circularItem(value),
-            ),),)
+              child: _circularItem(context, value),
+            ),
+          ),
+        )
         .values
         .toList()
         .reversed
@@ -145,53 +154,71 @@ class FlutterImageStack extends StatelessWidget {
     return FittedBox(
       child: Row(
         children: <Widget>[
-          if (widgetList.isNotEmpty) Stack(
-                  clipBehavior: Clip.none,
-                  children: widgetList,
-                ) else const SizedBox.shrink(),
+          if (widgetList.isNotEmpty)
+            Stack(
+              clipBehavior: Clip.none,
+              children: widgetList,
+            )
+          else
+            const SizedBox.shrink(),
           Container(
-              child: showTotalCount && totalCount - widgetList.length > 0
-                  ? Container(
-                      constraints: BoxConstraints(minWidth: itemRadius! - itemBorderWidth!),
-                      padding: const EdgeInsets.all(3),
-                      height: (itemRadius! - itemBorderWidth!),
-                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(itemRadius! - itemBorderWidth!), border: Border.all(color: itemBorderColor!, width: itemBorderWidth!), color: backgroundColor),
-                      child: Center(
-                        child: Text(
-                          "+${totalCount - widgetList.length}",
-                          textAlign: TextAlign.center,
-                          style: extraCountTextStyle,
-                        ),
+            child: showTotalCount && totalCount - widgetList.length > 0
+                ? Container(
+                    constraints: BoxConstraints(
+                        minWidth: itemRadius! - itemBorderWidth!),
+                    padding: const EdgeInsets.all(3),
+                    height: (itemRadius! - itemBorderWidth!),
+                    decoration: BoxDecoration(
+                      borderRadius:
+                          BorderRadius.circular(itemRadius! - itemBorderWidth!),
+                      border: Border.all(
+                        color: _getBorderColor(context),
+                        width: itemBorderWidth!,
                       ),
-                    ).onTap(() {
+                      color: _getBackgroundColor(context),
+                    ),
+                    child: Center(
+                      child: Text(
+                        "+${totalCount - widgetList.length}",
+                        textAlign: TextAlign.center,
+                        style: _getExtraCountTextStyle(context),
+                      ),
+                    ),
+                  ).onTap(
+                    () {
                       onCallBack?.call();
-                    }, hoverColor: Colors.transparent, highlightColor: Colors.transparent, splashColor: Colors.transparent,)
-                  : const SizedBox(),),
+                    },
+                    hoverColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
+                    splashColor: Colors.transparent,
+                  )
+                : const SizedBox(),
+          ),
         ],
       ),
     );
   }
 
-  Widget circularItem(dynamic item) {
+  Widget _circularItem(BuildContext context, dynamic item) {
     if (item is ImageProvider) {
-      return circularProviders(item);
+      return _circularProviders(context, item);
     } else if (item is Widget) {
-      return circularWidget(item);
+      return _circularWidget(context, item);
     } else if (item is String) {
-      return circularImage(item);
+      return _circularImage(context, item);
     }
     return Container();
   }
 
-  circularWidget(Widget widget) {
+  Widget _circularWidget(BuildContext context, Widget widget) {
     return Container(
       height: itemRadius,
       width: itemRadius,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: backgroundColor,
+        color: _getBackgroundColor(context),
         border: Border.all(
-          color: itemBorderColor!,
+          color: _getBorderColor(context),
           width: itemBorderWidth!,
         ),
       ),
@@ -202,23 +229,23 @@ class FlutterImageStack extends StatelessWidget {
     );
   }
 
-  Widget circularImage(String imageUrl) {
+  Widget _circularImage(BuildContext context, String imageUrl) {
     return Container(
       height: itemRadius,
       width: itemRadius,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         border: Border.all(
-          color: Colors.white,
+          color: _getBackgroundColor(context),
           width: itemBorderWidth!,
         ),
       ),
       child: Container(
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: Colors.white,
+          color: _getBackgroundColor(context),
           image: DecorationImage(
-            image: imageProvider(imageUrl),
+            image: _imageProvider(imageUrl),
             fit: BoxFit.cover,
           ),
         ),
@@ -226,21 +253,21 @@ class FlutterImageStack extends StatelessWidget {
     );
   }
 
-  Widget circularProviders(ImageProvider imageProvider) {
+  Widget _circularProviders(BuildContext context, ImageProvider imageProvider) {
     return Container(
       height: itemRadius,
       width: itemRadius,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         border: Border.all(
-          color: Colors.white,
+          color: _getBackgroundColor(context),
           width: itemBorderWidth!,
         ),
       ),
       child: Container(
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: Colors.white,
+          color: _getBackgroundColor(context),
           image: DecorationImage(
             image: imageProvider,
             fit: BoxFit.cover,
@@ -250,11 +277,11 @@ class FlutterImageStack extends StatelessWidget {
     );
   }
 
-  imageProvider(imageUrl) {
+  ImageProvider _imageProvider(String imageUrl) {
     if (imageSource == ImageSource.asset) {
       return AssetImage(imageUrl);
     } else if (imageSource == ImageSource.file) {
-      return FileImage(imageUrl);
+      return FileImage(imageUrl as dynamic);
     }
     return NetworkImage(imageUrl);
   }

@@ -1,6 +1,7 @@
 import 'package:booking_system_flutter/component/back_widget.dart';
 import 'package:booking_system_flutter/main.dart';
 import 'package:booking_system_flutter/screens/gallery/gallery_component.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -36,7 +37,7 @@ class _GalleryScreenState extends State<GalleryScreen> {
     return Scaffold(
       appBar: appBarWidget(
         "${language.lblGallery} ${'- ${widget.serviceName}'}",
-        textColor: Colors.white,
+        textColor: context.onPrimary,
         color: context.primaryColor,
         backWidget: BackWidget(),
         textSize: APP_BAR_TEXT_SIZE,
@@ -46,7 +47,8 @@ class _GalleryScreenState extends State<GalleryScreen> {
         runSpacing: 16,
         listAnimationType: ListAnimationType.FadeIn,
         fadeInConfiguration: FadeInConfiguration(duration: 2.seconds),
-        scaleConfiguration: ScaleConfiguration(duration: 300.milliseconds, delay: 50.milliseconds),
+        scaleConfiguration: ScaleConfiguration(
+            duration: 300.milliseconds, delay: 50.milliseconds),
         itemCount: widget.attachments.length,
         itemBuilder: (context, i) {
           return GalleryComponent(images: widget.attachments, index: i);

@@ -7,6 +7,7 @@ import 'package:booking_system_flutter/network/rest_apis.dart';
 import 'package:booking_system_flutter/screens/review/components/review_widget.dart';
 import 'package:booking_system_flutter/screens/review/rating_view_all_screen.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -78,7 +79,7 @@ class HandymanInfoScreenState extends State<HandymanInfoScreen> {
                           16.width,
                           Text(language.lblAboutHandyman,
                               style: context.boldTextStyle(
-                                  color: Colors.white, size: 18)),
+                                  color: context.onPrimary, size: 18)),
                         ],
                       ),
                     ),
@@ -184,7 +185,7 @@ class HandymanInfoScreenState extends State<HandymanInfoScreen> {
                                       width: 16,
                                       height: 16,
                                       color: appStore.isDarkMode
-                                          ? Colors.white
+                                          ? context.onPrimary
                                           : context.primaryColor),
                                   text: data.userData!.email.validate(),
                                   textStyle:
@@ -202,7 +203,7 @@ class HandymanInfoScreenState extends State<HandymanInfoScreen> {
                                       width: 16,
                                       height: 16,
                                       color: appStore.isDarkMode
-                                          ? Colors.white
+                                          ? context.onPrimary
                                           : context.primaryColor),
                                   text: data.userData!.contactNumber.validate(),
                                   textStyle:

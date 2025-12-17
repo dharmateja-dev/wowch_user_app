@@ -299,7 +299,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen>
                         value.name.validate(),
                         style: context.boldTextStyle(
                             color: isSelected
-                                ? Colors.white
+                                ? context.onPrimary
                                 : textPrimaryColorGlobal),
                       ),
                     ),

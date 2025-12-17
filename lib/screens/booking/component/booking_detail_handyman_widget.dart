@@ -144,7 +144,7 @@ class BookingDetailHandymanWidgetState
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       ic_calling.iconImage(
-                          size: 18, color: Colors.white, context: context),
+                          size: 18, color: context.onPrimary, context: context),
                       8.width,
                       Text(language.lblCall,
                           style: context.boldTextStyle(color: white)),

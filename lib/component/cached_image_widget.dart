@@ -41,7 +41,7 @@ class CachedImageWidget extends StatelessWidget {
         color: color ?? context.secondaryContainer,
         alignment: alignment,
         //padding: EdgeInsets.all(10),
-        //child: Image.asset(ic_no_photo, color: appStore.isDarkMode ? Colors.white : Colors.black),
+        //child: Image.asset(ic_no_photo, color: appStore.isDarkMode ? context.onPrimary : Colors.black),
         child: Stack(
           children: [
             PlaceHolderWidget(

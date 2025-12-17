@@ -72,7 +72,8 @@ class _BlogItemComponentState extends State<BlogItemComponent> {
                   Text(
                     widget.blogData!.title.validate(),
                     style: context.boldTextStyle(
-                        size: 14, color: textPrimaryColorGlobal),
+                      size: 14,
+                    ),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),

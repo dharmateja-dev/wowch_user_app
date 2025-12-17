@@ -218,7 +218,7 @@ class _CustomerRatingScreenState extends State<CustomerRatingScreen> {
                                       data.serviceName.validate(),
                                       style: context.boldTextStyle(
                                         size: 16,
-                                        color: textPrimaryColorGlobal,
+                                        
                                       ),
                                       maxLines: 2,
                                       overflow: TextOverflow.ellipsis,
@@ -263,7 +263,7 @@ class _CustomerRatingScreenState extends State<CustomerRatingScreen> {
                                     language.lblYourComment,
                                     style: context.boldTextStyle(
                                       size: 14,
-                                      color: textPrimaryColorGlobal,
+                                      
                                     ),
                                   ).expand(),
                                   // Edit icon - simple dark grey icon

@@ -132,7 +132,9 @@ class _CustomAppbarDashboardComponent2State
                       Row(
                         children: [
                           ic_location.iconImage(
-                              color: Colors.white, size: 22, context: context),
+                              color: context.onPrimary,
+                              size: 22,
+                              context: context),
                           8.width,
                           Text(
                             appStore.isCurrentLocation
@@ -153,7 +155,7 @@ class _CustomAppbarDashboardComponent2State
                                   ? getStringAsync(CURRENT_ADDRESS)
                                   : language.lblLocationOff,
                               style: context.secondaryTextStyle(
-                                  color: Colors.white),
+                                  color: context.onPrimary),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             ),
@@ -161,7 +163,7 @@ class _CustomAppbarDashboardComponent2State
                           IconButton(
                             icon: const Icon(Icons.keyboard_arrow_down_outlined,
                                 size: 20),
-                            color: Colors.white,
+                            color: context.onPrimary,
                             onPressed: () {
                               locationWiseService(context, () {
                                 widget.callback?.call();
@@ -181,7 +183,7 @@ class _CustomAppbarDashboardComponent2State
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: Colors.transparent,
-                        border: Border.all(color: Colors.white),
+                        border: Border.all(color: context.onPrimary),
                       ),
                       child: Stack(
                         clipBehavior: Clip.none,
@@ -200,7 +202,7 @@ class _CustomAppbarDashboardComponent2State
                                               appStore.unreadCount.toString(),
                                               style: context.primaryTextStyle(
                                                   size: 12,
-                                                  color: Colors.white)),
+                                                  color: context.onPrimary)),
                                         ),
                                         decoration: boxDecorationDefault(
                                             color: Colors.red,

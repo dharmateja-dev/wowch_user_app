@@ -24,7 +24,8 @@ class CustomerRatingsComponent extends StatelessWidget {
           Image.asset(ic_customer_rating_stars),
           26.height,
           Text(language.lblIntroducingCustomerRating,
-              style: context.primaryTextStyle(size: 18, color: Colors.white)),
+              style:
+                  context.primaryTextStyle(size: 18, color: context.onPrimary)),
           16.height,
           AppButton(
             text: language.lblSeeYourRatings,
@@ -36,7 +37,7 @@ class CustomerRatingsComponent extends StatelessWidget {
               if (appStore.isLoggedIn) {
                 CustomerRatingScreen().launch(context);
               } else {
-                setStatusBarColor(Colors.white,
+                setStatusBarColor(context.onPrimary,
                     statusBarIconBrightness: Brightness.dark);
 
                 SignInScreen().launch(context).then((value) {

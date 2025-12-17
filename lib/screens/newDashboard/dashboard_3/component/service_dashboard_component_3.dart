@@ -234,7 +234,7 @@ class _ServiceDashboardComponent3State
                         decoration: boxDecorationDefault(
                           color: appStore.isDarkMode
                               ? context.cardColor.withValues(alpha: 0.2)
-                              : Colors.white,
+                              : context.onPrimary,
                           shape: BoxShape.rectangle,
                           borderRadius: BorderRadius.circular(20),
                         ),
@@ -268,7 +268,7 @@ class _ServiceDashboardComponent3State
                         style: context.secondaryTextStyle(
                             size: 12,
                             color: appStore.isDarkMode
-                                ? Colors.white
+                                ? context.onPrimary
                                 : appTextSecondaryColor),
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,

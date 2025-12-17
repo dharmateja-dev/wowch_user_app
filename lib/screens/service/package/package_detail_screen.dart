@@ -5,6 +5,7 @@ import 'package:booking_system_flutter/model/package_data_model.dart';
 import 'package:booking_system_flutter/model/service_data_model.dart';
 import 'package:booking_system_flutter/screens/service/service_detail_screen.dart';
 import 'package:booking_system_flutter/utils/constant.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -94,7 +95,7 @@ class _PackageDetailScreenState extends State<PackageDetailScreen> {
                                 PriceWidget(
                                   color: lineTextColor,
                                   price: widget.packageData.originalPrice,
-                                  hourlyTextColor: Colors.white,
+                                  hourlyTextColor: context.onPrimary,
                                   size: 12,
                                   isLineThroughEnabled: true,
                                 ),
@@ -198,7 +199,7 @@ class _PackageDetailScreenState extends State<PackageDetailScreen> {
                                           const SizedBox(width: 8),
                                           PriceWidget(
                                             price: data.price.validate(),
-                                            hourlyTextColor: Colors.white,
+                                            hourlyTextColor: context.onPrimary,
                                             size: 14,
                                           ),
                                         ],
@@ -233,7 +234,7 @@ class _PackageDetailScreenState extends State<PackageDetailScreen> {
             child: Text(language.lblBookNow,
                 style: context.boldTextStyle(color: white)),
             width: context.width(),
-            textColor: Colors.white,
+            textColor: context.onPrimary,
           ).paddingSymmetric(horizontal: 16.0, vertical: 10.0),
         ],
       ),

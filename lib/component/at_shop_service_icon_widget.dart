@@ -1,6 +1,7 @@
 import 'package:booking_system_flutter/generated/assets.dart';
 import 'package:booking_system_flutter/main.dart';
 import 'package:booking_system_flutter/utils/colors.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -25,7 +26,7 @@ class ShopServiceIconWidget extends StatelessWidget {
               child: Image.asset(
                 Assets.iconsIcDefaultShop,
                 height: 12,
-                color: Colors.white,
+                color: context.onPrimary,
               ),
               decoration: boxDecorationDefault(
                 shape: BoxShape.circle,
@@ -46,7 +47,7 @@ class ShopServiceIconWidget extends StatelessWidget {
         child: Image.asset(
           Assets.iconsIcDefaultShop,
           height: 12,
-          color: Colors.white,
+          color: context.onPrimary,
         ),
         decoration: boxDecorationDefault(
           shape: BoxShape.circle,

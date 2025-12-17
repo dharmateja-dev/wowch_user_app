@@ -1,3 +1,5 @@
+import 'package:booking_system_flutter/utils/context_extensions.dart';
+import 'package:booking_system_flutter/utils/text_styles.dart';
 
 import 'custom_calendar.dart';
 import 'package:flutter/material.dart';
@@ -81,7 +83,7 @@ class CustomDateRangePickerState extends State<CustomDateRangePicker>
                   borderRadius: const BorderRadius.all(Radius.circular(24.0)),
                   boxShadow: <BoxShadow>[
                     BoxShadow(
-                      color: Colors.grey.withValues(alpha:0.2),
+                      color: Colors.grey.withValues(alpha: 0.2),
                       offset: const Offset(4, 4),
                       blurRadius: 8.0,
                     ),
@@ -115,7 +117,7 @@ class CustomDateRangePickerState extends State<CustomDateRangePicker>
                                 Text(
                                   startDate != null
                                       ? DateFormat('EEE, dd MMM')
-                                      .format(startDate!)
+                                          .format(startDate!)
                                       : '--/-- ',
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
@@ -148,7 +150,7 @@ class CustomDateRangePickerState extends State<CustomDateRangePicker>
                                 Text(
                                   endDate != null
                                       ? DateFormat('EEE, dd MMM')
-                                      .format(endDate!)
+                                          .format(endDate!)
                                       : '--/-- ',
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
@@ -168,8 +170,10 @@ class CustomDateRangePickerState extends State<CustomDateRangePicker>
                         initialEndDate: widget.initialEndDate,
                         initialStartDate: widget.initialStartDate,
                         primaryColor: widget.primaryColor,
-                        disabledDateColor: widget.disabledDateColor, // Ensure CustomCalendar supports this
-                        startEndDateChange: (DateTime startDateData, DateTime endDateData) {
+                        disabledDateColor: widget
+                            .disabledDateColor, // Ensure CustomCalendar supports this
+                        startEndDateChange:
+                            (DateTime startDateData, DateTime endDateData) {
                           setState(() {
                             startDate = startDateData;
                             endDate = endDateData;
@@ -191,19 +195,19 @@ class CustomDateRangePickerState extends State<CustomDateRangePicker>
                                       borderRadius: BorderRadius.circular(24.0),
                                     ),
                                   ),
-                                  backgroundColor:
-                                  WidgetStateProperty.all(widget.primaryColor),
+                                  backgroundColor: WidgetStateProperty.all(
+                                      widget.primaryColor),
                                 ),
                                 onPressed: () {
                                   widget.onCancelClick();
                                   Navigator.pop(context);
                                 },
-                                child: const Text(
+                                child: Text(
                                   'Cancel',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 18,
-                                    color: Colors.white,
+                                  style: context.primaryTextStyle(
+                                    weight: FontWeight.w500,
+                                    size: 18,
+                                    color: context.onPrimary,
                                   ),
                                 ),
                               ),
@@ -220,19 +224,19 @@ class CustomDateRangePickerState extends State<CustomDateRangePicker>
                                       borderRadius: BorderRadius.circular(24.0),
                                     ),
                                   ),
-                                  backgroundColor:
-                                  WidgetStateProperty.all(widget.primaryColor),
+                                  backgroundColor: WidgetStateProperty.all(
+                                      widget.primaryColor),
                                 ),
                                 onPressed: () {
                                   widget.onApplyClick(startDate!, endDate!);
                                   Navigator.pop(context);
                                 },
-                                child: const Text(
+                                child: Text(
                                   'Apply',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 18,
-                                    color: Colors.white,
+                                  style: context.primaryTextStyle(
+                                    weight: FontWeight.w500,
+                                    size: 18,
+                                    color: context.onPrimary,
                                   ),
                                 ),
                               ),
@@ -253,18 +257,18 @@ class CustomDateRangePickerState extends State<CustomDateRangePicker>
 }
 
 void showCustomDateRangePicker(
-    BuildContext context, {
-      required bool dismissible,
-      required DateTime minimumDate,
-      required DateTime maximumDate,
-      DateTime? startDate,
-      DateTime? endDate,
-      required Function(DateTime startDate, DateTime endDate) onApplyClick,
-      required Function() onCancelClick,
-      required Color backgroundColor,
-      required Color primaryColor,
-      required Color disabledDateColor,
-    }) {
+  BuildContext context, {
+  required bool dismissible,
+  required DateTime minimumDate,
+  required DateTime maximumDate,
+  DateTime? startDate,
+  DateTime? endDate,
+  required Function(DateTime startDate, DateTime endDate) onApplyClick,
+  required Function() onCancelClick,
+  required Color backgroundColor,
+  required Color primaryColor,
+  required Color disabledDateColor,
+}) {
   showDialog<dynamic>(
     context: context,
     builder: (BuildContext context) => CustomDateRangePicker(

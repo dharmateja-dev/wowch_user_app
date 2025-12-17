@@ -57,7 +57,7 @@ class CategoryWidget extends StatelessWidget {
                     width: CATEGORY_ICON_SIZE - 16,
                     colorFilter: ColorFilter.mode(
                       appStore.isDarkMode
-                          ? Colors.white
+                          ? context.onPrimary
                           : categoryData.color.validate(value: '000').toColor(),
                       BlendMode.srcIn,
                     ),

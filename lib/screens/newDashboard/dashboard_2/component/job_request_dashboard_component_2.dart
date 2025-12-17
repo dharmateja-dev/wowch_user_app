@@ -44,10 +44,10 @@ class JobRequestDashboardComponent2 extends StatelessWidget {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Icon(Icons.add, color: Colors.white),
+                Icon(Icons.add, color: context.onPrimary),
                 4.width,
                 Text(language.newRequest,
-                    style: context.boldTextStyle(color: Colors.white)),
+                    style: context.boldTextStyle(color: context.onPrimary)),
               ],
             ),
             color: context.primary,
@@ -56,7 +56,7 @@ class JobRequestDashboardComponent2 extends StatelessWidget {
               if (appStore.isLoggedIn) {
                 MyPostRequestListScreen().launch(context);
               } else {
-                setStatusBarColor(Colors.white,
+                setStatusBarColor(context.onPrimary,
                     statusBarIconBrightness: Brightness.dark);
                 bool? res = await const SignInScreen(isFromDashboard: true)
                     .launch(context);

@@ -198,7 +198,7 @@ class _ServiceDashboardComponent1State
                       padding: const EdgeInsets.only(
                           left: 0, right: 16, top: 0, bottom: 0),
                       decoration: BoxDecoration(
-                          color: Colors.amber.shade50,
+                          color: context.starColor.withValues(alpha: 0.9),
                           borderRadius: BorderRadius.circular(24)),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
@@ -206,10 +206,11 @@ class _ServiceDashboardComponent1State
                           Container(
                             height: 26,
                             padding: const EdgeInsets.all(6),
-                            decoration: const BoxDecoration(
-                                color: Colors.amber, shape: BoxShape.circle),
-                            child: const Icon(Icons.star,
-                                color: Colors.white, size: 15),
+                            decoration: BoxDecoration(
+                                color: context.starColor,
+                                shape: BoxShape.circle),
+                            child: Icon(Icons.star,
+                                color: context.onPrimary, size: 15),
                           ),
                           8.width,
                           Text(
@@ -217,7 +218,8 @@ class _ServiceDashboardComponent1State
                                 .validate()
                                 .toString(),
                             style: context.boldTextStyle(
-                                size: 12, color: Colors.black),
+                              size: 12,
+                            ),
                           ),
                         ],
                       ),
@@ -280,7 +282,7 @@ class _ServiceDashboardComponent1State
                         style: context.secondaryTextStyle(
                             size: 12,
                             color: appStore.isDarkMode
-                                ? Colors.white
+                                ? context.onPrimary
                                 : appTextSecondaryColor),
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,

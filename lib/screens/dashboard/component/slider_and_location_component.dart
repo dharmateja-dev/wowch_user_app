@@ -100,7 +100,8 @@ class _SliderLocationComponentState extends State<SliderLocationComponent> {
                                   child: FittedBox(
                                     child: Text(appStore.unreadCount.toString(),
                                         style: context.primaryTextStyle(
-                                            size: 12, color: Colors.white)),
+                                            size: 12,
+                                            color: context.onPrimary)),
                                   ),
                                   decoration: boxDecorationDefault(
                                       color: Colors.red,

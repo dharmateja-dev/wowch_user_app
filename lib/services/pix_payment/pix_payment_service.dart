@@ -1,4 +1,5 @@
 import 'package:booking_system_flutter/main.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/images.dart';
 import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
@@ -92,8 +93,8 @@ class _PixPayDialogState extends State<PixPayDialog> {
                           height: 50,
                           decoration: const BoxDecoration(
                               shape: BoxShape.circle, color: Colors.redAccent),
-                          child: const Icon(Icons.close_sharp,
-                              color: Colors.white),
+                          child:
+                              Icon(Icons.close_sharp, color: context.onPrimary),
                         ),
                         10.height,
                         Text(language.somethingWentWrong,

@@ -165,7 +165,7 @@ class _CancellationsBookingChargeDialogState
                           height: 40,
                           text: language.lblCancelBooking,
                           textStyle: context.boldTextStyle(
-                              color: Colors.white,
+                              color: context.onPrimary,
                               weight: FontWeight.w600,
                               size: 12),
                           width: context.width() - context.navigationBarHeight,

@@ -1,6 +1,7 @@
 import 'package:booking_system_flutter/component/back_widget.dart';
 import 'package:booking_system_flutter/component/loader_widget.dart';
 import 'package:booking_system_flutter/main.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:photo_view/photo_view.dart';
@@ -37,11 +38,11 @@ class _ZoomImageScreenState extends State<ZoomImageScreen> {
         exitFullScreen();
       },
       child: Scaffold(
-        backgroundColor: Colors.black,
+        backgroundColor: context.scaffold,
         appBar: showAppBar
             ? appBarWidget(
                 language.lblGallery,
-                textColor: Colors.white,
+                textColor: context.onPrimary,
                 color: context.primaryColor,
                 backWidget: BackWidget(),
               )
@@ -69,11 +70,13 @@ class _ZoomImageScreenState extends State<ZoomImageScreen> {
                   return PhotoViewGalleryPageOptions(
                     imageProvider: Image.network(
                       widget.galleryImages![index],
-                      errorBuilder: (context, error, stackTrace) => PlaceHolderWidget(),
+                      errorBuilder: (context, error, stackTrace) =>
+                          PlaceHolderWidget(),
                     ).image,
                     initialScale: PhotoViewComputedScale.contained,
                     minScale: PhotoViewComputedScale.contained,
-                    errorBuilder: (context, error, stackTrace) => PlaceHolderWidget(),
+                    errorBuilder: (context, error, stackTrace) =>
+                        PlaceHolderWidget(),
                     heroAttributes: PhotoViewHeroAttributes(
                       tag: widget.galleryImages![index],
                     ),
@@ -99,8 +102,8 @@ class _ZoomImageScreenState extends State<ZoomImageScreen> {
 class PlaceHolderWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Icon(Icons.broken_image, color: Colors.white, size: 50),
+    return Center(
+      child: Icon(Icons.broken_image, color: context.onPrimary, size: 50),
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:booking_system_flutter/component/base_scaffold_widget.dart';
 import 'package:booking_system_flutter/component/loader_widget.dart';
 import 'package:booking_system_flutter/store/filter_store.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
 import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
@@ -154,11 +155,11 @@ class _SearchServiceScreenState extends State<SearchServiceScreen> {
                       padding: const EdgeInsets.all(10),
                       decoration:
                           boxDecorationDefault(color: context.primaryColor),
-                      child: const CachedImageWidget(
+                      child: CachedImageWidget(
                         url: ic_filter,
                         height: 26,
                         width: 26,
-                        color: Colors.white,
+                        color: context.onPrimary,
                       ),
                     ).onTap(() {
                       hideKeyboard(context);

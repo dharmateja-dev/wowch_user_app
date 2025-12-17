@@ -466,7 +466,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             setState(() {});
           },
           activeColor: context.primary,
-          checkColor: Colors.white,
+          checkColor: context.onPrimary,
           side: BorderSide(color: context.primary, width: 2.0),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(2),

@@ -1,4 +1,5 @@
 import 'package:booking_system_flutter/utils/colors.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:flutter/material.dart';
 
 /// user for DateTime formatting
@@ -318,7 +319,7 @@ class CustomCalendarState extends State<CustomCalendar> {
                                 const BorderRadius.all(Radius.circular(32.0)),
                             border: Border.all(
                               color: getIsItStartAndEndDate(date)
-                                  ? Colors.white
+                                  ? context.onPrimary
                                   : Colors.transparent,
                               width: 2,
                             ),
@@ -374,7 +375,7 @@ class CustomCalendarState extends State<CustomCalendar> {
                                 DateTime.now().month == date.month &&
                                 DateTime.now().year == date.year
                             ? getIsInRange(date)
-                                ? Colors.white
+                                ? context.onPrimary
                                 : widget.primaryColor
                             : Colors.transparent,
                         shape: BoxShape.circle,

@@ -73,7 +73,7 @@ class _FilterProviderComponentState extends State<FilterProviderComponent> {
                         child: Text(
                           'Hello',
                           style: context.boldTextStyle(
-                              color: Colors.white, size: 10),
+                              color: context.onPrimary, size: 10),
                         ),
                       ),
               ),
@@ -145,7 +145,7 @@ class _FilterProviderComponentState extends State<FilterProviderComponent> {
                   color: data.isSelected ? context.primaryColor : white,
                 ),
                 child: data.isSelected
-                    ? const Icon(Icons.circle, size: 12, color: Colors.white)
+                    ? Icon(Icons.circle, size: 12, color: context.onPrimary)
                     : null,
               ),
             ],

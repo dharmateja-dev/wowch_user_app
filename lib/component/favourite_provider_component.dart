@@ -1,4 +1,5 @@
 import 'package:booking_system_flutter/screens/booking/provider_info_screen.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/string_extensions.dart';
 import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +8,6 @@ import 'package:nb_utils/nb_utils.dart';
 import '../main.dart';
 import '../model/user_data_model.dart';
 import '../network/rest_apis.dart';
-import '../utils/colors.dart';
 import '../utils/images.dart';
 import 'cached_image_widget.dart';
 
@@ -78,7 +78,7 @@ class _FavouriteProviderComponentState
           width: widget.width,
           decoration: boxDecorationWithRoundedCorners(
             borderRadius: radius(),
-            backgroundColor: greyColor.withValues(alpha: 0.2),
+            backgroundColor: context.onSurface.withValues(alpha: 0.1),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -147,12 +147,13 @@ class _FavouriteProviderComponentState
               padding: const EdgeInsets.all(6),
               margin: const EdgeInsets.only(right: 6),
               decoration: boxDecorationWithShadow(
-                  boxShape: BoxShape.circle, backgroundColor: Colors.white),
+                  boxShape: BoxShape.circle,
+                  backgroundColor: context.onPrimary),
               child: widget.data!.isFavourite == 1
                   ? ic_fill_heart.iconImage(
-                      color: favouriteColor, size: 16, context: context)
+                      color: context.error, size: 16, context: context)
                   : ic_heart.iconImage(
-                      context: context, color: unFavouriteColor, size: 16),
+                      context: context, color: context.iconMuted, size: 16),
             ).onTap(() async {
               if (widget.data!.isFavourite == 1) {
                 widget.data!.isFavourite = 0;

@@ -6,6 +6,7 @@ import 'package:booking_system_flutter/main.dart';
 import 'package:booking_system_flutter/network/network_utils.dart';
 import 'package:booking_system_flutter/utils/common.dart';
 import 'package:booking_system_flutter/utils/configs.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:http/http.dart';
@@ -61,7 +62,10 @@ class _PaymentWebViewScreenState extends State<PaymentWebViewScreen> {
     get(Uri.parse(url)).then((value) {
       log(value.body);
 
-      String txnId = parseHtmlString(value.body).removeAllWhiteSpace().splitBetween('TransactionNo:', 'InvoiceInformation').trim();
+      String txnId = parseHtmlString(value.body)
+          .removeAllWhiteSpace()
+          .splitBetween('TransactionNo:', 'InvoiceInformation')
+          .trim();
 
       if (txnId.isNotEmpty && txnId.startsWith('#SD')) {
         isInvoiceNumberFound = true;
@@ -77,7 +81,8 @@ class _PaymentWebViewScreenState extends State<PaymentWebViewScreen> {
     var request = Request(
       'GET',
       Uri.parse('$SADAD_API_URL/api/transactions/getTransaction'),
-    )..headers.addAll(buildHeaderForSadad(sadadToken: widget.accessToken.validate()));
+    )..headers
+        .addAll(buildHeaderForSadad(sadadToken: widget.accessToken.validate()));
     var params = {
       "transactionno": txnId,
     };
@@ -117,7 +122,7 @@ class _PaymentWebViewScreenState extends State<PaymentWebViewScreen> {
       appBar: appBarWidget(
         language.payment,
         color: context.primaryColor,
-        textColor: Colors.white,
+        textColor: context.onPrimary,
         backWidget: BackWidget(),
         textSize: APP_BAR_TEXT_SIZE,
       ),
@@ -129,7 +134,9 @@ class _PaymentWebViewScreenState extends State<PaymentWebViewScreen> {
             WebViewWidget(
               controller: controller,
             ),
-            Observer(builder: (context) => LoaderWidget().visible(appStore.isLoading)),
+            Observer(
+                builder: (context) =>
+                    LoaderWidget().visible(appStore.isLoading)),
           ],
         ),
       ),

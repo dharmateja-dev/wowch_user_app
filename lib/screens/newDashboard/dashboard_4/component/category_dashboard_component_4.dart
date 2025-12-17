@@ -44,7 +44,7 @@ class CategoryDashboardComponent4 extends StatelessWidget {
                     width: width ?? context.width() / 4 - 22,
                     colorFilter: ColorFilter.mode(
                       appStore.isDarkMode
-                          ? Colors.white
+                          ? context.onPrimary
                           : categoryData.color.validate(value: '000').toColor(),
                       BlendMode.srcIn,
                     ),
@@ -101,7 +101,8 @@ class CategoryDashboardComponent4 extends StatelessWidget {
             child: Marquee(
               child: Text(
                 categoryData.name.validate(),
-                style: context.boldTextStyle(color: Colors.white, size: 10),
+                style:
+                    context.boldTextStyle(color: context.onPrimary, size: 10),
               ),
             ).center(),
           ),

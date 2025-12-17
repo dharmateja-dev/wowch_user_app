@@ -60,7 +60,7 @@ class NewUpdateDialog extends StatelessWidget {
                   32.width,
                   AppButton(
                     text: language.lblUpdate,
-                    textStyle: context.boldTextStyle(color: Colors.white),
+                    textStyle: context.boldTextStyle(color: context.onPrimary),
                     shapeBorder: RoundedRectangleBorder(borderRadius: radius()),
                     color: context.primary,
                     elevation: 0,

@@ -306,8 +306,8 @@ class _ViewAllServiceScreenState extends State<ViewAllServiceScreen> {
                         color: context.primaryColor,
                         borderRadius: BorderRadius.circular(8),
                       ),
-                      child: const Icon(Icons.check,
-                          size: 14, color: Colors.white),
+                      child:
+                          Icon(Icons.check, size: 14, color: context.onPrimary),
                     ),
                   ),
               ],

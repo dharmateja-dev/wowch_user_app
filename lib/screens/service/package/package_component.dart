@@ -3,6 +3,7 @@ import 'package:booking_system_flutter/main.dart';
 import 'package:booking_system_flutter/model/package_data_model.dart';
 import 'package:booking_system_flutter/screens/service/package/package_detail_screen.dart';
 import 'package:booking_system_flutter/utils/common.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -109,7 +110,7 @@ class _PackageComponentState extends State<PackageComponent> {
                                 children: [
                                   PriceWidget(
                                     price: data.price.validate(),
-                                    hourlyTextColor: Colors.white,
+                                    hourlyTextColor: context.onPrimary,
                                     size: 14,
                                   ),
                                   10.width,
@@ -117,7 +118,7 @@ class _PackageComponentState extends State<PackageComponent> {
                                     PriceWidget(
                                       price: data.originalPrice,
                                       color: lineTextColor,
-                                      hourlyTextColor: Colors.white,
+                                      hourlyTextColor: context.onPrimary,
                                       size: 12,
                                       isBoldText: true,
                                       isLineThroughEnabled: true,
@@ -154,7 +155,7 @@ class _PackageComponentState extends State<PackageComponent> {
                     width: context.width(),
                     child: Text(
                       "Purchase", //Todo language
-                      style: context.boldTextStyle(color: Colors.white),
+                      style: context.boldTextStyle(color: context.onPrimary),
                     ),
                     color: context.primaryColor,
                     onTap: () async {

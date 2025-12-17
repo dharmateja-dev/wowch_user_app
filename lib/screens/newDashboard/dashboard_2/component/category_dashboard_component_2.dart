@@ -1,4 +1,5 @@
 import 'package:booking_system_flutter/utils/colors.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -24,7 +25,7 @@ class CategoryDashboardComponent2 extends StatelessWidget {
       child: Marquee(
           child: Text(categoryData.name.validate(),
               style: isSelected
-                  ? context.primaryTextStyle(color: Colors.white, size: 12)
+                  ? context.primaryTextStyle(color: context.onPrimary, size: 12)
                   : context.primaryTextStyle(size: 12))),
     );
   }

@@ -274,7 +274,7 @@ class _BookingConfirmedComponent1State
                               bookingData: widget.upcomingConfirmedBooking!);
                         },
                         color: context.primary,
-                        textColor: Colors.white,
+                        textColor: context.onPrimary,
                         text: language.lblCancel,
                       ).paddingAll(16)
                     : const Offstage()
@@ -283,7 +283,7 @@ class _BookingConfirmedComponent1State
                 AppButton(
                   width: context.width(),
                   color: Colors.green,
-                  textColor: Colors.white,
+                  textColor: context.onPrimary,
                   text: language.accepted,
                 ).paddingAll(16)
             ],

@@ -118,7 +118,7 @@ void main() async {
 
   passwordLengthGlobal = 6;
   appButtonBackgroundColorGlobal = primaryColor;
-  defaultAppButtonTextColorGlobal = Colors.white;
+
   defaultRadius = 12;
   defaultBlurRadius = 0;
   defaultSpreadRadius = 0;

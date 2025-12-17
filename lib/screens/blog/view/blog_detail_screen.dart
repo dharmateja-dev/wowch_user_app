@@ -5,6 +5,7 @@ import 'package:booking_system_flutter/model/package_data_model.dart';
 import 'package:booking_system_flutter/screens/blog/blog_repository.dart';
 import 'package:booking_system_flutter/screens/blog/model/blog_detail_response.dart';
 import 'package:booking_system_flutter/screens/blog/model/blog_response_model.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/model_keys.dart';
 import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
@@ -216,7 +217,8 @@ class _BlogDetailScreenState extends State<BlogDetailScreen> {
                           Text(
                             data.blogDetail!.title.validate(),
                             style: context.boldTextStyle(
-                                size: 22, color: textPrimaryColorGlobal),
+                              size: 22,
+                            ),
                           ).paddingSymmetric(horizontal: 16),
 
                           16.height,
@@ -242,8 +244,8 @@ class _BlogDetailScreenState extends State<BlogDetailScreen> {
                                   Text(
                                     data.blogDetail!.authorName.validate(),
                                     style: context.boldTextStyle(
-                                        size: 14,
-                                        color: textPrimaryColorGlobal),
+                                      size: 14,
+                                    ),
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                   ),
@@ -272,7 +274,7 @@ class _BlogDetailScreenState extends State<BlogDetailScreen> {
                                 lineHeight: LineHeight(1.6),
                                 margin: Margins.only(bottom: 16),
                                 color: appStore.isDarkMode
-                                    ? Colors.white
+                                    ? context.onPrimary
                                     : Color(0xFF333333),
                               ),
                             },
@@ -284,7 +286,8 @@ class _BlogDetailScreenState extends State<BlogDetailScreen> {
                             Text(
                               'Related Blogs',
                               style: context.boldTextStyle(
-                                  size: 20, color: textPrimaryColorGlobal),
+                                size: 20,
+                              ),
                             ).paddingSymmetric(horizontal: 16),
                             16.height,
                             // Horizontal scrollable related blogs

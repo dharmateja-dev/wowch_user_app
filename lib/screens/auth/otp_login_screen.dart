@@ -387,7 +387,7 @@ class _OTPLoginScreenState extends State<OTPLoginScreen> {
             },
             text: language.btnSendOtp,
             color: context.primary,
-            textColor: Colors.white,
+            textColor: context.onPrimary,
             width: context.width(),
           ),
           16.height,

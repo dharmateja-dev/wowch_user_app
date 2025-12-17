@@ -180,7 +180,7 @@ class _AppBarDashboardComponent4State extends State<AppBarDashboardComponent4> {
                     clipBehavior: Clip.none,
                     children: [
                       ic_notification.iconImage(
-                          color: Colors.white, size: 22, context: context),
+                          color: context.onPrimary, size: 22, context: context),
                       Observer(
                         builder: (context) {
                           return Positioned(
@@ -197,7 +197,8 @@ class _AppBarDashboardComponent4State extends State<AppBarDashboardComponent4> {
                                       child: Text(
                                           appStore.unreadCount.toString(),
                                           style: context.primaryTextStyle(
-                                              size: 12, color: Colors.white)),
+                                              size: 12,
+                                              color: context.onPrimary)),
                                     ),
                                     decoration: boxDecorationDefault(
                                         color: Colors.red,
