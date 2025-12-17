@@ -175,8 +175,8 @@ class _CustomerRatingScreenState extends State<CustomerRatingScreen> {
                       borderRadius: BorderRadius.circular(8),
                       color: Colors.transparent,
                       border: Border.all(
-                        color: context.primaryColor,
-                        width: 1,
+                        color: context.primary,
+                        width: 1.5,
                       ),
                     ),
                     child: Column(
@@ -187,8 +187,7 @@ class _CustomerRatingScreenState extends State<CustomerRatingScreen> {
                           width: context.width(),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(12),
-                            color: context
-                                .secondaryContainer, // Light green background
+                            color: context.secondaryContainer,
                           ),
                           padding: const EdgeInsets.all(16),
                           child: Row(
@@ -218,7 +217,6 @@ class _CustomerRatingScreenState extends State<CustomerRatingScreen> {
                                       data.serviceName.validate(),
                                       style: context.boldTextStyle(
                                         size: 16,
-                                        
                                       ),
                                       maxLines: 2,
                                       overflow: TextOverflow.ellipsis,
@@ -233,9 +231,9 @@ class _CustomerRatingScreenState extends State<CustomerRatingScreen> {
                                       },
                                       child: Text(
                                         language.viewDetail,
-                                        style: context.secondaryTextStyle(
+                                        style: context.primaryTextStyle(
                                           size: 12,
-                                          color: textSecondaryColorGlobal,
+                                          color: context.textGrey,
                                         ),
                                       ),
                                     ),
@@ -261,10 +259,7 @@ class _CustomerRatingScreenState extends State<CustomerRatingScreen> {
                                 children: [
                                   Text(
                                     language.lblYourComment,
-                                    style: context.boldTextStyle(
-                                      size: 14,
-                                      
-                                    ),
+                                    style: context.boldTextStyle(),
                                   ).expand(),
                                   // Edit icon - simple dark grey icon
                                   ic_edit_square
@@ -334,15 +329,21 @@ class _CustomerRatingScreenState extends State<CustomerRatingScreen> {
                                       width: 290,
                                       context,
                                       title: language.lblConfirmReviewSubTitle,
+                                      titleColor: context.dialogTitleColor,
                                       positiveText: language.lblYes,
                                       negativeText: language.lblNo,
+                                      positiveTextColor: context.onPrimary,
+                                      negativeTextColor:
+                                          context.dialogCancelColor,
+                                      backgroundColor:
+                                          context.dialogBackgroundColor,
                                       dialogType: DialogType.DELETE,
-                                      primaryColor: context.primaryColor,
-                                      negativeTextColor: context.primaryColor,
+                                      primaryColor: context.primary,
                                       customCenterWidget: Image.asset(
                                         ic_warning,
                                         height: 70,
                                         width: 70,
+                                        color: context.dialogIconColor,
                                         fit: BoxFit.cover,
                                       ),
                                       onAccept: (p0) async {
@@ -390,8 +391,9 @@ class _CustomerRatingScreenState extends State<CustomerRatingScreen> {
                               // Review text - light grey color
                               Text(
                                 data.review.validate(),
-                                style: context.secondaryTextStyle(
-                                  color: textSecondaryColorGlobal,
+                                style: context.primaryTextStyle(
+                                  size: 14,
+                                  color: context.textGrey,
                                 ),
                               ),
                             ],

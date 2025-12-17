@@ -142,19 +142,19 @@ class _SearchServiceScreenState extends State<SearchServiceScreen> {
                         fetchAllServiceData();
                         setState(() {});
                       },
-                      decoration: inputDecoration(context).copyWith(
-                        hintText: "${language.lblSearchFor} $setSearchString",
+                      decoration: inputDecoration(
+                        context,
                         prefixIcon: ic_search
                             .iconImage(size: 10, context: context)
                             .paddingAll(14),
-                        hintStyle: context.secondaryTextStyle(),
+                        hintTextColor: context.searchHintTextColor,
+                        hintText: "${language.lblSearchFor} $setSearchString",
                       ),
                     ).expand(),
                     16.width,
                     Container(
                       padding: const EdgeInsets.all(10),
-                      decoration:
-                          boxDecorationDefault(color: context.primaryColor),
+                      decoration: boxDecorationDefault(color: context.primary),
                       child: CachedImageWidget(
                         url: ic_filter,
                         height: 26,

@@ -87,7 +87,8 @@ class ProfileFragmentState extends State<ProfileFragment> {
         showBack: false,
         actions: [
           IconButton(
-            icon: ic_setting.iconImage(size: 20, context: context),
+            icon: ic_setting.iconImage(
+                size: 20, context: context, color: context.onPrimary),
             onPressed: () async {
               SettingScreen().launch(context);
             },
@@ -560,7 +561,7 @@ class ProfileFragmentState extends State<ProfileFragment> {
                         leading: Icon(
                           MaterialCommunityIcons.logout,
                           size: SETTING_ICON_SIZE,
-                          color: context.primary,
+                          color: context.icon,
                         ),
                         trailing: trailing(context),
                         title: language.signIn,

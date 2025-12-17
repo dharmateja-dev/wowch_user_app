@@ -42,8 +42,8 @@ class ThemeSelectionDaiLogState extends State<ThemeSelectionDaiLog> {
     return Container(
       width: context.width(),
       decoration: BoxDecoration(
-        color: context.scaffoldBackgroundColor,
-        borderRadius: BorderRadius.circular(defaultRadius),
+        color: context.dialogBackgroundColor,
+        borderRadius: BorderRadius.circular(8),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -133,7 +133,7 @@ class ThemeSelectionDaiLogState extends State<ThemeSelectionDaiLog> {
                               width: isSelected ? 2.0 : 1.5,
                             ),
                             color:
-                                isSelected ? primaryColor : Colors.transparent,
+                                isSelected ? primaryColor : context.onPrimary,
                           ),
                           child: isSelected
                               ? Center(

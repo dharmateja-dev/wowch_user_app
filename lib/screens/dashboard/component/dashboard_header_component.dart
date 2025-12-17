@@ -121,7 +121,7 @@ class DashboardHeaderComponent extends StatelessWidget {
                                       ),
                                     ),
                                     decoration: BoxDecoration(
-                                      color: Colors.red,
+                                      color: context.error,
                                       shape: BoxShape.circle,
                                     ),
                                   )

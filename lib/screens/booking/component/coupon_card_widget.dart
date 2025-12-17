@@ -1,9 +1,10 @@
 import 'package:booking_system_flutter/component/dotted_line.dart';
 import 'package:booking_system_flutter/model/service_detail_response.dart';
+import 'package:booking_system_flutter/utils/common.dart';
+import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/extensions/num_extenstions.dart';
 import 'package:booking_system_flutter/utils/text_styles.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../component/price_widget.dart';
@@ -51,7 +52,7 @@ class CouponCardWidget extends StatelessWidget {
                               size: 24),
                           Text("${language.lblDiscount.toUpperCase()}",
                               style: context.boldTextStyle(
-                                  color: white, size: 16)),
+                                  color: context.onPrimary, size: 16)),
                         ],
                       )
                     : Column(
@@ -63,7 +64,7 @@ class CouponCardWidget extends StatelessWidget {
                                   context.boldTextStyle(color: hold, size: 24)),
                           Text("${language.lblDiscount.toUpperCase()}",
                               style: context.boldTextStyle(
-                                  color: white, size: 16)),
+                                  color: context.onPrimary, size: 16)),
                         ],
                       ),
               ).paddingRight(4).expand(flex: 1),
@@ -72,7 +73,7 @@ class CouponCardWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text("${data.code.validate()}",
-                      style: context.boldTextStyle(color: white)),
+                      style: context.boldTextStyle(color: context.onPrimary)),
                   8.height,
                   Text.rich(
                     TextSpan(
@@ -80,7 +81,9 @@ class CouponCardWidget extends StatelessWidget {
                         TextSpan(
                           text: '${language.useThisCodeToGet} ',
                           style: context.primaryTextStyle(
-                              color: white, size: 12, weight: FontWeight.w500),
+                              color: context.onPrimary,
+                              size: 12,
+                              weight: FontWeight.w500),
                         ),
                         TextSpan(
                           text: calculateCouponDiscount(
@@ -93,7 +96,9 @@ class CouponCardWidget extends StatelessWidget {
                         TextSpan(
                           text: ' ${language.off}',
                           style: context.primaryTextStyle(
-                              color: white, size: 12, weight: FontWeight.w500),
+                              color: context.onPrimary,
+                              size: 12,
+                              weight: FontWeight.w500),
                         ),
                       ],
                     ),
@@ -106,7 +111,8 @@ class CouponCardWidget extends StatelessWidget {
                                 size: 16, color: completed),
                             6.width,
                             Text(language.applied,
-                                style: context.boldTextStyle(color: white)),
+                                style: context.boldTextStyle(
+                                    color: context.onPrimary)),
                             8.width,
                           ],
                         ).paddingBottom(8)
@@ -117,25 +123,21 @@ class CouponCardWidget extends StatelessWidget {
                             text: data.isApplied
                                 ? language.applied
                                 : language.lblApply,
-                            textStyle: context.boldTextStyle(
-                                color: appStore.isDarkMode
-                                    ? white
-                                    : context.primaryColor),
+                            textStyle:
+                                context.boldTextStyle(color: context.primary),
                             prefix: data.isApplied
                                 ? Icon(Icons.check_circle_outline,
                                     size: 16, color: completed)
                                 : Offstage(),
                           ),
-                          color: appStore.isDarkMode
-                              ? context.scaffoldBackgroundColor
-                              : white,
+                          color: context.onPrimary,
                           onTap: () {
                             data.isApplied = true;
                             finish(context, data);
                           },
                         ),
                   Text(
-                    "${language.lblExpiryDate} ${DateFormat(getStringAsync(DATE_FORMAT)).format(DateTime.parse(data.expireDate.validate()))}",
+                    "${language.lblExpiryDate} ${formatBookingDate(data.expireDate.validate(), format: 'MMMM d, yyyy')}",
                     style: context.primaryTextStyle(
                       color: hold,
                       size: 12,
@@ -155,7 +157,7 @@ class CouponCardWidget extends StatelessWidget {
               countOfSideCuts(context),
               (index) => CircleAvatar(
                 radius: sideDotsSize,
-                backgroundColor: context.scaffoldBackgroundColor,
+                backgroundColor: context.scaffold,
               ),
             ),
           ),
@@ -167,7 +169,7 @@ class CouponCardWidget extends StatelessWidget {
               countOfSideCuts(context),
               (index) => CircleAvatar(
                 radius: sideDotsSize,
-                backgroundColor: context.scaffoldBackgroundColor,
+                backgroundColor: context.scaffold,
               ),
             ),
           ),
@@ -191,17 +193,17 @@ class CouponCardWidget extends StatelessWidget {
                       children: [
                         CircleAvatar(
                           radius: sideDotsSize * 1.5,
-                          backgroundColor: context.scaffoldBackgroundColor,
+                          backgroundColor: context.scaffold,
                         ),
                         DottedLine(
                           direction: Axis.vertical,
-                          dashColor: white.withValues(alpha: 0.12),
+                          dashColor: context.onPrimary.withValues(alpha: 0.12),
                           dashGapLength: 8,
                           dashLength: 10,
                         ).expand(),
                         CircleAvatar(
                           radius: sideDotsSize * 1.5,
-                          backgroundColor: context.scaffoldBackgroundColor,
+                          backgroundColor: context.scaffold,
                         ),
                       ],
                     ).paddingSymmetric(horizontal: 8)

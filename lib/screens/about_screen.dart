@@ -49,21 +49,23 @@ class _AboutScreenState extends State<AboutScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 16),
         fadeInConfiguration: FadeInConfiguration(duration: 2.seconds),
         children: [
+          24.height,
           // Illustration
           Image.asset(no_conversation, fit: BoxFit.contain).center(),
           24.height,
           // App Name
           Text(
             APP_NAME,
-            style: context.boldTextStyle(size: 24, color: appTextPrimaryColor),
+            style: context.boldTextStyle(
+              size: 24,
+            ),
             textAlign: TextAlign.center,
           ),
           8.height,
           // Tagline
           Text(
             APP_NAME_TAG_LINE,
-            style: context.secondaryTextStyle(
-                size: 14, color: appTextSecondaryColor),
+            style: context.primaryTextStyle(size: 14),
             textAlign: TextAlign.center,
             maxLines: 2,
           ),
@@ -73,7 +75,7 @@ class _AboutScreenState extends State<AboutScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               // Call button
-              if (appConfigurationStore.helplineNumber.isNotEmpty)
+              if (!appConfigurationStore.helplineNumber.isNotEmpty)
                 Container(
                   width: 80,
                   padding: const EdgeInsets.symmetric(vertical: 12),
@@ -84,12 +86,15 @@ class _AboutScreenState extends State<AboutScreen> {
                         ic_calling,
                         height: 24,
                         width: 24,
-                        color: context.primary,
+                        color: context.onSecondaryContainer,
                       ),
                       8.height,
                       Text(
                         language.lblCall,
-                        style: context.primaryTextStyle(size: 14),
+                        style: context.primaryTextStyle(
+                          size: 14,
+                          color: context.textGrey,
+                        ),
                         textAlign: TextAlign.center,
                       ),
                     ],
@@ -102,11 +107,11 @@ class _AboutScreenState extends State<AboutScreen> {
                   highlightColor: Colors.transparent,
                   splashColor: Colors.transparent,
                 ),
-              if (appConfigurationStore.helplineNumber.isNotEmpty &&
-                  appConfigurationStore.inquiryEmail.isNotEmpty)
-                40.width,
+              if (!appConfigurationStore.helplineNumber.isNotEmpty &&
+                  !appConfigurationStore.inquiryEmail.isNotEmpty)
+                100.width,
               // Email button
-              if (appConfigurationStore.inquiryEmail.isNotEmpty)
+              if (!appConfigurationStore.inquiryEmail.isNotEmpty)
                 Container(
                   width: 80,
                   padding: const EdgeInsets.symmetric(vertical: 12),
@@ -117,7 +122,7 @@ class _AboutScreenState extends State<AboutScreen> {
                         ic_message,
                         height: 24,
                         width: 24,
-                        color: context.primary,
+                        color: context.onSecondaryContainer,
                       ),
                       8.height,
                       Text(
@@ -151,7 +156,7 @@ class _AboutScreenState extends State<AboutScreen> {
           // Copyright text
           Text(
             "Copyright © ${DateTime.now().year} ${getStringAsync(SITE_NAME).isNotEmpty ? getStringAsync(SITE_NAME) : APP_NAME} All rights reserved.",
-            style: context.secondaryTextStyle(size: 12),
+            style: context.primaryTextStyle(size: 12),
             textAlign: TextAlign.center,
           ),
           25.height,

@@ -188,18 +188,12 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     }
   }
 
-  /// Returns the appropriate ThemeMode based on user preference
+  /// Returns the appropriate ThemeMode based on appStore.isDarkMode (reactive)
+  /// This uses the observable isDarkMode instead of reading from SharedPreferences
+  /// to ensure the UI updates immediately when the theme is changed.
   ThemeMode _getThemeMode() {
-    int themeModeIndex =
-        getIntAsync(THEME_MODE_INDEX, defaultValue: THEME_MODE_SYSTEM);
-    if (themeModeIndex == THEME_MODE_LIGHT) {
-      return ThemeMode.light;
-    } else if (themeModeIndex == THEME_MODE_DARK) {
-      return ThemeMode.dark;
-    } else {
-      // THEME_MODE_SYSTEM - Let Flutter handle it automatically
-      return ThemeMode.system;
-    }
+    // Access the observable to make the Observer widget rebuild
+    return appStore.isDarkMode ? ThemeMode.dark : ThemeMode.light;
   }
 
   @override

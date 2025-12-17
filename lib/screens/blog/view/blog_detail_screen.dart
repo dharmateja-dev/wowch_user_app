@@ -268,6 +268,9 @@ class _BlogDetailScreenState extends State<BlogDetailScreen> {
                           Html(
                             data: data.blogDetail!.description.validate(),
                             style: {
+                              "body": Style(
+                                backgroundColor: context.scaffold,
+                              ),
                               "div": Style(
                                 margin: Margins.zero,
                                 color: context.scaffold,

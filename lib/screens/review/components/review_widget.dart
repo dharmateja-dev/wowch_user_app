@@ -100,7 +100,7 @@ class ReviewWidget extends StatelessWidget {
                       8.height,
                       ReadMoreText(
                         data.review.validate(),
-                        style: context.secondaryTextStyle(
+                        style: context.primaryTextStyle(
                           color: context.textGrey,
                           size: 14,
                         ),

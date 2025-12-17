@@ -420,7 +420,7 @@ class _SignInScreenState extends State<SignInScreen> {
           ),
           child: Icon(
             Icons.apple,
-            color: context.primary,
+            color: Colors.black,
             size: 20,
           ),
         ),

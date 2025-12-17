@@ -389,7 +389,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen>
                     : null,
               ),
               child: Text(value.day.capitalizeFirstLetter(),
-                  style: context.secondaryTextStyle(
+                  style: context.primaryTextStyle(
                       size: LABEL_TEXT_SIZE, color: primaryColor)),
             );
           }),

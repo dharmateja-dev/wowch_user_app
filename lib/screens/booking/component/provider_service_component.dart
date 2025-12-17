@@ -72,12 +72,7 @@ class _ProviderServiceComponentState extends State<ProviderServiceComponent> {
         padding: EdgeInsets.only(left: 16, top: 16, bottom: 16),
         decoration: boxDecorationWithRoundedCorners(
           borderRadius: radius(),
-          backgroundColor: context.cardColor,
-          border: widget.isBorderEnabled.validate()
-              ? appStore.isDarkMode
-                  ? Border.all(color: context.dividerColor)
-                  : null
-              : null,
+          backgroundColor: context.secondaryContainer,
         ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -104,9 +99,7 @@ class _ProviderServiceComponentState extends State<ProviderServiceComponent> {
                     children: [
                       Container(
                         decoration: BoxDecoration(
-                          color: appStore.isDarkMode
-                              ? Colors.black
-                              : lightPrimaryColor,
+                          color: context.primaryLiteColor,
                           borderRadius: BorderRadius.circular(20),
                         ),
                         padding:
@@ -116,7 +109,7 @@ class _ProviderServiceComponentState extends State<ProviderServiceComponent> {
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
-                            color: context.primary,
+                            color: context.onPrimary,
                             fontWeight: FontWeight.bold,
                             fontSize: 12,
                           ),
@@ -161,7 +154,7 @@ class _ProviderServiceComponentState extends State<ProviderServiceComponent> {
                           size: 12,
                           price: widget.serviceData!.getDiscountedPrice,
                           isDiscountedPrice: true,
-                          color: textSecondaryColorGlobal,
+                          color: context.textGrey,
                           isLineThroughEnabled: true,
                         ),
                       10.width,
@@ -171,7 +164,7 @@ class _ProviderServiceComponentState extends State<ProviderServiceComponent> {
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
                           style: TextStyle(
-                              color: defaultActivityStatus,
+                              color: context.primary,
                               fontWeight: FontWeight.bold,
                               fontSize: 12),
                         ).expand(),
@@ -191,7 +184,7 @@ class _ProviderServiceComponentState extends State<ProviderServiceComponent> {
                     ? ic_fill_heart.iconImage(
                         color: favouriteColor, size: 18, context: context)
                     : ic_heart.iconImage(
-                        color: unFavouriteColor, size: 18, context: context),
+                        color: context.iconMuted, size: 18, context: context),
               ).onTap(() async {
                 if (widget.serviceData!.isFavourite == 0) {
                   widget.serviceData!.isFavourite = 1;

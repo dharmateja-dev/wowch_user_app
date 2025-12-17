@@ -2,6 +2,7 @@ import 'package:booking_system_flutter/component/loader_widget.dart';
 import 'package:booking_system_flutter/main.dart';
 import 'package:booking_system_flutter/model/service_detail_response.dart';
 import 'package:booking_system_flutter/network/rest_apis.dart';
+import 'package:booking_system_flutter/utils/common.dart';
 import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/images.dart';
 import 'package:booking_system_flutter/utils/text_styles.dart';
@@ -136,7 +137,7 @@ class _AddReviewDialogState extends State<AddReviewDialog> {
         SingleChildScrollView(
           child: Container(
             decoration: BoxDecoration(
-              color: context.secondaryContainer,
+              color: context.dialogBackgroundColor,
               borderRadius: BorderRadius.circular(12),
             ),
             child: Column(
@@ -156,7 +157,7 @@ class _AddReviewDialogState extends State<AddReviewDialog> {
                   margin: const EdgeInsets.symmetric(horizontal: 16),
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: context.secondaryContainer, // Light green background
+                    color: context.secondaryContainer,
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Row(
@@ -165,8 +166,7 @@ class _AddReviewDialogState extends State<AddReviewDialog> {
                       Text(
                         language.lblYourRating,
                         style: context.primaryTextStyle(
-                          size: 14,
-                        ),
+                            size: 14, color: context.onSecondaryContainer),
                       ),
                       8.width,
                       // Rating stars on right - yellow color
@@ -178,7 +178,7 @@ class _AddReviewDialogState extends State<AddReviewDialog> {
                         activeColor: context.starColor,
                         inActiveColor: context.iconMuted,
                         rating: selectedRating,
-                        size: 18,
+                        size: 16,
                       ),
                     ],
                   ),
@@ -201,18 +201,21 @@ class _AddReviewDialogState extends State<AddReviewDialog> {
                     enableChatGPT: appConfigurationStore.chatGPTStatus,
                     promptFieldInputDecorationChatGPT: InputDecoration(
                       hintText: 'Enter Your Review (Optional)',
-                      hintStyle: context.secondaryTextStyle(),
+                      hintStyle: context.primaryTextStyle(),
                       border: InputBorder.none,
                       contentPadding: EdgeInsets.zero,
                     ),
                     testWithoutKeyChatGPT: appConfigurationStore.testWithoutKey,
                     loaderWidgetForChatGPT: const ChatGPTLoadingWidget(),
                     textCapitalization: TextCapitalization.sentences,
-                    decoration: InputDecoration(
+                    decoration: inputDecoration(
+                      context,
                       hintText: 'Enter Your Review (Optional)',
-                      hintStyle: context.secondaryTextStyle(),
-                      border: InputBorder.none,
-                      contentPadding: EdgeInsets.zero,
+                      borderRadius: 8,
+                      hintTextColor: context.searchHintTextColor,
+                      showBorder: false,
+                    ).copyWith(
+                      contentPadding: const EdgeInsets.all(8),
                     ),
                   ),
                 ),
@@ -294,7 +297,7 @@ class _AddReviewDialogState extends State<AddReviewDialog> {
                         child: AppButton(
                           textColor: context.onPrimary,
                           text: language.btnSubmit,
-                          color: context.primary, // Dark green background
+                          color: context.primary,
                           shapeBorder: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8),
                           ),

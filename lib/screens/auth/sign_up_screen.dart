@@ -393,7 +393,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
             onTap: () => changeCountry(),
             child: Text(
               language.selectCountry,
-              style: context.boldTextStyle(size: 13),
+              style: context.boldTextStyle(
+                  size: 12, color: context.searchHintTextColor),
             ),
           ),
         ),
