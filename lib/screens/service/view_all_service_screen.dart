@@ -209,40 +209,45 @@ class _ViewAllServiceScreenState extends State<ViewAllServiceScreen> {
           style: context.boldTextStyle(),
         ).paddingSymmetric(horizontal: 16),
         12.height,
-        // Grid layout for subcategories
-        Padding(
+        // 4-column Grid layout for subcategories
+        GridView.builder(
           padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Wrap(
-            spacing: 16,
-            runSpacing: 16,
-            children: List.generate(demoSubcategories.length, (index) {
-              final demo = demoSubcategories[index];
-              return Observer(
-                builder: (_) {
-                  bool isSelected = filterStore.selectedSubCategoryId == index;
-                  return _buildSubcategoryItem(
-                    context,
-                    name: demo['name']!,
-                    imageKey: demo['image']!,
-                    index: index,
-                    isSelected: isSelected,
-                    onTap: () {
-                      filterStore.setSelectedSubCategory(catId: index);
-                      if (index != 0) {
-                        subCategory = index;
-                      } else {
-                        subCategory = null;
-                      }
-                      page = 1;
-                      appStore.setLoading(true);
-                      fetchAllServiceData();
-                      setState(() {});
-                    },
-                  );
-                },
-              );
-            }),
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 4,
+            crossAxisSpacing: 12,
+            mainAxisSpacing: 12,
+            childAspectRatio: 0.75, // Adjust for icon + text height
           ),
+          itemCount: demoSubcategories.length,
+          itemBuilder: (context, index) {
+            final demo = demoSubcategories[index];
+            return Observer(
+              builder: (_) {
+                bool isSelected = filterStore.selectedSubCategoryId == index;
+                return _buildSubcategoryItem(
+                  context,
+                  name: demo['name']!,
+                  imageKey: demo['image']!,
+                  index: index,
+                  isSelected: isSelected,
+                  onTap: () {
+                    filterStore.setSelectedSubCategory(catId: index);
+                    if (index != 0) {
+                      subCategory = index;
+                    } else {
+                      subCategory = null;
+                    }
+                    page = 1;
+                    appStore.setLoading(true);
+                    fetchAllServiceData();
+                    setState(() {});
+                  },
+                );
+              },
+            );
+          },
         ),
         16.height,
       ],

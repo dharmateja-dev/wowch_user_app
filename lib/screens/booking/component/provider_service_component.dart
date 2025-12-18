@@ -6,7 +6,6 @@ import 'package:nb_utils/nb_utils.dart';
 
 import '../../../component/cached_image_widget.dart';
 import '../../../component/price_widget.dart';
-import '../../../main.dart';
 import '../../../model/package_data_model.dart';
 import '../../../model/service_data_model.dart';
 import '../../../utils/colors.dart';

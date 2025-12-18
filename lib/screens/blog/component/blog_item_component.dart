@@ -1,5 +1,4 @@
 import 'package:booking_system_flutter/component/cached_image_widget.dart';
-import 'package:booking_system_flutter/main.dart';
 import 'package:booking_system_flutter/screens/blog/model/blog_response_model.dart';
 import 'package:booking_system_flutter/screens/blog/view/blog_detail_screen.dart';
 import 'package:booking_system_flutter/utils/context_extensions.dart';

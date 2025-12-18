@@ -1,4 +1,3 @@
-import 'package:booking_system_flutter/component/back_widget.dart';
 import 'package:booking_system_flutter/component/cached_image_widget.dart';
 import 'package:booking_system_flutter/component/loader_widget.dart';
 import 'package:booking_system_flutter/main.dart';

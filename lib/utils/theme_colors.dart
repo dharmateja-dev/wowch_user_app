@@ -82,16 +82,16 @@ class LightThemeColors {
       Color(0xFF2E6B4F); // Bottom nav icon (active)
 
   // ——— Shadow Colors ———
-  static Color shadowLight = Colors.grey.withOpacity(0.05);
-  static Color shadowMedium = Colors.grey.withOpacity(0.08);
-  static Color shadowHeavy = Colors.grey.withOpacity(0.12);
-  static Color shadowIntense = Colors.grey.withOpacity(0.1);
+  static Color shadowLight = Colors.grey.withValues(alpha: 0.05);
+  static Color shadowMedium = Colors.grey.withValues(alpha: 0.08);
+  static Color shadowHeavy = Colors.grey.withValues(alpha: 0.12);
+  static Color shadowIntense = Colors.grey.withValues(alpha: 0.1);
 
   // ——— Overlay Colors ———
-  static Color overlayLight = Colors.black.withOpacity(0.05);
-  static Color overlayMedium = Colors.black.withOpacity(0.1);
-  static Color overlayHeavy = Colors.black.withOpacity(0.2);
-  static Color overlayIntense = Colors.black.withOpacity(0.4);
+  static Color overlayLight = Colors.black.withValues(alpha: 0.05);
+  static Color overlayMedium = Colors.black.withValues(alpha: 0.1);
+  static Color overlayHeavy = Colors.black.withValues(alpha: 0.2);
+  static Color overlayIntense = Colors.black.withValues(alpha: 0.4);
 
   // ——— LEGACY COMPATIBILITY ALIASES ———
   static const Color primary = primaryGreen;
@@ -115,7 +115,7 @@ class LightThemeColors {
 
   /// Get a color with opacity for light theme
   static Color withOpacity(Color color, double opacity) {
-    return color.withOpacity(opacity);
+    return color.withValues(alpha: opacity);
   }
 }
 
@@ -216,16 +216,16 @@ class DarkThemeColors {
   static const Color priceGreen = Color(0xFF2E7D32); // Price color
 
   // ——— Shadow Colors ———
-  static Color shadowLight = Colors.black.withOpacity(0.7);
-  static Color shadowMedium = Colors.black.withOpacity(0.2);
-  static Color shadowHeavy = Colors.black.withOpacity(0.4);
-  static Color shadowIntense = Colors.black.withOpacity(0.1);
+  static Color shadowLight = Colors.black.withValues(alpha: 0.7);
+  static Color shadowMedium = Colors.black.withValues(alpha: 0.2);
+  static Color shadowHeavy = Colors.black.withValues(alpha: 0.4);
+  static Color shadowIntense = Colors.black.withValues(alpha: 0.1);
 
   // ——— Overlay Colors ———
-  static Color overlayLight = Colors.black.withOpacity(0.07);
-  static Color overlayMedium = Colors.black.withOpacity(0.3);
-  static Color overlayHeavy = Colors.black.withOpacity(0.5);
-  static Color overlayIntense = Colors.black.withOpacity(0.8);
+  static Color overlayLight = Colors.black.withValues(alpha: 0.07);
+  static Color overlayMedium = Colors.black.withValues(alpha: 0.3);
+  static Color overlayHeavy = Colors.black.withValues(alpha: 0.5);
+  static Color overlayIntense = Colors.black.withValues(alpha: 0.8);
 
   // ——— LEGACY COMPATIBILITY ALIASES ———
   static const Color primary = primaryOrange;

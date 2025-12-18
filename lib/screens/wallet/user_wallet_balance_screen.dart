@@ -489,7 +489,7 @@ class _UserWalletBalanceScreenState extends State<UserWalletBalanceScreen> {
                                         color: isSelected
                                             ? context.primary
                                             : context.onSurface
-                                                .withOpacity(0.7)),
+                                                .withValues(alpha: 0.7)),
                                   ),
                                 ).onTap(() {
                                   walletAmountCont.text =

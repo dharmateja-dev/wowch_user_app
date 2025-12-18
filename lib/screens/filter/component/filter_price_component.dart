@@ -75,7 +75,7 @@ class _FilterPriceComponentState extends State<FilterPriceComponent> {
               thumbColor: context.primary,
               activeTrackColor: context.primary,
               inactiveTrackColor: context.mainBorderColor,
-              overlayColor: context.primary.withOpacity(0.2),
+              overlayColor: context.primary.withValues(alpha: 0.2),
               thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 10),
               trackHeight: 4,
             ),

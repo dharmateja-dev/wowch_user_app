@@ -18,7 +18,6 @@ import '../../../component/loader_widget.dart';
 import '../../../component/price_widget.dart';
 import '../../../model/bank_list_response.dart';
 import '../../../network/rest_apis.dart';
-import '../../../utils/colors.dart';
 import '../../../utils/common.dart';
 import '../../component/success_dialog.dart';
 import '../bankDetails/view/add_bank.dart';

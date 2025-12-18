@@ -9,7 +9,6 @@ import 'package:nb_utils/nb_utils.dart';
 
 import '../../../component/price_widget.dart';
 import '../../../main.dart';
-import '../../../utils/app_configuration.dart';
 import '../../../utils/booking_calculations_logic.dart';
 import '../../../utils/colors.dart';
 import '../../../utils/constant.dart';

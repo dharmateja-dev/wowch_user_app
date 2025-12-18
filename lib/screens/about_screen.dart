@@ -1,7 +1,6 @@
 import 'package:booking_system_flutter/component/back_widget.dart';
 import 'package:booking_system_flutter/component/base_scaffold_widget.dart';
 import 'package:booking_system_flutter/main.dart';
-import 'package:booking_system_flutter/utils/colors.dart';
 import 'package:booking_system_flutter/utils/common.dart';
 import 'package:booking_system_flutter/utils/configs.dart';
 import 'package:booking_system_flutter/utils/context_extensions.dart';

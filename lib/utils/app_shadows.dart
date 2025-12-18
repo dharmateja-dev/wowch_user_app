@@ -5,7 +5,7 @@ class AppShadows {
   // ——— Light Theme Shadows ———
   static List<BoxShadow> get lightCardShadow => [
         BoxShadow(
-          color: Colors.grey.withOpacity(0.07),
+          color: Colors.grey.withValues(alpha: 0.07),
           spreadRadius: 1,
           blurRadius: 4,
           offset: const Offset(0, 2),
@@ -14,7 +14,7 @@ class AppShadows {
 
   static List<BoxShadow> get lightElevatedShadow => [
         BoxShadow(
-          color: Colors.grey.withOpacity(0.2),
+          color: Colors.grey.withValues(alpha: 0.2),
           spreadRadius: 1,
           blurRadius: 6,
           offset: const Offset(0, 4),
@@ -23,7 +23,7 @@ class AppShadows {
 
   static List<BoxShadow> get lightFloatingShadow => [
         BoxShadow(
-          color: Colors.grey.withOpacity(0.16),
+          color: Colors.grey.withValues(alpha: 0.16),
           spreadRadius: 2,
           blurRadius: 8,
           offset: const Offset(0, 4),
@@ -32,7 +32,7 @@ class AppShadows {
 
   static List<BoxShadow> get lightIntenseShadow => [
         BoxShadow(
-          color: Colors.grey.withOpacity(0.24),
+          color: Colors.grey.withValues(alpha: 0.24),
           spreadRadius: 2,
           blurRadius: 10,
           offset: const Offset(0, 6),
@@ -51,7 +51,7 @@ class AppShadows {
 
   static List<BoxShadow> get darkElevatedShadow => [
         BoxShadow(
-          color: DarkThemeColors.shadowIntense.withOpacity(0.2),
+          color: DarkThemeColors.shadowIntense.withValues(alpha: 0.2),
           spreadRadius: 1,
           blurRadius: 6,
           offset: const Offset(0, 4),
@@ -152,7 +152,7 @@ class AppShadows {
   }) {
     return [
       BoxShadow(
-        color: baseColor.withOpacity(opacity),
+        color: baseColor.withValues(alpha: opacity),
         spreadRadius: spreadRadius,
         blurRadius: blurRadius,
         offset: offset,
@@ -168,7 +168,7 @@ class AppShadows {
       BoxShadow(
         color: Theme.of(context).brightness == Brightness.dark
             ? DarkThemeColors.shadowLight
-            : Colors.grey.withOpacity(0.08),
+            : Colors.grey.withValues(alpha: 0.08),
         spreadRadius: 0,
         blurRadius: 8,
         offset: const Offset(0, -2),
@@ -182,7 +182,7 @@ class AppShadows {
       BoxShadow(
         color: Theme.of(context).brightness == Brightness.dark
             ? DarkThemeColors.shadowHeavy
-            : Colors.grey.withOpacity(0.2),
+            : Colors.grey.withValues(alpha: 0.2),
         spreadRadius: 2,
         blurRadius: 8,
         offset: const Offset(0, 4),
@@ -196,7 +196,7 @@ class AppShadows {
       BoxShadow(
         color: Theme.of(context).brightness == Brightness.dark
             ? DarkThemeColors.shadowIntense
-            : Colors.grey.withOpacity(0.3),
+            : Colors.grey.withValues(alpha: 0.3),
         spreadRadius: 4,
         blurRadius: 16,
         offset: const Offset(0, 8),
@@ -210,7 +210,7 @@ class AppShadows {
       BoxShadow(
         color: Theme.of(context).brightness == Brightness.dark
             ? DarkThemeColors.shadowLight
-            : Colors.grey.withOpacity(0.06),
+            : Colors.grey.withValues(alpha: 0.06),
         spreadRadius: 0,
         blurRadius: 4,
         offset: const Offset(0, 2),
@@ -240,7 +240,7 @@ class AppShadows {
       BoxShadow(
         color: Theme.of(context).brightness == Brightness.dark
             ? DarkThemeColors.shadowLight
-            : Colors.grey.withOpacity(0.1),
+            : Colors.grey.withValues(alpha: 0.1),
         spreadRadius: 0,
         blurRadius: 4,
         offset: const Offset(0, 2),

@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:booking_system_flutter/main.dart';
-import 'package:booking_system_flutter/utils/colors.dart';
 import 'package:booking_system_flutter/utils/context_extensions.dart';
 import 'package:booking_system_flutter/utils/images.dart';
 import 'package:booking_system_flutter/utils/text_styles.dart';
