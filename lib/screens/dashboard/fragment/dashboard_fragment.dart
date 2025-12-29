@@ -119,7 +119,7 @@ class _DashboardFragmentState extends State<DashboardFragment> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: primaryColor,
+      backgroundColor: context.scaffoldSecondary,
       body: Stack(
         children: [
           Observer(
@@ -208,7 +208,8 @@ class _DashboardFragmentState extends State<DashboardFragment> {
                     CategoryComponent(categoryList: snap.category.validate()),
                     16.height,
                     FeaturedServiceListComponent(
-                        serviceList: snap.featuredServices.validate()),
+                      serviceList: snap.featuredServices.validate(),
+                    ),
 
                     ServiceListComponent(serviceList: snap.service.validate()),
                     16.height,

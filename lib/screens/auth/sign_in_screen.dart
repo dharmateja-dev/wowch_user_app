@@ -1,6 +1,5 @@
 import 'package:booking_system_flutter/component/back_widget.dart';
 import 'package:booking_system_flutter/component/base_scaffold_body.dart';
-//import 'package:booking_system_flutter/component/loader_widget.dart';
 import 'package:booking_system_flutter/main.dart';
 import 'package:booking_system_flutter/screens/auth/forgot_password_screen.dart';
 import 'package:booking_system_flutter/screens/auth/otp_login_screen.dart';
@@ -29,10 +28,11 @@ class SignInScreen extends StatefulWidget {
   final bool? isFromServiceBooking;
   final bool returnExpected;
 
-  const SignInScreen(
-      {this.isFromDashboard,
-      this.isFromServiceBooking,
-      this.returnExpected = false});
+  const SignInScreen({
+    this.isFromDashboard,
+    this.isFromServiceBooking,
+    this.returnExpected = false,
+  });
 
   @override
   _SignInScreenState createState() => _SignInScreenState();
@@ -143,42 +143,46 @@ class _SignInScreenState extends State<SignInScreen> {
   void googleSignIn() async {
     if (!appStore.isLoading) {
       appStore.setLoading(true);
-      await authService.signInWithGoogle(context).then((googleUser) async {
-        String firstName = '';
-        String lastName = '';
-        if (googleUser.displayName.validate().split(' ').length >= 1)
-          firstName = googleUser.displayName.splitBefore(' ');
-        if (googleUser.displayName.validate().split(' ').length >= 2)
-          lastName = googleUser.displayName.splitAfter(' ');
+      await authService
+          .signInWithGoogle(context)
+          .then((googleUser) async {
+            String firstName = '';
+            String lastName = '';
+            if (googleUser.displayName.validate().split(' ').length >= 1)
+              firstName = googleUser.displayName.splitBefore(' ');
+            if (googleUser.displayName.validate().split(' ').length >= 2)
+              lastName = googleUser.displayName.splitAfter(' ');
 
-        Map<String, dynamic> request = {
-          'first_name': firstName,
-          'last_name': lastName,
-          'email': googleUser.email,
-          'username': googleUser.email
-              .splitBefore('@')
-              .replaceAll('.', '')
-              .toLowerCase(),
-          // 'password': passwordCont.text.trim(),
-          'social_image': googleUser.photoURL,
-          'login_type': LOGIN_TYPE_GOOGLE,
-        };
-        var loginResponse = await loginUser(request, isSocialLogin: true);
+            Map<String, dynamic> request = {
+              'first_name': firstName,
+              'last_name': lastName,
+              'email': googleUser.email,
+              'username': googleUser.email
+                  .splitBefore('@')
+                  .replaceAll('.', '')
+                  .toLowerCase(),
+              // 'password': passwordCont.text.trim(),
+              'social_image': googleUser.photoURL,
+              'login_type': LOGIN_TYPE_GOOGLE,
+            };
+            var loginResponse = await loginUser(request, isSocialLogin: true);
 
-        loginResponse.userData!.profileImage = googleUser.photoURL.validate();
+            loginResponse.userData!.profileImage = googleUser.photoURL
+                .validate();
 
-        await saveUserData(loginResponse.userData!);
-        appStore.setLoginType(LOGIN_TYPE_GOOGLE);
+            await saveUserData(loginResponse.userData!);
+            appStore.setLoginType(LOGIN_TYPE_GOOGLE);
 
-        authService.verifyFirebaseUser();
+            authService.verifyFirebaseUser();
 
-        onLoginSuccessRedirection();
-        appStore.setLoading(false);
-      }).catchError((e) {
-        appStore.setLoading(false);
-        log(e.toString());
-        toast(e.toString());
-      });
+            onLoginSuccessRedirection();
+            appStore.setLoading(false);
+          })
+          .catchError((e) {
+            appStore.setLoading(false);
+            log(e.toString());
+            toast(e.toString());
+          });
     }
   }
 
@@ -186,41 +190,48 @@ class _SignInScreenState extends State<SignInScreen> {
     if (!appStore.isLoading) {
       appStore.setLoading(true);
 
-      await authService.appleSignIn().then((req) async {
-        // Ensure first_name and last_name are not empty or null
-        String email = req['email'] ??
-            'unknown_${DateTime.now().millisecondsSinceEpoch}@apple.com';
-        String firstName = req['first_name']?.toString().trim() ?? '';
-        String lastName = req['last_name']?.toString().trim() ?? '';
+      await authService
+          .appleSignIn()
+          .then((req) async {
+            // Ensure first_name and last_name are not empty or null
+            String email =
+                req['email'] ??
+                'unknown_${DateTime.now().millisecondsSinceEpoch}@apple.com';
+            String firstName = req['first_name']?.toString().trim() ?? '';
+            String lastName = req['last_name']?.toString().trim() ?? '';
 
-        // Fallback if names are not available
-        if (firstName.isEmpty || lastName.isEmpty) {
-          final parts = email.split('@').first.split('.');
-          firstName = parts.first.capitalizeFirstLetter();
-          lastName =
-              parts.length > 1 ? parts[1].capitalizeFirstLetter() : 'User';
-        }
+            // Fallback if names are not available
+            if (firstName.isEmpty || lastName.isEmpty) {
+              final parts = email.split('@').first.split('.');
+              firstName = parts.first.capitalizeFirstLetter();
+              lastName = parts.length > 1
+                  ? parts[1].capitalizeFirstLetter()
+                  : 'User';
+            }
 
-        req['first_name'] = firstName;
-        req['last_name'] = lastName;
+            req['first_name'] = firstName;
+            req['last_name'] = lastName;
 
-        await loginUser(req, isSocialLogin: true).then((value) async {
-          await saveUserData(value.userData!);
-          appStore.setLoginType(LOGIN_TYPE_APPLE);
+            await loginUser(req, isSocialLogin: true)
+                .then((value) async {
+                  await saveUserData(value.userData!);
+                  appStore.setLoginType(LOGIN_TYPE_APPLE);
 
-          appStore.setLoading(false);
-          authService.verifyFirebaseUser();
+                  appStore.setLoading(false);
+                  authService.verifyFirebaseUser();
 
-          onLoginSuccessRedirection();
-        }).catchError((e) {
-          appStore.setLoading(false);
-          log(e.toString());
-          throw e;
-        });
-      }).catchError((e) {
-        appStore.setLoading(false);
-        toast(e.toString());
-      });
+                  onLoginSuccessRedirection();
+                })
+                .catchError((e) {
+                  appStore.setLoading(false);
+                  log(e.toString());
+                  throw e;
+                });
+          })
+          .catchError((e) {
+            appStore.setLoading(false);
+            toast(e.toString());
+          });
     }
   }
 
@@ -238,37 +249,42 @@ class _SignInScreenState extends State<SignInScreen> {
           widget.isFromDashboard.validate() ||
           widget.returnExpected.validate()) {
         if (widget.isFromDashboard.validate()) {
-          push(DashboardScreen(redirectToBooking: true),
-              isNewTask: true, pageRouteAnimation: PageRouteAnimation.Fade);
+          push(
+            DashboardScreen(redirectToBooking: true),
+            isNewTask: true,
+            pageRouteAnimation: PageRouteAnimation.Fade,
+          );
         } else {
           finish(context, true);
         }
       } else {
-        DashboardScreen().launch(context,
-            isNewTask: true, pageRouteAnimation: PageRouteAnimation.Fade);
+        DashboardScreen().launch(
+          context,
+          isNewTask: true,
+          pageRouteAnimation: PageRouteAnimation.Fade,
+        );
       }
     });
   }
 
-//endregion
+  //endregion
 
-//region Widgets
-//completed
+  //region Widgets
+  //completed
   Widget _buildTopWidget() {
     return Container(
       child: Column(
         children: [
-          Text("${language.lblLoginTitle}!",
-                  style: context.boldTextStyle(size: 24))
-              .center(),
+          Text(
+            "${language.lblLoginTitle}!",
+            style: context.boldTextStyle(size: 24),
+          ).center(),
           16.height,
-          Text(language.lblLoginSubTitle,
-                  style: context.primaryTextStyle(
-                    size: 16,
-                  ),
-                  textAlign: TextAlign.center)
-              .center()
-              .paddingSymmetric(horizontal: 8),
+          Text(
+            language.lblLoginSubTitle,
+            style: context.primaryTextStyle(size: 16),
+            textAlign: TextAlign.center,
+          ).center().paddingSymmetric(horizontal: 8),
           32.height,
         ],
       ),
@@ -299,10 +315,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     borderRadius: BorderRadius.circular(2),
                   ),
                 ),
-                Text(
-                  language.rememberMe,
-                  style: context.primaryTextStyle(),
-                ),
+                Text(language.rememberMe, style: context.primaryTextStyle()),
               ],
             ),
             GestureDetector(
@@ -317,9 +330,7 @@ class _SignInScreenState extends State<SignInScreen> {
               },
               child: Text(
                 language.forgotPassword,
-                style: context.boldTextStyle(
-                  color: context.primary,
-                ),
+                style: context.boldTextStyle(color: context.primary),
                 textAlign: TextAlign.right,
               ),
             ).flexible(),
@@ -348,9 +359,7 @@ class _SignInScreenState extends State<SignInScreen> {
               },
               child: Text(
                 language.signUp,
-                style: context.boldTextStyle(
-                  color: context.primary,
-                ),
+                style: context.boldTextStyle(color: context.primary),
               ),
             ),
           ],
@@ -360,13 +369,17 @@ class _SignInScreenState extends State<SignInScreen> {
           onTap: () {
             if (isAndroid) {
               if (getStringAsync(PROVIDER_PLAY_STORE_URL).isNotEmpty) {
-                launchUrl(Uri.parse(getStringAsync(PROVIDER_PLAY_STORE_URL)),
-                    mode: LaunchMode.externalApplication);
+                launchUrl(
+                  Uri.parse(getStringAsync(PROVIDER_PLAY_STORE_URL)),
+                  mode: LaunchMode.externalApplication,
+                );
               } else {
                 launchUrl(
-                    Uri.parse(
-                        '${getSocialMediaLink(LinkProvider.PLAY_STORE)}$PROVIDER_PACKAGE_NAME'),
-                    mode: LaunchMode.externalApplication);
+                  Uri.parse(
+                    '${getSocialMediaLink(LinkProvider.PLAY_STORE)}$PROVIDER_PACKAGE_NAME',
+                  ),
+                  mode: LaunchMode.externalApplication,
+                );
               }
             } else if (isIOS) {
               if (getStringAsync(PROVIDER_APPSTORE_URL).isNotEmpty) {
@@ -376,9 +389,11 @@ class _SignInScreenState extends State<SignInScreen> {
               }
             }
           },
-          child: Text(language.lblRegisterAsPartner,
-              style: context.boldTextStyle(color: primaryColor)),
-        )
+          child: Text(
+            language.lblRegisterAsPartner,
+            style: context.boldTextStyle(color: primaryColor),
+          ),
+        ),
       ],
     );
   }
@@ -418,11 +433,7 @@ class _SignInScreenState extends State<SignInScreen> {
             color: context.onPrimary,
             border: Border.all(color: context.mainBorderColor, width: 2.0),
           ),
-          child: Icon(
-            Icons.apple,
-            color: Colors.black,
-            size: 20,
-          ),
+          child: Icon(Icons.apple, color: Colors.black, size: 20),
         ),
       ),
     );
@@ -459,10 +470,10 @@ class _SignInScreenState extends State<SignInScreen> {
           children: [
             Divider(color: context.dividerColor, thickness: 1).expand(),
             16.width,
-            Text(language.lblOrContinueWith,
-                style: context.primaryTextStyle(
-                  size: 14,
-                )),
+            Text(
+              language.lblOrContinueWith,
+              style: context.primaryTextStyle(size: 14),
+            ),
             16.width,
             Divider(color: context.dividerColor, thickness: 1).expand(),
           ],
@@ -471,17 +482,19 @@ class _SignInScreenState extends State<SignInScreen> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: socialButtons
-              .map((button) => Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 18),
-                    child: button,
-                  ))
+              .map(
+                (button) => Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 18),
+                  child: button,
+                ),
+              )
               .toList(),
         ),
       ],
     );
   }
 
-//endregion
+  //endregion
 
   @override
   void setState(fn) {
@@ -491,14 +504,20 @@ class _SignInScreenState extends State<SignInScreen> {
   @override
   void dispose() {
     if (widget.isFromServiceBooking.validate()) {
-      setStatusBarColor(Colors.transparent,
-          statusBarIconBrightness: Brightness.dark);
+      setStatusBarColor(
+        Colors.transparent,
+        statusBarIconBrightness: Brightness.dark,
+      );
     } else if (widget.isFromDashboard.validate()) {
-      setStatusBarColor(Colors.transparent,
-          statusBarIconBrightness: Brightness.light);
+      setStatusBarColor(
+        Colors.transparent,
+        statusBarIconBrightness: Brightness.light,
+      );
     } else {
-      setStatusBarColor(primaryColor,
-          statusBarIconBrightness: Brightness.light);
+      setStatusBarColor(
+        primaryColor,
+        statusBarIconBrightness: Brightness.light,
+      );
     }
     super.dispose();
   }
@@ -518,8 +537,9 @@ class _SignInScreenState extends State<SignInScreen> {
               : null,
           scrolledUnderElevation: 0,
           systemOverlayStyle: SystemUiOverlayStyle(
-              statusBarIconBrightness: context.statusBarBrightness,
-              statusBarColor: context.scaffold),
+            statusBarIconBrightness: context.statusBarBrightness,
+            statusBarColor: context.scaffold,
+          ),
         ),
         body: Body(
           child: Form(
@@ -527,79 +547,89 @@ class _SignInScreenState extends State<SignInScreen> {
             autovalidateMode: AutovalidateMode.onUserInteraction,
             child: SingleChildScrollView(
               padding: const EdgeInsets.all(16),
-              child: Observer(builder: (context) {
-                return Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    (context.height() * 0.085).toInt().height,
-                    //
-                    _buildTopWidget(),
-                    AutofillGroup(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(language.lblEmail,
-                              style: context.boldTextStyle(size: 14)),
-                          8.height,
-                          AppTextField(
-                            textStyle: context.primaryTextStyle(),
-                            textFieldType: TextFieldType.EMAIL_ENHANCED,
-                            controller: emailCont,
-                            focus: emailFocus,
-                            nextFocus: passwordFocus,
-                            errorThisFieldRequired: language.requiredText,
-                            decoration: inputDecoration(context,
+              child: Observer(
+                builder: (context) {
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      (context.height() * 0.085).toInt().height,
+                      //
+                      _buildTopWidget(),
+                      AutofillGroup(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              language.lblEmail,
+                              style: context.boldTextStyle(size: 14),
+                            ),
+                            8.height,
+                            AppTextField(
+                              textStyle: context.primaryTextStyle(),
+                              textFieldType: TextFieldType.EMAIL_ENHANCED,
+                              controller: emailCont,
+                              focus: emailFocus,
+                              nextFocus: passwordFocus,
+                              errorThisFieldRequired: language.requiredText,
+                              decoration: inputDecoration(
+                                context,
                                 fillColor: context.fillColor,
                                 hintText: language.hintEmailTxt,
-                                borderRadius: 8),
-                            suffix: ic_message
-                                .iconImage(size: 12, context: context)
-                                .paddingAll(12),
-                            autoFillHints: [AutofillHints.email],
-                          ),
-                          16.height,
-                          Text(language.lblPassword,
-                              style: context.boldTextStyle(size: 14)),
-                          8.height,
-                          AppTextField(
-                            textStyle: context.primaryTextStyle(),
-                            textFieldType: TextFieldType.PASSWORD,
-                            controller: passwordCont,
-                            focus: passwordFocus,
-                            obscureText: true,
-                            suffixPasswordVisibleWidget: ic_show
-                                .iconImage(size: 10, context: context)
-                                .paddingAll(14),
-                            suffixPasswordInvisibleWidget: ic_hide
-                                .iconImage(size: 10, context: context)
-                                .paddingAll(14),
-                            decoration: inputDecoration(context,
+                                borderRadius: 8,
+                              ),
+                              suffix: ic_message
+                                  .iconImage(context: context, size: 12)
+                                  .paddingAll(12),
+                              autoFillHints: [AutofillHints.email],
+                            ),
+                            16.height,
+                            Text(
+                              language.lblPassword,
+                              style: context.boldTextStyle(size: 14),
+                            ),
+                            8.height,
+                            AppTextField(
+                              textStyle: context.primaryTextStyle(),
+                              textFieldType: TextFieldType.PASSWORD,
+                              controller: passwordCont,
+                              focus: passwordFocus,
+                              obscureText: true,
+                              suffixPasswordVisibleWidget: ic_show
+                                  .iconImage(context: context, size: 10)
+                                  .paddingAll(14),
+                              suffixPasswordInvisibleWidget: ic_hide
+                                  .iconImage(context: context, size: 10)
+                                  .paddingAll(14),
+                              decoration: inputDecoration(
+                                context,
                                 fillColor: context.fillColor,
                                 hintText: language.hintPasswordTxt,
-                                borderRadius: 8),
-                            autoFillHints: [AutofillHints.password],
-                            isValidationRequired: true,
-                            validator: (val) {
-                              if (val == null || val.isEmpty) {
-                                return language.requiredText;
-                              } else if (val.length < 8 || val.length > 12) {
-                                return language.passwordLengthShouldBe;
-                              }
-                              return null;
-                            },
-                            onFieldSubmitted: (s) {
-                              _handleLogin();
-                            },
-                          ),
-                        ],
+                                borderRadius: 8,
+                              ),
+                              autoFillHints: [AutofillHints.password],
+                              isValidationRequired: true,
+                              validator: (val) {
+                                if (val == null || val.isEmpty) {
+                                  return language.requiredText;
+                                } else if (val.length < 8 || val.length > 12) {
+                                  return language.passwordLengthShouldBe;
+                                }
+                                return null;
+                              },
+                              onFieldSubmitted: (s) {
+                                _handleLogin();
+                              },
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    _buildRememberWidget(),
-                    if (!getBoolAsync(HAS_IN_REVIEW)) _buildSocialWidget(),
-                    30.height,
-                  ],
-                );
-              }),
+                      _buildRememberWidget(),
+                      if (!getBoolAsync(HAS_IN_REVIEW)) _buildSocialWidget(),
+                      30.height,
+                    ],
+                  );
+                },
+              ),
             ),
           ),
         ),

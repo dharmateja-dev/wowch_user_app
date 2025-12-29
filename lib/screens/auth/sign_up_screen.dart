@@ -25,14 +25,14 @@ class SignUpScreen extends StatefulWidget {
   final String? uid;
   final int? tokenForOTPCredentials;
 
-  SignUpScreen(
-      {Key? key,
-      this.phoneNumber,
-      this.isOTPLogin = false,
-      this.countryCode,
-      this.uid,
-      this.tokenForOTPCredentials})
-      : super(key: key);
+  SignUpScreen({
+    Key? key,
+    this.phoneNumber,
+    this.isOTPLogin = false,
+    this.countryCode,
+    this.uid,
+    this.tokenForOTPCredentials,
+  }) : super(key: key);
 
   @override
   _SignUpScreenState createState() => _SignUpScreenState();
@@ -41,8 +41,9 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   Country selectedCountry = defaultCountry();
-  ValueNotifier<Country> countryNotifier =
-      ValueNotifier<Country>(defaultCountry());
+  ValueNotifier<Country> countryNotifier = ValueNotifier<Country>(
+    defaultCountry(),
+  );
 
   TextEditingController fNameCont = TextEditingController();
   TextEditingController lNameCont = TextEditingController();
@@ -71,15 +72,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
   void init() async {
     if (widget.phoneNumber != null) {
       selectedCountry = Country.parse(
-          widget.countryCode.validate(value: selectedCountry.countryCode));
+        widget.countryCode.validate(value: selectedCountry.countryCode),
+      );
       countryNotifier.value = selectedCountry;
 
-      mobileCont.text =
-          widget.phoneNumber != null ? widget.phoneNumber.toString() : "";
-      passwordCont.text =
-          widget.phoneNumber != null ? widget.phoneNumber.toString() : "";
-      userNameCont.text =
-          widget.phoneNumber != null ? widget.phoneNumber.toString() : "";
+      mobileCont.text = widget.phoneNumber != null
+          ? widget.phoneNumber.toString()
+          : "";
+      passwordCont.text = widget.phoneNumber != null
+          ? widget.phoneNumber.toString()
+          : "";
+      userNameCont.text = widget.phoneNumber != null
+          ? widget.phoneNumber.toString()
+          : "";
     } else {
       countryNotifier.value = selectedCountry;
     }
@@ -130,13 +135,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
         if (widget.tokenForOTPCredentials != null) {
           try {
             AuthCredential credential = PhoneAuthProvider.credentialFromToken(
-                widget.tokenForOTPCredentials!);
-            UserCredential userCredential =
-                await FirebaseAuth.instance.signInWithCredential(credential);
+              widget.tokenForOTPCredentials!,
+            );
+            UserCredential userCredential = await FirebaseAuth.instance
+                .signInWithCredential(credential);
 
             AuthCredential emailAuthCredential = EmailAuthProvider.credential(
-                email: emailCont.text.trim(),
-                password: DEFAULT_FIREBASE_PASSWORD);
+              email: emailCont.text.trim(),
+              password: DEFAULT_FIREBASE_PASSWORD,
+            );
             userCredential.user!.linkWithCredential(emailAuthCredential);
           } catch (e) {
             print(e);
@@ -155,30 +162,27 @@ class _SignUpScreenState extends State<SignUpScreen> {
         borderRadius: BorderRadius.circular(0),
         bottomSheetHeight: 600,
         textStyle: context.primaryTextStyle(),
-        searchTextStyle:
-            context.primaryTextStyle(color: context.searchTextColor),
+        searchTextStyle: context.primaryTextStyle(
+          color: context.searchTextColor,
+        ),
         backgroundColor: context.bottomSheetBackgroundColor,
         inputDecoration: InputDecoration(
           fillColor: context.searchFillColor,
           filled: true,
           border: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: Colors.transparent,
-            ),
+            borderSide: BorderSide(color: Colors.transparent),
           ),
           enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: Colors.transparent,
-            ),
+            borderSide: BorderSide(color: Colors.transparent),
           ),
           focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: Colors.transparent,
-            ),
+            borderSide: BorderSide(color: Colors.transparent),
           ),
           hintText: language.search,
           hintStyle: context.primaryTextStyle(
-              size: 14, color: context.searchHintColor),
+            size: 14,
+            color: context.searchHintColor,
+          ),
           prefixIcon: Icon(Icons.search, color: context.searchHintColor),
         ),
       ),
@@ -237,19 +241,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
       return;
     }
 
-    await createUser(tempRegisterData.toJson()).then((registerResponse) async {
-      registerResponse.userData!.password = passwordCont.text.trim();
+    await createUser(tempRegisterData.toJson())
+        .then((registerResponse) async {
+          registerResponse.userData!.password = passwordCont.text.trim();
 
-      appStore.setLoading(false);
-      toast(registerResponse.message.validate());
-      await appStore.setLoginType(tempRegisterData.loginType.validate());
+          appStore.setLoading(false);
+          toast(registerResponse.message.validate());
+          await appStore.setLoginType(tempRegisterData.loginType.validate());
 
-      /// Back to sign in screen
-      finish(context);
-    }).catchError((e) {
-      appStore.setLoading(false);
-      toast(e.toString());
-    });
+          /// Back to sign in screen
+          finish(context);
+        })
+        .catchError((e) {
+          appStore.setLoading(false);
+          toast(e.toString());
+        });
   }
 
   //endregion
@@ -259,14 +265,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
     return Column(
       children: [
         (context.height() * 0.08).toInt().height,
-        Text(language.lblHelloAgain, style: context.boldTextStyle(size: 24))
-            .center(),
+        Text(
+          language.lblHelloAgain,
+          style: context.boldTextStyle(size: 24),
+        ).center(),
         16.height,
-        Text(language.lblSignUpSubTitle,
-                style: context.primaryTextStyle(size: 16),
-                textAlign: TextAlign.center)
-            .center()
-            .paddingSymmetric(horizontal: 8),
+        Text(
+          language.lblSignUpSubTitle,
+          style: context.primaryTextStyle(size: 16),
+          textAlign: TextAlign.center,
+        ).center().paddingSymmetric(horizontal: 8),
         16.height,
       ],
     );
@@ -288,8 +296,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
           focus: fNameFocus,
           nextFocus: lNameFocus,
           errorThisFieldRequired: language.requiredText,
-          decoration: inputDecoration(context,
-              hintText: language.hintFirstNameTxt, borderRadius: 8),
+          decoration: inputDecoration(
+            context,
+            hintText: language.hintFirstNameTxt,
+            borderRadius: 8,
+          ),
           suffix: ic_user.iconImage(size: 10, context: context).paddingAll(14),
         ),
         16.height,
@@ -303,8 +314,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
           focus: lNameFocus,
           nextFocus: userNameFocus,
           errorThisFieldRequired: language.requiredText,
-          decoration: inputDecoration(context,
-              hintText: language.hintLastNameTxt, borderRadius: 8),
+          decoration: inputDecoration(
+            context,
+            hintText: language.hintLastNameTxt,
+            borderRadius: 8,
+          ),
           suffix: ic_user.iconImage(size: 10, context: context).paddingAll(14),
         ),
         16.height,
@@ -318,8 +332,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
           nextFocus: emailFocus,
           readOnly: widget.isOTPLogin.validate() ? widget.isOTPLogin : false,
           errorThisFieldRequired: language.requiredText,
-          decoration: inputDecoration(context,
-              hintText: language.hintUserNameTxt, borderRadius: 8),
+          decoration: inputDecoration(
+            context,
+            hintText: language.hintUserNameTxt,
+            borderRadius: 8,
+          ),
           suffix: ic_user.iconImage(size: 10, context: context).paddingAll(14),
         ),
         16.height,
@@ -332,10 +349,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
           focus: emailFocus,
           errorThisFieldRequired: language.requiredText,
           nextFocus: mobileFocus,
-          decoration: inputDecoration(context,
-              hintText: language.hintEmailTxt, borderRadius: 8),
-          suffix:
-              ic_message.iconImage(size: 12, context: context).paddingAll(12),
+          decoration: inputDecoration(
+            context,
+            hintText: language.hintEmailTxt,
+            borderRadius: 8,
+          ),
+          suffix: ic_message
+              .iconImage(size: 12, context: context)
+              .paddingAll(12),
         ),
         16.height,
         Text(language.lblContactNumber, style: context.boldTextStyle(size: 14)),
@@ -348,41 +369,40 @@ class _SignUpScreenState extends State<SignUpScreen> {
           focus: mobileFocus,
           errorThisFieldRequired: language.requiredText,
           nextFocus: passwordFocus,
-          decoration: inputDecoration(context,
-              hintText: "${language.hintContactNumberTxt}",
-              counter: false,
-              borderRadius: 8,
-              prefixIcon: ValueListenableBuilder<Country>(
-                valueListenable: countryNotifier,
-                builder: (context, country, child) {
-                  return GestureDetector(
-                    onTap: () => changeCountry(),
-                    child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 8),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            country.flagEmoji,
-                            style: TextStyle(fontSize: 18),
-                          ),
-                          6.width,
-                          Text(
-                            "+${country.phoneCode}",
-                            style: context.primaryTextStyle(size: 14),
-                          ),
-                          4.width,
-                          Icon(
-                            Icons.arrow_drop_down,
-                            size: 18,
-                            color: context.icon,
-                          ),
-                        ],
-                      ),
+          decoration: inputDecoration(
+            context,
+            hintText: "${language.hintContactNumberTxt}",
+            counter: false,
+            borderRadius: 8,
+            prefixIcon: ValueListenableBuilder<Country>(
+              valueListenable: countryNotifier,
+              builder: (context, country, child) {
+                return GestureDetector(
+                  onTap: () => changeCountry(),
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 8),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(country.flagEmoji, style: TextStyle(fontSize: 18)),
+                        6.width,
+                        Text(
+                          "+${country.phoneCode}",
+                          style: context.primaryTextStyle(size: 14),
+                        ),
+                        4.width,
+                        Icon(
+                          Icons.arrow_drop_down,
+                          size: 18,
+                          color: context.icon,
+                        ),
+                      ],
                     ),
-                  );
-                },
-              )),
+                  ),
+                );
+              },
+            ),
+          ),
           maxLength: 15,
           suffix: ic_call.iconImage(size: 8, context: context).paddingAll(15),
         ),
@@ -394,7 +414,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
             child: Text(
               language.selectCountry,
               style: context.boldTextStyle(
-                  size: 12, color: context.searchHintTextColor),
+                size: 12,
+                color: context.searchHintTextColor,
+              ),
             ),
           ),
         ),
@@ -403,8 +425,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(language.lblPassword,
-                  style: context.boldTextStyle(size: 14)),
+              Text(
+                language.lblPassword,
+                style: context.boldTextStyle(size: 14),
+              ),
               8.height,
               AppTextField(
                 textStyle: context.primaryTextStyle(),
@@ -412,8 +436,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 controller: passwordCont,
                 focus: passwordFocus,
                 obscureText: true,
-                readOnly:
-                    widget.isOTPLogin.validate() ? widget.isOTPLogin : false,
+                readOnly: widget.isOTPLogin.validate()
+                    ? widget.isOTPLogin
+                    : false,
                 suffixPasswordVisibleWidget: ic_show
                     .iconImage(size: 10, context: context)
                     .paddingAll(14),
@@ -421,8 +446,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     .iconImage(size: 10, context: context)
                     .paddingAll(14),
                 errorThisFieldRequired: language.requiredText,
-                decoration: inputDecoration(context,
-                    hintText: language.hintPasswordTxt, borderRadius: 8),
+                decoration: inputDecoration(
+                  context,
+                  hintText: language.hintPasswordTxt,
+                  borderRadius: 8,
+                ),
                 isValidationRequired: true,
                 validator: (val) {
                   if (val == null || val.isEmpty) {
@@ -469,23 +497,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
           activeColor: context.primary,
           checkColor: context.onPrimary,
           side: BorderSide(color: context.primary, width: 2.0),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(2),
-          ),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(2)),
         ),
         //16.width,
         RichTextWidget(
           list: [
             TextSpan(
-                text: '${language.lblAgree} ',
-                style: context.primaryTextStyle(size: 14)),
+              text: '${language.lblAgree} ',
+              style: context.primaryTextStyle(size: 14),
+            ),
             TextSpan(
               text: language.lblTermsOfService,
               style: context.boldTextStyle(color: context.primary, size: 14),
               recognizer: TapGestureRecognizer()
                 ..onTap = () {
-                  checkIfLink(context, appConfigurationStore.termConditions,
-                      title: language.termsCondition);
+                  checkIfLink(
+                    context,
+                    appConfigurationStore.termConditions,
+                    title: language.termsCondition,
+                  );
                 },
             ),
             TextSpan(text: ' & ', style: context.primaryTextStyle(size: 14)),
@@ -494,8 +524,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
               style: context.boldTextStyle(color: context.primary, size: 14),
               recognizer: TapGestureRecognizer()
                 ..onTap = () {
-                  checkIfLink(context, appConfigurationStore.privacyPolicy,
-                      title: language.privacyPolicy);
+                  checkIfLink(
+                    context,
+                    appConfigurationStore.privacyPolicy,
+                    title: language.privacyPolicy,
+                  );
                 },
             ),
           ],
@@ -511,8 +544,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
         RichTextWidget(
           list: [
             TextSpan(
-                text: "${language.alreadyHaveAccountTxt} ",
-                style: context.primaryTextStyle(size: 14)),
+              text: "${language.alreadyHaveAccountTxt} ",
+              style: context.primaryTextStyle(size: 14),
+            ),
             TextSpan(
               text: language.signIn,
               style: context.boldTextStyle(color: context.primary, size: 14),
@@ -547,8 +581,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
             backgroundColor: transparentColor,
             scrolledUnderElevation: 0,
             systemOverlayStyle: SystemUiOverlayStyle(
-                statusBarIconBrightness: context.statusBarBrightness,
-                statusBarColor: context.scaffold),
+              statusBarIconBrightness: context.statusBarBrightness,
+              statusBarColor: context.scaffold,
+            ),
           ),
           body: Stack(
             alignment: AlignmentDirectional.center,
@@ -571,8 +606,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
               ),
               Observer(
-                  builder: (_) =>
-                      LoaderWidget().center().visible(appStore.isLoading)),
+                builder: (_) =>
+                    LoaderWidget().center().visible(appStore.isLoading),
+              ),
             ],
           ),
         ),
