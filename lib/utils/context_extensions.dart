@@ -299,6 +299,11 @@ extension ColorSchemeExtension on BuildContext {
   /// Scaffold background
   Color get scaffold => appTheme.scaffoldBackgroundColor;
 
+  /// Scaffold secondary background
+  Color get scaffoldSecondary => isDarkMode
+      ? DarkThemeColors.scaffoldSecondary
+      : LightThemeColors.scaffoldBackground;
+
   /// Card background
   Color get card => appTheme.cardTheme.color ?? surface;
 

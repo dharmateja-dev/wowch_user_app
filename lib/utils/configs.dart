@@ -56,6 +56,16 @@ const PAYSTACK_CURRENCY_CODE = 'NGN';
 /// STRIPE PAYMENT DETAIL
 const STRIPE_MERCHANT_COUNTRY_CODE = 'IN';
 const STRIPE_CURRENCY_CODE = 'INR';
+// IMPORTANT: Never commit secret keys to version control!
+// Public key can be in code (it's meant to be public)
+const STRIPE_TEST_PUBLIC_KEY =
+    'pk_test_51Sgs0YRwxGwHFvGQyUpk5d5RLA4xiDvKV5E8LTPzr3hGVyEA13SXsULb6Ig8nQj1quzuP3AR5Urfmf1aaAUp3CTP00WqY1yzQz';
+
+// Secret key should be handled by your backend server, NOT in client code
+// If you need it for testing, use: String.fromEnvironment('STRIPE_SECRET_KEY')
+// or load from a .env file that is in .gitignore
+const STRIPE_TEST_SECRET_KEY = '';
+const STRIPE_URL = 'https://api.stripe.com/v1/payment_intents';
 
 /// RAZORPAY PAYMENT DETAIL
 const RAZORPAY_CURRENCY_CODE = 'INR';

@@ -35,15 +35,24 @@ class StripeServiceNew {
     String stripePaymentPublishKey = '';
 
     if (paymentSetting.isTest == 1) {
-      stripePaymentKey = paymentSetting.testValue!.stripeKey.validate();
-      stripeURL = paymentSetting.testValue!.stripeUrl.validate();
-      stripePaymentPublishKey = paymentSetting.testValue!.stripePublickey.validate();
+      stripePaymentKey = STRIPE_TEST_SECRET_KEY.isNotEmpty
+          ? STRIPE_TEST_SECRET_KEY
+          : paymentSetting.testValue!.stripeKey.validate();
+      stripeURL = STRIPE_URL.isNotEmpty
+          ? STRIPE_URL
+          : paymentSetting.testValue!.stripeUrl.validate();
+      stripePaymentPublishKey = STRIPE_TEST_PUBLIC_KEY.isNotEmpty
+          ? STRIPE_TEST_PUBLIC_KEY
+          : paymentSetting.testValue!.stripePublickey.validate();
     } else {
       stripePaymentKey = paymentSetting.liveValue!.stripeKey!;
       stripeURL = paymentSetting.liveValue!.stripeUrl!;
       stripePaymentPublishKey = paymentSetting.liveValue!.stripePublickey!;
     }
-    if (stripePaymentKey.isEmpty || stripeURL.isEmpty || stripePaymentPublishKey.isEmpty) throw language.accessDeniedContactYourAdmin;
+    if (stripePaymentKey.isEmpty ||
+        stripeURL.isEmpty ||
+        stripePaymentPublishKey.isEmpty)
+      throw language.accessDeniedContactYourAdmin;
 
     Stripe.merchantIdentifier = 'merchant.flutter.stripe.test';
     Stripe.publishableKey = stripePaymentPublishKey;
@@ -54,12 +63,16 @@ class StripeServiceNew {
       throw e.toString();
     });
 
-    Request request = http.Request(HttpMethodType.POST.name, Uri.parse(stripeURL));
+    Request request =
+        http.Request(HttpMethodType.POST.name, Uri.parse(stripeURL));
 
     request.bodyFields = {
       'amount': '${(totalAmount * 100).toInt()}',
-      'currency': await isIqonicProduct ? STRIPE_CURRENCY_CODE : '${appConfigurationStore.currencyCode}',
-      'description': 'Name: ${appStore.userFullName} - Email: ${appStore.userEmail}',
+      'currency': await isIqonicProduct
+          ? STRIPE_CURRENCY_CODE
+          : '${appConfigurationStore.currencyCode}',
+      'description':
+          'Name: ${appStore.userFullName} - Email: ${appStore.userEmail}',
     };
 
     request.headers.addAll(buildHeaderForStripe(stripePaymentKey));
@@ -72,22 +85,32 @@ class StripeServiceNew {
     await request.send().then((value) {
       http.Response.fromStream(value).then((response) async {
         if (response.statusCode.isSuccessful()) {
-          StripePayModel res = StripePayModel.fromJson(jsonDecode(response.body));
+          StripePayModel res =
+              StripePayModel.fromJson(jsonDecode(response.body));
 
-          SetupPaymentSheetParameters setupPaymentSheetParameters = SetupPaymentSheetParameters(
+          SetupPaymentSheetParameters setupPaymentSheetParameters =
+              SetupPaymentSheetParameters(
             paymentIntentClientSecret: res.clientSecret.validate(),
             style: appThemeMode,
-            appearance: PaymentSheetAppearance(colors: PaymentSheetAppearanceColors(primary: primaryColor)),
-            applePay: PaymentSheetApplePay(merchantCountryCode: STRIPE_MERCHANT_COUNTRY_CODE),
-            googlePay: PaymentSheetGooglePay(merchantCountryCode: STRIPE_MERCHANT_COUNTRY_CODE, testEnv: paymentSetting.isTest == 1),
+            appearance: PaymentSheetAppearance(
+                colors: PaymentSheetAppearanceColors(primary: primaryColor)),
+            applePay: PaymentSheetApplePay(
+                merchantCountryCode: STRIPE_MERCHANT_COUNTRY_CODE),
+            googlePay: PaymentSheetGooglePay(
+                merchantCountryCode: STRIPE_MERCHANT_COUNTRY_CODE,
+                testEnv: paymentSetting.isTest == 1),
             merchantDisplayName: APP_NAME,
             customerId: appStore.userId.toString(),
             // customerEphemeralKeySecret: isAndroid ? res.id.validate() : null,
             setupIntentClientSecret: res.clientSecret.validate(),
-            billingDetails: BillingDetails(name: appStore.userFullName, email: appStore.userEmail),
+            billingDetails: BillingDetails(
+                name: appStore.userFullName, email: appStore.userEmail),
           );
 
-          await Stripe.instance.initPaymentSheet(paymentSheetParameters: setupPaymentSheetParameters).then((value) async {
+          await Stripe.instance
+              .initPaymentSheet(
+                  paymentSheetParameters: setupPaymentSheetParameters)
+              .then((value) async {
             await Stripe.instance.presentPaymentSheet().then((value) async {
               onComplete.call({
                 'transaction_id': res.id,

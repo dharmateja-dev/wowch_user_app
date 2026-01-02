@@ -1,0 +1,52 @@
+================================================================================
+                    STRIPE PAYMENT - API LIST
+================================================================================
+
+PROJECT: Wowch User App (Handyman Flutter)
+DATE: January 1, 2026
+
+================================================================================
+                    PAYMENT FLOW
+================================================================================
+
+Step 1 --> Step 2 --> Step 3 --> Step 4
+
+--------------------------------------------------------------------------------
+
+STEP 1: Get Payment Methods
+   API: GET /api/payment-gateways
+   Type: Backend API
+   When: Payment screen opens
+
+STEP 2: Create PaymentIntent  
+   API: POST https://api.stripe.com/v1/payment_intents
+   Type: Stripe Direct API
+   When: User clicks "Pay Now"
+
+STEP 3: User Completes Payment
+   Action: Payment Sheet UI (Stripe SDK)
+   Type: No API call - UI interaction
+
+STEP 4: Save Payment Record
+   API: POST /api/save-payment
+   Type: Backend API
+   When: After payment is successful
+
+================================================================================
+                    APIS CALLED DURING PAYMENT
+================================================================================
+
+# | API                                              | TYPE
+--|--------------------------------------------------|------------------
+1 | GET /api/payment-gateways                        | Backend
+2 | POST https://api.stripe.com/v1/payment_intents   | Stripe (External)
+3 | POST /api/save-payment                           | Backend
+
+================================================================================
+                    TOTAL: 3 APIs
+================================================================================
+
+Backend APIs: 2
+External APIs: 1 (Stripe)
+
+================================================================================
