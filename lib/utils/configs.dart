@@ -1,5 +1,6 @@
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 const APP_NAME = 'Wowch User App';
 const APP_NAME_TAG_LINE = 'On-Demand Services App';
@@ -61,10 +62,9 @@ const STRIPE_CURRENCY_CODE = 'INR';
 const STRIPE_TEST_PUBLIC_KEY =
     'pk_test_51Sgs0YRwxGwHFvGQyUpk5d5RLA4xiDvKV5E8LTPzr3hGVyEA13SXsULb6Ig8nQj1quzuP3AR5Urfmf1aaAUp3CTP00WqY1yzQz';
 
-// Secret key should be handled by your backend server, NOT in client code
-// If you need it for testing, use: String.fromEnvironment('STRIPE_SECRET_KEY')
-// or load from a .env file that is in .gitignore
-const STRIPE_TEST_SECRET_KEY = '';
+// Secret key loaded from .env file (added to .gitignore)
+// Create a .env file in the project root with: STRIPE_SECRET_KEY=sk_test_your_key_here
+String getStripeSecretKey() => dotenv.get('STRIPE_SECRET_KEY', fallback: '');
 const STRIPE_URL = 'https://api.stripe.com/v1/payment_intents';
 
 /// RAZORPAY PAYMENT DETAIL

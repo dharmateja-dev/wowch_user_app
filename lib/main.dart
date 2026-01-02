@@ -40,6 +40,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'package:nb_utils/nb_utils.dart';
 
@@ -107,6 +108,12 @@ List<(int bookingId, BookingDetailResponse list)?> cachedBookingDetailList = [];
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Load environment variables from .env file
+  await dotenv.load(fileName: ".env").catchError((e) {
+    log('Warning: .env file not found. Using fallback values.');
+  });
+
   await Firebase.initializeApp().then((value) {
     /// Firebase Notification
     initFirebaseMessaging();

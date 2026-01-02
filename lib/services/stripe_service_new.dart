@@ -35,8 +35,9 @@ class StripeServiceNew {
     String stripePaymentPublishKey = '';
 
     if (paymentSetting.isTest == 1) {
-      stripePaymentKey = STRIPE_TEST_SECRET_KEY.isNotEmpty
-          ? STRIPE_TEST_SECRET_KEY
+      final secretKey = getStripeSecretKey();
+      stripePaymentKey = secretKey.isNotEmpty
+          ? secretKey
           : paymentSetting.testValue!.stripeKey.validate();
       stripeURL = STRIPE_URL.isNotEmpty
           ? STRIPE_URL
